@@ -7,16 +7,20 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		58484AC52AD59B3C000C12D8 /* UICanvas.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58484AC42AD59B3C000C12D8 /* UICanvas.swift */; };
+		58484AC72AD5A641000C12D8 /* Test.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58484AC62AD5A641000C12D8 /* Test.swift */; };
 		BE1AE87A2AD3D65800F586CD /* macro2023App.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE1AE8792AD3D65800F586CD /* macro2023App.swift */; };
-		BE1AE87C2AD3D65800F586CD /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE1AE87B2AD3D65800F586CD /* ContentView.swift */; };
+		BE1AE87C2AD3D65800F586CD /* UIProject.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE1AE87B2AD3D65800F586CD /* UIProject.swift */; };
 		BE1AE87E2AD3D65900F586CD /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BE1AE87D2AD3D65900F586CD /* Assets.xcassets */; };
 		BE1AE8812AD3D65900F586CD /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BE1AE8802AD3D65900F586CD /* Preview Assets.xcassets */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		58484AC42AD59B3C000C12D8 /* UICanvas.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UICanvas.swift; sourceTree = "<group>"; };
+		58484AC62AD5A641000C12D8 /* Test.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Test.swift; sourceTree = "<group>"; };
 		BE1AE8762AD3D65800F586CD /* macro2023.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = macro2023.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		BE1AE8792AD3D65800F586CD /* macro2023App.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = macro2023App.swift; sourceTree = "<group>"; };
-		BE1AE87B2AD3D65800F586CD /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		BE1AE87B2AD3D65800F586CD /* UIProject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIProject.swift; sourceTree = "<group>"; };
 		BE1AE87D2AD3D65900F586CD /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		BE1AE8802AD3D65900F586CD /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -52,7 +56,9 @@
 			isa = PBXGroup;
 			children = (
 				BE1AE8792AD3D65800F586CD /* macro2023App.swift */,
-				BE1AE87B2AD3D65800F586CD /* ContentView.swift */,
+				BE1AE87B2AD3D65800F586CD /* UIProject.swift */,
+				58484AC62AD5A641000C12D8 /* Test.swift */,
+				58484AC42AD59B3C000C12D8 /* UICanvas.swift */,
 				BE1AE87D2AD3D65900F586CD /* Assets.xcassets */,
 				BE1AE87F2AD3D65900F586CD /* Preview Content */,
 			);
@@ -137,7 +143,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				BE1AE87C2AD3D65800F586CD /* ContentView.swift in Sources */,
+				58484AC52AD59B3C000C12D8 /* UICanvas.swift in Sources */,
+				58484AC72AD5A641000C12D8 /* Test.swift in Sources */,
+				BE1AE87C2AD3D65800F586CD /* UIProject.swift in Sources */,
 				BE1AE87A2AD3D65800F586CD /* macro2023App.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -272,7 +280,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"macro2023/Preview Content\"";
-				DEVELOPMENT_TEAM = ADCCQ7XPC3;
+				DEVELOPMENT_TEAM = 44349BA3CD;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
@@ -301,7 +309,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"macro2023/Preview Content\"";
-				DEVELOPMENT_TEAM = ADCCQ7XPC3;
+				DEVELOPMENT_TEAM = 44349BA3CD;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;

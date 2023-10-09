@@ -11,7 +11,7 @@ import SwiftUI
 struct macro2023App: App {
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            UIProject()
         }
     }
 }
