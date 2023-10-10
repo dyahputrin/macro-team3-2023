@@ -7,6 +7,15 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		210C7FF22AD531C200E01229 /* Model.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 210C7FF02AD531C200E01229 /* Model.xcdatamodeld */; };
+		210C80142AD5343400E01229 /* Persistence.swift in Sources */ = {isa = PBXBuildFile; fileRef = 210C80132AD5343400E01229 /* Persistence.swift */; };
+		210C80242AD541E900E01229 /* v2wall3.usdz in Resources */ = {isa = PBXBuildFile; fileRef = 210C801F2AD541E900E01229 /* v2wall3.usdz */; };
+		210C80252AD541E900E01229 /* v2wall2.usdz in Resources */ = {isa = PBXBuildFile; fileRef = 210C80202AD541E900E01229 /* v2wall2.usdz */; };
+		210C80262AD541E900E01229 /* v2wall1.usdz in Resources */ = {isa = PBXBuildFile; fileRef = 210C80212AD541E900E01229 /* v2wall1.usdz */; };
+		210C80272AD541E900E01229 /* v2wall4.usdz in Resources */ = {isa = PBXBuildFile; fileRef = 210C80222AD541E900E01229 /* v2wall4.usdz */; };
+		210C80282AD541E900E01229 /* v2floor.usdz in Resources */ = {isa = PBXBuildFile; fileRef = 210C80232AD541E900E01229 /* v2floor.usdz */; };
+		2172DE722AD4000500454B87 /* CanvasView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2172DE712AD4000500454B87 /* CanvasView.swift */; };
+		2172DE762AD40E2500454B87 /* ChangeName.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2172DE752AD40E2500454B87 /* ChangeName.swift */; };
 		BE1AE87A2AD3D65800F586CD /* macro2023App.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE1AE8792AD3D65800F586CD /* macro2023App.swift */; };
 		BE1AE87C2AD3D65800F586CD /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE1AE87B2AD3D65800F586CD /* ContentView.swift */; };
 		BE1AE87E2AD3D65900F586CD /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BE1AE87D2AD3D65900F586CD /* Assets.xcassets */; };
@@ -14,6 +23,15 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		210C7FF12AD531C200E01229 /* Model.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Model.xcdatamodel; sourceTree = "<group>"; };
+		210C80132AD5343400E01229 /* Persistence.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Persistence.swift; sourceTree = "<group>"; };
+		210C801F2AD541E900E01229 /* v2wall3.usdz */ = {isa = PBXFileReference; lastKnownFileType = file.usdz; path = v2wall3.usdz; sourceTree = "<group>"; };
+		210C80202AD541E900E01229 /* v2wall2.usdz */ = {isa = PBXFileReference; lastKnownFileType = file.usdz; path = v2wall2.usdz; sourceTree = "<group>"; };
+		210C80212AD541E900E01229 /* v2wall1.usdz */ = {isa = PBXFileReference; lastKnownFileType = file.usdz; path = v2wall1.usdz; sourceTree = "<group>"; };
+		210C80222AD541E900E01229 /* v2wall4.usdz */ = {isa = PBXFileReference; lastKnownFileType = file.usdz; path = v2wall4.usdz; sourceTree = "<group>"; };
+		210C80232AD541E900E01229 /* v2floor.usdz */ = {isa = PBXFileReference; lastKnownFileType = file.usdz; path = v2floor.usdz; sourceTree = "<group>"; };
+		2172DE712AD4000500454B87 /* CanvasView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CanvasView.swift; sourceTree = "<group>"; };
+		2172DE752AD40E2500454B87 /* ChangeName.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangeName.swift; sourceTree = "<group>"; };
 		BE1AE8762AD3D65800F586CD /* macro2023.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = macro2023.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		BE1AE8792AD3D65800F586CD /* macro2023App.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = macro2023App.swift; sourceTree = "<group>"; };
 		BE1AE87B2AD3D65800F586CD /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -32,6 +50,44 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		210C7FEB2AD52BED00E01229 /* Object */ = {
+			isa = PBXGroup;
+			children = (
+				210C80232AD541E900E01229 /* v2floor.usdz */,
+				210C80212AD541E900E01229 /* v2wall1.usdz */,
+				210C80202AD541E900E01229 /* v2wall2.usdz */,
+				210C801F2AD541E900E01229 /* v2wall3.usdz */,
+				210C80222AD541E900E01229 /* v2wall4.usdz */,
+			);
+			path = Object;
+			sourceTree = "<group>";
+		};
+		210C7FF32AD531FB00E01229 /* Data */ = {
+			isa = PBXGroup;
+			children = (
+				210C7FF02AD531C200E01229 /* Model.xcdatamodeld */,
+				210C80132AD5343400E01229 /* Persistence.swift */,
+			);
+			path = Data;
+			sourceTree = "<group>";
+		};
+		2172DE732AD40DDD00454B87 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				BE1AE87B2AD3D65800F586CD /* ContentView.swift */,
+				2172DE712AD4000500454B87 /* CanvasView.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		2172DE742AD40DF000454B87 /* Modal */ = {
+			isa = PBXGroup;
+			children = (
+				2172DE752AD40E2500454B87 /* ChangeName.swift */,
+			);
+			path = Modal;
+			sourceTree = "<group>";
+		};
 		BE1AE86D2AD3D65800F586CD = {
 			isa = PBXGroup;
 			children = (
@@ -52,7 +108,10 @@
 			isa = PBXGroup;
 			children = (
 				BE1AE8792AD3D65800F586CD /* macro2023App.swift */,
-				BE1AE87B2AD3D65800F586CD /* ContentView.swift */,
+				2172DE742AD40DF000454B87 /* Modal */,
+				210C7FF32AD531FB00E01229 /* Data */,
+				2172DE732AD40DDD00454B87 /* View */,
+				210C7FEB2AD52BED00E01229 /* Object */,
 				BE1AE87D2AD3D65900F586CD /* Assets.xcassets */,
 				BE1AE87F2AD3D65900F586CD /* Preview Content */,
 			);
@@ -125,6 +184,11 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				210C80242AD541E900E01229 /* v2wall3.usdz in Resources */,
+				210C80252AD541E900E01229 /* v2wall2.usdz in Resources */,
+				210C80262AD541E900E01229 /* v2wall1.usdz in Resources */,
+				210C80272AD541E900E01229 /* v2wall4.usdz in Resources */,
+				210C80282AD541E900E01229 /* v2floor.usdz in Resources */,
 				BE1AE8812AD3D65900F586CD /* Preview Assets.xcassets in Resources */,
 				BE1AE87E2AD3D65900F586CD /* Assets.xcassets in Resources */,
 			);
@@ -139,6 +203,10 @@
 			files = (
 				BE1AE87C2AD3D65800F586CD /* ContentView.swift in Sources */,
 				BE1AE87A2AD3D65800F586CD /* macro2023App.swift in Sources */,
+				210C7FF22AD531C200E01229 /* Model.xcdatamodeld in Sources */,
+				210C80142AD5343400E01229 /* Persistence.swift in Sources */,
+				2172DE762AD40E2500454B87 /* ChangeName.swift in Sources */,
+				2172DE722AD4000500454B87 /* CanvasView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -272,14 +340,14 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"macro2023/Preview Content\"";
-				DEVELOPMENT_TEAM = ADCCQ7XPC3;
+				DEVELOPMENT_TEAM = 28N6P267AM;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = UIInterfaceOrientationLandscapeRight;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -301,14 +369,14 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"macro2023/Preview Content\"";
-				DEVELOPMENT_TEAM = ADCCQ7XPC3;
+				DEVELOPMENT_TEAM = 28N6P267AM;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = UIInterfaceOrientationLandscapeRight;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -344,6 +412,19 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		210C7FF02AD531C200E01229 /* Model.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				210C7FF12AD531C200E01229 /* Model.xcdatamodel */,
+			);
+			currentVersion = 210C7FF12AD531C200E01229 /* Model.xcdatamodel */;
+			path = Model.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = BE1AE86E2AD3D65800F586CD /* Project object */;
 }
