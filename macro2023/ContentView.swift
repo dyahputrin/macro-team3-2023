@@ -10,10 +10,17 @@ import SwiftUI
 struct ContentView: View {
     var body: some View {
         VStack {
-            Image(systemName: "globe")
-                .imageScale(.large)
-                .foregroundStyle(.tint)
-            Text("Hello, world!")
+            NavigationStack {
+                NavigationLink(destination: CanvasView()) {
+                    Text("Go to Canvas")
+                        .font(.title)
+                        .padding()
+                        .background(Color.blue)
+                        .foregroundColor(.white)
+                        .cornerRadius(8)
+                }
+                
+            }
         }
         .padding()
     }

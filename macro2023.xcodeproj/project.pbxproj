@@ -11,6 +11,11 @@
 		BE1AE87C2AD3D65800F586CD /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE1AE87B2AD3D65800F586CD /* ContentView.swift */; };
 		BE1AE87E2AD3D65900F586CD /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BE1AE87D2AD3D65900F586CD /* Assets.xcassets */; };
 		BE1AE8812AD3D65900F586CD /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BE1AE8802AD3D65900F586CD /* Preview Assets.xcassets */; };
+		BEB2B5162AD4E73300976B0E /* RoomSceneView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEB2B5152AD4E73300976B0E /* RoomSceneView.swift */; };
+		BEB2B5182AD4E74A00976B0E /* RoomScene.scn in Resources */ = {isa = PBXBuildFile; fileRef = BEB2B5172AD4E74A00976B0E /* RoomScene.scn */; };
+		BEB2B51A2AD4E87400976B0E /* RoomSceneModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEB2B5192AD4E87400976B0E /* RoomSceneModel.swift */; };
+		BEB2B51C2AD4EC0E00976B0E /* RoomSceneViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEB2B51B2AD4EC0E00976B0E /* RoomSceneViewModel.swift */; };
+		BEDBF6AA2AD3FC76009D2EC0 /* CanvasView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEDBF6A92AD3FC76009D2EC0 /* CanvasView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -19,6 +24,11 @@
 		BE1AE87B2AD3D65800F586CD /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		BE1AE87D2AD3D65900F586CD /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		BE1AE8802AD3D65900F586CD /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		BEB2B5152AD4E73300976B0E /* RoomSceneView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoomSceneView.swift; sourceTree = "<group>"; };
+		BEB2B5172AD4E74A00976B0E /* RoomScene.scn */ = {isa = PBXFileReference; lastKnownFileType = file.bplist; path = RoomScene.scn; sourceTree = "<group>"; };
+		BEB2B5192AD4E87400976B0E /* RoomSceneModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoomSceneModel.swift; sourceTree = "<group>"; };
+		BEB2B51B2AD4EC0E00976B0E /* RoomSceneViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoomSceneViewModel.swift; sourceTree = "<group>"; };
+		BEDBF6A92AD3FC76009D2EC0 /* CanvasView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CanvasView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -51,6 +61,7 @@
 		BE1AE8782AD3D65800F586CD /* macro2023 */ = {
 			isa = PBXGroup;
 			children = (
+				BEDBF6A82AD3FC59009D2EC0 /* BuildRoom */,
 				BE1AE8792AD3D65800F586CD /* macro2023App.swift */,
 				BE1AE87B2AD3D65800F586CD /* ContentView.swift */,
 				BE1AE87D2AD3D65900F586CD /* Assets.xcassets */,
@@ -65,6 +76,18 @@
 				BE1AE8802AD3D65900F586CD /* Preview Assets.xcassets */,
 			);
 			path = "Preview Content";
+			sourceTree = "<group>";
+		};
+		BEDBF6A82AD3FC59009D2EC0 /* BuildRoom */ = {
+			isa = PBXGroup;
+			children = (
+				BEB2B5152AD4E73300976B0E /* RoomSceneView.swift */,
+				BEB2B51B2AD4EC0E00976B0E /* RoomSceneViewModel.swift */,
+				BEB2B5192AD4E87400976B0E /* RoomSceneModel.swift */,
+				BEB2B5172AD4E74A00976B0E /* RoomScene.scn */,
+				BEDBF6A92AD3FC76009D2EC0 /* CanvasView.swift */,
+			);
+			path = BuildRoom;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -126,6 +149,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				BE1AE8812AD3D65900F586CD /* Preview Assets.xcassets in Resources */,
+				BEB2B5182AD4E74A00976B0E /* RoomScene.scn in Resources */,
 				BE1AE87E2AD3D65900F586CD /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -137,8 +161,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BEB2B51C2AD4EC0E00976B0E /* RoomSceneViewModel.swift in Sources */,
+				BEB2B51A2AD4E87400976B0E /* RoomSceneModel.swift in Sources */,
+				BEB2B5162AD4E73300976B0E /* RoomSceneView.swift in Sources */,
 				BE1AE87C2AD3D65800F586CD /* ContentView.swift in Sources */,
 				BE1AE87A2AD3D65800F586CD /* macro2023App.swift in Sources */,
+				BEDBF6AA2AD3FC76009D2EC0 /* CanvasView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
