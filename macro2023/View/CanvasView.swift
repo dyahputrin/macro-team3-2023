@@ -59,7 +59,6 @@ struct CanvasView: View {
         return scene
     }
     
-    
     var cameraNode: SCNNode? {
         let cameraNode = SCNNode()
         cameraNode.camera = SCNCamera()
@@ -95,7 +94,7 @@ struct CanvasView: View {
                     } label: {
                         Image(systemName: "chevron.left")
                     }
-                    NavigationLink(destination:ChangeName()
+                    NavigationLink(destination:ContentView()
                                    ,label: {
                         Text(nameProject)
                             .foregroundColor(.black)
