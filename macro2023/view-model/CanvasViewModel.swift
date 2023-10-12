@@ -1,0 +1,25 @@
+//
+//  CanvasViewModel.swift
+//  macro2023
+//
+//  Created by Shalomeira Winata on 12/10/23.
+//
+
+import Foundation
+
+class AppState: ObservableObject {
+    
+    @Published var projectName = "New Project"
+    @Published var roomButtonClicked = false
+    @Published var objectsButtonClicked = false
+    @Published var viewfinderButtonClicked = false
+    
+    @Published var sheetPresented = true
+    @Published var isSetButtonTapped = false
+    
+    @Published var width = ""
+    @Published var length = ""
+    @Published var wallHeight = ""
+    
+    
+}
