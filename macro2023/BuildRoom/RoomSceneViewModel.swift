@@ -9,41 +9,68 @@ import Foundation
 import SceneKit
 
 class RoomSceneViewModel: ObservableObject {
-    @Published var customBoxNodes: [SCNNode] = []
+    @Published var roomSceneModel: RoomSceneModel = RoomSceneModel(roomWidth: 2, roomHeight: 2, roomLength: 2)
+    
+//    init(roomSceneModel: RoomSceneModel) {
+//        self.roomSceneModel = roomSceneModel
+//    }
+    
+    func makeScene(width: CGFloat, height: CGFloat, length: CGFloat) -> SCNScene? {
+//        roomSceneModel.scene = SCNScene(named: "RoomScene.scn")!
+//        let scene = roomSceneModel.scene
+        let scene = SCNScene(named: "RoomScene.scn")
+        let floorNode = SCNNode()
+        let wall1Node = SCNNode()
+        let wall2Node = SCNNode()
+        let tableNode = SCNNode()
         
-    func addCustomBoxNode(_ node: SCNNode) {
-        customBoxNodes.append(node)
+        if let floorAsset = SCNScene(named: "v2floor.usdz"){
+            let floorGeometry = floorAsset.rootNode.childNodes.first?.geometry?.copy() as? SCNGeometry
+            floorNode.geometry = floorGeometry
+//            floorNode.scale = SCNVector3(width, height, length)
+            floorNode.scale = SCNVector3(roomSceneModel.roomWidth, roomSceneModel.roomHeight, roomSceneModel.roomLength)
+            floorNode.addChildNode(floorAsset.rootNode)
+            scene?.rootNode.addChildNode(floorNode)
+        }
+        if let wall1Asset = SCNScene(named: "v2wall1.usdz"){
+            let wall1Geometry = wall1Asset.rootNode.childNodes.first?.geometry?.copy() as? SCNGeometry
+            wall1Node.geometry = wall1Geometry
+//            wall1Node.scale = SCNVector3(width, height, length)
+            wall1Node.position = SCNVector3()
+            wall1Node.scale = SCNVector3(roomSceneModel.roomWidth, roomSceneModel.roomHeight, roomSceneModel.roomLength)
+            wall1Node.addChildNode(wall1Asset.rootNode)
+            scene?.rootNode.addChildNode(wall1Node)
+        }
+        if let wall2Asset = SCNScene(named: "v2wall2.usdz"){
+            let wall2Geometry = wall2Asset.rootNode.childNodes.first?.geometry?.copy() as? SCNGeometry
+            wall2Node.geometry = wall2Geometry
+//            wall2Node.scale = SCNVector3(width, height, length)
+            wall2Node.scale = SCNVector3(roomSceneModel.roomWidth, roomSceneModel.roomHeight, roomSceneModel.roomLength)
+            wall2Node.addChildNode(wall2Asset.rootNode)
+            scene?.rootNode.addChildNode(wall2Node)
+        }
+        if let tableAsset = SCNScene(named: "OfficeTable.usdz"){
+            let tableGeometry = tableAsset.rootNode.childNodes.first?.geometry?.copy() as? SCNGeometry
+            tableNode.geometry = tableGeometry
+            tableNode.addChildNode(tableAsset.rootNode)
+            scene?.rootNode.addChildNode(tableNode)
+        }
+        
+        return scene
     }
     
-    func removeAllCustomBoxNodes() {
-        customBoxNodes.removeAll()
+    func updateRoomSize(width: CGFloat, height: CGFloat, length: CGFloat) {
+        roomSceneModel.roomWidth = width
+        roomSceneModel.roomHeight = height
+        roomSceneModel.roomLength = length
+        print("Update Room Size --> width: \(roomSceneModel.roomWidth); height: \(roomSceneModel.roomHeight); length: \(roomSceneModel.roomLength)")
     }
-        
-    // create the room
-    func createCustomBox(width: CGFloat, height: CGFloat, length: CGFloat) -> SCNNode {
-        print("CREATE CUSTOM BOX")
-        // Create the front, left, and right planes
-        let frontPlane = SCNPlane(width: width, height: height)
-        let leftPlane = SCNPlane(width: length, height: height)
-        let rightPlane = SCNPlane(width: length, height: height)
-        
-        // Create nodes for the planes
-        let frontNode = SCNNode(geometry: frontPlane)
-        let leftNode = SCNNode(geometry: leftPlane)
-        let rightNode = SCNNode(geometry: rightPlane)
-        
-        // Position the planes to create the illusion of a box with three sides missing
-        frontNode.position = SCNVector3(0, 0, length / 2)
-        leftNode.position = SCNVector3(-width / 2, 0, 0)
-        rightNode.position = SCNVector3(width / 2, 0, 0)
-        
-        // Combine the nodes into a single node
-        let customBoxNode = SCNNode()
-        customBoxNode.addChildNode(frontNode)
-        customBoxNode.addChildNode(leftNode)
-        customBoxNode.addChildNode(rightNode)
-        
-        return customBoxNode
+    
+    func stringToCGFloat(value: String) -> CGFloat? {
+        if let floatValue = Float(value) {
+            return CGFloat(floatValue)
+        }
+        return nil
     }
     
 }

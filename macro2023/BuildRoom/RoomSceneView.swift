@@ -9,42 +9,53 @@ import SwiftUI
 import SceneKit
 
 struct RoomSceneView: View {
-    static func makeScene() -> SCNScene? {
-        let scene = SCNScene(named: "RoomScene.scn")
-        return scene
-    }
     
-    @ObservedObject var roomSceneViewModel = RoomSceneViewModel()
-    @GestureState private var dragOffset: CGSize = .zero
-    var scene = makeScene()
-    @State private var roomLength: String = ""
-    @State private var roomWidth: String = ""
-    @State private var roomHeight: String = ""
+    @ObservedObject var roomSceneViewModel: RoomSceneViewModel
+    var roomSceneModel: RoomSceneModel
+    @State private var sceneViewID = UUID()
     
-    var cameraNode: SCNNode? {
-        let cameraNode = SCNNode()
-        cameraNode.camera = SCNCamera()
-        cameraNode.position = SCNVector3(x: 0, y: 0, z: 0)
-        return cameraNode
+    init() {
+        let roomSceneModel = RoomSceneModel(roomWidth: 2, roomHeight: 2, roomLength: 2)
+        self.roomSceneModel = roomSceneModel
+        self.roomSceneViewModel = RoomSceneViewModel()
     }
     
     var body: some View {
         VStack {
-            SceneView(scene: scene, options: [.allowsCameraControl])
+            SceneView(scene: roomSceneViewModel.makeScene(width: roomSceneModel.roomWidth, height: roomSceneModel.roomHeight, length: roomSceneModel.roomLength), options: [.allowsCameraControl])
                 .edgesIgnoringSafeArea(.all)
+                .id(sceneViewID)
+                
             HStack {
-                TextField("Room Length", text: $roomLength)
+                TextField("Room Length", text: $roomSceneViewModel.roomSceneModel.roomLengthText)
                     .padding(10)
                     .border(Color.gray, width: 1)
-                TextField("Room Width", text: $roomWidth)
+                TextField("Room Width", text: $roomSceneViewModel.roomSceneModel.roomWidthText)
                     .padding(10)
                     .border(Color.gray, width: 1)
-                TextField("Room Height", text: $roomHeight)
+                TextField("Room Height", text: $roomSceneViewModel.roomSceneModel.roomHeightText)
                     .padding(10)
                     .border(Color.gray, width: 1)
+                Button(action: {
+                    if let width = roomSceneViewModel.stringToCGFloat(value: roomSceneViewModel.roomSceneModel.roomWidthText),
+                       let height = roomSceneViewModel.stringToCGFloat(value: roomSceneViewModel.roomSceneModel.roomHeightText),
+                       let length = roomSceneViewModel.stringToCGFloat(value: roomSceneViewModel.roomSceneModel.roomLengthText) {
+                        roomSceneViewModel.updateRoomSize(width: width, height: height, length: length)
+                        sceneViewID = UUID() 
+                    } else {
+                        // Handle invalid input
+                    }
+                }) {
+                    Text("Set")
+                        .padding()
+                        .background(Color.blue)
+                        .foregroundColor(.white)
+                        .cornerRadius(8)
+                }
+                
             }
+            
         }
-        
     }
 }
 
