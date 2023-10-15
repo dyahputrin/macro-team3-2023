@@ -8,9 +8,14 @@
 import SwiftUI
 
 struct ImportButtonView: View {
+    @ObservedObject var importButton = AppState()
+    
+    @Binding var isImporting: Bool
+    //@Binding var document: MessageDocument
+    
     var body: some View {
         Button(action: {
-            
+            isImporting = true
         }) {
             RoundedRectangle(cornerRadius: 10)
                 .foregroundColor(.white)
@@ -26,5 +31,5 @@ struct ImportButtonView: View {
 }
 
 #Preview {
-    ImportButtonView()
+    ImportButtonView(isImporting: .constant(false))
 }

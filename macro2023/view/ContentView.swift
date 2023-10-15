@@ -11,7 +11,7 @@ struct ContentView: View {
     var body: some View {
         NavigationStack {
             NavigationLink(destination:
-                            CanvasView(sheetPresented: .constant(true), isSetButtonTapped: .constant(false), objectsButtonClicked: .constant(false), roomButtonClicked: .constant(false))
+                            CanvasView(objectsButtonClicked: .constant(false), roomButtonClicked: .constant(false), viewfinderButtonClicked: .constant(false), isImporting: .constant(false), isExporting: .constant(false), isSetButtonSidebarTapped: .constant(false))
             ) {
                 Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
             }

@@ -9,15 +9,16 @@ import SwiftUI
 
 struct SizePopUpView: View {
     
-    @StateObject var popUp = AppState()
+   // @ObservedObject var popUp = AppState()
     //Binding var canvasData: AppState
     
-//    @State private var width = ""
-//    @State private var length = ""
-//    @State private var wallHeight = ""
-    @Binding var width: String
-    @Binding var length: String
-    @Binding var wallHeight: String
+    @State private var width = ""
+    @State private var length = ""
+    @State private var wallHeight = ""
+    
+//    @Binding var width: String
+//    @Binding var length: String
+//    @Binding var wallHeight: String
     
     @Binding  var sheetPresented: Bool
     @Binding  var isSetButtonTapped: Bool
@@ -26,7 +27,8 @@ struct SizePopUpView: View {
         let isWidthValid = Double(width) ?? 0.0 >= 2
         let isLengthValid = Double(length) ?? 0.0 >= 2
         let isWallHeightValid = Double(wallHeight) ?? 0.0 >= 2
-        return isWidthValid && isLengthValid && isWallHeightValid
+        let areFieldsFilled = !width.isEmpty && !length.isEmpty && !wallHeight.isEmpty
+        return isWidthValid && isLengthValid && isWallHeightValid && areFieldsFilled
     }
     
     var body: some View {
@@ -40,7 +42,7 @@ struct SizePopUpView: View {
                 VStack(alignment: .leading) {
                     Text("Width").bold()
                     HStack {
-                        TextField("min. 2", text: $popUp.width)
+                        TextField("min. 2", text: $width)
                             .textFieldStyle(RoundedBorderTextFieldStyle())
                             .keyboardType(.numberPad)
                         Text("m")
@@ -49,7 +51,7 @@ struct SizePopUpView: View {
                     
                     Text("Length").bold()
                     HStack {
-                        TextField("min. 2", text: $popUp.length)
+                        TextField("min. 2", text: $length)
                             .textFieldStyle(RoundedBorderTextFieldStyle())
                             .keyboardType(.numberPad)
                         Text("m")
@@ -59,18 +61,18 @@ struct SizePopUpView: View {
                     
                     Text("Wall Height").bold()
                     HStack {
-                        TextField("min. 2", text: $popUp.wallHeight)
+                        TextField("min. 2", text: $wallHeight)
                             .textFieldStyle(RoundedBorderTextFieldStyle())
                             .keyboardType(.numberPad)
                         Text("m")
                     }
                     
                     Button(action: {
-                        popUp.isSetButtonTapped = true
-                        popUp.sheetPresented = false
-                        print("width: \(popUp.width)")
-                        print("length: \(popUp.length)")
-                        print("wall: \(popUp.wallHeight)")
+                        isSetButtonTapped = true
+                        sheetPresented = false
+                        print("width: \(width)")
+                        print("length: \(length)")
+                        print("wall: \(wallHeight)")
                         
                     }) {
                         RoundedRectangle(cornerRadius: 10)
@@ -98,5 +100,7 @@ struct SizePopUpView: View {
 }
 
 #Preview {
-    SizePopUpView(width: .constant("2"), length: .constant("2"), wallHeight: .constant("2"), sheetPresented: Binding.constant(true), isSetButtonTapped: Binding.constant(false))
+//    SizePopUpView(width: .constant("2"), length: .constant("2"), wallHeight: .constant("2"), sheetPresented: Binding.constant(true), isSetButtonTapped: Binding.constant(false))
+    
+    SizePopUpView(sheetPresented: Binding.constant(true), isSetButtonTapped: Binding.constant(false))
 }

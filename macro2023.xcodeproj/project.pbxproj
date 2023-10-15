@@ -15,6 +15,10 @@
 		97B0424B2AD7DA7200B9478D /* CanvasViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97B0424A2AD7DA7200B9478D /* CanvasViewModel.swift */; };
 		97B0424D2AD7E1B800B9478D /* ColorExt.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97B0424C2AD7E1B800B9478D /* ColorExt.swift */; };
 		97B0424F2AD7F54F00B9478D /* ImportButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97B0424E2AD7F54F00B9478D /* ImportButtonView.swift */; };
+		97B042512AD91EA100B9478D /* ToolbarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97B042502AD91EA100B9478D /* ToolbarView.swift */; };
+		97B042532AD91EBA00B9478D /* ToolbarModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97B042522AD91EBA00B9478D /* ToolbarModel.swift */; };
+		97B0425B2ADA506A00B9478D /* DocumentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97B0425A2ADA506A00B9478D /* DocumentView.swift */; };
+		97B0425D2ADC155600B9478D /* TransitionExt.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97B0425C2ADC155600B9478D /* TransitionExt.swift */; };
 		BE1AE87A2AD3D65800F586CD /* macro2023App.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE1AE8792AD3D65800F586CD /* macro2023App.swift */; };
 		BE1AE87C2AD3D65800F586CD /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE1AE87B2AD3D65800F586CD /* ContentView.swift */; };
 		BE1AE87E2AD3D65900F586CD /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BE1AE87D2AD3D65900F586CD /* Assets.xcassets */; };
@@ -30,6 +34,10 @@
 		97B0424A2AD7DA7200B9478D /* CanvasViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CanvasViewModel.swift; sourceTree = "<group>"; };
 		97B0424C2AD7E1B800B9478D /* ColorExt.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorExt.swift; sourceTree = "<group>"; };
 		97B0424E2AD7F54F00B9478D /* ImportButtonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImportButtonView.swift; sourceTree = "<group>"; };
+		97B042502AD91EA100B9478D /* ToolbarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToolbarView.swift; sourceTree = "<group>"; };
+		97B042522AD91EBA00B9478D /* ToolbarModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToolbarModel.swift; sourceTree = "<group>"; };
+		97B0425A2ADA506A00B9478D /* DocumentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocumentView.swift; sourceTree = "<group>"; };
+		97B0425C2ADC155600B9478D /* TransitionExt.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransitionExt.swift; sourceTree = "<group>"; };
 		BE1AE8762AD3D65800F586CD /* macro2023.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = macro2023.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		BE1AE8792AD3D65800F586CD /* macro2023App.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = macro2023App.swift; sourceTree = "<group>"; };
 		BE1AE87B2AD3D65800F586CD /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -58,6 +66,8 @@
 				97B042422AD7CED100B9478D /* ObjectSidebarView.swift */,
 				97B042442AD7CEE000B9478D /* RoomSidebarView.swift */,
 				97B0424E2AD7F54F00B9478D /* ImportButtonView.swift */,
+				97B042502AD91EA100B9478D /* ToolbarView.swift */,
+				97B0425A2ADA506A00B9478D /* DocumentView.swift */,
 			);
 			path = view;
 			sourceTree = "<group>";
@@ -67,6 +77,8 @@
 			children = (
 				97B0424A2AD7DA7200B9478D /* CanvasViewModel.swift */,
 				97B0424C2AD7E1B800B9478D /* ColorExt.swift */,
+				97B0425C2ADC155600B9478D /* TransitionExt.swift */,
+				97B042522AD91EBA00B9478D /* ToolbarModel.swift */,
 			);
 			path = "view-model";
 			sourceTree = "<group>";
@@ -177,11 +189,15 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				97B042512AD91EA100B9478D /* ToolbarView.swift in Sources */,
 				97B0424B2AD7DA7200B9478D /* CanvasViewModel.swift in Sources */,
 				97B0424D2AD7E1B800B9478D /* ColorExt.swift in Sources */,
 				97B042432AD7CED100B9478D /* ObjectSidebarView.swift in Sources */,
 				97B0423B2AD67D1500B9478D /* SizePopUpView.swift in Sources */,
+				97B042532AD91EBA00B9478D /* ToolbarModel.swift in Sources */,
+				97B0425B2ADA506A00B9478D /* DocumentView.swift in Sources */,
 				97B042392AD67CF600B9478D /* TopToolbarView.swift in Sources */,
+				97B0425D2ADC155600B9478D /* TransitionExt.swift in Sources */,
 				97B042452AD7CEE000B9478D /* RoomSidebarView.swift in Sources */,
 				BE1AE87C2AD3D65800F586CD /* ContentView.swift in Sources */,
 				BE1AE87A2AD3D65800F586CD /* macro2023App.swift in Sources */,
@@ -320,7 +336,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"macro2023/Preview Content\"";
-				DEVELOPMENT_TEAM = ADCCQ7XPC3;
+				DEVELOPMENT_TEAM = S8A3LN5PYH;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
@@ -349,7 +365,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"macro2023/Preview Content\"";
-				DEVELOPMENT_TEAM = ADCCQ7XPC3;
+				DEVELOPMENT_TEAM = S8A3LN5PYH;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
