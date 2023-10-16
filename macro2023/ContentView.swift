@@ -8,12 +8,32 @@
 import SwiftUI
 
 struct ContentView: View {
+    @State private var isRoomCaptureViewPresented = false
+    
     var body: some View {
         VStack {
-            Image(systemName: "globe")
-                .imageScale(.large)
-                .foregroundStyle(.tint)
-            Text("Hello, world!")
+            Button(action: {
+                isRoomCaptureViewPresented = true
+           }) {
+               Text("Open Room Capture")
+           }
+           .fullScreenCover(isPresented: $isRoomCaptureViewPresented) {
+               ZStack {
+                   OnboardingViewControllerWrapper()
+                   VStack {
+                       HStack {
+                           Button("Cancel") {
+                               isRoomCaptureViewPresented = false
+                           }.buttonStyle(.automatic)
+                           
+                           Spacer()
+                       }
+                       .padding()
+                       
+                       Spacer()
+                   }
+               }
+           }
         }
         .padding()
     }

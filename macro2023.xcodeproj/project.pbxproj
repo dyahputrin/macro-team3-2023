@@ -7,6 +7,12 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		948903E72ADD32BA0043BAE9 /* OnboardingViewControllerWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 948903E12ADD32BA0043BAE9 /* OnboardingViewControllerWrapper.swift */; };
+		948903E82ADD32BA0043BAE9 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 948903E22ADD32BA0043BAE9 /* LaunchScreen.storyboard */; };
+		948903E92ADD32BA0043BAE9 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 948903E32ADD32BA0043BAE9 /* Main.storyboard */; };
+		948903EA2ADD32BA0043BAE9 /* OnboardingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 948903E42ADD32BA0043BAE9 /* OnboardingViewController.swift */; };
+		948903EB2ADD32BA0043BAE9 /* UnsupportedDevice.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 948903E52ADD32BA0043BAE9 /* UnsupportedDevice.storyboard */; };
+		948903EC2ADD32BA0043BAE9 /* RoomCaptureViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 948903E62ADD32BA0043BAE9 /* RoomCaptureViewController.swift */; };
 		BE1AE87A2AD3D65800F586CD /* macro2023App.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE1AE8792AD3D65800F586CD /* macro2023App.swift */; };
 		BE1AE87C2AD3D65800F586CD /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE1AE87B2AD3D65800F586CD /* ContentView.swift */; };
 		BE1AE87E2AD3D65900F586CD /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BE1AE87D2AD3D65900F586CD /* Assets.xcassets */; };
@@ -14,6 +20,12 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		948903E12ADD32BA0043BAE9 /* OnboardingViewControllerWrapper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OnboardingViewControllerWrapper.swift; sourceTree = "<group>"; };
+		948903E22ADD32BA0043BAE9 /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
+		948903E32ADD32BA0043BAE9 /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
+		948903E42ADD32BA0043BAE9 /* OnboardingViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OnboardingViewController.swift; sourceTree = "<group>"; };
+		948903E52ADD32BA0043BAE9 /* UnsupportedDevice.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = UnsupportedDevice.storyboard; sourceTree = "<group>"; };
+		948903E62ADD32BA0043BAE9 /* RoomCaptureViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RoomCaptureViewController.swift; sourceTree = "<group>"; };
 		BE1AE8762AD3D65800F586CD /* macro2023.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = macro2023.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		BE1AE8792AD3D65800F586CD /* macro2023App.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = macro2023App.swift; sourceTree = "<group>"; };
 		BE1AE87B2AD3D65800F586CD /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -32,6 +44,19 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		948903E02ADD32BA0043BAE9 /* RoomPlan */ = {
+			isa = PBXGroup;
+			children = (
+				948903E12ADD32BA0043BAE9 /* OnboardingViewControllerWrapper.swift */,
+				948903E22ADD32BA0043BAE9 /* LaunchScreen.storyboard */,
+				948903E32ADD32BA0043BAE9 /* Main.storyboard */,
+				948903E42ADD32BA0043BAE9 /* OnboardingViewController.swift */,
+				948903E52ADD32BA0043BAE9 /* UnsupportedDevice.storyboard */,
+				948903E62ADD32BA0043BAE9 /* RoomCaptureViewController.swift */,
+			);
+			path = RoomPlan;
+			sourceTree = "<group>";
+		};
 		BE1AE86D2AD3D65800F586CD = {
 			isa = PBXGroup;
 			children = (
@@ -53,6 +78,7 @@
 			children = (
 				BE1AE8792AD3D65800F586CD /* macro2023App.swift */,
 				BE1AE87B2AD3D65800F586CD /* ContentView.swift */,
+				948903E02ADD32BA0043BAE9 /* RoomPlan */,
 				BE1AE87D2AD3D65900F586CD /* Assets.xcassets */,
 				BE1AE87F2AD3D65900F586CD /* Preview Content */,
 			);
@@ -125,8 +151,11 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				948903EB2ADD32BA0043BAE9 /* UnsupportedDevice.storyboard in Resources */,
+				948903E82ADD32BA0043BAE9 /* LaunchScreen.storyboard in Resources */,
 				BE1AE8812AD3D65900F586CD /* Preview Assets.xcassets in Resources */,
 				BE1AE87E2AD3D65900F586CD /* Assets.xcassets in Resources */,
+				948903E92ADD32BA0043BAE9 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -137,8 +166,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				948903E72ADD32BA0043BAE9 /* OnboardingViewControllerWrapper.swift in Sources */,
 				BE1AE87C2AD3D65800F586CD /* ContentView.swift in Sources */,
 				BE1AE87A2AD3D65800F586CD /* macro2023App.swift in Sources */,
+				948903EA2ADD32BA0043BAE9 /* OnboardingViewController.swift in Sources */,
+				948903EC2ADD32BA0043BAE9 /* RoomCaptureViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -272,9 +304,10 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"macro2023/Preview Content\"";
-				DEVELOPMENT_TEAM = ADCCQ7XPC3;
+				DEVELOPMENT_TEAM = 4QQ5D4534V;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSCameraUsageDescription = "Some features needed camera to function properly";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -301,9 +334,10 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"macro2023/Preview Content\"";
-				DEVELOPMENT_TEAM = ADCCQ7XPC3;
+				DEVELOPMENT_TEAM = 4QQ5D4534V;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSCameraUsageDescription = "Some features needed camera to function properly";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
