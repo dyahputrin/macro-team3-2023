@@ -17,7 +17,6 @@ class RoomSceneViewModel: ObservableObject {
     
     // function to make the scene
     func makeScene(width: CGFloat, height: CGFloat, length: CGFloat) -> SCNScene? {
-        print("MAKE SCENE")
         let scene = SCNScene(named: "RoomScene.scn")
         let floorNode = SCNNode()
         let wall1Node = SCNNode()

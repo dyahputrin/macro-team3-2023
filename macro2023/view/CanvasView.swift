@@ -29,6 +29,8 @@ struct CanvasView: View {
     @State private var newProjectName = ""
     @State private var renameClicked = false
     
+    @State private var isRoomCaptureViewPresented = false
+    
     var body: some View {
         
         GeometryReader { geometry in
@@ -62,7 +64,9 @@ struct CanvasView: View {
                         Button(action: /*@START_MENU_TOKEN@*/{}/*@END_MENU_TOKEN@*/, label: {
                             Text("Scan objects")
                         })
-                        Button(action: /*@START_MENU_TOKEN@*/{}/*@END_MENU_TOKEN@*/, label: {
+                        Button(action: {
+                            self.isRoomCaptureViewPresented = true
+                        }, label: {
                             Text("Scan room")
                         })
                     } label: {
@@ -111,6 +115,23 @@ struct CanvasView: View {
                         title: Text("\(projectName) Saved"),
                         dismissButton: .default(Text("OK"))
                     )
+                }
+            }
+        }
+        .fullScreenCover(isPresented: $isRoomCaptureViewPresented) {
+            ZStack {
+                OnboardingViewControllerWrapper()
+                VStack {
+                    HStack {
+                        Button("Cancel") {
+                            isRoomCaptureViewPresented = false
+                        }.buttonStyle(.automatic)
+                        
+                        Spacer()
+                    }
+                    .padding()
+                    
+                    Spacer()
                 }
             }
         }
