@@ -15,7 +15,10 @@
 		210C80272AD541E900E01229 /* v2wall4.usdz in Resources */ = {isa = PBXBuildFile; fileRef = 210C80222AD541E900E01229 /* v2wall4.usdz */; };
 		210C80282AD541E900E01229 /* v2floor.usdz in Resources */ = {isa = PBXBuildFile; fileRef = 210C80232AD541E900E01229 /* v2floor.usdz */; };
 		2172DE722AD4000500454B87 /* CanvasView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2172DE712AD4000500454B87 /* CanvasView.swift */; };
-		21C90BFA2AD681580003D517 /* InputScaleCanvas.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21C90BF92AD681580003D517 /* InputScaleCanvas.swift */; };
+		21C90C192AD694880003D517 /* CanvasData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21C90C182AD694880003D517 /* CanvasData.swift */; };
+		21C90C1B2AD6956C0003D517 /* CanvasViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21C90C1A2AD6956C0003D517 /* CanvasViewModel.swift */; };
+		21C90C412AD6A15B0003D517 /* BackRoot.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21C90C402AD6A15B0003D517 /* BackRoot.swift */; };
+		21C90C432AD7CC810003D517 /* ContentViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21C90C422AD7CC810003D517 /* ContentViewModel.swift */; };
 		BE1AE87A2AD3D65800F586CD /* macro2023App.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE1AE8792AD3D65800F586CD /* macro2023App.swift */; };
 		BE1AE87C2AD3D65800F586CD /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE1AE87B2AD3D65800F586CD /* ContentView.swift */; };
 		BE1AE87E2AD3D65900F586CD /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BE1AE87D2AD3D65900F586CD /* Assets.xcassets */; };
@@ -31,7 +34,10 @@
 		210C80222AD541E900E01229 /* v2wall4.usdz */ = {isa = PBXFileReference; lastKnownFileType = file.usdz; path = v2wall4.usdz; sourceTree = "<group>"; };
 		210C80232AD541E900E01229 /* v2floor.usdz */ = {isa = PBXFileReference; lastKnownFileType = file.usdz; path = v2floor.usdz; sourceTree = "<group>"; };
 		2172DE712AD4000500454B87 /* CanvasView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CanvasView.swift; sourceTree = "<group>"; };
-		21C90BF92AD681580003D517 /* InputScaleCanvas.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputScaleCanvas.swift; sourceTree = "<group>"; };
+		21C90C182AD694880003D517 /* CanvasData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CanvasData.swift; sourceTree = "<group>"; };
+		21C90C1A2AD6956C0003D517 /* CanvasViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CanvasViewModel.swift; sourceTree = "<group>"; };
+		21C90C402AD6A15B0003D517 /* BackRoot.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackRoot.swift; sourceTree = "<group>"; };
+		21C90C422AD7CC810003D517 /* ContentViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentViewModel.swift; sourceTree = "<group>"; };
 		BE1AE8762AD3D65800F586CD /* macro2023.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = macro2023.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		BE1AE8792AD3D65800F586CD /* macro2023App.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = macro2023App.swift; sourceTree = "<group>"; };
 		BE1AE87B2AD3D65800F586CD /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -53,11 +59,7 @@
 		210C7FEB2AD52BED00E01229 /* Object */ = {
 			isa = PBXGroup;
 			children = (
-				210C80232AD541E900E01229 /* v2floor.usdz */,
-				210C80212AD541E900E01229 /* v2wall1.usdz */,
-				210C80202AD541E900E01229 /* v2wall2.usdz */,
-				210C801F2AD541E900E01229 /* v2wall3.usdz */,
-				210C80222AD541E900E01229 /* v2wall4.usdz */,
+				21C90BFB2AD685F60003D517 /* 3D Object */,
 			);
 			path = Object;
 			sourceTree = "<group>";
@@ -80,12 +82,41 @@
 			path = View;
 			sourceTree = "<group>";
 		};
-		2172DE742AD40DF000454B87 /* Modal */ = {
+		21C90BFB2AD685F60003D517 /* 3D Object */ = {
 			isa = PBXGroup;
 			children = (
-				21C90BF92AD681580003D517 /* InputScaleCanvas.swift */,
+				210C80232AD541E900E01229 /* v2floor.usdz */,
+				210C80212AD541E900E01229 /* v2wall1.usdz */,
+				210C80202AD541E900E01229 /* v2wall2.usdz */,
+				210C801F2AD541E900E01229 /* v2wall3.usdz */,
+				210C80222AD541E900E01229 /* v2wall4.usdz */,
 			);
-			path = Modal;
+			path = "3D Object";
+			sourceTree = "<group>";
+		};
+		21C90C162AD694010003D517 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				21C90C422AD7CC810003D517 /* ContentViewModel.swift */,
+				21C90C1A2AD6956C0003D517 /* CanvasViewModel.swift */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		21C90C172AD694090003D517 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				21C90C182AD694880003D517 /* CanvasData.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		21C90C3F2AD6A1440003D517 /* Service */ = {
+			isa = PBXGroup;
+			children = (
+				21C90C402AD6A15B0003D517 /* BackRoot.swift */,
+			);
+			path = Service;
 			sourceTree = "<group>";
 		};
 		BE1AE86D2AD3D65800F586CD = {
@@ -108,9 +139,11 @@
 			isa = PBXGroup;
 			children = (
 				BE1AE8792AD3D65800F586CD /* macro2023App.swift */,
-				2172DE742AD40DF000454B87 /* Modal */,
-				210C7FF32AD531FB00E01229 /* Data */,
+				21C90C3F2AD6A1440003D517 /* Service */,
+				21C90C172AD694090003D517 /* Model */,
+				21C90C162AD694010003D517 /* ViewModel */,
 				2172DE732AD40DDD00454B87 /* View */,
+				210C7FF32AD531FB00E01229 /* Data */,
 				210C7FEB2AD52BED00E01229 /* Object */,
 				BE1AE87D2AD3D65900F586CD /* Assets.xcassets */,
 				BE1AE87F2AD3D65900F586CD /* Preview Content */,
@@ -201,12 +234,15 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				21C90C1B2AD6956C0003D517 /* CanvasViewModel.swift in Sources */,
+				21C90C192AD694880003D517 /* CanvasData.swift in Sources */,
 				BE1AE87C2AD3D65800F586CD /* ContentView.swift in Sources */,
-				21C90BFA2AD681580003D517 /* InputScaleCanvas.swift in Sources */,
+				21C90C432AD7CC810003D517 /* ContentViewModel.swift in Sources */,
 				BE1AE87A2AD3D65800F586CD /* macro2023App.swift in Sources */,
 				210C7FF22AD531C200E01229 /* Model.xcdatamodeld in Sources */,
 				210C80142AD5343400E01229 /* Persistence.swift in Sources */,
 				2172DE722AD4000500454B87 /* CanvasView.swift in Sources */,
+				21C90C412AD6A15B0003D517 /* BackRoot.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -355,9 +391,11 @@
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.dyahputrin.macro2023;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 2;
 			};
 			name = Debug;
 		};
@@ -384,9 +422,11 @@
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.dyahputrin.macro2023;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 2;
 			};
 			name = Release;
 		};
