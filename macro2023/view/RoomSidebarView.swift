@@ -8,17 +8,17 @@
 import SwiftUI
 
 struct RoomSidebarView: View {
-   // @ObservedObject var roomSidebar = AppState()
     
     @State private var isSetButtonSidebarTapped = false 
     
     @State private var currentSection = "Room Size"
     var section = ["Room Size", "Imports"]
     
-    @Binding var width: String
-    @Binding var length: String
-    @Binding var wallHeight: String
-    //@Binding var isSetButtonTapped: Bool
+    @Binding var roomWidthText: String
+    @Binding var roomLengthText: String
+    @Binding var roomHeightText: String
+    @Binding var sceneViewID: UUID
+    var roomSceneViewModel: RoomSceneViewModel
     
     var body: some View {
         GeometryReader { geometry in
@@ -40,7 +40,7 @@ struct RoomSidebarView: View {
                                     VStack(alignment: .leading) {
                                         Text("Width").bold()
                                         HStack {
-                                            TextField("min. 2", text: $width)
+                                            TextField("min. 2", text: $roomWidthText)
                                                 .textFieldStyle(RoundedBorderTextFieldStyle())
                                                 .keyboardType(.numberPad)
                                             Text("m")
@@ -49,7 +49,7 @@ struct RoomSidebarView: View {
                                         
                                         Text("Length").bold()
                                         HStack {
-                                            TextField("min. 2", text: $length)
+                                            TextField("min. 2", text: $roomLengthText)
                                                 .textFieldStyle(RoundedBorderTextFieldStyle())
                                                 .keyboardType(.numberPad)
                                             Text("m")
@@ -59,7 +59,7 @@ struct RoomSidebarView: View {
                                         
                                         Text("Wall Height").bold()
                                         HStack {
-                                            TextField("min. 2", text: $wallHeight)
+                                            TextField("min. 2", text: $roomHeightText)
                                                 .textFieldStyle(RoundedBorderTextFieldStyle())
                                                 .keyboardType(.numberPad)
                                             Text("m")
@@ -67,9 +67,14 @@ struct RoomSidebarView: View {
                                         
                                         Button(action: {
                                             isSetButtonSidebarTapped = true
-                                            print("width: \(width)")
-                                            print("length: \(length)")
-                                            print("wall: \(wallHeight)")
+                                            if let width = roomSceneViewModel.stringToCGFloat(value: roomWidthText),
+                                               let height = roomSceneViewModel.stringToCGFloat(value: roomHeightText),
+                                               let length = roomSceneViewModel.stringToCGFloat(value: roomLengthText) {
+                                                roomSceneViewModel.updateRoomSize(width: width, height: height, length: length)
+                                                sceneViewID = UUID()
+                                            } else {
+                                                // Handle invalid input
+                                            }
                                             
                                         }) {
                                             RoundedRectangle(cornerRadius: 10)
@@ -122,5 +127,5 @@ struct RoomSidebarView: View {
 
 
 #Preview {
-    RoomSidebarView(width: .constant("2"), length: .constant("2"), wallHeight: .constant("2"))
+    RoomSidebarView(roomWidthText:.constant("2"), roomLengthText: .constant("2"), roomHeightText: .constant("2"), sceneViewID: .constant(UUID()), roomSceneViewModel: RoomSceneViewModel(roomSceneModel: RoomSceneModel(roomWidth: 0, roomHeight: 0, roomLength: 0)))
 }

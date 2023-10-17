@@ -17,9 +17,6 @@ class RoomSceneModel: ObservableObject {
     @Published var roomWidthText: String
     @Published var roomLengthText: String
     
-//    @Published var scene: SCNScene
-
-    
     init(roomWidth: CGFloat, roomHeight: CGFloat, roomLength: CGFloat) {
         self.roomWidth = roomWidth
         self.roomHeight = roomHeight
@@ -27,7 +24,6 @@ class RoomSceneModel: ObservableObject {
         self.roomWidthText = ""
         self.roomHeightText = ""
         self.roomLengthText = ""
-//        self.scene = SCNScene(named: "RoomScene.scn")!
         print("Initial Room Model --> width: \(self.roomWidth); height: \(self.roomHeight); length: \(self.roomLength)")
     }
 }

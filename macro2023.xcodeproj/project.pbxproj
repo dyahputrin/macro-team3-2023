@@ -23,18 +23,16 @@
 		BE1AE87C2AD3D65800F586CD /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE1AE87B2AD3D65800F586CD /* ContentView.swift */; };
 		BE1AE87E2AD3D65900F586CD /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BE1AE87D2AD3D65900F586CD /* Assets.xcassets */; };
 		BE1AE8812AD3D65900F586CD /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BE1AE8802AD3D65900F586CD /* Preview Assets.xcassets */; };
-		BE7315FA2AD7F86400F4CDE8 /* OfficeTable.usdz in Resources */ = {isa = PBXBuildFile; fileRef = BE7315F92AD7F86400F4CDE8 /* OfficeTable.usdz */; };
-		BEA1C1EC2AD54998000F338D /* floor.usdz in Resources */ = {isa = PBXBuildFile; fileRef = BEA1C1EB2AD54998000F338D /* floor.usdz */; };
-		BEA1C1EE2AD54F22000F338D /* v2floor.usdz in Resources */ = {isa = PBXBuildFile; fileRef = BEA1C1ED2AD54F22000F338D /* v2floor.usdz */; };
-		BEA1C1F32AD54F50000F338D /* v2wall3.usdz in Resources */ = {isa = PBXBuildFile; fileRef = BEA1C1EF2AD54F50000F338D /* v2wall3.usdz */; };
-		BEA1C1F42AD54F50000F338D /* v2wall2.usdz in Resources */ = {isa = PBXBuildFile; fileRef = BEA1C1F02AD54F50000F338D /* v2wall2.usdz */; };
-		BEA1C1F52AD54F50000F338D /* v2wall1.usdz in Resources */ = {isa = PBXBuildFile; fileRef = BEA1C1F12AD54F50000F338D /* v2wall1.usdz */; };
-		BEA1C1F62AD54F50000F338D /* v2wall4.usdz in Resources */ = {isa = PBXBuildFile; fileRef = BEA1C1F22AD54F50000F338D /* v2wall4.usdz */; };
+		BE7DA7AB2ADE61E000686BF4 /* v2floor.usdz in Resources */ = {isa = PBXBuildFile; fileRef = BE394D8C2ADE5DD700836F02 /* v2floor.usdz */; };
+		BE7DA7AC2ADE61E000686BF4 /* v2wall1.usdz in Resources */ = {isa = PBXBuildFile; fileRef = BE394D892ADE5DCF00836F02 /* v2wall1.usdz */; };
+		BE7DA7AD2ADE61E000686BF4 /* v2wall2.usdz in Resources */ = {isa = PBXBuildFile; fileRef = BE394D8F2ADE5DD700836F02 /* v2wall2.usdz */; };
+		BE7DA7AE2ADE61E000686BF4 /* OfficeTable.usdz in Resources */ = {isa = PBXBuildFile; fileRef = BE394D8B2ADE5DD700836F02 /* OfficeTable.usdz */; };
+		BE7DA7AF2ADE61E000686BF4 /* v2wall3.usdz in Resources */ = {isa = PBXBuildFile; fileRef = BE394D8A2ADE5DD600836F02 /* v2wall3.usdz */; };
+		BE7DA7B02ADE61E000686BF4 /* v2wall4.usdz in Resources */ = {isa = PBXBuildFile; fileRef = BE394D8D2ADE5DD700836F02 /* v2wall4.usdz */; };
 		BEB2B5162AD4E73300976B0E /* RoomSceneView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEB2B5152AD4E73300976B0E /* RoomSceneView.swift */; };
 		BEB2B5182AD4E74A00976B0E /* RoomScene.scn in Resources */ = {isa = PBXBuildFile; fileRef = BEB2B5172AD4E74A00976B0E /* RoomScene.scn */; };
 		BEB2B51A2AD4E87400976B0E /* RoomSceneModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEB2B5192AD4E87400976B0E /* RoomSceneModel.swift */; };
 		BEB2B51C2AD4EC0E00976B0E /* RoomSceneViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEB2B51B2AD4EC0E00976B0E /* RoomSceneViewModel.swift */; };
-		BEDBF6AA2AD3FC76009D2EC0 /* CanvasView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEDBF6A92AD3FC76009D2EC0 /* CanvasView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -55,18 +53,16 @@
 		BE1AE87B2AD3D65800F586CD /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		BE1AE87D2AD3D65900F586CD /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		BE1AE8802AD3D65900F586CD /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
-		BE7315F92AD7F86400F4CDE8 /* OfficeTable.usdz */ = {isa = PBXFileReference; lastKnownFileType = file.usdz; name = OfficeTable.usdz; path = ../../../../../../Downloads/OfficeTable.usdz; sourceTree = "<group>"; };
-		BEA1C1EB2AD54998000F338D /* floor.usdz */ = {isa = PBXFileReference; lastKnownFileType = file.usdz; name = floor.usdz; path = ../../../../../../Downloads/floor.usdz; sourceTree = "<group>"; };
-		BEA1C1ED2AD54F22000F338D /* v2floor.usdz */ = {isa = PBXFileReference; lastKnownFileType = file.usdz; name = v2floor.usdz; path = ../../../../../../Downloads/v2floor.usdz; sourceTree = "<group>"; };
-		BEA1C1EF2AD54F50000F338D /* v2wall3.usdz */ = {isa = PBXFileReference; lastKnownFileType = file.usdz; name = v2wall3.usdz; path = ../../../../../../Downloads/v2wall3.usdz; sourceTree = "<group>"; };
-		BEA1C1F02AD54F50000F338D /* v2wall2.usdz */ = {isa = PBXFileReference; lastKnownFileType = file.usdz; name = v2wall2.usdz; path = ../../../../../../Downloads/v2wall2.usdz; sourceTree = "<group>"; };
-		BEA1C1F12AD54F50000F338D /* v2wall1.usdz */ = {isa = PBXFileReference; lastKnownFileType = file.usdz; name = v2wall1.usdz; path = ../../../../../../Downloads/v2wall1.usdz; sourceTree = "<group>"; };
-		BEA1C1F22AD54F50000F338D /* v2wall4.usdz */ = {isa = PBXFileReference; lastKnownFileType = file.usdz; name = v2wall4.usdz; path = ../../../../../../Downloads/v2wall4.usdz; sourceTree = "<group>"; };
+		BE394D892ADE5DCF00836F02 /* v2wall1.usdz */ = {isa = PBXFileReference; lastKnownFileType = file.usdz; path = v2wall1.usdz; sourceTree = "<group>"; };
+		BE394D8A2ADE5DD600836F02 /* v2wall3.usdz */ = {isa = PBXFileReference; lastKnownFileType = file.usdz; path = v2wall3.usdz; sourceTree = "<group>"; };
+		BE394D8B2ADE5DD700836F02 /* OfficeTable.usdz */ = {isa = PBXFileReference; lastKnownFileType = file.usdz; path = OfficeTable.usdz; sourceTree = "<group>"; };
+		BE394D8C2ADE5DD700836F02 /* v2floor.usdz */ = {isa = PBXFileReference; lastKnownFileType = file.usdz; path = v2floor.usdz; sourceTree = "<group>"; };
+		BE394D8D2ADE5DD700836F02 /* v2wall4.usdz */ = {isa = PBXFileReference; lastKnownFileType = file.usdz; path = v2wall4.usdz; sourceTree = "<group>"; };
+		BE394D8F2ADE5DD700836F02 /* v2wall2.usdz */ = {isa = PBXFileReference; lastKnownFileType = file.usdz; path = v2wall2.usdz; sourceTree = "<group>"; };
 		BEB2B5152AD4E73300976B0E /* RoomSceneView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoomSceneView.swift; sourceTree = "<group>"; };
 		BEB2B5172AD4E74A00976B0E /* RoomScene.scn */ = {isa = PBXFileReference; lastKnownFileType = file.bplist; path = RoomScene.scn; sourceTree = "<group>"; };
 		BEB2B5192AD4E87400976B0E /* RoomSceneModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoomSceneModel.swift; sourceTree = "<group>"; };
 		BEB2B51B2AD4EC0E00976B0E /* RoomSceneViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoomSceneViewModel.swift; sourceTree = "<group>"; };
-		BEDBF6A92AD3FC76009D2EC0 /* CanvasView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CanvasView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -126,8 +122,8 @@
 		BE1AE8782AD3D65800F586CD /* macro2023 */ = {
 			isa = PBXGroup;
 			children = (
-				BEDBF6A82AD3FC59009D2EC0 /* BuildRoom */,
 				BE1AE8792AD3D65800F586CD /* macro2023App.swift */,
+				BEDBF6A82AD3FC59009D2EC0 /* BuildRoom */,
 				97B042492AD7D96F00B9478D /* view-model */,
 				97B042352AD67CD300B9478D /* view */,
 				BE1AE87D2AD3D65900F586CD /* Assets.xcassets */,
@@ -144,6 +140,19 @@
 			path = "Preview Content";
 			sourceTree = "<group>";
 		};
+		BE394D882ADE5DC400836F02 /* Objects */ = {
+			isa = PBXGroup;
+			children = (
+				BE394D8C2ADE5DD700836F02 /* v2floor.usdz */,
+				BE394D892ADE5DCF00836F02 /* v2wall1.usdz */,
+				BE394D8F2ADE5DD700836F02 /* v2wall2.usdz */,
+				BE394D8B2ADE5DD700836F02 /* OfficeTable.usdz */,
+				BE394D8A2ADE5DD600836F02 /* v2wall3.usdz */,
+				BE394D8D2ADE5DD700836F02 /* v2wall4.usdz */,
+			);
+			path = Objects;
+			sourceTree = "<group>";
+		};
 		BEDBF6A82AD3FC59009D2EC0 /* BuildRoom */ = {
 			isa = PBXGroup;
 			children = (
@@ -151,14 +160,7 @@
 				BEB2B51B2AD4EC0E00976B0E /* RoomSceneViewModel.swift */,
 				BEB2B5192AD4E87400976B0E /* RoomSceneModel.swift */,
 				BEB2B5172AD4E74A00976B0E /* RoomScene.scn */,
-				BEDBF6A92AD3FC76009D2EC0 /* CanvasView.swift */,
-				BEA1C1F12AD54F50000F338D /* v2wall1.usdz */,
-				BEA1C1F02AD54F50000F338D /* v2wall2.usdz */,
-				BE7315F92AD7F86400F4CDE8 /* OfficeTable.usdz */,
-				BEA1C1EF2AD54F50000F338D /* v2wall3.usdz */,
-				BEA1C1F22AD54F50000F338D /* v2wall4.usdz */,
-				BEA1C1ED2AD54F22000F338D /* v2floor.usdz */,
-				BEA1C1EB2AD54998000F338D /* floor.usdz */,
+				BE394D882ADE5DC400836F02 /* Objects */,
 			);
 			path = BuildRoom;
 			sourceTree = "<group>";
@@ -221,15 +223,14 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				BEA1C1EC2AD54998000F338D /* floor.usdz in Resources */,
-				BEA1C1F52AD54F50000F338D /* v2wall1.usdz in Resources */,
-				BEA1C1F32AD54F50000F338D /* v2wall3.usdz in Resources */,
+				BE7DA7AB2ADE61E000686BF4 /* v2floor.usdz in Resources */,
+				BE7DA7AC2ADE61E000686BF4 /* v2wall1.usdz in Resources */,
+				BE7DA7AD2ADE61E000686BF4 /* v2wall2.usdz in Resources */,
+				BE7DA7AE2ADE61E000686BF4 /* OfficeTable.usdz in Resources */,
+				BE7DA7AF2ADE61E000686BF4 /* v2wall3.usdz in Resources */,
+				BE7DA7B02ADE61E000686BF4 /* v2wall4.usdz in Resources */,
 				BE1AE8812AD3D65900F586CD /* Preview Assets.xcassets in Resources */,
-				BEA1C1F42AD54F50000F338D /* v2wall2.usdz in Resources */,
 				BEB2B5182AD4E74A00976B0E /* RoomScene.scn in Resources */,
-				BEA1C1EE2AD54F22000F338D /* v2floor.usdz in Resources */,
-				BEA1C1F62AD54F50000F338D /* v2wall4.usdz in Resources */,
-				BE7315FA2AD7F86400F4CDE8 /* OfficeTable.usdz in Resources */,
 				BE1AE87E2AD3D65900F586CD /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -246,7 +247,6 @@
 				BEB2B5162AD4E73300976B0E /* RoomSceneView.swift in Sources */,
 				BE1AE87C2AD3D65800F586CD /* ContentView.swift in Sources */,
 				BE1AE87A2AD3D65800F586CD /* macro2023App.swift in Sources */,
-				BEDBF6AA2AD3FC76009D2EC0 /* CanvasView.swift in Sources */,
 				97B042512AD91EA100B9478D /* ToolbarView.swift in Sources */,
 				97B0424B2AD7DA7200B9478D /* CanvasViewModel.swift in Sources */,
 				97B0424D2AD7E1B800B9478D /* ColorExt.swift in Sources */,
@@ -392,7 +392,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"macro2023/Preview Content\"";
-				DEVELOPMENT_TEAM = S8A3LN5PYH;
+				DEVELOPMENT_TEAM = ADCCQ7XPC3;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
@@ -421,7 +421,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"macro2023/Preview Content\"";
-				DEVELOPMENT_TEAM = S8A3LN5PYH;
+				DEVELOPMENT_TEAM = ADCCQ7XPC3;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;

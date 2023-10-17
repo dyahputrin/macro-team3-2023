@@ -16,17 +16,12 @@ struct TopToolbarView: View {
     @State private var showSaveAlert = false
     @State private var renameClicked = false
     @State private var newProjectName = ""
-
     
-    //@ObservedObject var toolbarData = AppState()
-    
-//    @Binding var projectName: String
-//    @Binding var roomButtonClicked: Bool
-//    @Binding var objectsButtonClicked: Bool
-//    @Binding var viewfinderButtonClicked: Bool
-    
-    //@Binding var isExporting: Bool
-    //@Binding var document: MessageDocument
+    @Binding var roomWidthText: String
+    @Binding var roomLengthText: String
+    @Binding var roomHeightText: String
+    @Binding var sceneViewID: UUID
+    var roomSceneViewModel: RoomSceneViewModel
     
     var body: some View {
         if objectsButtonClicked == true {
@@ -34,8 +29,9 @@ struct TopToolbarView: View {
                 .transition(.moveAndFade)
             
         } else if roomButtonClicked == true {
-            RoomSidebarView(width: .constant("2"), length: .constant("2"), wallHeight: .constant("2"))
+            RoomSidebarView(roomWidthText: $roomWidthText, roomLengthText: $roomLengthText, roomHeightText: $roomHeightText,  sceneViewID: $sceneViewID, roomSceneViewModel: roomSceneViewModel)
                 .transition(.moveAndFade)
+                .zIndex(1)
         }
         Text(projectName)
             .toolbarRole(.editor)
@@ -130,23 +126,5 @@ struct TopToolbarView: View {
 }
 
 #Preview {
-//    TopToolbarView(projectName: .constant("New Project"), roomButtonClicked: .constant(false), objectsButtonClicked: .constant(false), viewfinderButtonClicked: .constant(false), isExporting: .constant(false))
-    TopToolbarView()
+    TopToolbarView(roomWidthText: .constant("2"), roomLengthText: .constant("2"), roomHeightText: .constant("2"), sceneViewID: .constant(UUID()), roomSceneViewModel: RoomSceneViewModel(roomSceneModel: RoomSceneModel(roomWidth: 0, roomHeight: 0, roomLength: 0)))
 }
-
-//
-//VStack {
-//                if isEditingTitle {
-//                    TextField("Project Name", text: $projectName)
-//                        .textFieldStyle(RoundedBorderTextFieldStyle())
-//                        .padding(.horizontal)
-//                } else {
-//                    Text(projectName)
-//                        .font(.title)
-//                        .onTapGesture {
-//                            isEditingTitle = true
-//                        }
-//                }
-//
-//                Spacer()
-//            }

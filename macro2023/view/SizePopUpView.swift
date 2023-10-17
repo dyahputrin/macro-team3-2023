@@ -9,25 +9,20 @@ import SwiftUI
 
 struct SizePopUpView: View {
     
-   // @ObservedObject var popUp = AppState()
-    //Binding var canvasData: AppState
-    
-    @State private var width = ""
-    @State private var length = ""
-    @State private var wallHeight = ""
-    
-//    @Binding var width: String
-//    @Binding var length: String
-//    @Binding var wallHeight: String
-    
     @Binding  var sheetPresented: Bool
     @Binding  var isSetButtonTapped: Bool
     
+    var roomSceneViewModel: RoomSceneViewModel
+    @Binding var sceneViewID: UUID
+    @Binding var roomWidthText: String
+    @Binding var roomLengthText: String
+    @Binding var roomHeightText: String
+    
     var isSetButtonEnabled: Bool {
-        let isWidthValid = Double(width) ?? 0.0 >= 2
-        let isLengthValid = Double(length) ?? 0.0 >= 2
-        let isWallHeightValid = Double(wallHeight) ?? 0.0 >= 2
-        let areFieldsFilled = !width.isEmpty && !length.isEmpty && !wallHeight.isEmpty
+        let isWidthValid = Double(roomWidthText) ?? 0.0 >= 2
+        let isLengthValid = Double(roomLengthText) ?? 0.0 >= 2
+        let isWallHeightValid = Double(roomHeightText) ?? 0.0 >= 2
+        let areFieldsFilled = !roomWidthText.isEmpty && !roomLengthText.isEmpty && !roomHeightText.isEmpty
         return isWidthValid && isLengthValid && isWallHeightValid && areFieldsFilled
     }
     
@@ -42,7 +37,7 @@ struct SizePopUpView: View {
                 VStack(alignment: .leading) {
                     Text("Width").bold()
                     HStack {
-                        TextField("min. 2", text: $width)
+                        TextField("min. 2", text: $roomWidthText)
                             .textFieldStyle(RoundedBorderTextFieldStyle())
                             .keyboardType(.numberPad)
                         Text("m")
@@ -51,7 +46,7 @@ struct SizePopUpView: View {
                     
                     Text("Length").bold()
                     HStack {
-                        TextField("min. 2", text: $length)
+                        TextField("min. 2", text: $roomLengthText)
                             .textFieldStyle(RoundedBorderTextFieldStyle())
                             .keyboardType(.numberPad)
                         Text("m")
@@ -61,7 +56,7 @@ struct SizePopUpView: View {
                     
                     Text("Wall Height").bold()
                     HStack {
-                        TextField("min. 2", text: $wallHeight)
+                        TextField("min. 2", text: $roomHeightText)
                             .textFieldStyle(RoundedBorderTextFieldStyle())
                             .keyboardType(.numberPad)
                         Text("m")
@@ -70,9 +65,18 @@ struct SizePopUpView: View {
                     Button(action: {
                         isSetButtonTapped = true
                         sheetPresented = false
-                        print("width: \(width)")
-                        print("length: \(length)")
-                        print("wall: \(wallHeight)")
+                        print("width: \(roomWidthText)")
+                        print("length: \(roomLengthText)")
+                        print("wall: \(roomHeightText)")
+                        
+                        if let width = roomSceneViewModel.stringToCGFloat(value: roomWidthText),
+                           let height = roomSceneViewModel.stringToCGFloat(value: roomHeightText),
+                           let length = roomSceneViewModel.stringToCGFloat(value: roomLengthText) {
+                            roomSceneViewModel.updateRoomSize(width: width, height: height, length: length)
+                            sceneViewID = UUID()
+                        } else {
+                            // Handle invalid input
+                        }
                         
                     }) {
                         RoundedRectangle(cornerRadius: 10)
@@ -100,7 +104,13 @@ struct SizePopUpView: View {
 }
 
 #Preview {
-//    SizePopUpView(width: .constant("2"), length: .constant("2"), wallHeight: .constant("2"), sheetPresented: Binding.constant(true), isSetButtonTapped: Binding.constant(false))
-    
-    SizePopUpView(sheetPresented: Binding.constant(true), isSetButtonTapped: Binding.constant(false))
+    SizePopUpView(
+        sheetPresented: Binding.constant(true),
+        isSetButtonTapped: Binding.constant(false),
+        roomSceneViewModel: RoomSceneViewModel(roomSceneModel: RoomSceneModel(roomWidth: 0, roomHeight: 0, roomLength: 0)),
+        sceneViewID: .constant(UUID()),
+        roomWidthText: Binding.constant("2"),
+        roomLengthText: Binding.constant("2"),
+        roomHeightText: Binding.constant("2")
+        )
 }
