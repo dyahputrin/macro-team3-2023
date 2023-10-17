@@ -12,10 +12,10 @@ struct SizePopUpView: View {
    // @ObservedObject var popUp = AppState()
     //Binding var canvasData: AppState
     
-    @State private var width = ""
-    @State private var length = ""
+    @State private var roomWidth = ""
+    @State private var roomLength = ""
     @State private var wallHeight = ""
-    
+
 //    @Binding var width: String
 //    @Binding var length: String
 //    @Binding var wallHeight: String
@@ -24,10 +24,10 @@ struct SizePopUpView: View {
     @Binding  var isSetButtonTapped: Bool
     
     var isSetButtonEnabled: Bool {
-        let isWidthValid = Double(width) ?? 0.0 >= 2
-        let isLengthValid = Double(length) ?? 0.0 >= 2
+        let isWidthValid = Double(roomWidth) ?? 0.0 >= 2
+        let isLengthValid = Double(roomLength) ?? 0.0 >= 2
         let isWallHeightValid = Double(wallHeight) ?? 0.0 >= 2
-        let areFieldsFilled = !width.isEmpty && !length.isEmpty && !wallHeight.isEmpty
+        let areFieldsFilled = !roomWidth.isEmpty && !roomLength.isEmpty && !wallHeight.isEmpty
         return isWidthValid && isLengthValid && isWallHeightValid && areFieldsFilled
     }
     
@@ -42,7 +42,7 @@ struct SizePopUpView: View {
                 VStack(alignment: .leading) {
                     Text("Width").bold()
                     HStack {
-                        TextField("min. 2", text: $width)
+                        TextField("min. 2", text: $roomWidth)
                             .textFieldStyle(RoundedBorderTextFieldStyle())
                             .keyboardType(.numberPad)
                         Text("m")
@@ -51,7 +51,7 @@ struct SizePopUpView: View {
                     
                     Text("Length").bold()
                     HStack {
-                        TextField("min. 2", text: $length)
+                        TextField("min. 2", text: $roomLength)
                             .textFieldStyle(RoundedBorderTextFieldStyle())
                             .keyboardType(.numberPad)
                         Text("m")
@@ -70,8 +70,8 @@ struct SizePopUpView: View {
                     Button(action: {
                         isSetButtonTapped = true
                         sheetPresented = false
-                        print("width: \(width)")
-                        print("length: \(length)")
+                        print("width: \(roomWidth)")
+                        print("length: \(roomLength)")
                         print("wall: \(wallHeight)")
                         
                     }) {

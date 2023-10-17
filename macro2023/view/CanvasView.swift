@@ -29,7 +29,7 @@ struct CanvasView: View {
         GeometryReader { geometry in
             ZStack {
                 VStack {
-                    TopToolbarView()
+                    TopToolbarView(roomWidth: .constant("2"), roomLength: .constant("2"), wallHeight: .constant("2"))
 //                    if objectsButtonClicked == true {
 //                        ObjectSidebarView()
 //                    } else if roomButtonClicked == true {

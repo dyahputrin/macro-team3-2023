@@ -15,8 +15,8 @@ struct RoomSidebarView: View {
     @State private var currentSection = "Room Size"
     var section = ["Room Size", "Imports"]
     
-    @Binding var width: String
-    @Binding var length: String
+    @Binding var roomWidth: String
+    @Binding var roomLength: String
     @Binding var wallHeight: String
     //@Binding var isSetButtonTapped: Bool
     
@@ -40,7 +40,7 @@ struct RoomSidebarView: View {
                                     VStack(alignment: .leading) {
                                         Text("Width").bold()
                                         HStack {
-                                            TextField("min. 2", text: $width)
+                                            TextField("min. 2", text: $roomWidth)
                                                 .textFieldStyle(RoundedBorderTextFieldStyle())
                                                 .keyboardType(.numberPad)
                                             Text("m")
@@ -49,7 +49,7 @@ struct RoomSidebarView: View {
                                         
                                         Text("Length").bold()
                                         HStack {
-                                            TextField("min. 2", text: $length)
+                                            TextField("min. 2", text: $roomLength)
                                                 .textFieldStyle(RoundedBorderTextFieldStyle())
                                                 .keyboardType(.numberPad)
                                             Text("m")
@@ -67,9 +67,9 @@ struct RoomSidebarView: View {
                                         
                                         Button(action: {
                                             isSetButtonSidebarTapped = true
-                                            print("width: \(width)")
-                                            print("length: \(length)")
-                                            print("wall: \(wallHeight)")
+                                            print("width: \($roomWidth)")
+                                            print("length: \($roomLength)")
+                                            print("wall: \($wallHeight)")
                                             
                                         }) {
                                             RoundedRectangle(cornerRadius: 10)
@@ -122,5 +122,5 @@ struct RoomSidebarView: View {
 
 
 #Preview {
-    RoomSidebarView(width: .constant("2"), length: .constant("2"), wallHeight: .constant("2"))
+    RoomSidebarView(roomWidth: .constant("2"), roomLength: .constant("2"), wallHeight: .constant("2"))
 }

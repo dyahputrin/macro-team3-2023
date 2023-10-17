@@ -17,6 +17,9 @@ struct TopToolbarView: View {
     @State private var renameClicked = false
     @State private var newProjectName = ""
 
+    @Binding var roomWidth: String
+    @Binding var roomLength: String
+    @Binding var wallHeight: String
     
     //@ObservedObject var toolbarData = AppState()
     
@@ -34,7 +37,8 @@ struct TopToolbarView: View {
                 .transition(.moveAndFade)
             
         } else if roomButtonClicked == true {
-            RoomSidebarView(width: .constant("2"), length: .constant("2"), wallHeight: .constant("2"))
+//            RoomSidebarView(roomWidth: .constant("2"), roomLength: .constant("2"), wallHeight: .constant("2"))
+            RoomSidebarView(roomWidth: $roomWidth, roomLength: $roomLength, wallHeight: $wallHeight)
                 .transition(.moveAndFade)
         }
         Text(projectName)
@@ -131,7 +135,7 @@ struct TopToolbarView: View {
 
 #Preview {
 //    TopToolbarView(projectName: .constant("New Project"), roomButtonClicked: .constant(false), objectsButtonClicked: .constant(false), viewfinderButtonClicked: .constant(false), isExporting: .constant(false))
-    TopToolbarView()
+    TopToolbarView(roomWidth: .constant("2"), roomLength: .constant("2"), wallHeight: .constant("2"))
 }
 
 //
