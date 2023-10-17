@@ -17,6 +17,9 @@ struct TopToolbarView: View {
     @State private var renameClicked = false
     @State private var newProjectName = ""
     
+    @State private var isRoomCaptureViewPresented = false
+
+    
     @Binding var roomWidthText: String
     @Binding var roomLengthText: String
     @Binding var roomHeightText: String
@@ -41,10 +44,14 @@ struct TopToolbarView: View {
                     HStack {
                         //VIEWFINDER
                         Menu {
-                            Button(action: /*@START_MENU_TOKEN@*/{}/*@END_MENU_TOKEN@*/, label: {
+                            Button(action: {
+                                
+                            }, label: {
                                 Text("Scan objects")
                             })
-                            Button(action: /*@START_MENU_TOKEN@*/{}/*@END_MENU_TOKEN@*/, label: {
+                            Button(action: {
+                                self.isRoomCaptureViewPresented = true
+                            }, label: {
                                 Text("Scan room")
                             })
                         } label: {
@@ -74,6 +81,7 @@ struct TopToolbarView: View {
                     .padding(.trailing, 100)
                 }
                 
+                
                 // UNDO & SAVE
                 ToolbarItemGroup {
                     Button(action: {})
@@ -93,6 +101,23 @@ struct TopToolbarView: View {
                             title: Text("\(projectName) Saved"),
                             dismissButton: .default(Text("OK"))
                         )
+                    }
+                }
+            }
+            .fullScreenCover(isPresented: $isRoomCaptureViewPresented) {
+                ZStack {
+                    OnboardingViewControllerWrapper()
+                    VStack {
+                        HStack {
+                            Button("Cancel") {
+                                isRoomCaptureViewPresented = false
+                            }.buttonStyle(.automatic)
+                            
+                            Spacer()
+                        }
+                        .padding()
+                        
+                        Spacer()
                     }
                 }
             }
@@ -122,6 +147,7 @@ struct TopToolbarView: View {
                     renameClicked = false
                 })
             })
+        
     }
 }
 
