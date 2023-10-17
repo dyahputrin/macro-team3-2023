@@ -78,7 +78,7 @@ class CanvasViewModel: ObservableObject{
         var projectName = dataCanvas.nameProject
         
         // Check if the project name is empty or nil
-        if projectName.isEmpty {
+        if projectName.isEmpty{
             var counter = 1
             repeat {
                 let generatedName = "Untitled\(counter)"

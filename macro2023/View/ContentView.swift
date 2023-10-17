@@ -69,6 +69,8 @@ struct ContentView: View {
     
     @State private var currentProjectName: String = ""
     
+    @State private var currentProjectEntity: ProjectEntity? = nil
+    
     var body: some View {
         NavigationStack(path: $routerView.path){
             ScrollView{
@@ -102,20 +104,20 @@ struct ContentView: View {
                                         .cornerRadius(16)
                                     VStack(){
                                         Spacer()
-                                        Text(newProjectName.projectName ?? "")
+                                        Text((newProjectName.projectName ?? "").prefix(10))
                                             .bold()
                                             .font(.title3)
                                             .padding(.vertical, 13)
                                             .padding(.leading, -75)
                                             .frame(maxWidth: .infinity)
                                             .background(RoundedCorners(bl:16, br:16))
-//                                          .roundedCorner(16,corners:[.bottomLeft,.bottomRight])
                                     }
                                 }
                             )
                         .contextMenu(ContextMenu(menuItems: {
                             Button("Rename", systemImage: "pencil"){
                                 currentProjectName = newProjectName.projectName ?? ""
+                                currentProjectEntity = newProjectName
                                 dataContentViewModel.dataCanvas.isRenameAlertPresented = true
                             }
                             Button("Delete", systemImage: "trash", role: .destructive){
@@ -134,7 +136,7 @@ struct ContentView: View {
                                     }
                                     Button("Save") {
                                         // Handle renaming using the ViewModel
-                                        dataContentViewModel.renameProject(project: newProjectName, newProjectName: currentProjectName, viewContext: viewContext)
+                                        dataContentViewModel.renameProject(project: currentProjectEntity!, newProjectName: currentProjectName, viewContext: viewContext)
                                         dataContentViewModel.dataCanvas.isRenameAlertPresented = false
                                     }
                                 }

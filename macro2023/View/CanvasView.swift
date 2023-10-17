@@ -29,14 +29,20 @@ struct CanvasView: View {
         .toolbar {
             ToolbarItemGroup(placement: .topBarLeading) {
                 Button() {
-                    routerView.path.removeLast()
+                    if routerView.path.count > 0 {
+                        routerView.path.removeLast()
+                    }
+                    dataCanvasViewModel.dataCanvas.nameProject = ""
+                    dataCanvasViewModel.dataCanvas.uuid = UUID()
+                    
+                    routerView.project = nil
                 } label: {
                     Image(systemName: "chevron.left")
                 }
                 NavigationLink(destination:ContentView()
                                ,label: {
-                    //   Text(routerView.project == nil ? dataCanvasViewModel.dataCanvas.nameProject : routerView.project)
-                    Text(routerView.project?.projectName ?? dataCanvasViewModel.dataCanvas.nameProject )
+                    Text((routerView.project == nil ? "ProjectName" : routerView.project!.projectName)!)
+//                    Text(routerView.project?.projectName ?? dataCanvasViewModel.dataCanvas.nameProject )
                         .foregroundColor(.black)
                     Image(systemName: "pencil")
                 }
@@ -45,13 +51,18 @@ struct CanvasView: View {
             ToolbarItemGroup(placement: .topBarTrailing) {
                 Button("Save") {
                     dataCanvasViewModel.saveProject(viewContext: viewContext)
-                  
                 }
             }
         }
         .toolbarBackground(Color(UIColor.systemGray6), for: .navigationBar)
         .toolbarBackground(.visible, for: .navigationBar)
         .navigationBarBackButtonHidden(true)
+        .onAppear {
+            if routerView.project != nil {
+                dataCanvasViewModel.dataCanvas.nameProject = routerView.project!.projectName!
+                dataCanvasViewModel.dataCanvas.uuid = routerView.project!.projectID!
+            }
+        }
     }
 }
 
