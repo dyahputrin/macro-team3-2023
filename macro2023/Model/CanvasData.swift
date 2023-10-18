@@ -22,3 +22,5 @@ struct DataCanvas {
     var isRenameAlertPresented = false
     var newProjectName: String = ""
 }
+
+

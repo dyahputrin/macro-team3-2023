@@ -7,14 +7,19 @@
 
 import SwiftUI
 import SceneKit
+import CoreData
 
 struct RoomSceneView: View {
+    @Environment(\.managedObjectContext) private var viewContext
     var roomSceneViewModel: RoomSceneViewModel
+//    var projectViewModel: ProjectViewModel
     @Binding var sceneViewID: UUID
+    var loadedScene: SCNScene?
+//    var loadedSceneID: UUID?
     
     var body: some View {
         VStack {
-            SceneView(scene: roomSceneViewModel.makeScene(width: roomSceneViewModel.roomSceneModel.roomWidth, height: roomSceneViewModel.roomSceneModel.roomHeight, length: roomSceneViewModel.roomSceneModel.roomLength), options: [.allowsCameraControl])
+            SceneView(scene: loadedScene ?? roomSceneViewModel.makeScene(width: roomSceneViewModel.roomSceneModel.roomWidth, height: roomSceneViewModel.roomSceneModel.roomHeight, length: roomSceneViewModel.roomSceneModel.roomLength), options: [.allowsCameraControl])
                 .edgesIgnoringSafeArea(.bottom)
                 .id(sceneViewID)
         }

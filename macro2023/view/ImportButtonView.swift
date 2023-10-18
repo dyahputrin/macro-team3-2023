@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct ImportButtonView: View {
-    @ObservedObject var importButton = AppState()
+//    @ObservedObject var importButton = AppState()
     
     @Binding var isImporting: Bool
     //@Binding var document: MessageDocument

@@ -1,8 +1,8 @@
 //
-//  CanvasViewModel.swift
+//  AppState.swift
 //  macro2023
 //
-//  Created by Shalomeira Winata on 12/10/23.
+//  Created by Dyah Putri Nariswari on 17/10/23.
 //
 
 import Foundation
@@ -13,10 +13,10 @@ class AppState: ObservableObject {
 //    @Published var roomButtonClicked = false
 //    @Published var objectsButtonClicked = false
 //    @Published var viewfinderButtonClicked = false
-//    
+//
 //    @Published var sheetPresented = true
 //    @Published var isSetButtonTapped = false
-//    
+//
 //    @Published var width = ""
 //    @Published var length = ""
 //    @Published var wallHeight = ""
@@ -26,4 +26,3 @@ class AppState: ObservableObject {
 //    @Published var isExporting: Bool = false
     
 }
-

@@ -17,19 +17,20 @@ class RoomSceneViewModel: ObservableObject {
     
     // function to make the scene
     func makeScene(width: CGFloat, height: CGFloat, length: CGFloat) -> SCNScene? {
-        let scene = SCNScene(named: "RoomScene.scn")
+        var scene = roomSceneModel.scene
+        scene = SCNScene(named: "RoomScene.scn")!
         let floorNode = SCNNode()
         let wall1Node = SCNNode()
         let wall2Node = SCNNode()
         
-        scene?.background.contents = UIColor.lightGray
+        scene.background.contents = UIColor.clear
         
         if let floorAsset = SCNScene(named: "v2floor.usdz"){
             let floorGeometry = floorAsset.rootNode.childNodes.first?.geometry?.copy() as? SCNGeometry
             floorNode.geometry = floorGeometry
             floorNode.scale = SCNVector3(roomSceneModel.roomWidth, roomSceneModel.roomHeight, roomSceneModel.roomLength)
             floorNode.addChildNode(floorAsset.rootNode)
-            scene?.rootNode.addChildNode(floorNode)
+            scene.rootNode.addChildNode(floorNode)
         }
         if let wall1Asset = SCNScene(named: "v2wall1.usdz"){
             let wall1Geometry = wall1Asset.rootNode.childNodes.first?.geometry?.copy() as? SCNGeometry
@@ -37,23 +38,23 @@ class RoomSceneViewModel: ObservableObject {
             wall1Node.position = SCNVector3()
             wall1Node.scale = SCNVector3(roomSceneModel.roomWidth, roomSceneModel.roomHeight, roomSceneModel.roomLength)
             wall1Node.addChildNode(wall1Asset.rootNode)
-            scene?.rootNode.addChildNode(wall1Node)
+            scene.rootNode.addChildNode(wall1Node)
         }
         if let wall2Asset = SCNScene(named: "v2wall2.usdz"){
             let wall2Geometry = wall2Asset.rootNode.childNodes.first?.geometry?.copy() as? SCNGeometry
             wall2Node.geometry = wall2Geometry
             wall2Node.scale = SCNVector3(roomSceneModel.roomWidth, roomSceneModel.roomHeight, roomSceneModel.roomLength)
             wall2Node.addChildNode(wall2Asset.rootNode)
-            scene?.rootNode.addChildNode(wall2Node)
+            scene.rootNode.addChildNode(wall2Node)
         }
         
         let camera = SCNCamera()
         let cameraNode = SCNNode()
         cameraNode.camera = camera
         // Set the custom position for the camera using SCNVector3
-        let customCameraPosition = SCNVector3(x: 0, y: 5, z: 5)
+        let customCameraPosition = SCNVector3(x: 0, y: 0, z: 0)
         cameraNode.position = customCameraPosition
-        scene?.rootNode.addChildNode(cameraNode)
+        scene.rootNode.addChildNode(cameraNode)
         
         return scene
     }
@@ -75,12 +76,3 @@ class RoomSceneViewModel: ObservableObject {
     }
     
 }
-
-
-
-
-
-
-
-
-

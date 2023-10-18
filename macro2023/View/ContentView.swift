@@ -6,6 +6,8 @@
 //
 
 import SwiftUI
+import SceneKit
+import CoreData
 
 struct RoundedCorners: View {
     var color: Color = .white
@@ -53,27 +55,40 @@ extension Color {
         )
     }
 }
+enum ProjectType {
+    case new
+    case existing(ProjectEntity) // Store the project entity for easy access.
+}
 
 struct ContentView: View {
     @StateObject var dataContentViewModel = ContentViewModel()
-    
     @Environment(\.managedObjectContext) private var viewContext
-    
     @EnvironmentObject var routerView:RouterView
     
     @FetchRequest(entity: ProjectEntity.entity(),
                   sortDescriptors: [NSSortDescriptor(keyPath: \ProjectEntity.projectName, ascending: true)])
     var newName: FetchedResults<ProjectEntity>
-    
+//    var projects: FetchedResults<ProjectEntity>
     let columns = [GridItem(.flexible()),GridItem(.flexible()),GridItem(.flexible()),GridItem(.flexible()),GridItem(.flexible())]
     
     @State private var currentProjectName: String = ""
+    @State private var currentProjectEntity: ProjectEntity? = nil
+    
+    @StateObject var projectViewModel = ProjectViewModel()
+    @State private var selectedProjectType: ProjectType? = nil
+    @State private var fetchedScene: SCNScene? = nil
+    
+//    @Published var projectModel: ProjectModel
     
     var body: some View {
         NavigationStack(path: $routerView.path){
+            
+//        let a = projectViewModel.printAllData(in: viewContext)
+            
             ScrollView{
                 LazyVGrid(columns: columns) {
                     Button(action: {
+                        selectedProjectType = .new
                         routerView.path.append("canvas")
                     }, label: {
                         RoundedRectangle(cornerRadius: 16, style: .circular)
@@ -102,42 +117,43 @@ struct ContentView: View {
                                         .cornerRadius(16)
                                     VStack(){
                                         Spacer()
-                                        Text(newProjectName.projectName ?? "")
+                                        Text((newProjectName.projectName ?? "").prefix(10))
                                             .bold()
                                             .font(.title3)
                                             .padding(.vertical, 13)
                                             .padding(.leading, -75)
                                             .frame(maxWidth: .infinity)
                                             .background(RoundedCorners(bl:16, br:16))
-//                                          .roundedCorner(16,corners:[.bottomLeft,.bottomRight])
                                     }
                                 }
                             )
-                        .contextMenu(ContextMenu(menuItems: {
-                            Button("Rename", systemImage: "pencil"){
-                                currentProjectName = newProjectName.projectName ?? ""
-                                dataContentViewModel.dataCanvas.isRenameAlertPresented = true
-                            }
-                            Button("Delete", systemImage: "trash", role: .destructive){
-                                dataContentViewModel.deleteProject(viewContext: viewContext, project: newProjectName)
-                            }
-                        }))
-                        .onTapGesture {
-                            routerView.path.append("canvas")
-                            routerView.project = newProjectName
-                            // routerView.uuid = newProjectName.projectID
-                        }
-                        .alert("Rename Project", isPresented: $dataContentViewModel.dataCanvas.isRenameAlertPresented) {
-                                    TextField("Enter a new project name", text: $currentProjectName)
-                                    Button("Cancel", role: .cancel) {
-                                        dataContentViewModel.dataCanvas.isRenameAlertPresented = false
-                                    }
-                                    Button("Save") {
-                                        // Handle renaming using the ViewModel
-                                        dataContentViewModel.renameProject(project: newProjectName, newProjectName: currentProjectName, viewContext: viewContext)
-                                        dataContentViewModel.dataCanvas.isRenameAlertPresented = false
-                                    }
+                            .contextMenu(ContextMenu(menuItems: {
+                                Button("Rename", systemImage: "pencil"){
+                                    currentProjectName = newProjectName.projectName ?? ""
+                                    currentProjectEntity = newProjectName
+                                    dataContentViewModel.dataCanvas.isRenameAlertPresented = true
                                 }
+                                Button("Delete", systemImage: "trash", role: .destructive){
+                                    dataContentViewModel.deleteProject(viewContext: viewContext, project: newProjectName)
+                                }
+                            }))
+                            .onTapGesture {
+                                selectedProjectType = .existing(newProjectName)
+                                routerView.path.append("canvas")
+                                //                            routerView.project = newProjectName
+                                // routerView.uuid = newProjectName.projectID
+                            }
+                            .alert("Rename Project", isPresented: $dataContentViewModel.dataCanvas.isRenameAlertPresented) {
+                                TextField("Enter a new project name", text: $currentProjectName)
+                                Button("Cancel", role: .cancel) {
+                                    dataContentViewModel.dataCanvas.isRenameAlertPresented = false
+                                }
+                                Button("Save") {
+                                    // Handle renaming using the ViewModel
+                                    dataContentViewModel.renameProject(project: currentProjectEntity!, newProjectName: currentProjectName, viewContext: viewContext)
+                                    dataContentViewModel.dataCanvas.isRenameAlertPresented = false
+                                }
+                            }
                     }
                     
                     .padding(.bottom,30)
@@ -154,15 +170,30 @@ struct ContentView: View {
             }
             .navigationDestination(for: String.self) { val in
                 if val == "canvas"{
-                    
-                    CanvasView()
+                    switch selectedProjectType {
+                    case .new:
+                        CanvasView(objectsButtonClicked: false, roomButtonClicked: false, viewfinderButtonClicked: .constant(false), isImporting: .constant(false), isExporting: .constant(false), isSetButtonSidebarTapped: .constant(false), existingProjectName: "")
+                    case .existing(let selectedProject):
+                        if let loadedScene = loadScene(for: selectedProject).0, let loadedSceneName = loadScene(for: selectedProject).1/*, let loadedSceneID = loadScene(for: selectedProject).1*/ {
+                            CanvasView(objectsButtonClicked: false, roomButtonClicked: false, viewfinderButtonClicked: .constant(false), isImporting: .constant(false), isExporting: .constant(false), isSetButtonSidebarTapped: .constant(false), existingProjectName:  loadedSceneName/*, loadedSceneID: loadedSceneID*/)
+                           } else {
+                               // Handle the case where the scene couldn't be loaded, for instance:
+                               Text("Failed to load project scene.")
+                           }
+                    case .none:
+                        EmptyView()
+                    }
                 }else{
-               
+                    
                 }
                 
             }
         }
         
+    }
+    
+    func loadScene(for project: ProjectEntity) -> (SCNScene?, String?/*, UUID?*/) {
+        return projectViewModel.openSceneFromCoreData(userFilenmae: project.projectName ?? "", context: viewContext)
     }
 }
 
