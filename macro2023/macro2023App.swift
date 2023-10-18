@@ -11,6 +11,8 @@ import SwiftUI
 struct macro2023App: App {
     let persistenceController = PersistenceController.shared
     @StateObject var routerView = RouterView()
+    static let subsystem: String = "com.dyahputrin.macro2023"
+    
     var body: some Scene {
         WindowGroup {
             ContentView()

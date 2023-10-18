@@ -19,7 +19,7 @@ struct RoomSceneView: View {
     
     var body: some View {
         VStack {
-            SceneView(scene: loadedScene ?? roomSceneViewModel.makeScene(width: roomSceneViewModel.roomSceneModel.roomWidth, height: roomSceneViewModel.roomSceneModel.roomHeight, length: roomSceneViewModel.roomSceneModel.roomLength), options: [.allowsCameraControl])
+            SceneView(scene: roomSceneViewModel.makeScene(width: roomSceneViewModel.roomSceneModel.roomWidth, height: roomSceneViewModel.roomSceneModel.roomHeight, length: roomSceneViewModel.roomSceneModel.roomLength), options: [.allowsCameraControl])
                 .edgesIgnoringSafeArea(.bottom)
                 .id(sceneViewID)
         }

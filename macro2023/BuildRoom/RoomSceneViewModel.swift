@@ -23,7 +23,8 @@ class RoomSceneViewModel: ObservableObject {
         let wall1Node = SCNNode()
         let wall2Node = SCNNode()
         
-        scene.background.contents = UIColor.clear
+        // scene.background.contents = UIColor.clear
+        scene.background.contents = UIColor.lightGray
         
         if let floorAsset = SCNScene(named: "v2floor.usdz"){
             let floorGeometry = floorAsset.rootNode.childNodes.first?.geometry?.copy() as? SCNGeometry
@@ -76,3 +77,12 @@ class RoomSceneViewModel: ObservableObject {
     }
     
 }
+
+
+
+
+
+
+
+
+

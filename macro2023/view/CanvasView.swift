@@ -1,12 +1,12 @@
 import SwiftUI
 import SceneKit
 
+
 struct CanvasView: View {
     @Environment(\.managedObjectContext) private var viewContext
     
     @EnvironmentObject var routerView:RouterView
     @StateObject var dataCanvasViewModel = CanvasViewModel()
-    
     @State private var sheetPresented = true
     @State private var isSetButtonTapped = false
     @State var objectsButtonClicked: Bool
@@ -31,6 +31,7 @@ struct CanvasView: View {
     @State private var isRoomCaptureViewPresented = false
     
     @StateObject var projectViewModel = ProjectViewModel()
+    @State private var isGuidedCaptureViewPresented = false
     
 //    var loadedScene: SCNScene?
     var existingProjectName: String
@@ -66,6 +67,10 @@ struct CanvasView: View {
         .onAppear {
             sheetPresented = true
         }
+//        .sheet(isPresented: $sheetPresented) {
+//            SizePopUpView(sheetPresented: $sheetPresented, isSetButtonTapped: $isSetButtonTapped, roomSceneViewModel: roomSceneViewModel, sceneViewID: $sceneViewID, roomWidthText: $roomWidthText, roomLengthText: $roomLengthText, roomHeightText: $roomHeightText)
+//                .interactiveDismissDisabled()
+//        }
         .toolbarRole(.editor)
         .toolbarBackground(Color.blue)
         .toolbar {
@@ -73,7 +78,9 @@ struct CanvasView: View {
                 HStack {
                     //VIEWFINDER
                     Menu {
-                        Button(action: /*@START_MENU_TOKEN@*/{}/*@END_MENU_TOKEN@*/, label: {
+                        Button(action: {
+                            self.isGuidedCaptureViewPresented = true
+                        }, label: {
                             Text("Scan objects")
                         })
                         Button(action: {
@@ -132,6 +139,7 @@ struct CanvasView: View {
                 }
             }
         }
+        // ROOM PLAN
         .fullScreenCover(isPresented: $isRoomCaptureViewPresented) {
             ZStack {
                 OnboardingViewControllerWrapper()
@@ -149,6 +157,9 @@ struct CanvasView: View {
                 }
             }
         }
+        .fullScreenCover(isPresented: $isGuidedCaptureViewPresented, content: {
+            GuidedCaptureView()
+        })
         .navigationTitle(projectName)
         .toolbarTitleMenu {
             Button(action: {
