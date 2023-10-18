@@ -9,10 +9,23 @@ import SwiftUI
 
 struct Sidebar: View {
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        NavigationView {
+            List {
+                NavigationLink(destination: UIProject()) {
+                    Label("All Projects", systemImage:  "square.fill.on.square.fill")
+                }
+                .foregroundStyle(Color(hex: 0x28B0E5))
+                Label("Recents", systemImage: "square.fill.on.square.fill")
+                    .foregroundStyle(Color(hex: 0xFF9500))
+            }
+            .listStyle(SidebarListStyle())
+            .navigationTitle("Solulu")
+//            .colorMultiply(Color(hex: 0xEBEBF5))
+        }
     }
 }
 
 #Preview {
     Sidebar()
+        .previewInterfaceOrientation(.landscapeRight)
 }

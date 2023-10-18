@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		58484AC52AD59B3C000C12D8 /* UICanvas.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58484AC42AD59B3C000C12D8 /* UICanvas.swift */; };
 		58484AC72AD5A641000C12D8 /* Test.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58484AC62AD5A641000C12D8 /* Test.swift */; };
+		58484AC92ADFCF87000C12D8 /* Sidebar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58484AC82ADFCF87000C12D8 /* Sidebar.swift */; };
 		BE1AE87A2AD3D65800F586CD /* macro2023App.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE1AE8792AD3D65800F586CD /* macro2023App.swift */; };
 		BE1AE87C2AD3D65800F586CD /* UIProject.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE1AE87B2AD3D65800F586CD /* UIProject.swift */; };
 		BE1AE87E2AD3D65900F586CD /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BE1AE87D2AD3D65900F586CD /* Assets.xcassets */; };
@@ -18,6 +19,7 @@
 /* Begin PBXFileReference section */
 		58484AC42AD59B3C000C12D8 /* UICanvas.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UICanvas.swift; sourceTree = "<group>"; };
 		58484AC62AD5A641000C12D8 /* Test.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Test.swift; sourceTree = "<group>"; };
+		58484AC82ADFCF87000C12D8 /* Sidebar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Sidebar.swift; sourceTree = "<group>"; };
 		BE1AE8762AD3D65800F586CD /* macro2023.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = macro2023.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		BE1AE8792AD3D65800F586CD /* macro2023App.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = macro2023App.swift; sourceTree = "<group>"; };
 		BE1AE87B2AD3D65800F586CD /* UIProject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIProject.swift; sourceTree = "<group>"; };
@@ -58,6 +60,7 @@
 				BE1AE8792AD3D65800F586CD /* macro2023App.swift */,
 				BE1AE87B2AD3D65800F586CD /* UIProject.swift */,
 				58484AC62AD5A641000C12D8 /* Test.swift */,
+				58484AC82ADFCF87000C12D8 /* Sidebar.swift */,
 				58484AC42AD59B3C000C12D8 /* UICanvas.swift */,
 				BE1AE87D2AD3D65900F586CD /* Assets.xcassets */,
 				BE1AE87F2AD3D65900F586CD /* Preview Content */,
@@ -143,6 +146,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				58484AC92ADFCF87000C12D8 /* Sidebar.swift in Sources */,
 				58484AC52AD59B3C000C12D8 /* UICanvas.swift in Sources */,
 				58484AC72AD5A641000C12D8 /* Test.swift in Sources */,
 				BE1AE87C2AD3D65800F586CD /* UIProject.swift in Sources */,
