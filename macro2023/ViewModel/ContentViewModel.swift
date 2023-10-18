@@ -10,6 +10,7 @@ import CoreData
 
 class ContentViewModel: ObservableObject {
     @Published var dataCanvas = DataCanvas()
+    
     func deleteProject(viewContext: NSManagedObjectContext, project: ProjectEntity) {
         viewContext.delete(project)
         
@@ -19,6 +20,7 @@ class ContentViewModel: ObservableObject {
             print("Error deleting project: \(error)")
         }
     }
+    
     func renameProject(project: ProjectEntity, newProjectName: String, viewContext: NSManagedObjectContext) {
            // Handle renaming logic here, update the project entity with the new name
            project.projectName = newProjectName

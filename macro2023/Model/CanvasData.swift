@@ -11,7 +11,7 @@ import SceneKit
 struct DataCanvas {
     var uuid = UUID()
     var nameProject = ""
-    var lenghtScale: CGFloat = 5 // this is X - kiri kanan
+    var lengthScale: CGFloat = 5 // this is X - kiri kanan
     var heightScale: CGFloat = 5 // this is Y - atas bawah
     var widthScale: CGFloat = 5 // this is Z - lebar
     

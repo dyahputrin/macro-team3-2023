@@ -11,58 +11,62 @@ import CoreData
 
 class CanvasViewModel: ObservableObject{
     @Published var dataCanvas = DataCanvas()
+    var sceneOri:SCNScene? = nil
+    func sceneSpawn() -> SCNScene {
+        // Create a new SCNScene
+        let scene = SCNScene()
         
-    func sceneSpawn() -> SCNScene? {
-        var scene: SCNScene? {
-            let scene = SCNScene(named: "v2floor.usdz")
-            
-            // Create SCNNodes for the four walls
-            let floorNode = SCNNode()
-            let wall1Node = SCNNode()
-            let wall2Node = SCNNode()
-            let wall3Node = SCNNode()
-            let wall4Node = SCNNode()
-            
-            // Load and add the floor asset
-            if let floorAsset = SCNScene(named: "v2floor.usdz") {
-                floorNode.addChildNode(floorAsset.rootNode)
-                scene?.rootNode.addChildNode(floorNode)
-            }
-            
-            // Load and add the first wall asset
-            if let wall1Asset = SCNScene(named: "v2wall1.usdz") {
-                wall1Node.addChildNode(wall1Asset.rootNode)
-                scene?.rootNode.addChildNode(wall1Node)
-            }
-            
-            // Load and add the second wall asset
-            if let wall2Asset = SCNScene(named: "v2wall2.usdz") {
-                wall2Node.addChildNode(wall2Asset.rootNode)
-                scene?.rootNode.addChildNode(wall2Node)
-            }
-            
-            // Load and add the third wall asset
-            if let wall3Asset = SCNScene(named: "v2wall3.usdz") {
-                wall3Node.addChildNode(wall3Asset.rootNode)
-                scene?.rootNode.addChildNode(wall3Node)
-            }
-            
-            // Load and add the fourth wall asset
-            if let wall4Asset = SCNScene(named: "v2wall4.usdz") {
-                wall4Node.addChildNode(wall4Asset.rootNode)
-                scene?.rootNode.addChildNode(wall4Node)
-            }
-            
-            floorNode.scale = SCNVector3(dataCanvas.lenghtScale,dataCanvas.heightScale,dataCanvas.widthScale)
-            wall1Node.scale = SCNVector3(dataCanvas.lenghtScale,dataCanvas.heightScale,dataCanvas.widthScale)
-            wall2Node.scale = SCNVector3(dataCanvas.lenghtScale,dataCanvas.heightScale,dataCanvas.widthScale)
-            wall3Node.scale = SCNVector3(dataCanvas.lenghtScale,dataCanvas.heightScale,dataCanvas.widthScale)
-            wall4Node.scale = SCNVector3(dataCanvas.lenghtScale,dataCanvas.heightScale,dataCanvas.widthScale)
-            
-            return scene
+        // Create SCNNodes for the four walls
+        let floorNode = SCNNode()
+        let wall1Node = SCNNode()
+        let wall2Node = SCNNode()
+        let wall3Node = SCNNode()
+        let wall4Node = SCNNode()
+        
+        // Load and add the floor asset
+        if let floorAsset = SCNScene(named: "v2floor.usdz") {
+            floorNode.addChildNode(floorAsset.rootNode)
+            scene.rootNode.addChildNode(floorNode)
         }
+        
+        // Load and add the first wall asset
+        if let wall1Asset = SCNScene(named: "v2wall1.usdz") {
+            wall1Node.addChildNode(wall1Asset.rootNode)
+            scene.rootNode.addChildNode(wall1Node)
+        }
+        
+        // Load and add the second wall asset
+        if let wall2Asset = SCNScene(named: "v2wall2.usdz") {
+            wall2Node.addChildNode(wall2Asset.rootNode)
+            scene.rootNode.addChildNode(wall2Node)
+        }
+        
+        // Load and add the third wall asset
+        if let wall3Asset = SCNScene(named: "v2wall3.usdz") {
+            wall3Node.addChildNode(wall3Asset.rootNode)
+            scene.rootNode.addChildNode(wall3Node)
+        }
+        
+        // Load and add the fourth wall asset
+        if let wall4Asset = SCNScene(named: "v2wall4.usdz") {
+            wall4Node.addChildNode(wall4Asset.rootNode)
+            scene.rootNode.addChildNode(wall4Node)
+        }
+        
+        // Adjust the scale of nodes based on your dataCanvas values
+        floorNode.scale = SCNVector3(dataCanvas.lengthScale, dataCanvas.heightScale, dataCanvas.widthScale)
+        wall1Node.scale = SCNVector3(dataCanvas.lengthScale, dataCanvas.heightScale, dataCanvas.widthScale)
+        wall2Node.scale = SCNVector3(dataCanvas.lengthScale, dataCanvas.heightScale, dataCanvas.widthScale)
+        wall3Node.scale = SCNVector3(dataCanvas.lengthScale, dataCanvas.heightScale, dataCanvas.widthScale)
+        wall4Node.scale = SCNVector3(dataCanvas.lengthScale, dataCanvas.heightScale, dataCanvas.widthScale)
+        
+        sceneOri = scene
         return scene
     }
+    
+    //    func loadScene() -> SCNScene {
+    ////        sceneOri
+    //    }
     
     func cameraNode()-> SCNNode?{
         var cameraNode: SCNNode? {
@@ -74,6 +78,7 @@ class CanvasViewModel: ObservableObject{
         }
         return cameraNode
     }
+    
     func saveProject(viewContext: NSManagedObjectContext) {
         var projectName = dataCanvas.nameProject
         
@@ -81,28 +86,44 @@ class CanvasViewModel: ObservableObject{
         if projectName.isEmpty{
             var counter = 1
             repeat {
-                let generatedName = "Untitled\(counter)"
-                // Check if the generated name already exists
+                let generatedName = "Project\(counter)"
                 if !projectExists(withName: generatedName, in: viewContext) {
-                    // Assign the generated name to the project
                     projectName = generatedName
-                    dataCanvas.nameProject = projectName // Update dataCanvas.nameProject here
+                    dataCanvas.nameProject = projectName
                     break
                 }
                 counter += 1
             } while true
         }
-        saveSceneToUSDZ(viewContext: viewContext)
-        moveUSDZToFileManager(viewContext: viewContext)
-
-        // Now, you have a valid project name, whether provided by the user or generated.
-        
         let projectUUID = dataCanvas.uuid
-
+        
+        //        if let scene = sceneOri {
+        //            let documentsDirectory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
+        //            let scnFileName = "\(dataCanvas.uuid).scn"
+        //            let scnURL = documentsDirectory.appendingPathComponent(scnFileName)
+        //
+        //            // Archive the SceneKit scene as data
+        //            if let scnData = try? NSKeyedArchiver.archivedData(withRootObject: scene, requiringSecureCoding: true) {
+        //                do {
+        //                    try scnData.write(to: scnURL)
+        //                    print("Saved SCN to \(scnURL)")
+        //                    // Create a new CoreData entity or fetch an existing one
+        //                    let entity = ProjectEntity(context: viewContext)
+        //                    // Set the 'projectScene' attribute to the saved SCN data
+        //                    entity.projectScene = scnData
+        //                    // Save the managed object context to persist the changes
+        //                    //                    try viewContext.save()
+        //                } catch {
+        //                    print("Failed to save SCN: \(error)")
+        //                }
+        //            } else {
+        //                print("Failed to archive the SCN scene")
+        //            }
+        //        }
+        
         // Fetch the existing project with the same UUID
         let fetchRequest: NSFetchRequest<ProjectEntity> = ProjectEntity.fetchRequest()
         fetchRequest.predicate = NSPredicate(format: "projectID == %@", projectUUID as CVarArg)
-
         do {
             if let existingProject = try viewContext.fetch(fetchRequest).first {
                 // Update the existing project
@@ -113,20 +134,29 @@ class CanvasViewModel: ObservableObject{
                 let newProject = ProjectEntity(context: viewContext)
                 newProject.projectID = projectUUID
                 newProject.projectName = projectName
-                // Set other properties for the new project
+                if let scene = sceneOri {
+                    if let scnData = try? NSKeyedArchiver.archivedData(withRootObject: scene, requiringSecureCoding: true) {
+                        
+                        // Create a new CoreData entity or fetch an existing one
+                        //                    let entity = ProjectEntity(context: viewContext)
+                        //                    // Set the 'projectScene' attribute to the saved SCN data
+                        newProject.projectScene = scnData
+                        
+                    } else {
+                        print("Failed to archive the SCN scene")
+                    }
+                }
             }
-
             // Save the context
             try viewContext.save()
         } catch {
             print("Error saving project: \(error)")
         }
     }
-
+    
     func projectExists(withName name: String, in context: NSManagedObjectContext) -> Bool {
         let fetchRequest: NSFetchRequest<ProjectEntity> = ProjectEntity.fetchRequest()
         fetchRequest.predicate = NSPredicate(format: "projectName == %@", name)
-        
         do {
             let matchingProjects = try context.fetch(fetchRequest)
             return !matchingProjects.isEmpty
@@ -135,37 +165,45 @@ class CanvasViewModel: ObservableObject{
             return false
         }
     }
-
-    func saveSceneToUSDZ(viewContext: NSManagedObjectContext) {
-        if let scene = sceneSpawn() {
+    
+    func saveSceneToCoreData(viewContext: NSManagedObjectContext) {
+        if let scene = sceneOri {
             let documentsDirectory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
-            let usdzFileName = "\(dataCanvas.uuid).usdz"
-            let usdzURL = documentsDirectory.appendingPathComponent(usdzFileName)
-
-            scene.write(to: usdzURL, options: nil, delegate: nil, progressHandler: nil)
-            let _ = print("Converted to usdz")
+            let scnFileName = "\(dataCanvas.uuid).scn"
+            let scnURL = documentsDirectory.appendingPathComponent(scnFileName)
+            
+            // Archive the SceneKit scene as data
+            if let scnData = try? NSKeyedArchiver.archivedData(withRootObject: scene, requiringSecureCoding: true) {
+                do {
+                    try scnData.write(to: scnURL)
+                    print("Saved SCN to \(scnURL)")
+                } catch {
+                    print("Failed to save SCN: \(error)")
+                }
+            } else {
+                print("Failed to archive the SCN scene")
+            }
         }
     }
     
-    func moveUSDZToFileManager(viewContext : NSManagedObjectContext) {
-        let documentsDirectory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
-        let usdzFileName = "\(dataCanvas.uuid).usdz"
-        let usdzURL = documentsDirectory.appendingPathComponent(usdzFileName)
-        let fileManager = FileManager.default
-
+    func loadSceneFromCoreData(viewContext: NSManagedObjectContext) -> SCNScene? {
+        // Fetch the CoreData entity with the 'projectScene' attribute
+        let fetchRequest: NSFetchRequest<ProjectEntity> = ProjectEntity.fetchRequest()
         do {
-            print(usdzURL)
-            let destinationDirectory = fileManager.temporaryDirectory // Choose a location in the file manager
-            let destinationURL = destinationDirectory.appendingPathComponent(usdzFileName)
-
-            // Create the destination directory if it doesn't exist
-            try fileManager.createDirectory(at: destinationDirectory, withIntermediateDirectories: true, attributes: nil)
-
-            // Move the file to the destination
-            try fileManager.moveItem(at: usdzURL, to: destinationURL)
-            print("USDZ file moved to the file manager.")
+            let entities = try viewContext.fetch(fetchRequest)
+            
+            if let entity = entities.first, let scnData = entity.projectScene {
+                // Unarchive the SCN data to get the SceneKit scene
+                if let scene = try NSKeyedUnarchiver.unarchiveTopLevelObjectWithData(scnData) as? SCNScene {
+                    return scene
+                } else {
+                    print("Failed to unarchive the SCN scene data")
+                }
+            }
         } catch {
-            print("Error moving USDZ file to the file manager: \(error.localizedDescription)")
+            print("Failed to fetch CoreData entity: \(error)")
         }
+        return nil
     }
+    
 }

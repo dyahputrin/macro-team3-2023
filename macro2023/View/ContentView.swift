@@ -121,6 +121,7 @@ struct ContentView: View {
                                 dataContentViewModel.dataCanvas.isRenameAlertPresented = true
                             }
                             Button("Delete", systemImage: "trash", role: .destructive){
+                                let _ = print(newProjectName.projectScene)
                                 dataContentViewModel.deleteProject(viewContext: viewContext, project: newProjectName)
                             }
                         }))

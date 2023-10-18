@@ -9,18 +9,32 @@ struct CanvasView: View {
     
     var body: some View {
         HStack {
-            SceneView(
-                scene: dataCanvasViewModel.sceneSpawn(),
-                pointOfView: dataCanvasViewModel.cameraNode(),
-                options: [
-                    .allowsCameraControl,
-                    .autoenablesDefaultLighting,
-                    .temporalAntialiasingEnabled
-                ]
-            )
-            .frame(width: UIScreen.main.bounds.width / 4 * 3, height: UIScreen.main.bounds.height / 8 * 7)
-            .border(Color.black)
-            
+            if routerView.project?.projectID == nil{
+                SceneView(
+                    scene: dataCanvasViewModel.sceneSpawn(),
+                    pointOfView: dataCanvasViewModel.cameraNode(),
+                    options: [
+                        .allowsCameraControl,
+                        .autoenablesDefaultLighting,
+                        .temporalAntialiasingEnabled
+                    ]
+                )
+                .frame(width: UIScreen.main.bounds.width / 4 * 3, height: UIScreen.main.bounds.height / 8 * 7)
+                .border(Color.black)
+            }
+            else{
+                SceneView(
+                    scene: dataCanvasViewModel.loadSceneFromCoreData(viewContext: viewContext),
+                    pointOfView: dataCanvasViewModel.cameraNode(),
+                    options: [
+                        .allowsCameraControl,
+                        .autoenablesDefaultLighting,
+                        .temporalAntialiasingEnabled
+                    ]
+                )
+                .frame(width: UIScreen.main.bounds.width / 4 * 3, height: UIScreen.main.bounds.height / 8 * 7)
+                .border(Color.black)
+            }
             Text("Hello, World!")
                 .frame(width: UIScreen.main.bounds.width / 4, height: UIScreen.main.bounds.height / 8 * 7)
                 .border(Color.black)
@@ -42,7 +56,7 @@ struct CanvasView: View {
                 NavigationLink(destination:ContentView()
                                ,label: {
                     Text((routerView.project == nil ? "ProjectName" : routerView.project!.projectName)!)
-//                    Text(routerView.project?.projectName ?? dataCanvasViewModel.dataCanvas.nameProject )
+                    //                    Text(routerView.project?.projectName ?? dataCanvasViewModel.dataCanvas.nameProject )
                         .foregroundColor(.black)
                     Image(systemName: "pencil")
                 }
