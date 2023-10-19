@@ -6,7 +6,6 @@ struct CanvasView: View {
     
     @EnvironmentObject var routerView:RouterView
     @StateObject var dataCanvasViewModel = CanvasViewModel()
-    
     var body: some View {
         HStack {
             if routerView.project?.projectID == nil{
@@ -55,8 +54,7 @@ struct CanvasView: View {
                 }
                 NavigationLink(destination:ContentView()
                                ,label: {
-                    Text((routerView.project == nil ? "ProjectName" : routerView.project!.projectName)!)
-                    //                    Text(routerView.project?.projectName ?? dataCanvasViewModel.dataCanvas.nameProject )
+                    Text(routerView.project == nil ? "ProjectName" : dataCanvasViewModel.dataCanvas.nameProject)
                         .foregroundColor(.black)
                     Image(systemName: "pencil")
                 }

@@ -12,6 +12,7 @@ import CoreData
 class CanvasViewModel: ObservableObject{
     @Published var dataCanvas = DataCanvas()
     var sceneOri:SCNScene? = nil
+    
     func sceneSpawn() -> SCNScene {
         // Create a new SCNScene
         let scene = SCNScene()
@@ -64,10 +65,6 @@ class CanvasViewModel: ObservableObject{
         return scene
     }
     
-    //    func loadScene() -> SCNScene {
-    ////        sceneOri
-    //    }
-    
     func cameraNode()-> SCNNode?{
         var cameraNode: SCNNode? {
             let cameraNode = SCNNode()
@@ -96,39 +93,13 @@ class CanvasViewModel: ObservableObject{
             } while true
         }
         let projectUUID = dataCanvas.uuid
-        
-        //        if let scene = sceneOri {
-        //            let documentsDirectory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
-        //            let scnFileName = "\(dataCanvas.uuid).scn"
-        //            let scnURL = documentsDirectory.appendingPathComponent(scnFileName)
-        //
-        //            // Archive the SceneKit scene as data
-        //            if let scnData = try? NSKeyedArchiver.archivedData(withRootObject: scene, requiringSecureCoding: true) {
-        //                do {
-        //                    try scnData.write(to: scnURL)
-        //                    print("Saved SCN to \(scnURL)")
-        //                    // Create a new CoreData entity or fetch an existing one
-        //                    let entity = ProjectEntity(context: viewContext)
-        //                    // Set the 'projectScene' attribute to the saved SCN data
-        //                    entity.projectScene = scnData
-        //                    // Save the managed object context to persist the changes
-        //                    //                    try viewContext.save()
-        //                } catch {
-        //                    print("Failed to save SCN: \(error)")
-        //                }
-        //            } else {
-        //                print("Failed to archive the SCN scene")
-        //            }
-        //        }
-        
+            
         // Fetch the existing project with the same UUID
         let fetchRequest: NSFetchRequest<ProjectEntity> = ProjectEntity.fetchRequest()
         fetchRequest.predicate = NSPredicate(format: "projectID == %@", projectUUID as CVarArg)
         do {
             if let existingProject = try viewContext.fetch(fetchRequest).first {
-                // Update the existing project
                 existingProject.projectName = projectName
-                // Update other properties as needed
             } else {
                 // No existing project found, create a new one
                 let newProject = ProjectEntity(context: viewContext)
@@ -136,10 +107,6 @@ class CanvasViewModel: ObservableObject{
                 newProject.projectName = projectName
                 if let scene = sceneOri {
                     if let scnData = try? NSKeyedArchiver.archivedData(withRootObject: scene, requiringSecureCoding: true) {
-                        
-                        // Create a new CoreData entity or fetch an existing one
-                        //                    let entity = ProjectEntity(context: viewContext)
-                        //                    // Set the 'projectScene' attribute to the saved SCN data
                         newProject.projectScene = scnData
                         
                     } else {
@@ -166,28 +133,7 @@ class CanvasViewModel: ObservableObject{
         }
     }
     
-    func saveSceneToCoreData(viewContext: NSManagedObjectContext) {
-        if let scene = sceneOri {
-            let documentsDirectory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
-            let scnFileName = "\(dataCanvas.uuid).scn"
-            let scnURL = documentsDirectory.appendingPathComponent(scnFileName)
-            
-            // Archive the SceneKit scene as data
-            if let scnData = try? NSKeyedArchiver.archivedData(withRootObject: scene, requiringSecureCoding: true) {
-                do {
-                    try scnData.write(to: scnURL)
-                    print("Saved SCN to \(scnURL)")
-                } catch {
-                    print("Failed to save SCN: \(error)")
-                }
-            } else {
-                print("Failed to archive the SCN scene")
-            }
-        }
-    }
-    
     func loadSceneFromCoreData(viewContext: NSManagedObjectContext) -> SCNScene? {
-        // Fetch the CoreData entity with the 'projectScene' attribute
         let fetchRequest: NSFetchRequest<ProjectEntity> = ProjectEntity.fetchRequest()
         do {
             let entities = try viewContext.fetch(fetchRequest)

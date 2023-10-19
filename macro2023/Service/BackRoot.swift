@@ -10,12 +10,4 @@ import Foundation
 class RouterView:ObservableObject{
     @Published var path:[String] = []
     @Published var project:ProjectEntity? = nil
-//    func backToRoot(){
-//        path.removeAll()
-//    }
-//
-//    func backToView(pageName:String){
-//
-//    }
-    
 }
