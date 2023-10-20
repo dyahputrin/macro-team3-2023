@@ -1,8 +1,8 @@
 //
-//  ContentView.swift
+//  ProjectManagerView.swift
 //  macro2023
 //
-//  Created by Dyah Putri Nariswari on 09/10/23.
+//  Created by Dyah Putri Nariswari on 20/10/23.
 //
 
 import SwiftUI
@@ -57,28 +57,22 @@ extension Color {
 }
 enum ProjectType {
     case new
-    case existing(ProjectEntity) // Store the project entity for easy access.
+    case existing(Project) // Store the project entity for easy access.
 }
 
-struct ContentView: View {
+struct ProjectManagerView: View {
     @StateObject var dataContentViewModel = ContentViewModel()
     @Environment(\.managedObjectContext) private var viewContext
     @EnvironmentObject var routerView:RouterView
     
-    @FetchRequest(entity: ProjectEntity.entity(),
-                  sortDescriptors: [NSSortDescriptor(keyPath: \ProjectEntity.projectName, ascending: true)])
-    var newName: FetchedResults<ProjectEntity>
-//    var projects: FetchedResults<ProjectEntity>
+    @FetchRequest(entity: Project.entity(),
+                  sortDescriptors: [NSSortDescriptor(keyPath: \Project.name, ascending: true)])
+    var newName: FetchedResults<Project>
     let columns = [GridItem(.flexible()),GridItem(.flexible()),GridItem(.flexible()),GridItem(.flexible()),GridItem(.flexible())]
-    
-    @State private var currentProjectName: String = ""
-    @State private var currentProjectEntity: ProjectEntity? = nil
     
     @StateObject var projectViewModel = ProjectViewModel()
     @State private var selectedProjectType: ProjectType? = nil
     @State private var fetchedScene: SCNScene? = nil
-    
-//    @Published var projectModel: ProjectModel
     
     var body: some View {
         NavigationStack(path: $routerView.path){
@@ -198,7 +192,8 @@ struct ContentView: View {
 }
 
 #Preview {
-    ContentView().environment(\.managedObjectContext,PersistenceController.preview.container.viewContext)
+    ProjectManagerView().environment(\.managedObjectContext,PersistenceController.preview.container.viewContext)
         .environmentObject(RouterView())
-        .previewInterfaceOrientation(.landscapeLeft)
 }
+
+

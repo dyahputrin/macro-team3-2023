@@ -50,7 +50,7 @@ struct CanvasView: View {
     var body: some View {
         GeometryReader { geometry in
             ZStack {
-                let a = print("load: \(existingProjectName)")
+//                let a = print("load: \(existingProjectName)")
                 RoomSceneView(roomSceneViewModel: roomSceneViewModel, sceneViewID: $sceneViewID)
             }
             
@@ -176,139 +176,9 @@ struct CanvasView: View {
         })
         
     }
-    
-//    var body: some View {
-//        HStack {
-//            SceneView(
-//                scene: dataCanvasViewModel.sceneSpawn(),
-//                pointOfView: dataCanvasViewModel.cameraNode(),
-//                options: [
-//                    .allowsCameraControl,
-//                    .autoenablesDefaultLighting,
-//                    .temporalAntialiasingEnabled
-//                ]
-//            )
-//            .frame(width: UIScreen.main.bounds.width / 4 * 3, height: UIScreen.main.bounds.height / 8 * 7)
-//            .border(Color.black)
-//            
-//            Text("Hello, World!")
-//                .frame(width: UIScreen.main.bounds.width / 4, height: UIScreen.main.bounds.height / 8 * 7)
-//                .border(Color.black)
-//        }
-//        .padding()
-//        .toolbar {
-//            ToolbarItemGroup(placement: .topBarLeading) {
-//                Button() {
-//                    //                    routerView.path.removeLast()
-//                    if routerView.path.count > 0 {
-//                        routerView.path.removeLast()
-//                    }
-//                    dataCanvasViewModel.dataCanvas.nameProject = ""
-//                    dataCanvasViewModel.dataCanvas.uuid = UUID()
-//                    
-//                    routerView.project = nil
-//                } label: {
-//                    Image(systemName: "chevron.left")
-////                    ToolbarItemGroup {
-////                        HStack {
-////                            //VIEWFINDER
-////                            Menu {
-////                                Button(action: /*@START_MENU_TOKEN@*/{}/*@END_MENU_TOKEN@*/, label: {
-////                                    Text("Scan objects")
-////                                })
-////                                Button(action: /*@START_MENU_TOKEN@*/{}/*@END_MENU_TOKEN@*/, label: {
-////                                    Text("Scan room")
-////                                })
-////                            } label: {
-////                                Label("Viewfinder", systemImage: "viewfinder")
-////                                    .foregroundColor(.black)
-////                            }
-////                            
-////                            // ROOM
-////                            Button(action : {
-////                                roomButtonClicked.toggle()
-////                                objectsButtonClicked = false
-////                            }) {
-////                                Image(systemName: "square.split.bottomrightquarter")
-////                                    .foregroundColor(roomButtonClicked ? .blue : .black)
-////                                    .padding()
-////                            }
-////                            
-////                            //OBJECTS
-////                            Button(action : {
-////                                objectsButtonClicked.toggle()
-////                                roomButtonClicked = false
-////                            }) {
-////                                Image(systemName: "chair.lounge")
-////                                    .foregroundColor(objectsButtonClicked ? .blue : .black)
-////                            }
-////                        }
-////                        NavigationLink(destination:ContentView()
-////                                       ,label: {
-////                            //   Text(routerView.project == nil ? dataCanvasViewModel.dataCanvas.nameProject : routerView.project)
-////                            Text(routerView.project?.projectName ?? dataCanvasViewModel.dataCanvas.nameProject )
-////                                .foregroundColor(.black)
-////                            Image(systemName: "pencil")
-////                        }
-////                        )
-////                    }
-////                    ToolbarItemGroup(placement: .topBarTrailing) {
-////                        Button("Save") {
-////                            dataCanvasViewModel.saveProject(viewContext: viewContext)
-////                            
-////                        }
-////                    }
-//                }
-//                .toolbarBackground(Color(UIColor.systemGray6), for: .navigationBar)
-//                .toolbarBackground(.visible, for: .navigationBar)
-//                .navigationBarBackButtonHidden(true)
-//                .navigationTitle(projectName)
-//                .onAppear {
-//                    if routerView.project != nil {
-//                        dataCanvasViewModel.dataCanvas.nameProject = routerView.project!.projectName!
-//                        dataCanvasViewModel.dataCanvas.uuid = routerView.project!.projectID!
-//                    }
-//                }
-//                .toolbarTitleMenu {
-//                    Button(action: {
-//                        renameClicked = true
-//                        print("Action for context menu item 1")
-//                    }) {
-//                        Label("Rename", systemImage: "pencil")
-//                    }
-//                    Button(action: {
-//                        isExporting = true
-//                        print("Action for context menu item 2")
-//                    }) {
-//                        Label("Export as USDZ", systemImage: "square.and.arrow.up")
-//                    }
-//                }
-//                .alert("Rename", isPresented: $renameClicked, actions: {
-//                    TextField("\(projectName)", text: $newProjectName)
-//                    Button("Save", action: {
-//                        projectName = newProjectName
-//                        renameClicked = false
-//                    })
-//                    Button("Cancel", role: .cancel, action: {
-//                        renameClicked = false
-//                    })
-//                })
-//                
-//            }
-//        }
-//    }
 }
 
 #Preview {
     CanvasView(objectsButtonClicked: false, roomButtonClicked: false, viewfinderButtonClicked: .constant(false), isImporting: .constant(false), isExporting: .constant(false), isSetButtonSidebarTapped: .constant(false), existingProjectName: "")
 }
-
-//struct CanvasView_Previews: PreviewProvider {
-//    static var previews: some View {
-//        NavigationStack{
-//            CanvasView(viewfinderButtonClicked: Binding.constant(false), isImporting: Binding.constant(false), isExporting: Binding.constant(false), isSetButtonSidebarTapped: Binding.constant(false), objectsButtonClicked: false, roomButtonClicked: false).environment(\.managedObjectContext,PersistenceController.preview.container.viewContext)
-//                .environmentObject(RouterView())
-//        }
-//    }
-//}
 

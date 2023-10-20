@@ -15,9 +15,12 @@ struct macro2023App: App {
     
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            ProjectManagerView()
                 .environment(\.managedObjectContext,persistenceController.container.viewContext)
                 .environmentObject(routerView)
+//            ContentView()
+//                .environment(\.managedObjectContext,persistenceController.container.viewContext)
+//                .environmentObject(routerView)
         }
     }
 }
