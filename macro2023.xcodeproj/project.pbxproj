@@ -49,11 +49,9 @@
 		94DDE9592ADE8FFA007915FF /* TopToolbarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94DDE9342ADE8FFA007915FF /* TopToolbarView.swift */; };
 		94DDE95A2ADE8FFA007915FF /* DocumentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94DDE9352ADE8FFA007915FF /* DocumentView.swift */; };
 		94DDE95B2ADE8FFA007915FF /* RoomSidebarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94DDE9362ADE8FFA007915FF /* RoomSidebarView.swift */; };
-		94DDE95C2ADE8FFA007915FF /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94DDE9372ADE8FFA007915FF /* ContentView.swift */; };
 		94DDE95D2ADE8FFA007915FF /* ImportButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94DDE9382ADE8FFA007915FF /* ImportButtonView.swift */; };
 		94DDE95E2ADE8FFA007915FF /* SizePopUpView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94DDE9392ADE8FFA007915FF /* SizePopUpView.swift */; };
 		94DDE95F2ADE8FFA007915FF /* TransitionExt.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94DDE93B2ADE8FFA007915FF /* TransitionExt.swift */; };
-		94DDE9602ADE8FFA007915FF /* CanvasViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94DDE93C2ADE8FFA007915FF /* CanvasViewModel.swift */; };
 		94DDE9612ADE8FFA007915FF /* ColorExt.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94DDE93D2ADE8FFA007915FF /* ColorExt.swift */; };
 		94DDE9622ADE8FFA007915FF /* ToolbarModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94DDE93E2ADE8FFA007915FF /* ToolbarModel.swift */; };
 		94DDE9632ADE8FFA007915FF /* OnboardingViewControllerWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94DDE9402ADE8FFA007915FF /* OnboardingViewControllerWrapper.swift */; };
@@ -73,6 +71,13 @@
 		94DDE9722ADE8FFA007915FF /* v2wall4.usdz in Resources */ = {isa = PBXBuildFile; fileRef = 94DDE9522ADE8FFA007915FF /* v2wall4.usdz */; };
 		94DDE9732ADE8FFA007915FF /* RoomScene.scn in Resources */ = {isa = PBXBuildFile; fileRef = 94DDE9532ADE8FFA007915FF /* RoomScene.scn */; };
 		94DDE9752ADE8FFA007915FF /* macro2023App.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94DDE9552ADE8FFA007915FF /* macro2023App.swift */; };
+		210C7FF22AD531C200E01229 /* Model.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 210C7FF02AD531C200E01229 /* Model.xcdatamodeld */; };
+		210C80142AD5343400E01229 /* Persistence.swift in Sources */ = {isa = PBXBuildFile; fileRef = 210C80132AD5343400E01229 /* Persistence.swift */; };
+		21C90C192AD694880003D517 /* CanvasData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21C90C182AD694880003D517 /* CanvasData.swift */; };
+		21C90C1B2AD6956C0003D517 /* CanvasViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21C90C1A2AD6956C0003D517 /* CanvasViewModel.swift */; };
+		21C90C412AD6A15B0003D517 /* BackRoot.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21C90C402AD6A15B0003D517 /* BackRoot.swift */; };
+		21C90C432AD7CC810003D517 /* ContentViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21C90C422AD7CC810003D517 /* ContentViewModel.swift */; };
+		BE1AE87C2AD3D65800F586CD /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE1AE87B2AD3D65800F586CD /* ContentView.swift */; };
 		BE1AE87E2AD3D65900F586CD /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BE1AE87D2AD3D65900F586CD /* Assets.xcassets */; };
 /* End PBXBuildFile section */
 
@@ -124,7 +129,6 @@
 		94DDE9382ADE8FFA007915FF /* ImportButtonView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImportButtonView.swift; sourceTree = "<group>"; };
 		94DDE9392ADE8FFA007915FF /* SizePopUpView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SizePopUpView.swift; sourceTree = "<group>"; };
 		94DDE93B2ADE8FFA007915FF /* TransitionExt.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TransitionExt.swift; sourceTree = "<group>"; };
-		94DDE93C2ADE8FFA007915FF /* CanvasViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CanvasViewModel.swift; sourceTree = "<group>"; };
 		94DDE93D2ADE8FFA007915FF /* ColorExt.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ColorExt.swift; sourceTree = "<group>"; };
 		94DDE93E2ADE8FFA007915FF /* ToolbarModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ToolbarModel.swift; sourceTree = "<group>"; };
 		94DDE9402ADE8FFA007915FF /* OnboardingViewControllerWrapper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OnboardingViewControllerWrapper.swift; sourceTree = "<group>"; };
@@ -144,7 +148,12 @@
 		94DDE9522ADE8FFA007915FF /* v2wall4.usdz */ = {isa = PBXFileReference; lastKnownFileType = file.usdz; path = v2wall4.usdz; sourceTree = "<group>"; };
 		94DDE9532ADE8FFA007915FF /* RoomScene.scn */ = {isa = PBXFileReference; lastKnownFileType = file.bplist; path = RoomScene.scn; sourceTree = "<group>"; };
 		94DDE9552ADE8FFA007915FF /* macro2023App.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = macro2023App.swift; sourceTree = "<group>"; };
-		BE1AE8762AD3D65800F586CD /* macro2023.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = macro2023.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		210C7FF12AD531C200E01229 /* Model.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Model.xcdatamodel; sourceTree = "<group>"; };
+		210C80132AD5343400E01229 /* Persistence.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Persistence.swift; sourceTree = "<group>"; };
+		21C90C182AD694880003D517 /* CanvasData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CanvasData.swift; sourceTree = "<group>"; };
+		21C90C1A2AD6956C0003D517 /* CanvasViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CanvasViewModel.swift; sourceTree = "<group>"; };
+		21C90C402AD6A15B0003D517 /* BackRoot.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackRoot.swift; sourceTree = "<group>"; };
+		21C90C422AD7CC810003D517 /* ContentViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentViewModel.swift; sourceTree = "<group>"; };
 		BE1AE87D2AD3D65900F586CD /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -280,6 +289,55 @@
 			children = (
 			);
 			path = "Preview Content";
+		};
+		210C7FEB2AD52BED00E01229 /* Object */ = {
+			isa = PBXGroup;
+			children = (
+				21C90BFB2AD685F60003D517 /* 3D Object */,
+			);
+			path = Object;
+			sourceTree = "<group>";
+		};
+		210C7FF32AD531FB00E01229 /* Data */ = {
+			isa = PBXGroup;
+			children = (
+				210C7FF02AD531C200E01229 /* Model.xcdatamodeld */,
+				210C80132AD5343400E01229 /* Persistence.swift */,
+			);
+			path = Data;
+			sourceTree = "<group>";
+		};
+		2172DE732AD40DDD00454B87 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				BE1AE87B2AD3D65800F586CD /* ContentView.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		21C90C162AD694010003D517 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				21C90C422AD7CC810003D517 /* ContentViewModel.swift */,
+				21C90C1A2AD6956C0003D517 /* CanvasViewModel.swift */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		21C90C172AD694090003D517 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				21C90C182AD694880003D517 /* CanvasData.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		21C90C3F2AD6A1440003D517 /* Service */ = {
+			isa = PBXGroup;
+			children = (
+				21C90C402AD6A15B0003D517 /* BackRoot.swift */,
+			);
+			path = Service;
 			sourceTree = "<group>";
 		};
 		BE1AE86D2AD3D65800F586CD = {
@@ -301,6 +359,13 @@
 		BE1AE8782AD3D65800F586CD /* macro2023 */ = {
 			isa = PBXGroup;
 			children = (
+				BE1AE8792AD3D65800F586CD /* macro2023App.swift */,
+				21C90C3F2AD6A1440003D517 /* Service */,
+				21C90C172AD694090003D517 /* Model */,
+				21C90C162AD694010003D517 /* ViewModel */,
+				2172DE732AD40DDD00454B87 /* View */,
+				210C7FF32AD531FB00E01229 /* Data */,
+				210C7FEB2AD52BED00E01229 /* Object */,
 				BE1AE87D2AD3D65900F586CD /* Assets.xcassets */,
 				94DDE9482ADE8FFA007915FF /* BuildRoom */,
 				9487BDE22ADE93B0004FCC67 /* Guided Capture */,
@@ -385,6 +450,7 @@
 				94DDE96D2ADE8FFA007915FF /* v2wall1.usdz in Resources */,
 				94DDE96E2ADE8FFA007915FF /* v2wall3.usdz in Resources */,
 				94DDE9722ADE8FFA007915FF /* v2wall4.usdz in Resources */,
+				BE1AE8812AD3D65900F586CD /* Preview Assets.xcassets in Resources */,
 				BE1AE87E2AD3D65900F586CD /* Assets.xcassets in Resources */,
 				9487BE2A2ADE93CF004FCC67 /* ScanPasses-iPad-FixedHeight-1.mp4 in Resources */,
 				94DDE96F2ADE8FFA007915FF /* v2wall2.usdz in Resources */,
@@ -450,6 +516,14 @@
 				94DDE95B2ADE8FFA007915FF /* RoomSidebarView.swift in Sources */,
 				9487BE032ADE93B0004FCC67 /* AppDataModel+Orbit.swift in Sources */,
 				94DDE95A2ADE8FFA007915FF /* DocumentView.swift in Sources */,
+				21C90C1B2AD6956C0003D517 /* CanvasViewModel.swift in Sources */,
+				21C90C192AD694880003D517 /* CanvasData.swift in Sources */,
+				BE1AE87C2AD3D65800F586CD /* ContentView.swift in Sources */,
+				21C90C432AD7CC810003D517 /* ContentViewModel.swift in Sources */,
+				BE1AE87A2AD3D65800F586CD /* macro2023App.swift in Sources */,
+				210C7FF22AD531C200E01229 /* Model.xcdatamodeld in Sources */,
+				210C80142AD5343400E01229 /* Persistence.swift in Sources */,
+				21C90C412AD6A15B0003D517 /* BackRoot.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -591,8 +665,8 @@
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = UIInterfaceOrientationLandscapeRight;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -600,11 +674,13 @@
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.dyahputrin.macro2023;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_OBJC_BRIDGING_HEADER = "macro2023/macro2023-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 2;
 			};
 			name = Debug;
 		};
@@ -624,8 +700,8 @@
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = UIInterfaceOrientationLandscapeRight;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -633,10 +709,12 @@
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.dyahputrin.macro2023;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_OBJC_BRIDGING_HEADER = "macro2023/macro2023-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 2;
 			};
 			name = Release;
 		};
@@ -662,6 +740,19 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		210C7FF02AD531C200E01229 /* Model.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				210C7FF12AD531C200E01229 /* Model.xcdatamodel */,
+			);
+			currentVersion = 210C7FF12AD531C200E01229 /* Model.xcdatamodel */;
+			path = Model.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = BE1AE86E2AD3D65800F586CD /* Project object */;
 }

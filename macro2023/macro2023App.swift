@@ -11,9 +11,13 @@ import SwiftUI
 struct macro2023App: App {
     static let subsystem: String = "com.dyahputrin.macro2023"
     
+    let persistenceController = PersistenceController.shared
+    @StateObject var routerView = RouterView()
     var body: some Scene {
         WindowGroup {
             ContentView()
+                .environment(\.managedObjectContext,persistenceController.container.viewContext)
+                .environmentObject(routerView)
         }
     }
 }
