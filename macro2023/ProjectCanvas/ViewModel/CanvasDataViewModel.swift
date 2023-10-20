@@ -1,83 +1,100 @@
 //
-//  CanvasViewModel.swift
+//  RoomSceneViewModel.swift
 //  macro2023
 //
-//  Created by Billy Jefferson on 11/10/23.
+//  Created by Dyah Putri Nariswari on 10/10/23.
 //
 
 import Foundation
 import SceneKit
 import CoreData
 
-class CanvasViewModel: ObservableObject{
-    @Published var dataCanvas = DataCanvas()
+class CanvasDataViewModel: ObservableObject {
+    
+    @Published var canvasData: CanvasData
+    @Published var projectData: ProjectData
+    
     var sceneOri:SCNScene? = nil
     
-    func sceneSpawn() -> SCNScene {
-        // Create a new SCNScene
-        let scene = SCNScene()
-        
-        // Create SCNNodes for the four walls
+    init(canvasData: CanvasData, projectData: ProjectData) {
+        self.canvasData = canvasData
+        self.projectData = projectData
+    }
+    
+    // function to make the scene
+    func makeScene(width: CGFloat, height: CGFloat, length: CGFloat) -> SCNScene? {
+        let scene = SCNScene(named: "RoomScene.scn")
         let floorNode = SCNNode()
         let wall1Node = SCNNode()
         let wall2Node = SCNNode()
-        let wall3Node = SCNNode()
-        let wall4Node = SCNNode()
         
-        // Load and add the floor asset
-        if let floorAsset = SCNScene(named: "v2floor.usdz") {
+        scene?.background.contents = UIColor.lightGray
+        
+        if let floorAsset = SCNScene(named: "v2floor.usdz"){
+            let floorGeometry = floorAsset.rootNode.childNodes.first?.geometry?.copy() as? SCNGeometry
+            floorNode.geometry = floorGeometry
+            floorNode.scale = SCNVector3(canvasData.roomWidth, canvasData.roomHeight, canvasData.roomLength)
             floorNode.addChildNode(floorAsset.rootNode)
-            scene.rootNode.addChildNode(floorNode)
+            scene?.rootNode.addChildNode(floorNode)
         }
-        
-        // Load and add the first wall asset
-        if let wall1Asset = SCNScene(named: "v2wall1.usdz") {
+        if let wall1Asset = SCNScene(named: "v2wall1.usdz"){
+            let wall1Geometry = wall1Asset.rootNode.childNodes.first?.geometry?.copy() as? SCNGeometry
+            wall1Node.geometry = wall1Geometry
+            wall1Node.position = SCNVector3()
+            wall1Node.scale = SCNVector3(canvasData.roomWidth, canvasData.roomHeight, canvasData.roomLength)
             wall1Node.addChildNode(wall1Asset.rootNode)
-            scene.rootNode.addChildNode(wall1Node)
+            scene?.rootNode.addChildNode(wall1Node)
         }
-        
-        // Load and add the second wall asset
-        if let wall2Asset = SCNScene(named: "v2wall2.usdz") {
+        if let wall2Asset = SCNScene(named: "v2wall2.usdz"){
+            let wall2Geometry = wall2Asset.rootNode.childNodes.first?.geometry?.copy() as? SCNGeometry
+            wall2Node.geometry = wall2Geometry
+            wall2Node.scale = SCNVector3(canvasData.roomWidth, canvasData.roomHeight, canvasData.roomLength)
             wall2Node.addChildNode(wall2Asset.rootNode)
-            scene.rootNode.addChildNode(wall2Node)
+            scene?.rootNode.addChildNode(wall2Node)
         }
         
-        // Load and add the third wall asset
-        if let wall3Asset = SCNScene(named: "v2wall3.usdz") {
-            wall3Node.addChildNode(wall3Asset.rootNode)
-            scene.rootNode.addChildNode(wall3Node)
-        }
-        
-        // Load and add the fourth wall asset
-        if let wall4Asset = SCNScene(named: "v2wall4.usdz") {
-            wall4Node.addChildNode(wall4Asset.rootNode)
-            scene.rootNode.addChildNode(wall4Node)
-        }
-        
-        // Adjust the scale of nodes based on your dataCanvas values
-        floorNode.scale = SCNVector3(dataCanvas.lengthScale, dataCanvas.heightScale, dataCanvas.widthScale)
-        wall1Node.scale = SCNVector3(dataCanvas.lengthScale, dataCanvas.heightScale, dataCanvas.widthScale)
-        wall2Node.scale = SCNVector3(dataCanvas.lengthScale, dataCanvas.heightScale, dataCanvas.widthScale)
-        wall3Node.scale = SCNVector3(dataCanvas.lengthScale, dataCanvas.heightScale, dataCanvas.widthScale)
-        wall4Node.scale = SCNVector3(dataCanvas.lengthScale, dataCanvas.heightScale, dataCanvas.widthScale)
+        let camera = SCNCamera()
+        let cameraNode = SCNNode()
+        cameraNode.camera = camera
+        // Set the custom position for the camera using SCNVector3
+        let customCameraPosition = SCNVector3(x: 0, y: 5, z: 5)
+        cameraNode.position = customCameraPosition
+        scene?.rootNode.addChildNode(cameraNode)
         
         sceneOri = scene
         return scene
     }
     
-    func cameraNode()-> SCNNode?{
-        var cameraNode: SCNNode? {
-            let cameraNode = SCNNode()
-            cameraNode.camera = SCNCamera()
-            cameraNode.position = SCNVector3(x: 0, y:0, z: 15)
-            cameraNode.rotation = SCNVector4(0, 0, 0, Float.pi / 2)
-            return cameraNode
-        }
-        return cameraNode
+    // function for updating room size
+    func updateRoomSize(width: CGFloat, height: CGFloat, length: CGFloat) {
+        canvasData.roomWidth = width
+        canvasData.roomHeight = height
+        canvasData.roomLength = length
+        print("Update Room Size --> width: \(canvasData.roomWidth); height: \(canvasData.roomHeight); length: \(canvasData.roomLength)")
     }
     
+    // function for convert text to cgfloat for room size
+    func stringToCGFloat(value: String) -> CGFloat? {
+        if let floatValue = Float(value) {
+            return CGFloat(floatValue)
+        }
+        return nil
+    }
+    
+    func renameProject(project: ProjectEntity, newProjectName: String, viewContext: NSManagedObjectContext) {
+           // Handle renaming logic here, update the project entity with the new name
+           project.projectName = newProjectName
+
+           do {
+               try viewContext.save()
+           } catch {
+               // Handle the error
+               print("Error renaming project: \(error)")
+           }
+       }
+    
     func saveProject(viewContext: NSManagedObjectContext) {
-        var projectName = dataCanvas.nameProject
+        var projectName = projectData.nameProject
         
         // Check if the project name is empty or nil
         if projectName.isEmpty{
@@ -86,13 +103,13 @@ class CanvasViewModel: ObservableObject{
                 let generatedName = "Project\(counter)"
                 if !projectExists(withName: generatedName, in: viewContext) {
                     projectName = generatedName
-                    dataCanvas.nameProject = projectName
+                    projectData.nameProject = projectName
                     break
                 }
                 counter += 1
             } while true
         }
-        let projectUUID = dataCanvas.uuid
+        let projectUUID = projectData.uuid
             
         // Fetch the existing project with the same UUID
         let fetchRequest: NSFetchRequest<ProjectEntity> = ProjectEntity.fetchRequest()
@@ -151,5 +168,14 @@ class CanvasViewModel: ObservableObject{
         }
         return nil
     }
-    
 }
+
+
+
+
+
+
+
+
+
+

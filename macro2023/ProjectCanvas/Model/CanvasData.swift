@@ -8,7 +8,7 @@
 import Foundation
 import SceneKit
 
-class RoomSceneModel: ObservableObject {
+class CanvasData: ObservableObject {
     @Published var roomWidth: CGFloat
     @Published var roomHeight: CGFloat
     @Published var roomLength: CGFloat

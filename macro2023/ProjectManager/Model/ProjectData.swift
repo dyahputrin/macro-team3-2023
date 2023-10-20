@@ -1,5 +1,5 @@
 //
-//  CanvasData.swift
+//  ProjectData.swift
 //  macro2023
 //
 //  Created by Billy Jefferson on 11/10/23.
@@ -8,7 +8,7 @@
 import Foundation
 import SceneKit
 
-struct DataCanvas {
+struct ProjectData {
     var uuid = UUID()
     var nameProject = ""
     var lengthScale: CGFloat = 5 // this is X - kiri kanan

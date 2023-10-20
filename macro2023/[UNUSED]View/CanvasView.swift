@@ -1,9 +1,3 @@
-//
-//  CanvasView.swift
-//  macro2023
-//
-//  Created by Shalomeira Winata on 11/10/23.
-//
 
 import SwiftUI
 

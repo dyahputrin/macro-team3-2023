@@ -42,36 +42,26 @@ struct RoundedCorners: View {
         }
     }
 }
-extension Color {
-    init(hex: UInt, alpha: Double = 1) {
-        self.init(
-            .sRGB,
-            red: Double((hex >> 16) & 0xff) / 255,
-            green: Double((hex >> 08) & 0xff) / 255,
-            blue: Double((hex >> 00) & 0xff) / 255,
-            opacity: alpha
-        )
-    }
-}
 
-struct ContentView: View {
-    @StateObject var dataContentViewModel = ContentViewModel()
-    
+struct ProjectView: View {
+    @StateObject var dataContentViewModel = ProjectViewModel()
+
     @Environment(\.managedObjectContext) private var viewContext
-    
+
     @EnvironmentObject var routerView:RouterView
-    
+
     @FetchRequest(entity: ProjectEntity.entity(),
                   sortDescriptors: [NSSortDescriptor(keyPath: \ProjectEntity.projectName, ascending: true)])
     var newName: FetchedResults<ProjectEntity>
-    
+
     let columns = [GridItem(.flexible()),GridItem(.flexible()),GridItem(.flexible()),GridItem(.flexible()),GridItem(.flexible())]
-    
+
     @State private var currentProjectName: String = ""
-    
+
     @State private var currentProjectEntity: ProjectEntity? = nil
-    
+
     var body: some View {
+        let _ = dataContentViewModel.printAllData(in: viewContext)
         NavigationStack(path: $routerView.path){
             ScrollView{
                 LazyVGrid(columns: columns) {
@@ -142,7 +132,7 @@ struct ContentView: View {
                                     }
                                 }
                     }
-                    
+
                     .padding(.bottom,30)
                 }
                 .padding()
@@ -157,19 +147,20 @@ struct ContentView: View {
             }
             .navigationDestination(for: String.self) { val in
                 if val == "canvas"{
-                    
-                    CanvasView()
+
+                    CanvasView(objectsButtonClicked: false, roomButtonClicked: false, viewfinderButtonClicked: .constant(false), isImporting: .constant(false), isExporting: .constant(false), isSetButtonSidebarTapped: .constant(false))
                 }else{
-               
+
                 }
-                
+
             }
         }
-        
+
     }
 }
 
 #Preview {
-    ContentView().environment(\.managedObjectContext,PersistenceController.preview.container.viewContext)
+    ProjectView().environment(\.managedObjectContext,PersistenceController.preview.container.viewContext)
         .environmentObject(RouterView())
 }
+
