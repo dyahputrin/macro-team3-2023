@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import SceneKit
 
 struct CanvasView: View {
     @Environment(\.managedObjectContext) private var viewContext
@@ -38,12 +39,18 @@ struct CanvasView: View {
         GeometryReader { geometry in
             if routerView.project?.projectID == nil{
                 ZStack {
-                    RoomSceneView(roomSceneViewModel: roomSceneViewModel, sceneViewID: $sceneViewID)
+                    let _ = print(routerView.project?.projectID)
+                    SceneView(scene: roomSceneViewModel.makeScene(width: roomSceneViewModel.canvasData.roomWidth, height: roomSceneViewModel.canvasData.roomHeight, length: roomSceneViewModel.canvasData.roomLength), options: [.allowsCameraControl])
+                        .edgesIgnoringSafeArea(.bottom)
+                        .id(sceneViewID)
                 }
             }
             else {
                 ZStack {
-                    RoomSceneView(roomSceneViewModel: roomSceneViewModel, sceneViewID: $sceneViewID)
+                    let _ = print(routerView.project?.projectID)
+                    SceneView(scene: roomSceneViewModel.loadSceneFromCoreData(viewContext: viewContext), options: [.allowsCameraControl])
+                        .edgesIgnoringSafeArea(.bottom)
+                        .id(sceneViewID)
                 }
             }
             

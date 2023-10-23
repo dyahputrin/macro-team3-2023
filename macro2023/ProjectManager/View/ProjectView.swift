@@ -52,7 +52,7 @@ struct ProjectView: View {
 
     @FetchRequest(entity: ProjectEntity.entity(),
                   sortDescriptors: [NSSortDescriptor(keyPath: \ProjectEntity.projectName, ascending: true)])
-    var newName: FetchedResults<ProjectEntity>
+    var recentlyOpenedItems: FetchedResults<ProjectEntity>
 
     let columns = [GridItem(.flexible()),GridItem(.flexible()),GridItem(.flexible()),GridItem(.flexible()),GridItem(.flexible())]
 
@@ -80,7 +80,7 @@ struct ProjectView: View {
                             )
                     })
                     .padding(.bottom,30)
-                    ForEach(newName){ newProjectName in
+                    ForEach(recentlyOpenedItems){ newProjectName in
                         RoundedRectangle(cornerRadius: 16, style: .circular)
                             .frame(width: 200, height: 200)
                             .shadow(radius: 5)
