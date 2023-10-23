@@ -47,8 +47,7 @@ struct CanvasView: View {
             }
             else {
                 ZStack {
-                    let _ = print(routerView.project?.projectID)
-                    SceneView(scene: roomSceneViewModel.loadSceneFromCoreData(viewContext: viewContext), options: [.allowsCameraControl])
+                    SceneView(scene: roomSceneViewModel.loadSceneFromCoreData(selectedProjectID: routerView.project!.projectID!, in: viewContext), options: [.allowsCameraControl])
                         .edgesIgnoringSafeArea(.bottom)
                         .id(sceneViewID)
                 }
@@ -66,10 +65,10 @@ struct CanvasView: View {
         .onAppear {
             sheetPresented = true
         }
-//        .sheet(isPresented: $sheetPresented) {
-//            SizePopUpView(sheetPresented: $sheetPresented, isSetButtonTapped: $isSetButtonTapped, roomSceneViewModel: roomSceneViewModel, sceneViewID: $sceneViewID, roomWidthText: $roomWidthText, roomLengthText: $roomLengthText, roomHeightText: $roomHeightText)
-//                .interactiveDismissDisabled()
-//        }
+        //        .sheet(isPresented: $sheetPresented) {
+        //            SizePopUpView(sheetPresented: $sheetPresented, isSetButtonTapped: $isSetButtonTapped, roomSceneViewModel: roomSceneViewModel, sceneViewID: $sceneViewID, roomWidthText: $roomWidthText, roomLengthText: $roomLengthText, roomHeightText: $roomHeightText)
+        //                .interactiveDismissDisabled()
+        //        }
         .toolbarRole(.editor)
         .toolbarBackground(Color.blue)
         .toolbar {
@@ -188,6 +187,14 @@ struct CanvasView: View {
                 roomSceneViewModel.projectData.nameProject = routerView.project!.projectName!
                 roomSceneViewModel.projectData.uuid = routerView.project!.projectID!
             }
+        }
+        .onDisappear{
+            if routerView.path.count > 0 {
+                routerView.path.removeLast()
+            }
+            roomSceneViewModel.projectData.nameProject = ""
+            roomSceneViewModel.projectData.uuid = UUID()
+            routerView.project = nil
         }
         
     }

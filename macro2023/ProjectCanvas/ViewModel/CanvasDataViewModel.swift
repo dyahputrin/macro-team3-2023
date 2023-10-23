@@ -27,6 +27,8 @@ class CanvasDataViewModel: ObservableObject {
         let floorNode = SCNNode()
         let wall1Node = SCNNode()
         let wall2Node = SCNNode()
+        let wall3Node = SCNNode()
+        let wall4Node = SCNNode()
         
         scene?.background.contents = UIColor.lightGray
         
@@ -51,6 +53,22 @@ class CanvasDataViewModel: ObservableObject {
             wall2Node.scale = SCNVector3(canvasData.roomWidth, canvasData.roomHeight, canvasData.roomLength)
             wall2Node.addChildNode(wall2Asset.rootNode)
             scene?.rootNode.addChildNode(wall2Node)
+        }
+        
+        if let wall3Asset = SCNScene(named: "v2wall3.usdz"){
+            let wall3Geometry = wall3Asset.rootNode.childNodes.first?.geometry?.copy() as? SCNGeometry
+            wall3Node.geometry = wall3Geometry
+            wall3Node.scale = SCNVector3(canvasData.roomWidth, canvasData.roomHeight, canvasData.roomLength)
+            wall3Node.addChildNode(wall3Asset.rootNode)
+            scene?.rootNode.addChildNode(wall3Node)
+        }
+        
+        if let wall4Asset = SCNScene(named: "v2wall4.usdz"){
+            let wall4Geometry = wall4Asset.rootNode.childNodes.first?.geometry?.copy() as? SCNGeometry
+            wall4Node.geometry = wall4Geometry
+            wall4Node.scale = SCNVector3(canvasData.roomWidth, canvasData.roomHeight, canvasData.roomLength)
+            wall4Node.addChildNode(wall4Asset.rootNode)
+            scene?.rootNode.addChildNode(wall4Node)
         }
         
         let camera = SCNCamera()
@@ -125,7 +143,8 @@ class CanvasDataViewModel: ObservableObject {
                 if let scene = sceneOri {
                     if let scnData = try? NSKeyedArchiver.archivedData(withRootObject: scene, requiringSecureCoding: true) {
                         newProject.projectScene = scnData
-                        
+                        let _ = print("project Scene:\(scnData)")
+                        let _ = print("project ID:\(newProject.projectID)")
                     } else {
                         print("Failed to archive the SCN scene")
                     }
@@ -150,11 +169,12 @@ class CanvasDataViewModel: ObservableObject {
         }
     }
     
-    func loadSceneFromCoreData(viewContext: NSManagedObjectContext) -> SCNScene? {
+    func loadSceneFromCoreData(selectedProjectID : UUID , in viewContext: NSManagedObjectContext) -> SCNScene? {
         let fetchRequest: NSFetchRequest<ProjectEntity> = ProjectEntity.fetchRequest()
+        fetchRequest.predicate = NSPredicate(format: "projectID == %@", selectedProjectID as CVarArg)
         do {
             let entities = try viewContext.fetch(fetchRequest)
-            
+                
             if let entity = entities.first, let scnData = entity.projectScene {
                 // Unarchive the SCN data to get the SceneKit scene
                 if let scene = try NSKeyedUnarchiver.unarchiveTopLevelObjectWithData(scnData) as? SCNScene {
