@@ -154,9 +154,9 @@ struct CanvasView: View {
                 }
             }
         }
-        .fullScreenCover(isPresented: $isGuidedCaptureViewPresented, content: {
-            GuidedCaptureView()
-        })
+//        .fullScreenCover(isPresented: $isGuidedCaptureViewPresented, content: {
+//            GuidedCaptureView()
+//        })
         .navigationTitle(routerView.project == nil ? "NewProject" : roomSceneViewModel.projectData.nameProject)
         .toolbarTitleMenu {
             Button(action: {
