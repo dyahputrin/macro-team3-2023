@@ -75,7 +75,7 @@ struct ProjectView: View {
                             .overlay(
                                 Image(systemName: "plus")
                                     .font(.system(size: 130))
-                                    .foregroundStyle(Color(hex: 0x326EEB))
+                                    .foregroundStyle(Color(hex: 0x28B0E5))
                                     .fontWeight(.thin)
                             )
                     })
@@ -141,6 +141,7 @@ struct ProjectView: View {
                     ToolbarItem(placement: .topBarLeading) {
                         Text("All Projects")
                             .font(.largeTitle.bold())
+                            .foregroundStyle(Color(hex: 0x28B0E5))
                             .accessibilityAddTraits(.isHeader)
                     }
                 }
