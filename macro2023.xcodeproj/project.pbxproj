@@ -61,6 +61,7 @@
 		94DDE96C2ADE8FFA007915FF /* RoomSceneView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94DDE94B2ADE8FFA007915FF /* RoomSceneView.swift */; };
 		94DDE9712ADE8FFA007915FF /* OfficeTable.usdz in Resources */ = {isa = PBXBuildFile; fileRef = 94DDE9512ADE8FFA007915FF /* OfficeTable.usdz */; };
 		94DDE9732ADE8FFA007915FF /* RoomScene.scn in Resources */ = {isa = PBXBuildFile; fileRef = 94DDE9532ADE8FFA007915FF /* RoomScene.scn */; };
+		BE10DDB32AE7A34C007D1A8E /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BE10DDB22AE7A34C007D1A8E /* Preview Assets.xcassets */; };
 		BE1AE87E2AD3D65900F586CD /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BE1AE87D2AD3D65900F586CD /* Assets.xcassets */; };
 		BE56624F2AE262EC007F0B98 /* (null) in Sources */ = {isa = PBXBuildFile; };
 		BE6F988A2AE265D200AC6A69 /* macro2023App.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94DDE9552ADE8FFA007915FF /* macro2023App.swift */; };
@@ -135,6 +136,7 @@
 		94DDE9512ADE8FFA007915FF /* OfficeTable.usdz */ = {isa = PBXFileReference; lastKnownFileType = file.usdz; path = OfficeTable.usdz; sourceTree = "<group>"; };
 		94DDE9532ADE8FFA007915FF /* RoomScene.scn */ = {isa = PBXFileReference; lastKnownFileType = file.bplist; path = RoomScene.scn; sourceTree = "<group>"; };
 		94DDE9552ADE8FFA007915FF /* macro2023App.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = macro2023App.swift; sourceTree = "<group>"; };
+		BE10DDB22AE7A34C007D1A8E /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		BE1AE8762AD3D65800F586CD /* macro2023.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = macro2023.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		BE1AE87D2AD3D65900F586CD /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		BE5661CA2AE262EC007F0B98 /* OnboardingViewControllerWrapper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OnboardingViewControllerWrapper.swift; sourceTree = "<group>"; };
@@ -318,6 +320,15 @@
 			path = RoomPlan;
 			sourceTree = "<group>";
 		};
+		BE10DDB12AE7A34C007D1A8E /* Preview Content */ = {
+			isa = PBXGroup;
+			children = (
+				BE10DDB22AE7A34C007D1A8E /* Preview Assets.xcassets */,
+			);
+			name = "Preview Content";
+			path = "../../../../../Downloads/macro-team3-2023-281feca5adfe93b9c20d495b8a6d9575870f98f6/macro2023/Preview Content";
+			sourceTree = "<group>";
+		};
 		BE1AE86D2AD3D65800F586CD = {
 			isa = PBXGroup;
 			children = (
@@ -342,11 +353,11 @@
 				21C90C3F2AD6A1440003D517 /* Service */,
 				9487BDE22ADE93B0004FCC67 /* Guided Capture */,
 				BE6F99672AE271BE00AC6A69 /* ProjectCanvas */,
-				BE6F99662AE26EF400AC6A69 /* Preview Content */,
 				BE6F98972AE26AF700AC6A69 /* ProjectManager */,
 				210C7FF32AD531FB00E01229 /* CoreData */,
 				210C7FEB2AD52BED00E01229 /* Object */,
 				BE1AE87D2AD3D65900F586CD /* Assets.xcassets */,
+				BE10DDB12AE7A34C007D1A8E /* Preview Content */,
 				94DDE92F2ADE8FF9007915FF /* macro2023-Bridging-Header.h */,
 				94DDE9552ADE8FFA007915FF /* macro2023App.swift */,
 			);
@@ -443,13 +454,6 @@
 				21C90C182AD694880003D517 /* ProjectData.swift */,
 			);
 			path = Model;
-			sourceTree = "<group>";
-		};
-		BE6F99662AE26EF400AC6A69 /* Preview Content */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = "Preview Content";
 			sourceTree = "<group>";
 		};
 		BE6F99672AE271BE00AC6A69 /* ProjectCanvas */ = {
@@ -563,6 +567,7 @@
 				BE6F98A12AE26BA500AC6A69 /* v2wall4.usdz in Resources */,
 				94DDE9672ADE8FFA007915FF /* UnsupportedDevice.storyboard in Resources */,
 				94DDE9642ADE8FFA007915FF /* LaunchScreen.storyboard in Resources */,
+				BE10DDB32AE7A34C007D1A8E /* Preview Assets.xcassets in Resources */,
 				BE1AE87E2AD3D65900F586CD /* Assets.xcassets in Resources */,
 				9487BE2A2ADE93CF004FCC67 /* ScanPasses-iPad-FixedHeight-1.mp4 in Resources */,
 				9487BE262ADE93CF004FCC67 /* ScanPasses-iPhone-FixedHeight-3.mp4 in Resources */,
