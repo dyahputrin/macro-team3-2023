@@ -15,6 +15,7 @@ struct CanvasView: View {
     @State private var isSetButtonTapped = false
     @State var objectsButtonClicked: Bool
     @State var roomButtonClicked: Bool
+    @State var povButtonClicked: Bool
     
     @Binding var viewfinderButtonClicked: Bool
     @Binding var isImporting: Bool
@@ -83,6 +84,15 @@ struct CanvasView: View {
         .toolbar {
             ToolbarItemGroup {
                 HStack {
+                    //POV TOP VIEW
+                    Button(action: {
+                        povButtonClicked.toggle()
+                    })
+                    {
+                        Image(systemName: "light.panel")
+                            .foregroundColor(povButtonClicked ? .accentColor :  .black)
+                    }
+                    
                     //VIEWFINDER
                     Menu {
                         Button(action: {
@@ -106,7 +116,7 @@ struct CanvasView: View {
                         objectsButtonClicked = false
                     }) {
                         Image(systemName: "square.split.bottomrightquarter")
-                            .foregroundColor(roomButtonClicked ? .blue : .black)
+                            .foregroundColor(roomButtonClicked ? .accentColor : .black)
                             .padding()
                     }
                     
@@ -116,7 +126,7 @@ struct CanvasView: View {
                         roomButtonClicked = false
                     }) {
                         Image(systemName: "chair.lounge")
-                            .foregroundColor(objectsButtonClicked ? .blue : .black)
+                            .foregroundColor(objectsButtonClicked ? .accentColor : .black)
                     }
                 }
                 .padding(.trailing, 100)
@@ -212,6 +222,6 @@ struct CanvasView: View {
 
 
 #Preview {
-    CanvasView(objectsButtonClicked: false, roomButtonClicked: false, viewfinderButtonClicked: .constant(false), isImporting: .constant(false), isExporting: .constant(false), isSetButtonSidebarTapped: .constant(false)).environment(\.managedObjectContext,PersistenceController.preview.container.viewContext)
+    CanvasView(objectsButtonClicked: false, roomButtonClicked: false, povButtonClicked: false, viewfinderButtonClicked: .constant(false), isImporting: .constant(false), isExporting: .constant(false), isSetButtonSidebarTapped: .constant(false)).environment(\.managedObjectContext,PersistenceController.preview.container.viewContext)
         .environmentObject(RouterView())
 }

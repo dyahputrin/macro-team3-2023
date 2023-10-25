@@ -75,7 +75,6 @@ struct ProjectView: View {
                             .overlay(
                                 Image(systemName: "plus")
                                     .font(.system(size: 130))
-                                    .foregroundStyle(Color(hex: 0x28B0E5))
                                     .fontWeight(.thin)
                             )
                     })
@@ -149,7 +148,7 @@ struct ProjectView: View {
             .navigationDestination(for: String.self) { val in
                 if val == "canvas"{
 
-                    CanvasView(objectsButtonClicked: false, roomButtonClicked: false, viewfinderButtonClicked: .constant(false), isImporting: .constant(false), isExporting: .constant(false), isSetButtonSidebarTapped: .constant(false))
+                    CanvasView(objectsButtonClicked: false, roomButtonClicked: false, povButtonClicked: false, viewfinderButtonClicked: .constant(false), isImporting: .constant(false), isExporting: .constant(false), isSetButtonSidebarTapped: .constant(false))
                 }else{
 
                 }

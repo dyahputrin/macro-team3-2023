@@ -14,117 +14,49 @@ struct ObjectSizeView: View {
     @Binding var sceneViewID: UUID
     var roomSceneViewModel: CanvasDataViewModel
     
+    @State var objectName = "Selected Object Name"
+    
     var body: some View {
         
-        // ONLY SHOW THE SIZE OF SELECTED OBJECT
-//        Rectangle()
-//            .foregroundColor(Color.systemGray6)
-//            .border(/*@START_MENU_TOKEN@*/Color.black/*@END_MENU_TOKEN@*/)
-//            .frame(width: 170, height: 100)
-//            .overlay(
-//                VStack(alignment: .leading, content: {
-//                    Text("Width     :   \(roomWidthText)    m")
-//                    Text("Length    :   \(roomLengthText)   m")
-//                    Text("Height    :   \(roomHeightText)   m")
-//                })
-//                .padding(.leading)
-//                .font(.subheadline)
-//                .padding(.leading, -50)
-//            )
-        
-        // SHOW NAME & SIZE OF SELECTED OBJECT WITH DELETE BUTTON (1)
-//        Rectangle()
-//            .foregroundColor(Color.systemGray6)
-//            .border(/*@START_MENU_TOKEN@*/Color.black/*@END_MENU_TOKEN@*/)
-//            .frame(width: 200, height: 150)
-//            .overlay(
-//                VStack(alignment: .leading, content: {
-//                    HStack {
-//                        Text("Object Name")
-//                            .bold()
-//                            .font(.headline)
-//                        //Spacer()
-//                        Image(systemName: "trash")
-//                            .foregroundColor(.red)
-//                            .bold()
-//                            .padding(.leading)
-//                        //Spacer()
-//                    }
-//                    .padding(.top)
-//                    
-//                    VStack {
-//                        Text("Width     :   \(roomWidthText)    m")
-//                        Text("Length    :   \(roomLengthText)   m")
-//                        Text("Height    :   \(roomHeightText)   m")
-//                    }
-//                    .padding(.vertical)
-//                })
-//                .padding(.leading, -10)
-//                .font(.subheadline)
-//               //.padding(.leading, -50)
-//            )
-        
-        // SHOW NAME & SIZE OF SELECTED OBJECT WITH DELETE BUTTON (2)
-        RoundedRectangle(cornerRadius: 15)
-            .foregroundColor(Color.systemGray6)
-            //.border(/*@START_MENU_TOKEN@*/Color.black/*@END_MENU_TOKEN@*/)
-            .frame(width: 300, height: 120)
-            .overlay(
-                VStack(alignment: .center, content: {
-                    HStack {
-                        Text("Object Name")
-                            .bold()
-                            .font(.title3)
-                            .bold()
-                        //Spacer()
-                        //Image(systemName: "trash")
-                        Text("REMOVE")
-                            .underline()
-                            .foregroundColor(.red)
-                            .font(.subheadline)
-                            .bold()
-                            .padding(.leading, 50)
-                        //Spacer()
-                    }
-                    .padding(.top)
-                    
-                    HStack {
-                        Text("W:   \(roomWidthText) m    ")
-                        Text("L:   \(roomLengthText) m    ")
-                        Text("H:   \(roomHeightText) m")
-                    }
+            RoundedRectangle(cornerRadius: 15)
+                .foregroundColor(Color.systemGray6)
+                .frame(width: 300, height: 135)
+                .overlay(
+                    VStack(alignment: .center, content: {
+                        HStack {
+                            Text("\(objectName)")
+                                .bold()
+                                .font(.title3)
+                                .bold()
+                                //.padding(.top)
+                                .lineLimit(2)
+                            
+                            Spacer()
+                            HStack(alignment: .firstTextBaseline) {
+                                Button(action: {})
+                                {
+                                    Text("REMOVE")
+                                        .underline()
+                                        .foregroundColor(.red)
+                                        .font(.subheadline)
+                                        .bold()
+                                        //.padding(.leading, 50)
+                                }
+                            }
+                        }
+                        .padding(.horizontal)
+                        
+                        HStack {
+                            Text("W:   \(roomWidthText) m    ")
+                            Text("L:   \(roomLengthText) m    ")
+                            Text("H:   \(roomHeightText) m")
+                        }
+                        .padding(.top)
+                    })
                     .padding(.vertical)
-                })
-                //.padding(.leading, -10)
-                //.font(.subheadline)
-               //.padding(.leading, -50)
-            )
-        
-//        VStack(alignment: .leading, content: {
-//            HStack {
-//                Text("Object Name")
-//                    .font(.title3)
-//                    .bold()
-//                Text("REMOVE")
-//                    .foregroundColor(.red)
-//                    .underline()
-//                    .bold()
-//                    .padding(.leading, 50)
-//            }
-//            .padding(.top)
-//            
-//            VStack {
-//                HStack {
-//                    Text("W:   \(roomWidthText) m    ")
-//                    Text("L:   \(roomLengthText) m    ")
-//                    Text("H:   \(roomHeightText) m")
-//                }
-//            }
-//            .padding(.vertical)
-//        })
-//        .padding()
-//        .background(Color.systemGray6)
-//        .border(/*@START_MENU_TOKEN@*/Color.black/*@END_MENU_TOKEN@*/)
+                )
+                .aspectRatio(contentMode: .fit)
+            
     }
 }
 
