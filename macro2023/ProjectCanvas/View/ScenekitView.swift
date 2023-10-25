@@ -57,12 +57,24 @@ struct ScenekitView: UIViewRepresentable {
 //                print("\(result)")
                 let node = result.node
                 
-                let max = node.boundingBox.max
-                let min = node.boundingBox.min
+                // Get Dimension
+//                let max = node.convertPosition(worldBoundingBox.min)
+//                let min = node.boundingBox.min
+                let worldBoundingBox = node.boundingBox
+                let worldMin = node.convertPosition(worldBoundingBox.min, to: nil)
+                let worldMax = node.convertPosition(worldBoundingBox.max, to: nil)
+
+                let worldDimensions = SCNVector3(
+                    worldMax.x - worldMin.x,
+                    worldMax.y - worldMin.y,
+                    worldMax.z - worldMin.z
+                )
                 
-                let dimension = SCNVector3(max.x - min.x, max.y - min.y, max.z - min.z)
+                print("World Dimensions: \(worldDimensions)")
                 
-                print("\(node.name) : \(dimension)")
+//                let dimension = SCNVector3(max.x - min.x, max.y - min.y, max.z - min.z)
+                
+//                print("\(node.name) : \(dimension)")
                 
 //                node.geometry?.firstMaterial?.emission.contents = Color(hue: 10, saturation: 50, brightness: 10)
          

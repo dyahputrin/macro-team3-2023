@@ -34,6 +34,8 @@ struct CanvasView: View {
     @State private var isRoomCaptureViewPresented = false
     @State private var isGuidedCaptureViewPresented = false
     
+    @State private var checkRename = false
+    
     var body: some View {
         
         GeometryReader { geometry in
@@ -160,7 +162,7 @@ struct CanvasView: View {
 //        .fullScreenCover(isPresented: $isGuidedCaptureViewPresented, content: {
 //            GuidedCaptureView()
 //        })
-        .navigationTitle(routerView.project == nil ? "NewProject" : roomSceneViewModel.projectData.nameProject)
+        .navigationTitle(checkRename ? roomSceneViewModel.projectData.nameProject : (routerView.project == nil ? "NewProject" : roomSceneViewModel.projectData.nameProject))
         .toolbarTitleMenu {
             Button(action: {
                 renameClicked = true
@@ -205,8 +207,8 @@ struct CanvasView: View {
 
 
 
-#Preview {
-    CanvasView(objectsButtonClicked: false, roomButtonClicked: false, viewfinderButtonClicked: .constant(false), isImporting: .constant(false), isExporting: .constant(false), isSetButtonSidebarTapped: .constant(false))
-        .environment(\.managedObjectContext,PersistenceController.preview.container.viewContext)
-            .environmentObject(RouterView())
-}
+//#Preview {
+//    CanvasView(objectsButtonClicked: false, roomButtonClicked: false, viewfinderButtonClicked: .constant(false), isImporting: .constant(false), isExporting: .constant(false), isSetButtonSidebarTapped: .constant(false))
+//        .environment(\.managedObjectContext,PersistenceController.preview.container.viewContext)
+//            .environmentObject(RouterView())
+//}
