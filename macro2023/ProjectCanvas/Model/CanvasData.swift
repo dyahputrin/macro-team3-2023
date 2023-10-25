@@ -24,7 +24,6 @@ class CanvasData: ObservableObject {
         self.roomWidthText = ""
         self.roomHeightText = ""
         self.roomLengthText = ""
-        print("Initial Room Model --> width: \(self.roomWidth); height: \(self.roomHeight); length: \(self.roomLength)")
     }
 }
 
