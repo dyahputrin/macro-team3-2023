@@ -39,15 +39,18 @@ struct CanvasView: View {
         GeometryReader { geometry in
             if routerView.project?.projectID == nil{
                 ZStack {
-                    let _ = print(routerView.project?.projectID)
-                    SceneView(scene: roomSceneViewModel.makeScene(width: roomSceneViewModel.canvasData.roomWidth, height: roomSceneViewModel.canvasData.roomHeight, length: roomSceneViewModel.canvasData.roomLength), options: [.allowsCameraControl])
+                    let sceneKitView = ScenekitView(scene: roomSceneViewModel.makeScene(width: roomSceneViewModel.canvasData.roomWidth, height: roomSceneViewModel.canvasData.roomHeight, length: roomSceneViewModel.canvasData.roomLength)!)
+                   
+                    sceneKitView
                         .edgesIgnoringSafeArea(.bottom)
                         .id(sceneViewID)
                 }
             }
             else {
                 ZStack {
-                    SceneView(scene: roomSceneViewModel.loadSceneFromCoreData(selectedProjectID: routerView.project!.projectID!, in: viewContext), options: [.allowsCameraControl])
+                    let sceneKitView = ScenekitView(scene: roomSceneViewModel.loadSceneFromCoreData(selectedProjectID: routerView.project!.projectID!, in: viewContext)!)
+                   
+                    sceneKitView
                         .edgesIgnoringSafeArea(.bottom)
                         .id(sceneViewID)
                 }
@@ -204,4 +207,6 @@ struct CanvasView: View {
 
 #Preview {
     CanvasView(objectsButtonClicked: false, roomButtonClicked: false, viewfinderButtonClicked: .constant(false), isImporting: .constant(false), isExporting: .constant(false), isSetButtonSidebarTapped: .constant(false))
+        .environment(\.managedObjectContext,PersistenceController.preview.container.viewContext)
+            .environmentObject(RouterView())
 }

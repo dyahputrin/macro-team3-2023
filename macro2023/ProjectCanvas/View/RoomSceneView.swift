@@ -1,26 +1,38 @@
-//
-//  RoomSceneView.swift
-//  macro2023
-//
-//  Created by Dyah Putri Nariswari on 10/10/23.
-//
-
 import SwiftUI
 import SceneKit
+//
+//struct RoomSceneView: View {
+//    var roomSceneViewModel: CanvasDataViewModel
+//    @Binding var sceneViewID: UUID
+//    @State private var sceneKitView = ScenekitView(scene: SCNScene())
+//
+//    var body: some View {
+//        VStack {
+//            GeometryReader { geometry in
+//                sceneKitView
+//                    .edgesIgnoringSafeArea(.bottom)
+//                    .id(sceneViewID)
+//                    .allowsHitTesting(true)
+//                    .simultaneousGesture(
+//                        DragGesture(minimumDistance: 0.0, coordinateSpace: .local)
+//                            .onEnded({ value in
+//                                var startLocation = value.startLocation
+//                                startLocation.y = geometry.size.height - startLocation.y
+//                                let hits = sceneKitView.view.hitTest(startLocation, options: [:])
+//                                
+//                                if hits.count > 0 {
+//                                    print("\(hits)")
+//                                }
+//                            })
+//                    )
+//            }
+//        }
+//    }
+//}
+//
 
-struct RoomSceneView: View {
-    var roomSceneViewModel: CanvasDataViewModel
-    @Binding var sceneViewID: UUID
-    
-    var body: some View {
-        VStack {
-            SceneView(scene: roomSceneViewModel.makeScene(width: roomSceneViewModel.canvasData.roomWidth, height: roomSceneViewModel.canvasData.roomHeight, length: roomSceneViewModel.canvasData.roomLength), options: [.allowsCameraControl])
-                .edgesIgnoringSafeArea(.bottom)
-                .id(sceneViewID)
-        }
-    }
-}
-
-#Preview {
-    RoomSceneView(roomSceneViewModel: CanvasDataViewModel(canvasData: CanvasData(roomWidth: 0, roomHeight: 0, roomLength: 0), projectData: ProjectData()), sceneViewID: .constant(UUID()))
-}
+//
+//
+//#Preview {
+//        RoomSceneView(roomSceneViewModel: CanvasDataViewModel(canvasData: CanvasData(roomWidth: 0, roomHeight: 0, roomLength: 0), projectData: ProjectData()), sceneViewID: .constant(UUID()))
+//}
