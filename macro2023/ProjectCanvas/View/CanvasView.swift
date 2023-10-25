@@ -34,6 +34,14 @@ struct CanvasView: View {
     @State private var isRoomCaptureViewPresented = false
     @State private var isGuidedCaptureViewPresented = false
     
+    @FetchRequest(entity: ProjectEntity.entity(),
+                  sortDescriptors: [NSSortDescriptor(keyPath: \ProjectEntity.projectName, ascending: true)])
+    var projectEntity: FetchedResults<ProjectEntity>
+    
+    @Binding var activeProjectID: UUID
+    @Binding var activeScene: SCNScene
+    @State private var checkRename = false
+    
     var body: some View {
         
         GeometryReader { geometry in
@@ -61,17 +69,10 @@ struct CanvasView: View {
                     .transition(.moveAndFade)
                 
             } else if roomButtonClicked == true {
-                RoomSidebarView(roomWidthText: $roomWidthText, roomLengthText: $roomLengthText, roomHeightText: $roomHeightText,  sceneViewID: $sceneViewID, roomSceneViewModel: roomSceneViewModel)
+                RoomSidebarView(roomWidthText: $roomWidthText, roomLengthText: $roomLengthText, roomHeightText: $roomHeightText,  sceneViewID: $sceneViewID, activeProjectID: $activeProjectID, activeScene: $activeScene, roomSceneViewModel: roomSceneViewModel)
                     .transition(.moveAndFade)
             }
         }
-        .onAppear {
-            sheetPresented = true
-        }
-        //        .sheet(isPresented: $sheetPresented) {
-        //            SizePopUpView(sheetPresented: $sheetPresented, isSetButtonTapped: $isSetButtonTapped, roomSceneViewModel: roomSceneViewModel, sceneViewID: $sceneViewID, roomWidthText: $roomWidthText, roomLengthText: $roomLengthText, roomHeightText: $roomHeightText)
-        //                .interactiveDismissDisabled()
-        //        }
         .toolbarRole(.editor)
         .toolbarBackground(Color.blue)
         .toolbar {
@@ -160,7 +161,7 @@ struct CanvasView: View {
 //        .fullScreenCover(isPresented: $isGuidedCaptureViewPresented, content: {
 //            GuidedCaptureView()
 //        })
-        .navigationTitle(routerView.project == nil ? "NewProject" : roomSceneViewModel.projectData.nameProject)
+        .navigationTitle(checkRename ? roomSceneViewModel.projectData.nameProject : (routerView.project == nil ? "NewProject" : roomSceneViewModel.projectData.nameProject))
         .toolbarTitleMenu {
             Button(action: {
                 renameClicked = true
@@ -178,6 +179,7 @@ struct CanvasView: View {
         .alert("Rename", isPresented: $renameClicked, actions: {
             TextField("\(roomSceneViewModel.projectData.nameProject)", text: $newProjectName)
             Button("Save", action: {
+                checkRename = true
                 roomSceneViewModel.projectData.nameProject = newProjectName
                 renameClicked = false
             })
@@ -189,7 +191,15 @@ struct CanvasView: View {
             if routerView.project != nil{
                 roomSceneViewModel.projectData.nameProject = routerView.project!.projectName!
                 roomSceneViewModel.projectData.uuid = routerView.project!.projectID!
-            }
+                activeProjectID = routerView.project!.projectID!
+                if let project = routerView.project,
+                   let sceneData = project.projectScene {
+                    do {
+                        activeScene = try NSKeyedUnarchiver.unarchivedObject(ofClass: SCNScene.self, from: sceneData)!
+                    } catch {
+                        print("Failed to unarchive SCN scene: \(error)")
+                    }
+                }            }
         }
         .onDisappear{
             if routerView.path.count > 0 {

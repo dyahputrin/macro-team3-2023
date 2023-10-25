@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import SceneKit
 
 @main
 struct macro2023App: App {
@@ -15,7 +16,7 @@ struct macro2023App: App {
     @StateObject var routerView = RouterView()
     var body: some Scene {
         WindowGroup {
-            ProjectView()
+            ProjectView(activeProjectID: UUID(), activeScene: SCNScene())
                 .environment(\.managedObjectContext,persistenceController.container.viewContext)
                 .environmentObject(routerView)
         }

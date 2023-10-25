@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import SceneKit
 
 struct RoundedCorners: View {
     var color: Color = .white
@@ -59,9 +60,12 @@ struct ProjectView: View {
     @State private var currentProjectName: String = ""
 
     @State private var currentProjectEntity: ProjectEntity? = nil
+    
+    @State var activeProjectID: UUID
+    @State var activeScene: SCNScene
 
     var body: some View {
-        let _ = dataContentViewModel.printAllData(in: viewContext)
+//        let _ = dataContentViewModel.printAllData(in: viewContext)
         NavigationStack(path: $routerView.path){
             ScrollView{
                 LazyVGrid(columns: columns) {
@@ -147,8 +151,7 @@ struct ProjectView: View {
             }
             .navigationDestination(for: String.self) { val in
                 if val == "canvas"{
-
-                    CanvasView(objectsButtonClicked: false, roomButtonClicked: false, viewfinderButtonClicked: .constant(false), isImporting: .constant(false), isExporting: .constant(false), isSetButtonSidebarTapped: .constant(false))
+                    CanvasView(objectsButtonClicked: false, roomButtonClicked: false, viewfinderButtonClicked: .constant(false), isImporting: .constant(false), isExporting: .constant(false), isSetButtonSidebarTapped: .constant(false), activeProjectID: $activeProjectID, activeScene: $activeScene)
                 }else{
 
                 }
@@ -160,7 +163,7 @@ struct ProjectView: View {
 }
 
 #Preview {
-    ProjectView().environment(\.managedObjectContext,PersistenceController.preview.container.viewContext)
+    ProjectView(activeProjectID: UUID(), activeScene: SCNScene()).environment(\.managedObjectContext,PersistenceController.preview.container.viewContext)
         .environmentObject(RouterView())
 }
 

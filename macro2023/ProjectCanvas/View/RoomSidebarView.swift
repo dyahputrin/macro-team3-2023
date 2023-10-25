@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import SceneKit
 
 struct RoomSidebarView: View {
     
@@ -18,9 +19,19 @@ struct RoomSidebarView: View {
     @Binding var roomLengthText: String
     @Binding var roomHeightText: String
     @Binding var sceneViewID: UUID
+    @Binding var activeProjectID: UUID
+    @Binding var activeScene: SCNScene
     var roomSceneViewModel: CanvasDataViewModel
     
+    @Environment(\.managedObjectContext) private var viewContext
+    @EnvironmentObject var routerView: RouterView
+    @FetchRequest(entity: ProjectEntity.entity(),
+                  sortDescriptors: [NSSortDescriptor(keyPath: \ProjectEntity.projectName, ascending: true)])
+    var projectEntity: FetchedResults<ProjectEntity>
+    
     var body: some View {
+        
+//        let a = print("ACTIVE PROJECT ID: \(activeProjectID)")
         GeometryReader { geometry in
             HStack {
                 Spacer()
@@ -40,7 +51,7 @@ struct RoomSidebarView: View {
                                     VStack(alignment: .leading) {
                                         Text("Width").bold()
                                         HStack {
-                                            TextField("min. 2", text: $roomWidthText)
+                                            TextField("min. 2", text:$roomWidthText)
                                                 .textFieldStyle(RoundedBorderTextFieldStyle())
                                                 .keyboardType(.numberPad)
                                             Text("m")
@@ -70,7 +81,17 @@ struct RoomSidebarView: View {
                                             if let width = roomSceneViewModel.stringToCGFloat(value: roomWidthText),
                                                let height = roomSceneViewModel.stringToCGFloat(value: roomHeightText),
                                                let length = roomSceneViewModel.stringToCGFloat(value: roomLengthText) {
-                                                roomSceneViewModel.updateRoomSize(width: width, height: height, length: length)
+                                                
+                                                if let project = routerView.project,
+                                                   let sceneData = project.projectScene {
+                                                    do {
+                                                        activeScene = try NSKeyedUnarchiver.unarchivedObject(ofClass: SCNScene.self, from: sceneData)!
+                                                    } catch {
+                                                        print("Failed to unarchive SCN scene: \(error)")
+                                                    }
+                                                }
+                                                
+                                                roomSceneViewModel.updateRoomSize(newWidth: width, newHeight: height, newLength: length, activeProjectID: activeProjectID, viewContext: viewContext)
                                                 sceneViewID = UUID()
                                             } else {
                                                 // Handle invalid input
@@ -121,11 +142,12 @@ struct RoomSidebarView: View {
                     .padding(.top, 10)
                 
             }
+            
         }
     }
 }
 
 
 #Preview {
-    RoomSidebarView(roomWidthText:.constant("2"), roomLengthText: .constant("2"), roomHeightText: .constant("2"), sceneViewID: .constant(UUID()), roomSceneViewModel: CanvasDataViewModel(canvasData: CanvasData(roomWidth: 0, roomHeight: 0, roomLength: 0), projectData: ProjectData()))
+    RoomSidebarView(roomWidthText:.constant("2"), roomLengthText: .constant("2"), roomHeightText: .constant("2"), sceneViewID: .constant(UUID()), activeProjectID: .constant(UUID()), activeScene: .constant(SCNScene()), roomSceneViewModel: CanvasDataViewModel(canvasData: CanvasData(roomWidth: 0, roomHeight: 0, roomLength: 0), projectData: ProjectData()))
 }
