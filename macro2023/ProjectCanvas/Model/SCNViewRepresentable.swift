@@ -64,6 +64,7 @@ struct ScenekitView: UIViewRepresentable {
                 let min = node.boundingBox.min
                 
                 let dimension = SCNVector3(max.x - min.x, max.y - min.y, max.z - min.z)
+                print("\(node.name) : \(dimension)")
             }
         }
     }
