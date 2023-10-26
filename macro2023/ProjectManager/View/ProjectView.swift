@@ -91,7 +91,16 @@ struct ProjectView: View {
                             .foregroundColor(.white)
                             .overlay(
                                 ZStack {
-                                    Image("project5")
+                                    var thumbnailImage: UIImage {
+                                            if let thumbnailData = newProjectName.projectThumbnail,
+                                               let image = UIImage(data: thumbnailData) {
+                                                return image
+                                            } else {
+                                                return UIImage(named: "project5") ?? UIImage() // Provide a fallback default image
+                                            }
+                                        }
+//                                    Image(uiImage: UIImage(data: newProjectName.projectThumbnail ?? UIImage(named: "project5"))!)
+                                    Image(uiImage: thumbnailImage)
                                         .resizable()
                                         .scaledToFill()
                                         .frame(width: 200, height: 200)

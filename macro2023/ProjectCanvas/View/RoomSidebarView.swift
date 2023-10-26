@@ -30,8 +30,6 @@ struct RoomSidebarView: View {
     var projectEntity: FetchedResults<ProjectEntity>
     
     var body: some View {
-        
-//        let a = print("ACTIVE PROJECT ID: \(activeProjectID)")
         GeometryReader { geometry in
             HStack {
                 Spacer()

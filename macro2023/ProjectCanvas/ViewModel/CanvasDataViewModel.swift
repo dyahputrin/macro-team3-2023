@@ -303,14 +303,13 @@ class CanvasDataViewModel: ObservableObject {
     
     // function to retrieve project scene from core data
     func loadSceneFromCoreData(selectedProjectID : UUID , in viewContext: NSManagedObjectContext) -> SCNScene? {
+        print("LOAD SCENE FROM CD: \(selectedProjectID)")
         let fetchRequest: NSFetchRequest<ProjectEntity> = ProjectEntity.fetchRequest()
         fetchRequest.predicate = NSPredicate(format: "projectID == %@", selectedProjectID as CVarArg)
         do {
             let entities = try viewContext.fetch(fetchRequest)
                 
             if let entity = entities.first, let scnData = entity.projectScene {
-                // Unarchive the SCN data to get the SceneKit scene
-//                print("\(entity.widthRoom) - \(entity.lengthRoom) - \(entity.heightRoom)")
 //                if let scene = try NSKeyedUnarchiver.unarchiveTopLevelObjectWithData(scnData) as? SCNScene 
                 if let scene = try NSKeyedUnarchiver.unarchivedObject(ofClass: SCNScene.self, from: scnData) {
                     return scene
@@ -323,6 +322,31 @@ class CanvasDataViewModel: ObservableObject {
         }
         return nil
     }
+    
+    func saveSnapshot(activeProjectID: UUID, viewContext: NSManagedObjectContext, snapshotImageArg: UIImage?, scenekitView: ScenekitView) {
+        let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "ProjectEntity")
+        fetchRequest.predicate = NSPredicate(format: "projectID == %@", activeProjectID as CVarArg)
+        
+        do {
+            let results = try viewContext.fetch(fetchRequest) as! [ProjectEntity]
+            if results.count > 0 {
+                let projectEntity = results.first!
+                if let snapshotImage = /*snapshotImageArg*/ scenekitView.snapshot() {
+                    let imageData = snapshotImage.pngData()
+                    projectEntity.projectThumbnail = imageData
+                    try viewContext.save()
+                    print("Succesfully save snapshot")
+                } else {
+                    print("Failed to take snapshot")
+                }
+            } else {
+                print("No project found with ID: \(activeProjectID)")
+            }
+        } catch {
+            print("Failed to save snapshot: \(error)")
+        }
+    }
+    
 }
 
 

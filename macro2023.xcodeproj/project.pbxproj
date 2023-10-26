@@ -77,6 +77,7 @@
 		BE6F996D2AE272A400AC6A69 /* ObjectSidebarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE6F996C2AE272A400AC6A69 /* ObjectSidebarView.swift */; };
 		BE6F996F2AE272BC00AC6A69 /* RoomSidebarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE6F996E2AE272BC00AC6A69 /* RoomSidebarView.swift */; };
 		BE6F99712AE272D800AC6A69 /* TopToolbarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE6F99702AE272D800AC6A69 /* TopToolbarView.swift */; };
+		BED427372AE8C39000AD041E /* SCNViewRepresentable.swift in Sources */ = {isa = PBXBuildFile; fileRef = BED427362AE8C39000AD041E /* SCNViewRepresentable.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -202,6 +203,7 @@
 		BE6F996C2AE272A400AC6A69 /* ObjectSidebarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ObjectSidebarView.swift; sourceTree = "<group>"; };
 		BE6F996E2AE272BC00AC6A69 /* RoomSidebarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoomSidebarView.swift; sourceTree = "<group>"; };
 		BE6F99702AE272D800AC6A69 /* TopToolbarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopToolbarView.swift; sourceTree = "<group>"; };
+		BED427362AE8C39000AD041E /* SCNViewRepresentable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SCNViewRepresentable.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -492,6 +494,7 @@
 			isa = PBXGroup;
 			children = (
 				94DDE9492ADE8FFA007915FF /* CanvasData.swift */,
+				BED427362AE8C39000AD041E /* SCNViewRepresentable.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -615,6 +618,7 @@
 				9487BE092ADE93B0004FCC67 /* UntilProcessingCompleteFilter.swift in Sources */,
 				94DDE9682ADE8FFA007915FF /* RoomCaptureViewController.swift in Sources */,
 				9487BE122ADE93B0004FCC67 /* CapturePrimaryView.swift in Sources */,
+				BED427372AE8C39000AD041E /* SCNViewRepresentable.swift in Sources */,
 				9487BE0C2ADE93B0004FCC67 /* PlayerView.swift in Sources */,
 				BE6F99712AE272D800AC6A69 /* TopToolbarView.swift in Sources */,
 				9487BE052ADE93B0004FCC67 /* HelpPageView.swift in Sources */,
