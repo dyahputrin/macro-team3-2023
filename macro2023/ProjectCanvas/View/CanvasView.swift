@@ -47,7 +47,7 @@ struct CanvasView: View {
         GeometryReader { geometry in
             if routerView.project?.projectID == nil{
                 ZStack {
-                    let sceneKitView = ScenekitView(scene: roomSceneViewModel.makeScene(width: roomSceneViewModel.canvasData.roomWidth, height: roomSceneViewModel.canvasData.roomHeight, length: roomSceneViewModel.canvasData.roomLength)!)
+                    let sceneKitView = ScenekitView(scene: roomSceneViewModel.makeScene1(width: roomSceneViewModel.canvasData.roomWidth, height: roomSceneViewModel.canvasData.roomHeight, length: roomSceneViewModel.canvasData.roomLength)!)
                    
                     sceneKitView
                         .edgesIgnoringSafeArea(.bottom)

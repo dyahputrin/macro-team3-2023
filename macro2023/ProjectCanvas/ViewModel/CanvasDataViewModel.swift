@@ -88,7 +88,7 @@ class CanvasDataViewModel: ObservableObject {
         cameraNode.position = SCNVector3(x: 0, y: 5, z: 5)
         scene?.rootNode.addChildNode(cameraNode)
         
-        addMarkerToRootNode(scene: scene!)
+//        addMarkerToRootNode(scene: scene!)
         
         sceneOri = scene
         return scene
