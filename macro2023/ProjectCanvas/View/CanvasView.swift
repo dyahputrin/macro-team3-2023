@@ -37,6 +37,7 @@ struct CanvasView: View {
     
     @State private var selectedAnObject = true
     @State private var showingObjectList = false
+    @State private var objectSizeViewOffset: CGFloat = 0
     
     var body: some View {
         
@@ -60,22 +61,29 @@ struct CanvasView: View {
             if objectsButtonClicked == true {
                 ObjectSidebarView()
                    // .transition(.moveAndFade)
-                    .animation(.easeInOut, value: objectsButtonClicked)
+                    .animation(.default, value: objectsButtonClicked)
                 
             } else if roomButtonClicked == true {
                 RoomSidebarView(roomWidthText: $roomWidthText, roomLengthText: $roomLengthText, roomHeightText: $roomHeightText,  sceneViewID: $sceneViewID, roomSceneViewModel: roomSceneViewModel)
                     //.transition(.moveAndFade)
-                    .animation(.easeInOut, value: roomButtonClicked)
+                    .animation(.default, value: roomButtonClicked)
             }
             
 //            if showingObjectList == true {
 //                ObjectListView()
 //            }
             
+//            if selectedAnObject == true {
+//                ObjectListView()
+//                ObjectSizeView(roomWidthText:.constant("2"), roomLengthText: .constant("2"), roomHeightText: .constant("2"), sceneViewID: .constant(UUID()), roomSceneViewModel: CanvasDataViewModel(canvasData: CanvasData(roomWidth: 0, roomHeight: 0, roomLength: 0), projectData: ProjectData()))
+//            }
+            
+            ObjectListView(showingObjectList: $showingObjectList)
+            
             if selectedAnObject == true {
                 ObjectSizeView(roomWidthText:.constant("2"), roomLengthText: .constant("2"), roomHeightText: .constant("2"), sceneViewID: .constant(UUID()), roomSceneViewModel: CanvasDataViewModel(canvasData: CanvasData(roomWidth: 0, roomHeight: 0, roomLength: 0), projectData: ProjectData()))
+                    .offset(x: objectSizeViewOffset)
             }
-            
         }
         .onAppear {
             sheetPresented = true
