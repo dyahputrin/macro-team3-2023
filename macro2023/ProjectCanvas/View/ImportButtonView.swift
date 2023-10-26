@@ -17,15 +17,9 @@ struct ImportButtonView: View {
         Button(action: {
             isImporting = true
         }) {
-            RoundedRectangle(cornerRadius: 10)
-                .foregroundColor(.white)
+            Image(systemName: "plus")
+                .font(.system(size: 80))
                 .frame(width: 100, height: 100)
-                .shadow(radius: 5)
-                .overlay(
-                    Image(systemName: "plus")
-                    .foregroundColor(/*@START_MENU_TOKEN@*/.blue/*@END_MENU_TOKEN@*/)
-                    .font(.system(size: 50))
-                )
         }
     }
 }

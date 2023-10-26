@@ -63,6 +63,8 @@
 		94DDE9712ADE8FFA007915FF /* OfficeTable.usdz in Resources */ = {isa = PBXBuildFile; fileRef = 94DDE9512ADE8FFA007915FF /* OfficeTable.usdz */; };
 		94DDE9732ADE8FFA007915FF /* RoomScene.scn in Resources */ = {isa = PBXBuildFile; fileRef = 94DDE9532ADE8FFA007915FF /* RoomScene.scn */; };
 		BE10DDB32AE7A34C007D1A8E /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BE10DDB22AE7A34C007D1A8E /* Preview Assets.xcassets */; };
+		974199552AE7A26900D96E7F /* ObjectSizeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 974199542AE7A26900D96E7F /* ObjectSizeView.swift */; };
+		974199572AE7BA2600D96E7F /* ObjectListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 974199562AE7BA2600D96E7F /* ObjectListView.swift */; };
 		BE1AE87E2AD3D65900F586CD /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BE1AE87D2AD3D65900F586CD /* Assets.xcassets */; };
 		BE56624F2AE262EC007F0B98 /* (null) in Sources */ = {isa = PBXBuildFile; };
 		BE6F988A2AE265D200AC6A69 /* macro2023App.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94DDE9552ADE8FFA007915FF /* macro2023App.swift */; };
@@ -139,6 +141,8 @@
 		94DDE9532ADE8FFA007915FF /* RoomScene.scn */ = {isa = PBXFileReference; lastKnownFileType = file.bplist; path = RoomScene.scn; sourceTree = "<group>"; };
 		94DDE9552ADE8FFA007915FF /* macro2023App.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = macro2023App.swift; sourceTree = "<group>"; };
 		BE10DDB22AE7A34C007D1A8E /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		974199542AE7A26900D96E7F /* ObjectSizeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ObjectSizeView.swift; sourceTree = "<group>"; };
+		974199562AE7BA2600D96E7F /* ObjectListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ObjectListView.swift; sourceTree = "<group>"; };
 		BE1AE8762AD3D65800F586CD /* macro2023.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = macro2023.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		BE1AE87D2AD3D65900F586CD /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		BE5661CA2AE262EC007F0B98 /* OnboardingViewControllerWrapper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OnboardingViewControllerWrapper.swift; sourceTree = "<group>"; };
@@ -479,6 +483,8 @@
 				BE6F996E2AE272BC00AC6A69 /* RoomSidebarView.swift */,
 				BE6F99702AE272D800AC6A69 /* TopToolbarView.swift */,
 				943595CE2AE8F152000331A9 /* ScenekitView.swift */,
+				974199542AE7A26900D96E7F /* ObjectSizeView.swift */,
+				974199562AE7BA2600D96E7F /* ObjectListView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -607,6 +613,7 @@
 				94DDE9662ADE8FFA007915FF /* OnboardingViewController.swift in Sources */,
 				9487BE0B2ADE93B0004FCC67 /* CaptureOverlayView+LocalizedString.swift in Sources */,
 				9487BDFF2ADE93B0004FCC67 /* FeedbackMessages.swift in Sources */,
+				974199552AE7A26900D96E7F /* ObjectSizeView.swift in Sources */,
 				9487BE102ADE93B0004FCC67 /* GuidedCaptureView.swift in Sources */,
 				9487BDFD2ADE93B0004FCC67 /* ShotFileInfo.swift in Sources */,
 				9487BE0A2ADE93B0004FCC67 /* OnboardingButtonView.swift in Sources */,
@@ -624,6 +631,7 @@
 				9487BE0D2ADE93B0004FCC67 /* FeedbackView.swift in Sources */,
 				9487BE112ADE93B0004FCC67 /* CaptureOverlayView+Buttons.swift in Sources */,
 				9487BE012ADE93B0004FCC67 /* OnboardingStateMachine.swift in Sources */,
+				974199572AE7BA2600D96E7F /* ObjectListView.swift in Sources */,
 				9487BDFE2ADE93B0004FCC67 /* TimedMessageList.swift in Sources */,
 				BE6F996F2AE272BC00AC6A69 /* RoomSidebarView.swift in Sources */,
 				9487BE152ADE93B0004FCC67 /* ModelView.swift in Sources */,
@@ -773,7 +781,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"macro2023/Preview Content\"";
-				DEVELOPMENT_TEAM = 4QQ5D4534V;
+				DEVELOPMENT_TEAM = S8A3LN5PYH;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_NSCameraUsageDescription = "Camera needed to function";
@@ -808,7 +816,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"macro2023/Preview Content\"";
-				DEVELOPMENT_TEAM = 4QQ5D4534V;
+				DEVELOPMENT_TEAM = S8A3LN5PYH;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_NSCameraUsageDescription = "Camera needed to function";

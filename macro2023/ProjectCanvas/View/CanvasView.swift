@@ -15,6 +15,7 @@ struct CanvasView: View {
     @State private var isSetButtonTapped = false
     @State var objectsButtonClicked: Bool
     @State var roomButtonClicked: Bool
+    @State var povButtonClicked: Bool
     
     @Binding var viewfinderButtonClicked: Bool
     @Binding var isImporting: Bool
@@ -41,6 +42,8 @@ struct CanvasView: View {
     @Binding var activeProjectID: UUID
     @Binding var activeScene: SCNScene
     @State private var checkRename = false
+    @State private var selectedAnObject = true
+    @State private var showingObjectList = false
     
     var body: some View {
         
@@ -66,18 +69,39 @@ struct CanvasView: View {
             
             if objectsButtonClicked == true {
                 ObjectSidebarView()
-                    .transition(.moveAndFade)
+                   // .transition(.moveAndFade)
+                    .animation(.easeInOut, value: objectsButtonClicked)
                 
             } else if roomButtonClicked == true {
                 RoomSidebarView(roomWidthText: $roomWidthText, roomLengthText: $roomLengthText, roomHeightText: $roomHeightText,  sceneViewID: $sceneViewID, activeProjectID: $activeProjectID, activeScene: $activeScene, roomSceneViewModel: roomSceneViewModel)
-                    .transition(.moveAndFade)
+                    //.transition(.moveAndFade)
+                    .animation(.easeInOut, value: roomButtonClicked)
             }
+            
+//            if showingObjectList == true {
+//                ObjectListView()
+//            }
+            
+            if selectedAnObject == true {
+                ObjectSizeView(roomWidthText:.constant("2"), roomLengthText: .constant("2"), roomHeightText: .constant("2"), sceneViewID: .constant(UUID()), roomSceneViewModel: CanvasDataViewModel(canvasData: CanvasData(roomWidth: 0, roomHeight: 0, roomLength: 0), projectData: ProjectData()))
+            }
+            
         }
         .toolbarRole(.editor)
-        .toolbarBackground(Color.blue)
+        .toolbarBackground(Color.white)
         .toolbar {
             ToolbarItemGroup {
                 HStack {
+                    //POV TOP VIEW
+                    Button(action: {
+                        povButtonClicked.toggle()
+                    })
+                    {
+                        Image(systemName: "light.panel")
+                            .foregroundColor(povButtonClicked ? .accentColor :  .black)
+                    }
+                    .padding(.trailing)
+                    
                     //VIEWFINDER
                     Menu {
                         Button(action: {
@@ -101,7 +125,7 @@ struct CanvasView: View {
                         objectsButtonClicked = false
                     }) {
                         Image(systemName: "square.split.bottomrightquarter")
-                            .foregroundColor(roomButtonClicked ? .blue : .black)
+                            .foregroundColor(roomButtonClicked ? .accentColor : .black)
                             .padding()
                     }
                     
@@ -111,7 +135,7 @@ struct CanvasView: View {
                         roomButtonClicked = false
                     }) {
                         Image(systemName: "chair.lounge")
-                            .foregroundColor(objectsButtonClicked ? .blue : .black)
+                            .foregroundColor(objectsButtonClicked ? .accentColor : .black)
                     }
                 }
                 .padding(.trailing, 100)
@@ -119,12 +143,12 @@ struct CanvasView: View {
             
             // UNDO & SAVE
             ToolbarItemGroup {
-                Button(action: {})
-                {
-                    Image(systemName: "arrow.uturn.backward.circle")
-                        .foregroundColor(.black)
-                        .padding()
-                }
+//                Button(action: {})
+//                {
+//                    Image(systemName: "arrow.uturn.backward.circle")
+//                        .foregroundColor(.black)
+//                        .padding()
+//                }
                 Button(action: {
                     showSaveAlert = true
                     roomSceneViewModel.saveProject(viewContext: viewContext)

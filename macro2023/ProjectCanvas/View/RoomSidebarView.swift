@@ -100,8 +100,6 @@ struct RoomSidebarView: View {
                                         }) {
                                             RoundedRectangle(cornerRadius: 10)
                                                 .frame(width: geometry.size.width * 0.85, height: geometry.size.height * 0.08)
-                                                .foregroundColor(.blue)
-                                            
                                             
                                                 .overlay {
                                                     Text("Set")
@@ -139,7 +137,7 @@ struct RoomSidebarView: View {
                             .background(Color.systemGray6)
                     )
                     .frame(width: geometry.size.width * 0.3)
-                    .padding(.top, 10)
+                    .padding(.top, 1)
                 
             }
             

@@ -79,7 +79,6 @@ struct ProjectView: View {
                             .overlay(
                                 Image(systemName: "plus")
                                     .font(.system(size: 130))
-                                    .foregroundStyle(Color(hex: 0x326EEB))
                                     .fontWeight(.thin)
                             )
                     })
@@ -145,13 +144,14 @@ struct ProjectView: View {
                     ToolbarItem(placement: .topBarLeading) {
                         Text("All Projects")
                             .font(.largeTitle.bold())
+                            .foregroundStyle(Color(hex: 0x28B0E5))
                             .accessibilityAddTraits(.isHeader)
                     }
                 }
             }
             .navigationDestination(for: String.self) { val in
                 if val == "canvas"{
-                    CanvasView(objectsButtonClicked: false, roomButtonClicked: false, viewfinderButtonClicked: .constant(false), isImporting: .constant(false), isExporting: .constant(false), isSetButtonSidebarTapped: .constant(false), activeProjectID: $activeProjectID, activeScene: $activeScene)
+                    CanvasView(objectsButtonClicked: false, roomButtonClicked: false, povButtonClicked: false, viewfinderButtonClicked: .constant(false), isImporting: .constant(false), isExporting: .constant(false), isSetButtonSidebarTapped: .constant(false), activeProjectID: $activeProjectID, activeScene: $activeScene)
                 }else{
 
                 }
