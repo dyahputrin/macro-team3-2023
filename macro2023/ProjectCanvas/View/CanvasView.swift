@@ -35,6 +35,9 @@ struct CanvasView: View {
     @State private var isRoomCaptureViewPresented = false
     @State private var isGuidedCaptureViewPresented = false
     
+    @State private var selectedAnObject = true
+    @State private var showingObjectList = false
+    
     var body: some View {
         
         GeometryReader { geometry in
@@ -56,21 +59,23 @@ struct CanvasView: View {
             
             if objectsButtonClicked == true {
                 ObjectSidebarView()
-                    .transition(.moveAndFade)
+                   // .transition(.moveAndFade)
+                    .animation(.easeInOut, value: objectsButtonClicked)
                 
             } else if roomButtonClicked == true {
                 RoomSidebarView(roomWidthText: $roomWidthText, roomLengthText: $roomLengthText, roomHeightText: $roomHeightText,  sceneViewID: $sceneViewID, roomSceneViewModel: roomSceneViewModel)
-                    .transition(.moveAndFade)
+                    //.transition(.moveAndFade)
+                    .animation(.easeInOut, value: roomButtonClicked)
             }
-            VStack{
-                Spacer()
-                HStack{
-                    ObjectSizeView(roomWidthText:.constant("2"), roomLengthText: .constant("2"), roomHeightText: .constant("2"), sceneViewID: .constant(UUID()), roomSceneViewModel: CanvasDataViewModel(canvasData: CanvasData(roomWidth: 0, roomHeight: 0, roomLength: 0), projectData: ProjectData()))
-                    //ObjectListView()
-                        .padding(.leading)
-                    Spacer()
-                }
+            
+//            if showingObjectList == true {
+//                ObjectListView()
+//            }
+            
+            if selectedAnObject == true {
+                ObjectSizeView(roomWidthText:.constant("2"), roomLengthText: .constant("2"), roomHeightText: .constant("2"), sceneViewID: .constant(UUID()), roomSceneViewModel: CanvasDataViewModel(canvasData: CanvasData(roomWidth: 0, roomHeight: 0, roomLength: 0), projectData: ProjectData()))
             }
+            
         }
         .onAppear {
             sheetPresented = true
@@ -92,6 +97,7 @@ struct CanvasView: View {
                         Image(systemName: "light.panel")
                             .foregroundColor(povButtonClicked ? .accentColor :  .black)
                     }
+                    .padding(.trailing)
                     
                     //VIEWFINDER
                     Menu {
