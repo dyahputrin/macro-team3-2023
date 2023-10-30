@@ -14,17 +14,19 @@ struct ScenekitView: UIViewRepresentable {
     var scene: SCNScene
     var view = SCNView()
     @ObservedObject var objectDimensionData: ObjectDimensionData
+    var roomWidth: Float?
 
-    init(scene: SCNScene, objectDimensionData: ObjectDimensionData) {
+    init(scene: SCNScene, objectDimensionData: ObjectDimensionData, roomWidth: Float) {
         self.scene = scene
         self.objectDimensionData = objectDimensionData
+        self.roomWidth = roomWidth
     }
 
     func makeUIView(context: Context) -> SCNView {
         view.scene = scene
         view.allowsCameraControl = true
         // Lihat width nya - 1
-        view.defaultCameraController.translateInCameraSpaceBy(x: 0, y: -0.5, z: 3)
+        view.defaultCameraController.translateInCameraSpaceBy(x: 0, y: -0.5, z: (roomWidth ?? 1) - 1)
         let tapGesture = UITapGestureRecognizer(target: context.coordinator, action: #selector(context.coordinator.handleTap(_:)))
                 view.addGestureRecognizer(tapGesture)
         

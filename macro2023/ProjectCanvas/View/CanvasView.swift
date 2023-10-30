@@ -49,9 +49,10 @@ struct CanvasView: View {
     
     var sceneKitView: ScenekitView {
         if routerView.project?.projectID == nil {
-            return ScenekitView(scene: roomSceneViewModel.makeScene1(width: roomSceneViewModel.canvasData.roomWidth, height: roomSceneViewModel.canvasData.roomHeight, length: roomSceneViewModel.canvasData.roomLength)!, objectDimensionData: objectDimensionData)
+            return ScenekitView(scene: roomSceneViewModel.makeScene1(width: roomSceneViewModel.canvasData.roomWidth, height: roomSceneViewModel.canvasData.roomHeight, length: roomSceneViewModel.canvasData.roomLength)!, objectDimensionData: objectDimensionData, roomWidth: Float(roomSceneViewModel.canvasData.roomWidth)
+            )
         } else {
-            return ScenekitView(scene: roomSceneViewModel.loadSceneFromCoreData(selectedProjectID: routerView.project!.projectID!, in: viewContext)!, objectDimensionData: objectDimensionData)
+            return ScenekitView(scene: roomSceneViewModel.loadSceneFromCoreData(selectedProjectID: routerView.project!.projectID!, in: viewContext)!, objectDimensionData: objectDimensionData, roomWidth: Float(routerView.project!.widthRoom))
         }
     }
     
