@@ -25,6 +25,10 @@ struct ScenekitView: UIViewRepresentable {
         let tapGesture = UITapGestureRecognizer(target: context.coordinator, action: #selector(context.coordinator.handleTap(_:)))
         view.addGestureRecognizer(tapGesture)
         
+        let doubleTapGesture = UITapGestureRecognizer(target: context.coordinator, action: #selector(context.coordinator.handleDoubleTap(_:)))
+        doubleTapGesture.numberOfTapsRequired = 2
+        view.addGestureRecognizer(doubleTapGesture)
+        
         return view
     }
 
@@ -104,6 +108,15 @@ struct ScenekitView: UIViewRepresentable {
 
         }
         
+        @objc func handleDoubleTap(_ gestureRecognizer: UITapGestureRecognizer) {
+            guard !parent.isEditMode else {
+                guard let selectedNode = selectedNode else { return }
+                rotateNode(selectedNode)
+                return
+                
+            }
+        }
+        
         @objc func handlePan(_ gestureRecognizer: UIPanGestureRecognizer) {
             guard !parent.isEditMode else {
                 
@@ -125,16 +138,11 @@ struct ScenekitView: UIViewRepresentable {
                 
             }
             
-//            if gestureRecognizer.state == .ended || gestureRecognizer.state == .cancelled {
-//                removePanGesture()
-//                lastPanTranslation = .zero
-//                self.selectedNode = nil
-//                DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-//                    self.parent.view.allowsCameraControl = true
-//                    print("PAN GESTURE ENDED, CAMERA CONTROL RE-ENABLED")
-//                }
-//            }
-            
+        }
+        
+        private func rotateNode(_ node: SCNNode) {
+            let rotation = SCNAction.rotateBy(x: 0, y: CGFloat.pi/2, z: 0, duration: 0.2)
+            node.runAction(rotation)
         }
         
         private func handleOneFingerPan(translation: CGPoint, for node: SCNNode) {
@@ -156,6 +164,13 @@ struct ScenekitView: UIViewRepresentable {
             )
             node.position = newPos
         }
+        
+//        private func handleDoubleTap(for node: SCNNode) {
+//            let rotationDegree: Float = 90.0
+//            let newPos = SCNVector4(
+//                node.rotation.x(rotationDegree)
+//            )
+//        }
         
         func addPanGesture() {
             let panGesture = UIPanGestureRecognizer(target: self, action: #selector(handlePan(_:)))
