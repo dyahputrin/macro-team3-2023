@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		210C7FF22AD531C200E01229 /* Model.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 210C7FF02AD531C200E01229 /* Model.xcdatamodeld */; };
 		210C80142AD5343400E01229 /* Persistence.swift in Sources */ = {isa = PBXBuildFile; fileRef = 210C80132AD5343400E01229 /* Persistence.swift */; };
+		2128E7E12AE7A2C900FD6B99 /* ObjectViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2128E7E02AE7A2C900FD6B99 /* ObjectViewModel.swift */; };
+		2135F0622AEF982100A3DD9A /* ObjectThumbnailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2135F0612AEF982100A3DD9A /* ObjectThumbnailView.swift */; };
 		21C90C192AD694880003D517 /* ProjectData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21C90C182AD694880003D517 /* ProjectData.swift */; };
 		21C90C412AD6A15B0003D517 /* RouterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21C90C402AD6A15B0003D517 /* RouterView.swift */; };
 		21C90C432AD7CC810003D517 /* ProjectViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21C90C422AD7CC810003D517 /* ProjectViewModel.swift */; };
@@ -81,6 +83,8 @@
 /* Begin PBXFileReference section */
 		210C7FF12AD531C200E01229 /* Model.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Model.xcdatamodel; sourceTree = "<group>"; };
 		210C80132AD5343400E01229 /* Persistence.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Persistence.swift; sourceTree = "<group>"; };
+		2128E7E02AE7A2C900FD6B99 /* ObjectViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ObjectViewModel.swift; sourceTree = "<group>"; };
+		2135F0612AEF982100A3DD9A /* ObjectThumbnailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ObjectThumbnailView.swift; sourceTree = "<group>"; };
 		21C90C182AD694880003D517 /* ProjectData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectData.swift; sourceTree = "<group>"; };
 		21C90C402AD6A15B0003D517 /* RouterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RouterView.swift; sourceTree = "<group>"; };
 		21C90C422AD7CC810003D517 /* ProjectViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectViewModel.swift; sourceTree = "<group>"; };
@@ -472,6 +476,7 @@
 				BE6F996C2AE272A400AC6A69 /* ObjectSidebarView.swift */,
 				BE6F996E2AE272BC00AC6A69 /* RoomSidebarView.swift */,
 				BE6F99702AE272D800AC6A69 /* TopToolbarView.swift */,
+				2135F0612AEF982100A3DD9A /* ObjectThumbnailView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -480,6 +485,7 @@
 			isa = PBXGroup;
 			children = (
 				94DDE94A2ADE8FFA007915FF /* CanvasDataViewModel.swift */,
+				2128E7E02AE7A2C900FD6B99 /* ObjectViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -586,6 +592,7 @@
 				9487BE042ADE93B0004FCC67 /* OnboardingButtonView+LocalizedString.swift in Sources */,
 				BE6F99692AE2725100AC6A69 /* CanvasView.swift in Sources */,
 				94DDE96C2ADE8FFA007915FF /* RoomSceneView.swift in Sources */,
+				2128E7E12AE7A2C900FD6B99 /* ObjectViewModel.swift in Sources */,
 				BE6F996B2AE2728B00AC6A69 /* ImportButtonView.swift in Sources */,
 				94DDE9612ADE8FFA007915FF /* ColorExtension.swift in Sources */,
 				94DDE96A2ADE8FFA007915FF /* CanvasData.swift in Sources */,
@@ -595,6 +602,7 @@
 				9487BE162ADE93B0004FCC67 /* OnboardingTutorialView.swift in Sources */,
 				9487BE072ADE93B0004FCC67 /* CaptureOverlayView.swift in Sources */,
 				94DDE95F2ADE8FFA007915FF /* TransitionExtension.swift in Sources */,
+				2135F0622AEF982100A3DD9A /* ObjectThumbnailView.swift in Sources */,
 				9487BE0F2ADE93B0004FCC67 /* AppDataModel.swift in Sources */,
 				94DDE9662ADE8FFA007915FF /* OnboardingViewController.swift in Sources */,
 				9487BE0B2ADE93B0004FCC67 /* CaptureOverlayView+LocalizedString.swift in Sources */,
@@ -764,7 +772,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"macro2023/Preview Content\"";
-				DEVELOPMENT_TEAM = 4QQ5D4534V;
+				DEVELOPMENT_TEAM = 28N6P267AM;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_NSCameraUsageDescription = "Camera needed to function";
@@ -799,7 +807,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"macro2023/Preview Content\"";
-				DEVELOPMENT_TEAM = 4QQ5D4534V;
+				DEVELOPMENT_TEAM = 28N6P267AM;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_NSCameraUsageDescription = "Camera needed to function";

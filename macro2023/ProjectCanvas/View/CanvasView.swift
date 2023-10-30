@@ -204,4 +204,6 @@ struct CanvasView: View {
 
 #Preview {
     CanvasView(objectsButtonClicked: false, roomButtonClicked: false, viewfinderButtonClicked: .constant(false), isImporting: .constant(false), isExporting: .constant(false), isSetButtonSidebarTapped: .constant(false))
+        .environment(\.managedObjectContext,PersistenceController.preview.container.viewContext)
+            .environmentObject(RouterView())
 }

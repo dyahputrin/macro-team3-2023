@@ -10,4 +10,5 @@ import Foundation
 class RouterView:ObservableObject{
     @Published var path:[String] = []
     @Published var project:ProjectEntity? = nil
+    @Published var object:ObjectEntity? = nil
 }
