@@ -45,13 +45,21 @@ struct CanvasView: View {
     @State private var selectedAnObject = true
     @State private var showingObjectList = false
     
+    @ObservedObject var objectDimensionData: ObjectDimensionData = ObjectDimensionData()
+    
+    var sceneKitView: ScenekitView {
+        if routerView.project?.projectID == nil {
+            return ScenekitView(scene: roomSceneViewModel.makeScene1(width: roomSceneViewModel.canvasData.roomWidth, height: roomSceneViewModel.canvasData.roomHeight, length: roomSceneViewModel.canvasData.roomLength)!, objectDimensionData: objectDimensionData)
+        } else {
+            return ScenekitView(scene: roomSceneViewModel.loadSceneFromCoreData(selectedProjectID: routerView.project!.projectID!, in: viewContext)!, objectDimensionData: objectDimensionData)
+        }
+    }
+    
     var body: some View {
         
         GeometryReader { geometry in
             if routerView.project?.projectID == nil{
                 ZStack {
-                    let sceneKitView = ScenekitView(scene: roomSceneViewModel.makeScene1(width: roomSceneViewModel.canvasData.roomWidth, height: roomSceneViewModel.canvasData.roomHeight, length: roomSceneViewModel.canvasData.roomLength)!)
-                   
                     sceneKitView
                         .edgesIgnoringSafeArea(.bottom)
                         .id(sceneViewID)
@@ -59,8 +67,6 @@ struct CanvasView: View {
             }
             else {
                 ZStack {
-                    let sceneKitView = ScenekitView(scene: roomSceneViewModel.loadSceneFromCoreData(selectedProjectID: routerView.project!.projectID!, in: viewContext)!)
-                   
                     sceneKitView
                         .edgesIgnoringSafeArea(.bottom)
                         .id(sceneViewID)
@@ -81,9 +87,9 @@ struct CanvasView: View {
 //            if showingObjectList == true {
 //                ObjectListView()
 //            }
-            
-            if selectedAnObject == true {
-                ObjectSizeView(roomWidthText:.constant("2"), roomLengthText: .constant("2"), roomHeightText: .constant("2"), sceneViewID: .constant(UUID()), roomSceneViewModel: CanvasDataViewModel(canvasData: CanvasData(roomWidth: 0, roomHeight: 0, roomLength: 0), projectData: ProjectData()))
+
+            if objectDimensionData.name != "--" {
+                ObjectSizeView(roomWidthText:.constant("2"), roomLengthText: .constant("2"), roomHeightText: .constant("2"), sceneViewID: .constant(UUID()), roomSceneViewModel: CanvasDataViewModel(canvasData: CanvasData(roomWidth: 0, roomHeight: 0, roomLength: 0), projectData: ProjectData()), objectDimensionData: objectDimensionData)
             }
             
         }

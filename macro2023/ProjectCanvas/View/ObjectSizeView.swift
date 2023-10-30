@@ -14,7 +14,7 @@ struct ObjectSizeView: View {
     @Binding var sceneViewID: UUID
     var roomSceneViewModel: CanvasDataViewModel
     
-    @State var objectName = "Selected Object Name"
+    @ObservedObject var objectDimensionData: ObjectDimensionData
     
     var body: some View {
         
@@ -23,11 +23,11 @@ struct ObjectSizeView: View {
             HStack {
                 RoundedRectangle(cornerRadius: 15)
                     .foregroundColor(Color.systemGray6)
-                    .frame(width: 300, height: 135)
+                    .frame(width: 250, height: 135)
                     .overlay(
-                        VStack(alignment: .center, content: {
+                        VStack(alignment: .leading, content: {
                             HStack {
-                                Text("\(objectName)")
+                                Text("\(objectDimensionData.name)")
                                     .bold()
                                     .font(.title3)
                                     .bold()
@@ -48,13 +48,23 @@ struct ObjectSizeView: View {
                                 }
                             }
                             .padding(.horizontal)
-                            
-                            HStack {
-                                Text("W:   \(roomWidthText) m    ")
-                                Text("L:   \(roomLengthText) m    ")
-                                Text("H:   \(roomHeightText) m")
-                            }
                             .padding(.top)
+                            
+                            VStack() {
+                                HStack {
+                                    Text("W:   ")
+                                    Text("\(objectDimensionData.width) m    ")
+                                }
+                                HStack {
+                                    Text("L:   ")
+                                    Text("\(objectDimensionData.length) m    ")
+                                }
+                                HStack {
+                                    Text("H:   ")
+                                    Text("\(objectDimensionData.height) m    ")
+                                }
+                            }
+                            .padding()
                         })
                         .padding(.vertical)
                     )
@@ -66,6 +76,6 @@ struct ObjectSizeView: View {
     }
 }
 
-#Preview {
-    ObjectSizeView(roomWidthText:.constant("2"), roomLengthText: .constant("2"), roomHeightText: .constant("2"), sceneViewID: .constant(UUID()), roomSceneViewModel: CanvasDataViewModel(canvasData: CanvasData(roomWidth: 0, roomHeight: 0, roomLength: 0), projectData: ProjectData()))
-}
+//#Preview {
+//    ObjectSizeView(roomWidthText:.constant("2"), roomLengthText: .constant("2"), roomHeightText: .constant("2"), sceneViewID: .constant(UUID()), roomSceneViewModel: CanvasDataViewModel(canvasData: CanvasData(roomWidth: 0, roomHeight: 0, roomLength: 0), projectData: ProjectData()))
+//}

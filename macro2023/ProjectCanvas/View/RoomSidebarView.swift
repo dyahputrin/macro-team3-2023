@@ -146,6 +146,6 @@ struct RoomSidebarView: View {
 }
 
 
-#Preview {
-    RoomSidebarView(roomWidthText:.constant("2"), roomLengthText: .constant("2"), roomHeightText: .constant("2"), sceneViewID: .constant(UUID()), activeProjectID: .constant(UUID()), activeScene: .constant(SCNScene()), roomSceneViewModel: CanvasDataViewModel(canvasData: CanvasData(roomWidth: 0, roomHeight: 0, roomLength: 0), projectData: ProjectData()))
-}
+//#Preview {
+//    RoomSidebarView(roomWidthText:.constant("2"), roomLengthText: .constant("2"), roomHeightText: .constant("2"), sceneViewID: .constant(UUID()), activeProjectID: .constant(UUID()), activeScene: .constant(SCNScene()), roomSceneViewModel: CanvasDataViewModel(canvasData: CanvasData(roomWidth: 0, roomHeight: 0, roomLength: 0), projectData: ProjectData()))
+//}
