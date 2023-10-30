@@ -45,12 +45,14 @@ struct CanvasView: View {
     @State private var currentScenekitView: ScenekitView? = nil
     @State private var snapshotImage: UIImage? = nil
     
+    @State private var isEditMode: Bool = false
+    
     var body: some View {
         
         GeometryReader { geometry in
             if routerView.project?.projectID == nil{
                 ZStack {
-                    let scenekitView = ScenekitView(scene: roomSceneViewModel.makeScene1(width: roomSceneViewModel.canvasData.roomWidth, height: roomSceneViewModel.canvasData.roomHeight, length: roomSceneViewModel.canvasData.roomLength)!)
+                    let scenekitView = ScenekitView(scene: roomSceneViewModel.makeScene1(width: roomSceneViewModel.canvasData.roomWidth, height: roomSceneViewModel.canvasData.roomHeight, length: roomSceneViewModel.canvasData.roomLength)!, isEditMode: $isEditMode)
                     
                     scenekitView
                         .edgesIgnoringSafeArea(.bottom)
@@ -74,7 +76,7 @@ struct CanvasView: View {
             }
             else {
                 ZStack {
-                    let scenekitView = ScenekitView(scene: roomSceneViewModel.loadSceneFromCoreData(selectedProjectID: routerView.project!.projectID!, in: viewContext)!)
+                    let scenekitView = ScenekitView(scene: roomSceneViewModel.loadSceneFromCoreData(selectedProjectID: routerView.project!.projectID!, in: viewContext)!, isEditMode: $isEditMode)
                     
                     scenekitView
                         .edgesIgnoringSafeArea(.bottom)
@@ -126,6 +128,16 @@ struct CanvasView: View {
                     } label: {
                         Label("Viewfinder", systemImage: "viewfinder")
                             .foregroundColor(.black)
+                    }
+                    
+                    //EDIT MODE TOGGLE
+                    Button(action : {
+                        isEditMode.toggle()
+//                        objectsButtonClicked = false
+                    }) {
+                        Image(systemName: "pencil")
+                            .foregroundColor(isEditMode ? .blue : .black)
+                            .padding()
                     }
                     
                     // ROOM
@@ -254,8 +266,8 @@ struct CanvasView: View {
 
 
 
-#Preview {
-    CanvasView(objectsButtonClicked: false, roomButtonClicked: false, viewfinderButtonClicked: .constant(false), isImporting: .constant(false), isExporting: .constant(false), isSetButtonSidebarTapped: .constant(false), activeProjectID: Binding.constant(UUID()), activeScene: Binding.constant(SCNScene()))
-        .environment(\.managedObjectContext,PersistenceController.preview.container.viewContext)
-        .environmentObject(RouterView())
-}
+//#Preview {
+//    CanvasView(objectsButtonClicked: false, roomButtonClicked: false, viewfinderButtonClicked: .constant(false), isImporting: .constant(false), isExporting: .constant(false), isSetButtonSidebarTapped: .constant(false), activeProjectID: Binding.constant(UUID()), activeScene: Binding.constant(SCNScene()), isEditMode: false)
+//        .environment(\.managedObjectContext,PersistenceController.preview.container.viewContext)
+//        .environmentObject(RouterView())
+//}

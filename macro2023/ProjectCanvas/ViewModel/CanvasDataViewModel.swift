@@ -81,6 +81,13 @@ class CanvasDataViewModel: ObservableObject {
             scene?.rootNode.addChildNode(wall4Node)
         }
         
+        //TEMPORARY
+        if let wall4Asset = SCNScene(named: "OfficeTableGroup.usdz"),
+           let wall4Node = wall4Asset.rootNode.childNodes.first?.clone() {
+            wall4Node.scale = SCNVector3(1, 1, 1)
+            scene?.rootNode.addChildNode(wall4Node)
+        }
+        
         // Add camera
         let camera = SCNCamera()
         let cameraNode = SCNNode()
