@@ -78,7 +78,7 @@ struct CanvasView: View {
 //                ObjectSizeView(roomWidthText:.constant("2"), roomLengthText: .constant("2"), roomHeightText: .constant("2"), sceneViewID: .constant(UUID()), roomSceneViewModel: CanvasDataViewModel(canvasData: CanvasData(roomWidth: 0, roomHeight: 0, roomLength: 0), projectData: ProjectData()))
 //            }
             
-            ObjectListView(showingObjectList: $showingObjectList)
+            //ObjectListView(showingObjectList: $showingObjectList)
             
             if selectedAnObject == true {
                 ObjectSizeView(roomWidthText:.constant("2"), roomLengthText: .constant("2"), roomHeightText: .constant("2"), sceneViewID: .constant(UUID()), roomSceneViewModel: CanvasDataViewModel(canvasData: CanvasData(roomWidth: 0, roomHeight: 0, roomLength: 0), projectData: ProjectData()))
@@ -97,41 +97,40 @@ struct CanvasView: View {
         .toolbar {
             ToolbarItemGroup {
                 HStack {
-                    //POV TOP VIEW
-                    Button(action: {
-                        povButtonClicked.toggle()
-                    })
-                    {
-                        Image(systemName: "light.panel")
-                            .foregroundColor(povButtonClicked ? .accentColor :  .black)
-                    }
-                    .padding(.trailing)
                     
                     //VIEWFINDER
-                    Menu {
-                        Button(action: {
-                            self.isGuidedCaptureViewPresented = true
-                        }, label: {
-                            Text("Scan objects")
-                        })
-                        Button(action: {
-                            self.isRoomCaptureViewPresented = true
-                        }, label: {
-                            Text("Scan room")
-                        })
-                    } label: {
-                        Label("Viewfinder", systemImage: "viewfinder")
-                            .foregroundColor(.black)
-                    }
+                        Menu {
+                            Button(action: {
+                                self.isGuidedCaptureViewPresented = true
+                            }, label: {
+                                Text("Scan objects")
+                            })
+                            Button(action: {
+                                self.isRoomCaptureViewPresented = true
+                            }, label: {
+                                Text("Scan room")
+                            })
+                        } label: {
+                            Label("Viewfinder", systemImage: "viewfinder")
+                                .foregroundColor(.black)
+                            Text("Scan")
+                                .font(.subheadline)
+                                .foregroundColor(.black)
+                        }
+                        .padding(.trailing, 50)
                     
                     // ROOM
                     Button(action : {
                         roomButtonClicked.toggle()
                         objectsButtonClicked = false
                     }) {
-                        Image(systemName: "square.split.bottomrightquarter")
-                            .foregroundColor(roomButtonClicked ? .accentColor : .black)
-                            .padding()
+                        VStack {
+                            Image(systemName: "square.split.bottomrightquarter")
+                                .foregroundColor(roomButtonClicked ? .accentColor : .black)
+                            Text("Room")
+                                .font(.subheadline)
+                                .foregroundColor(roomButtonClicked ? .accentColor : .black)
+                        }
                     }
                     
                     //OBJECTS
@@ -139,28 +138,33 @@ struct CanvasView: View {
                         objectsButtonClicked.toggle()
                         roomButtonClicked = false
                     }) {
-                        Image(systemName: "chair.lounge")
-                            .foregroundColor(objectsButtonClicked ? .accentColor : .black)
+                        VStack {
+                            Image(systemName: "chair.lounge")
+                                .foregroundColor(objectsButtonClicked ? .accentColor : .black)
+                            Text("Objects")
+                                .font(.subheadline)
+                                .foregroundColor(objectsButtonClicked ? .accentColor : .black)
+                        }
                     }
+
                 }
-                .padding(.trailing, 100)
+                .padding(.trailing, 200)
             }
             
-            // UNDO & SAVE
+            // SAVE
             ToolbarItemGroup {
-//                Button(action: {})
-//                {
-//                    Image(systemName: "arrow.uturn.backward.circle")
-//                        .foregroundColor(.black)
-//                        .padding()
-//                }
                 Button(action: {
                     showSaveAlert = true
                     roomSceneViewModel.saveProject(viewContext: viewContext)
                 })
                 {
-                    Image(systemName: "square.and.arrow.down")
-                        .foregroundColor(.black)
+                    VStack {
+                        Image(systemName: "square.and.arrow.down")
+                            .foregroundColor(.black)
+                        Text("Save")
+                            .font(.subheadline)
+                            .foregroundColor(.black)
+                    }
                 }.alert(isPresented: $showSaveAlert) {
                     Alert(
                         title: Text("\(roomSceneViewModel.projectData.nameProject) Saved"),
