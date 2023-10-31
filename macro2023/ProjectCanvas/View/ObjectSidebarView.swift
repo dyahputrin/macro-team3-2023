@@ -13,6 +13,8 @@ struct ObjectSidebarView: View {
     @EnvironmentObject var routerView: RouterView
     @StateObject private var ObjectVM = ObjectViewModel()
     
+    @State private var sceneKitView: SceneKitView?
+    
     @FetchRequest(entity: ObjectEntity.entity(),
                   sortDescriptors: [NSSortDescriptor(keyPath: \ObjectEntity.importedName, ascending: true)])
     var importsObject: FetchedResults<ObjectEntity>
@@ -66,33 +68,41 @@ struct ObjectSidebarView: View {
                                                 .foregroundStyle(Color(hex: 0x28B0E5))
                                                 .font(.system(size: 50))
                                         })
-                                        ForEach(importsObject){ urlImport in
+                                        ForEach(importsObject, id: \.self){ urlImport in
                                             RoundedRectangle(cornerRadius: 25, style: .circular)
                                                 .shadow(radius:5)
                                                 .frame(width: 100, height: 100)
-                                                .foregroundColor(.white)
+                                                .foregroundColor(.clear)
                                                 .overlay{
                                                     VStack {
-                                                        if let thumbnailData = urlImport.importedPreview,
-                                                           let thumbnailImage = UIImage(data: thumbnailData) {
-                                                            Image(uiImage: thumbnailImage)
-                                                                .resizable()
-                                                                .scaledToFill()
-                                                                .frame(width: 100, height: 100)
-                                                        } else {
-                                                            Image("OfficeTable")
-                                                                .resizable()
-                                                                .scaledToFill()
-                                                                .frame(width: 100, height: 100)
-                                                        }
+                                                        if let usdzData = urlImport.importedObject {
+                                                                           SceneKitView(usdzData: usdzData)
+                                                                               .frame(width: 100, height: 100)
+                                                                               .cornerRadius(25)
+                                                                               .shadow(radius: 5)
+                                                                       }
                                                         Text("\(urlImport.importedName ?? "error")")
-                                                        if let importedObject = urlImport.importedURL, let scene = ObjectVM.CoreStringScene(URLName: importedObject) {
-                                                            SceneView(scene: scene)
-                                                                .frame(width: 800, height: 800)
-                                                                .background(Color.red)
-                                                        } else {
-                                                            Text("Failed to load the USDZ file.")
-                                                        }
+//                                                        if let thumbnailData = urlImport.importedPreview,
+//                                                           let thumbnailImage = UIImage(data: thumbnailData) {
+//                                                            Image(uiImage: thumbnailImage)
+//                                                                .resizable()
+//                                                                .scaledToFill()
+//                                                                .frame(width: 100, height: 100)
+//                                                        } else {
+//                                                            Image("OfficeTable")
+//                                                                .resizable()
+//                                                                .scaledToFill()
+//                                                                .frame(width: 100, height: 100)
+//                                                        }
+//                                                        Text("\(urlImport.importedName ?? "error")")
+//                                                        if let importedObject = urlImport.importedURL, let scene = ObjectVM.coreStringScene(URLName: importedObject) {
+//                                                            SceneView(scene: scene ,options: [.allowsCameraControl])
+//                                                                .frame(width: 800, height: 800)
+//                                                         
+//                                                        } else {
+//                                                            Text("Failed to load the USDZ file.")
+//                                                        }
+                                                        
                                                     }
                                                 }
                                         }
@@ -105,7 +115,7 @@ struct ObjectSidebarView: View {
                             .padding()
                             .background(Color.systemGray6)
                     )
-//                    .frame(width: geometry.size.width * 0.3)
+                    .frame(width: geometry.size.width * 0.3)
                     .padding(.top, 10)
                 
             }
