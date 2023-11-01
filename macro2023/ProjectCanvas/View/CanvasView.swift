@@ -47,7 +47,7 @@ struct CanvasView: View {
     
     @ObservedObject var objectDimensionData: ObjectDimensionData = ObjectDimensionData()
     
-    var sceneKitView: ScenekitView {
+    var scenekitView: ScenekitView {
         if routerView.project?.projectID == nil {
             return ScenekitView(scene: roomSceneViewModel.makeScene1(width: roomSceneViewModel.canvasData.roomWidth, height: roomSceneViewModel.canvasData.roomHeight, length: roomSceneViewModel.canvasData.roomLength)!, objectDimensionData: objectDimensionData, roomWidth: Float(roomSceneViewModel.canvasData.roomWidth), isEditMode: $isEditMode
             )
@@ -66,7 +66,7 @@ struct CanvasView: View {
         GeometryReader { geometry in
             if routerView.project?.projectID == nil{
                 ZStack {
-                    let scenekitView = ScenekitView(scene: roomSceneViewModel.makeScene1(width: roomSceneViewModel.canvasData.roomWidth, height: roomSceneViewModel.canvasData.roomHeight, length: roomSceneViewModel.canvasData.roomLength)!, objectDimensionData: objectDimensionData, isEditMode: $isEditMode)
+//                    let scenekitView = ScenekitView(scene: roomSceneViewModel.makeScene1(width: roomSceneViewModel.canvasData.roomWidth, height: roomSceneViewModel.canvasData.roomHeight, length: roomSceneViewModel.canvasData.roomLength)!, objectDimensionData: objectDimensionData, isEditMode: $isEditMode)
                     
                     scenekitView
                         .edgesIgnoringSafeArea(.bottom)
@@ -90,7 +90,7 @@ struct CanvasView: View {
             }
             else {
                 ZStack {
-                    let scenekitView = ScenekitView(scene: roomSceneViewModel.loadSceneFromCoreData(selectedProjectID: routerView.project!.projectID!, in: viewContext)!, objectDimensionData: objectDimensionData, isEditMode: $isEditMode)
+//                    let scenekitView = ScenekitView(scene: roomSceneViewModel.loadSceneFromCoreData(selectedProjectID: routerView.project!.projectID!, in: viewContext)!, objectDimensionData: objectDimensionData, isEditMode: $isEditMode)
                     
                     scenekitView
                         .edgesIgnoringSafeArea(.bottom)

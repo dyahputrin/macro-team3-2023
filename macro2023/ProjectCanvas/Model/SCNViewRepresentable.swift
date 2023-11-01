@@ -159,6 +159,7 @@ struct ScenekitView: UIViewRepresentable {
                 guard let selectedNode = selectedNode else {return}
                 
                 let translation = gestureRecognizer.translation(in: parent.view)
+                print("translation \(translation)")
                 
                 if gestureRecognizer.numberOfTouches == 1 {
                         handleOneFingerPan(translation: translation, for: selectedNode)
@@ -166,7 +167,14 @@ struct ScenekitView: UIViewRepresentable {
                         handleTwoFingerPan(translation: translation, for: selectedNode)
                     }
                 
-                lastPanTranslation = translation
+                switch gestureRecognizer.state {
+                case .began:
+                    lastPanTranslation = translation
+                case .changed:
+                    lastPanTranslation = translation
+                default:
+                    lastPanTranslation = .zero
+                }
                 
                 return
                 
@@ -187,6 +195,8 @@ struct ScenekitView: UIViewRepresentable {
                 node.position.z
             )
             node.position = newPos
+            print("Last pan \(lastPanTranslation)")
+            print("now \(translation)")
         }
 
         private func handleTwoFingerPan(translation: CGPoint, for node: SCNNode) {
