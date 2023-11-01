@@ -6,17 +6,30 @@
 //
 
 import SwiftUI
+import SceneKit
 
 struct ObjectSidebarView: View {
+    @Environment(\.managedObjectContext) private var viewContext
+    @EnvironmentObject var routerView: RouterView
+    @StateObject private var ObjectVM = ObjectViewModel()
+    
+    @State private var sceneKitView: ThumbnailView?
+    
+    @FetchRequest(entity: ObjectEntity.entity(),
+                  sortDescriptors: [NSSortDescriptor(keyPath: \ObjectEntity.importedName, ascending: true)])
+    var importsObject: FetchedResults<ObjectEntity>
+    
     @State private var currentSection = "Objects"
+    @State var thumbnailPreview : Image?
+    @State var isShowingScene: Bool = false
     var section = ["Objects", "Imports"]
     
     var body: some View {
         
-            let columns = [
-                GridItem(.flexible()),
-                GridItem(.flexible())
-            ]
+        let columns = [
+            GridItem(.flexible()),
+            GridItem(.flexible())
+        ]
         GeometryReader { geometry in
             HStack {
                 Spacer()
@@ -47,22 +60,41 @@ struct ObjectSidebarView: View {
                             } else if currentSection == "Imports" {
                                 ScrollView {
                                     LazyVGrid(columns: columns, spacing: 30) {
-                                        ImportButtonView(isImporting: .constant(false))
                                         
-                                        ForEach(2..<15, id: \.self) { index in
-                                            Image(systemName: "plus.app.fill")
+                                        Button(action: {
+                                            ObjectVM.presentDocumentPicker()
+                                        }, label: {
+                                            Image(systemName: "plus")
+                                                .foregroundStyle(Color(hex: 0x28B0E5))
+                                                .font(.system(size: 50))
                                                 .frame(width: 100, height: 100)
-                                                .font(.system(size: 100))
-                                                .shadow(radius: 5)
+                                        })
+                                        ForEach(importsObject, id: \.self){ urlImport in
+                                            RoundedRectangle(cornerRadius: 25, style: .circular)
+                                                .shadow(radius:5)
+                                                .frame(width: 100, height: 100)
+                                                .foregroundColor(.clear)
+                                                .overlay{
+                                                    VStack {
+                                                        if let usdzData = urlImport.importedObject {
+                                                                           ThumbnailView(usdzData: usdzData)
+                                                                               .frame(width: 100, height: 100)
+                                                                               .cornerRadius(25)
+                                                                               .shadow(radius: 5)
+                                                                       }
+                                                        Text("\(urlImport.importedName ?? "error")")
+                                          
+                                                    }
+                                                }
                                         }
+                                        
                                     }
                                     .padding(.top)
                                 }
                             }
-                            
                         }
-                        .padding()
-                        .background(Color.systemGray6)
+                            .padding()
+                            .background(Color.systemGray6)
                     )
                     .frame(width: geometry.size.width * 0.3)
                     .padding(.top, 1)
@@ -74,5 +106,7 @@ struct ObjectSidebarView: View {
 }
 
 #Preview {
-    ObjectSidebarView()
+    ObjectSidebarView().environment(\.managedObjectContext,PersistenceController.preview.container.viewContext)
+        .environmentObject(RouterView())
 }
+

@@ -301,8 +301,8 @@ struct CanvasView: View {
 
 
 
-//#Preview {
-//    CanvasView(objectsButtonClicked: false, roomButtonClicked: false, viewfinderButtonClicked: .constant(false), isImporting: .constant(false), isExporting: .constant(false), isSetButtonSidebarTapped: .constant(false), activeProjectID: Binding.constant(UUID()), activeScene: Binding.constant(SCNScene()), isEditMode: false)
-//        .environment(\.managedObjectContext,PersistenceController.preview.container.viewContext)
-//        .environmentObject(RouterView())
-//}
+// #Preview {
+//     CanvasView(objectsButtonClicked: false, roomButtonClicked: false, viewfinderButtonClicked: .constant(false), isImporting: .constant(false), isExporting: .constant(false), isSetButtonSidebarTapped: .constant(false))
+//         .environment(\.managedObjectContext,PersistenceController.preview.container.viewContext)
+//             .environmentObject(RouterView())
+// }
