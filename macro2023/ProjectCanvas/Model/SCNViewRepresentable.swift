@@ -96,23 +96,6 @@ struct ScenekitView: UIViewRepresentable {
 //        }
         
         @objc func handleTap(_ gestureRecognizer: UIGestureRecognizer) {
-//            guard !parent.isEditMode else {
-//                print("Tap detected")
-//                let p = gestureRecognizer.location(in: parent.view)
-//                let hitResults = parent.view.hitTest(p, options: [:])
-//                
-//                if let result = hitResults.first {
-//                    selectedNode = result.node
-//                    parent.view.allowsCameraControl = false
-//                    let max = selectedNode!.boundingBox.max
-//                    let min = selectedNode!.boundingBox.min
-//
-//                    let dimension = SCNVector3(max.x - min.x, max.y - min.y, max.z - min.z)
-//                    print("\(selectedNode?.name) : \(dimension)")
-//                    addPanGesture()
-//                }
-//                return
-//            }
             let p = gestureRecognizer.location(in: parent.view)
             let hitResults = parent.view.hitTest(p, options: [:])
             
