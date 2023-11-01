@@ -22,8 +22,9 @@ struct ObjectSizeView: View {
             Spacer()
             HStack {
                 RoundedRectangle(cornerRadius: 15)
-                    .foregroundColor(Color.systemGray6)
-                    .frame(width: 250, height: 135)
+//                    .foregroundColor(Color.systemGray6)
+                    .foregroundStyle(.thinMaterial)
+                    .frame(width: 250, height: 180)
                     .overlay(
                         VStack(alignment: .leading, content: {
                             HStack {
@@ -38,33 +39,38 @@ struct ObjectSizeView: View {
                                 HStack(alignment: .firstTextBaseline) {
                                     Button(action: {})
                                     {
-                                        Text("REMOVE")
-                                            .underline()
-                                            .foregroundColor(.red)
-                                            .font(.subheadline)
-                                            .bold()
+//                                        Text("REMOVE")
+//                                            .underline()
+//                                            .foregroundColor(.red)
+//                                            .font(.subheadline)
+//                                            .bold()
+                                        Image(systemName: "trash.fill")
+                                            .foregroundStyle(.red)
                                         //.padding(.leading, 50)
                                     }
                                 }
                             }
                             .padding(.horizontal)
-                            .padding(.top)
+//                            .padding(.top)
                             
                             VStack() {
                                 HStack {
                                     Text("W:   ")
                                     Text("\(objectDimensionData.width) m    ")
                                 }
+                                .padding(.bottom, 2)
                                 HStack {
                                     Text("L:   ")
                                     Text("\(objectDimensionData.length) m    ")
                                 }
+                                .padding(.bottom, 2)
                                 HStack {
                                     Text("H:   ")
                                     Text("\(objectDimensionData.height) m    ")
                                 }
                             }
-                            .padding()
+                            .padding(.top)
+                            .padding(.leading)
                         })
                         .padding(.vertical)
                     )
