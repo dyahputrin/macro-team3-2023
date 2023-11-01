@@ -10,18 +10,11 @@ import SceneKit
 
 struct ScenekitView: UIViewRepresentable {
     typealias UIViewType = SCNView
-    var scene: SCNScene
+    @Binding var scene: SCNScene?
     var view = SCNView()
     @ObservedObject var objectDimensionData: ObjectDimensionData
     var roomWidth: Float?
     @Binding var isEditMode: Bool
-    
-//    init(scene: SCNScene, objectDimensionData: ObjectDimensionData, roomWidth: Float, isEditMode: Bool) {
-//        self.scene = scene
-//        self.objectDimensionData = objectDimensionData
-//        self.roomWidth = roomWidth
-//        self.isEditMode = isEditMode
-//    }
 
     func makeUIView(context: Context) -> SCNView {
         view.scene = scene
@@ -64,37 +57,7 @@ struct ScenekitView: UIViewRepresentable {
             super.init()
         }
         
-//        init(_ scnView: SCNView) {
-//            self.scnView = scnView
-//            super.init()
-//        }
-//
-//        init(_ view: SCNView) {
-//            self.view = view
-//            super.init()
-//        }
-        
-//        @objc func handleTap(_ gestureRecognize: UIGestureRecognizer) {
-//            // check what nodes are tapped
-//            let p = gestureRecognize.location(in: view)
-//            let hitResults = view.hitTest(p, options: [:])
-//            
-//            // check that we clicked on at least one object
-//            if hitResults.count > 0 {
-//                
-//                // retrieved the first clicked object
-//                let result = hitResults[0]
-////                print("\(result)")
-//                let node = result.node
-//                
-//                let max = node.boundingBox.max
-//                let min = node.boundingBox.min
-//                
-//                let dimension = SCNVector3(max.x - min.x, max.y - min.y, max.z - min.z)
-//                print("\(node.name) : \(dimension)")
-//            }
-//        }
-        
+  
         @objc func handleTap(_ gestureRecognizer: UIGestureRecognizer) {
             let p = gestureRecognizer.location(in: parent.view)
             let hitResults = parent.view.hitTest(p, options: [:])
@@ -111,17 +74,9 @@ struct ScenekitView: UIViewRepresentable {
                     parent.view.allowsCameraControl = false
                     
                     // Get Dimension
-    //                let max = node.convertPosition(worldBoundingBox.min)
-    //                let min = node.boundingBox.min
                     let worldBoundingBox = selectedNode!.boundingBox
                     let worldMin = selectedNode!.convertPosition(worldBoundingBox.min, to: nil)
                     let worldMax = selectedNode!.convertPosition(worldBoundingBox.max, to: nil)
-
-    //                let worldDimensions = SCNVector3(
-    //                    worldMax.x - worldMin.x,
-    //                    worldMax.y - worldMin.y,
-    //                    worldMax.z - worldMin.z
-    //                )
                     
                     let x = String(format: "%.2f", worldMax.x - worldMin.x)
                     let y = String(format: "%.2f", worldMax.y - worldMin.y)
@@ -198,13 +153,6 @@ struct ScenekitView: UIViewRepresentable {
             )
             node.position = newPos
         }
-        
-//        private func handleDoubleTap(for node: SCNNode) {
-//            let rotationDegree: Float = 90.0
-//            let newPos = SCNVector4(
-//                node.rotation.x(rotationDegree)
-//            )
-//        }
         
         func addPanGesture() {
             let panGesture = UIPanGestureRecognizer(target: self, action: #selector(handlePan(_:)))
