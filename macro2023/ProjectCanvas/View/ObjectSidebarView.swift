@@ -67,6 +67,7 @@ struct ObjectSidebarView: View {
                                             Image(systemName: "plus")
                                                 .foregroundStyle(Color(hex: 0x28B0E5))
                                                 .font(.system(size: 50))
+                                                .frame(width: 100, height: 100)
                                         })
                                         ForEach(importsObject, id: \.self){ urlImport in
                                             RoundedRectangle(cornerRadius: 25, style: .circular)
