@@ -46,26 +46,26 @@ struct RoundedCorners: View {
 
 struct ProjectView: View {
     @StateObject var dataContentViewModel = ProjectViewModel()
-
+    
     @Environment(\.managedObjectContext) private var viewContext
-
+    
     @EnvironmentObject var routerView:RouterView
-
+    
     @FetchRequest(entity: ProjectEntity.entity(),
                   sortDescriptors: [NSSortDescriptor(keyPath: \ProjectEntity.projectName, ascending: true)])
     var recentlyOpenedItems: FetchedResults<ProjectEntity>
-
+    
     let columns = [GridItem(.flexible()),GridItem(.flexible()),GridItem(.flexible()),GridItem(.flexible()),GridItem(.flexible())]
-
+    
     @State private var currentProjectName: String = ""
-
+    
     @State private var currentProjectEntity: ProjectEntity? = nil
     
     @State var activeProjectID: UUID
     @State var activeScene: SCNScene
-
+    
     var body: some View {
-//        let _ = dataContentViewModel.printAllData(in: viewContext)
+        //        let _ = dataContentViewModel.printAllData(in: viewContext)
         NavigationStack(path: $routerView.path){
             ScrollView{
                 LazyVGrid(columns: columns) {
@@ -90,7 +90,15 @@ struct ProjectView: View {
                             .foregroundColor(.white)
                             .overlay(
                                 ZStack {
-                                    Image("project5")
+                                    var thumbnailImage: UIImage {
+                                        if let thumbnailData = newProjectName.projectThumbnail,
+                                           let image = UIImage(data: thumbnailData) {
+                                            return image
+                                        } else {
+                                            return UIImage(named: "project5") ?? UIImage()
+                                        }
+                                    }
+                                    Image(uiImage: thumbnailImage)
                                         .resizable()
                                         .scaledToFill()
                                         .frame(width: 200, height: 200)
@@ -107,35 +115,35 @@ struct ProjectView: View {
                                     }
                                 }
                             )
-                        .contextMenu(ContextMenu(menuItems: {
-                            Button("Rename", systemImage: "pencil"){
-                                currentProjectName = newProjectName.projectName ?? ""
-                                currentProjectEntity = newProjectName
-                                dataContentViewModel.dataCanvas.isRenameAlertPresented = true
-                            }
-                            Button("Delete", systemImage: "trash", role: .destructive){
-                                let _ = print(newProjectName.projectScene)
-                                dataContentViewModel.deleteProject(viewContext: viewContext, project: newProjectName)
-                            }
-                        }))
-                        .onTapGesture {
-                            routerView.path.append("canvas")
-                            routerView.project = newProjectName
-                            // routerView.uuid = newProjectName.projectID
-                        }
-                        .alert("Rename Project", isPresented: $dataContentViewModel.dataCanvas.isRenameAlertPresented) {
-                                    TextField("Enter a new project name", text: $currentProjectName)
-                                    Button("Cancel", role: .cancel) {
-                                        dataContentViewModel.dataCanvas.isRenameAlertPresented = false
-                                    }
-                                    Button("Save") {
-                                        // Handle renaming using the ViewModel
-                                        dataContentViewModel.renameProject(project: currentProjectEntity!, newProjectName: currentProjectName, viewContext: viewContext)
-                                        dataContentViewModel.dataCanvas.isRenameAlertPresented = false
-                                    }
+                            .contextMenu(ContextMenu(menuItems: {
+                                Button("Rename", systemImage: "pencil"){
+                                    currentProjectName = newProjectName.projectName ?? ""
+                                    currentProjectEntity = newProjectName
+                                    dataContentViewModel.dataCanvas.isRenameAlertPresented = true
                                 }
+                                Button("Delete", systemImage: "trash", role: .destructive){
+                                    let _ = print(newProjectName.projectScene)
+                                    dataContentViewModel.deleteProject(viewContext: viewContext, project: newProjectName)
+                                }
+                            }))
+                            .onTapGesture {
+                                routerView.path.append("canvas")
+                                routerView.project = newProjectName
+                                // routerView.uuid = newProjectName.projectID
+                            }
+                            .alert("Rename Project", isPresented: $dataContentViewModel.dataCanvas.isRenameAlertPresented) {
+                                TextField("Enter a new project name", text: $currentProjectName)
+                                Button("Cancel", role: .cancel) {
+                                    dataContentViewModel.dataCanvas.isRenameAlertPresented = false
+                                }
+                                Button("Save") {
+                                    // Handle renaming using the ViewModel
+                                    dataContentViewModel.renameProject(project: currentProjectEntity!, newProjectName: currentProjectName, viewContext: viewContext)
+                                    dataContentViewModel.dataCanvas.isRenameAlertPresented = false
+                                }
+                            }
                     }
-
+                    
                     .padding(.bottom,30)
                 }
                 .padding()
@@ -153,12 +161,12 @@ struct ProjectView: View {
                 if val == "canvas"{
                     CanvasView(objectsButtonClicked: false, roomButtonClicked: false, povButtonClicked: false, viewfinderButtonClicked: .constant(false), isImporting: .constant(false), isExporting: .constant(false), isSetButtonSidebarTapped: .constant(false), activeProjectID: $activeProjectID, activeScene: $activeScene)
                 }else{
-
+                    
                 }
-
+                
             }
         }
-
+        
     }
 }
 

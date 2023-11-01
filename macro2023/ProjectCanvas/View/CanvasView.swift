@@ -56,21 +56,60 @@ struct CanvasView: View {
         }
     }
     
+    @State private var currentScenekitView: ScenekitView? = nil
+    @State private var snapshotImage: UIImage? = nil
+    
+    @State private var isEditMode: Bool = false
+    
     var body: some View {
         
         GeometryReader { geometry in
             if routerView.project?.projectID == nil{
                 ZStack {
-                    sceneKitView
+                    let scenekitView = ScenekitView(scene: roomSceneViewModel.makeScene1(width: roomSceneViewModel.canvasData.roomWidth, height: roomSceneViewModel.canvasData.roomHeight, length: roomSceneViewModel.canvasData.roomLength)!, isEditMode: $isEditMode)
+                    
+                    scenekitView
                         .edgesIgnoringSafeArea(.bottom)
                         .id(sceneViewID)
+                        .onAppear {
+                            currentScenekitView = scenekitView
+                        }
+                    //                    SCNViewRepresentable(
+                    //                        scene: roomSceneViewModel.makeScene1(width: roomSceneViewModel.canvasData.roomWidth, height: roomSceneViewModel.canvasData.roomHeight, length: roomSceneViewModel.canvasData.roomLength)!,
+                    //                        allowsCameraControl: true,
+                    //                        onDisappear: { view in
+                    //                            print("SCNView is stored in CanvasView")
+                    //                            roomSceneViewModel.takeSnapshotAndSave(sceneView: scnView!, activeProjectID: activeProjectID, viewContext: viewContext)
+                    //                        }
+                    //                    )
+                    //                    .edgesIgnoringSafeArea(.bottom)
+                    //                    SceneView(scene: roomSceneViewModel.makeScene1(width: roomSceneViewModel.canvasData.roomWidth, height: roomSceneViewModel.canvasData.roomHeight, length: roomSceneViewModel.canvasData.roomLength), options: [.allowsCameraControl])
+                    //                        .edgesIgnoringSafeArea(.bottom)
+                    //                        .id(sceneViewID)
                 }
             }
             else {
                 ZStack {
-                    sceneKitView
+                    let scenekitView = ScenekitView(scene: roomSceneViewModel.loadSceneFromCoreData(selectedProjectID: routerView.project!.projectID!, in: viewContext)!, isEditMode: $isEditMode)
+                    
+                    scenekitView
                         .edgesIgnoringSafeArea(.bottom)
                         .id(sceneViewID)
+                        .onAppear {
+                            currentScenekitView = scenekitView
+                        }
+                    //                    SCNViewRepresentable(
+                    //                        scene: roomSceneViewModel.loadSceneFromCoreData(selectedProjectID: routerView.project!.projectID!, in: viewContext)!,
+                    //                        allowsCameraControl: true,
+                    //                        onDisappear: { view in
+                    //                            print("SCNView is stored in CanvasView")
+                    //                            roomSceneViewModel.takeSnapshotAndSave(sceneView: scnView!, activeProjectID: activeProjectID, viewContext: viewContext)
+                    //                        }
+                    //                    )
+                    //                    .edgesIgnoringSafeArea(.bottom)
+                    //                    SceneView(scene: roomSceneViewModel.loadSceneFromCoreData(selectedProjectID: routerView.project!.projectID!, in: viewContext), options: [.allowsCameraControl])
+                    //                        .edgesIgnoringSafeArea(.bottom)
+                    //                        .id(sceneViewID)
                 }
             }
             
@@ -126,6 +165,16 @@ struct CanvasView: View {
                             .foregroundColor(.black)
                     }
                     
+                    //EDIT MODE TOGGLE
+                    Button(action : {
+                        isEditMode.toggle()
+//                        objectsButtonClicked = false
+                    }) {
+                        Image(systemName: "pencil")
+                            .foregroundColor(isEditMode ? .blue : .black)
+                            .padding()
+                    }
+                    
                     // ROOM
                     Button(action : {
                         roomButtonClicked.toggle()
@@ -159,6 +208,10 @@ struct CanvasView: View {
                 Button(action: {
                     showSaveAlert = true
                     roomSceneViewModel.saveProject(viewContext: viewContext)
+                    // add snapshot function here
+//                    snapshotImage = roomSceneViewModel.takeSnapshot(scenekitView: currentScenekitView!)
+                    roomSceneViewModel.saveSnapshot(activeProjectID: activeProjectID, viewContext: viewContext, snapshotImageArg: snapshotImage, scenekitView: currentScenekitView!)
+                    
                 })
                 {
                     Image(systemName: "square.and.arrow.down")
@@ -189,9 +242,9 @@ struct CanvasView: View {
                 }
             }
         }
-//        .fullScreenCover(isPresented: $isGuidedCaptureViewPresented, content: {
-//            GuidedCaptureView()
-//        })
+        //        .fullScreenCover(isPresented: $isGuidedCaptureViewPresented, content: {
+        //            GuidedCaptureView()
+        //        })
         .navigationTitle(checkRename ? roomSceneViewModel.projectData.nameProject : (routerView.project == nil ? "NewProject" : roomSceneViewModel.projectData.nameProject))
         .toolbarTitleMenu {
             Button(action: {
@@ -233,6 +286,9 @@ struct CanvasView: View {
                 }            }
         }
         .onDisappear{
+//            roomSceneViewModel.saveSnapshot(activeProjectID: activeProjectID, viewContext: viewContext, snapshotImageArg: snapshotImage)
+            
+            print("CanvasView is disappearing")
             if routerView.path.count > 0 {
                 routerView.path.removeLast()
             }
@@ -240,14 +296,13 @@ struct CanvasView: View {
             roomSceneViewModel.projectData.uuid = UUID()
             routerView.project = nil
         }
-        
     }
 }
 
 
 
 //#Preview {
-//    CanvasView(objectsButtonClicked: false, roomButtonClicked: false, viewfinderButtonClicked: .constant(false), isImporting: .constant(false), isExporting: .constant(false), isSetButtonSidebarTapped: .constant(false))
+//    CanvasView(objectsButtonClicked: false, roomButtonClicked: false, viewfinderButtonClicked: .constant(false), isImporting: .constant(false), isExporting: .constant(false), isSetButtonSidebarTapped: .constant(false), activeProjectID: Binding.constant(UUID()), activeScene: Binding.constant(SCNScene()), isEditMode: false)
 //        .environment(\.managedObjectContext,PersistenceController.preview.container.viewContext)
-//            .environmentObject(RouterView())
+//        .environmentObject(RouterView())
 //}

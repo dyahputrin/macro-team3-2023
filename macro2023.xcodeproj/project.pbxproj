@@ -75,6 +75,7 @@
 		974199572AE7BA2600D96E7F /* ObjectListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 974199562AE7BA2600D96E7F /* ObjectListView.swift */; };
 		BE10DDB32AE7A34C007D1A8E /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BE10DDB22AE7A34C007D1A8E /* Preview Assets.xcassets */; };
 		BE1AE87E2AD3D65900F586CD /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BE1AE87D2AD3D65900F586CD /* Assets.xcassets */; };
+		BE229C8C2AEB96CB00AEEFF4 /* OfficeTableGroup.usdz in Resources */ = {isa = PBXBuildFile; fileRef = BE229C8B2AEB96CB00AEEFF4 /* OfficeTableGroup.usdz */; };
 		BE56624F2AE262EC007F0B98 /* (null) in Sources */ = {isa = PBXBuildFile; };
 		BE6F988A2AE265D200AC6A69 /* macro2023App.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94DDE9552ADE8FFA007915FF /* macro2023App.swift */; };
 		BE6F98922AE2672400AC6A69 /* ProjectView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE6F98912AE2672400AC6A69 /* ProjectView.swift */; };
@@ -89,6 +90,8 @@
 		BE6F996D2AE272A400AC6A69 /* ObjectSidebarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE6F996C2AE272A400AC6A69 /* ObjectSidebarView.swift */; };
 		BE6F996F2AE272BC00AC6A69 /* RoomSidebarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE6F996E2AE272BC00AC6A69 /* RoomSidebarView.swift */; };
 		BE6F99712AE272D800AC6A69 /* TopToolbarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE6F99702AE272D800AC6A69 /* TopToolbarView.swift */; };
+		BEBC5D422AEA693C008C41D2 /* Office.usdz in Resources */ = {isa = PBXBuildFile; fileRef = BEBC5D412AEA693C008C41D2 /* Office.usdz */; };
+		BED427372AE8C39000AD041E /* SCNViewRepresentable.swift in Sources */ = {isa = PBXBuildFile; fileRef = BED427362AE8C39000AD041E /* SCNViewRepresentable.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -163,6 +166,7 @@
 		BE10DDB22AE7A34C007D1A8E /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		BE1AE8762AD3D65800F586CD /* macro2023.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = macro2023.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		BE1AE87D2AD3D65900F586CD /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		BE229C8B2AEB96CB00AEEFF4 /* OfficeTableGroup.usdz */ = {isa = PBXFileReference; lastKnownFileType = file.usdz; path = OfficeTableGroup.usdz; sourceTree = "<group>"; };
 		BE5661CA2AE262EC007F0B98 /* OnboardingViewControllerWrapper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OnboardingViewControllerWrapper.swift; sourceTree = "<group>"; };
 		BE5661CD2AE262EC007F0B98 /* OnboardingViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OnboardingViewController.swift; sourceTree = "<group>"; };
 		BE5661CF2AE262EC007F0B98 /* RoomCaptureViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RoomCaptureViewController.swift; sourceTree = "<group>"; };
@@ -226,6 +230,8 @@
 		BE6F996C2AE272A400AC6A69 /* ObjectSidebarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ObjectSidebarView.swift; sourceTree = "<group>"; };
 		BE6F996E2AE272BC00AC6A69 /* RoomSidebarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoomSidebarView.swift; sourceTree = "<group>"; };
 		BE6F99702AE272D800AC6A69 /* TopToolbarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopToolbarView.swift; sourceTree = "<group>"; };
+		BEBC5D412AEA693C008C41D2 /* Office.usdz */ = {isa = PBXFileReference; lastKnownFileType = file.usdz; path = Office.usdz; sourceTree = "<group>"; };
+		BED427362AE8C39000AD041E /* SCNViewRepresentable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SCNViewRepresentable.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -272,7 +278,9 @@
 				BE6F989A2AE26BA500AC6A69 /* v2wall2.usdz */,
 				BE6F989D2AE26BA500AC6A69 /* v2wall3.usdz */,
 				BE6F989C2AE26BA500AC6A69 /* v2wall4.usdz */,
+				BE229C8B2AEB96CB00AEEFF4 /* OfficeTableGroup.usdz */,
 				94DDE9512ADE8FFA007915FF /* OfficeTable.usdz */,
+				BEBC5D412AEA693C008C41D2 /* Office.usdz */,
 			);
 			path = "3D Object";
 			sourceTree = "<group>";
@@ -528,6 +536,7 @@
 			children = (
 				94DDE9492ADE8FFA007915FF /* CanvasData.swift */,
 				940CF4832AEA69E900F3EB7C /* ObjectDimensionData.swift */,
+				BED427362AE8C39000AD041E /* SCNViewRepresentable.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -614,7 +623,9 @@
 				9487BE262ADE93CF004FCC67 /* ScanPasses-iPhone-FixedHeight-3.mp4 in Resources */,
 				940CF47E2AEA5F3E00F3EB7C /* wall2white.usdz in Resources */,
 				940CF47B2AEA5F3E00F3EB7C /* wall3white.usdz in Resources */,
+				BEBC5D422AEA693C008C41D2 /* Office.usdz in Resources */,
 				BE6F989E2AE26BA500AC6A69 /* v2floor.usdz in Resources */,
+				BE229C8C2AEB96CB00AEEFF4 /* OfficeTableGroup.usdz in Resources */,
 				94DDE9712ADE8FFA007915FF /* OfficeTable.usdz in Resources */,
 				9487BE2B2ADE93CF004FCC67 /* ScanPasses-iPad-FixedHeight-unflippable-low.mp4 in Resources */,
 				9487BE292ADE93CF004FCC67 /* ScanPasses-iPad-FixedHeight-3.mp4 in Resources */,
@@ -661,6 +672,7 @@
 				9487BE092ADE93B0004FCC67 /* UntilProcessingCompleteFilter.swift in Sources */,
 				94DDE9682ADE8FFA007915FF /* RoomCaptureViewController.swift in Sources */,
 				9487BE122ADE93B0004FCC67 /* CapturePrimaryView.swift in Sources */,
+				BED427372AE8C39000AD041E /* SCNViewRepresentable.swift in Sources */,
 				9487BE0C2ADE93B0004FCC67 /* PlayerView.swift in Sources */,
 				BE6F99712AE272D800AC6A69 /* TopToolbarView.swift in Sources */,
 				9487BE052ADE93B0004FCC67 /* HelpPageView.swift in Sources */,
