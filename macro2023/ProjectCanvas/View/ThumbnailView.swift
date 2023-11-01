@@ -7,12 +7,11 @@
 import SceneKit
 import SwiftUI
 
-struct SceneKitView: UIViewRepresentable {
+struct ThumbnailView: UIViewRepresentable {
     let usdzData: Data?
 
     func makeUIView(context: Context) -> SCNView {
         let sceneView = SCNView()
-//        sceneView.allowsCameraControl = true
         sceneView.autoenablesDefaultLighting = true
         return sceneView
     }

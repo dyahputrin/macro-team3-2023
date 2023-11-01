@@ -3,8 +3,6 @@
     <entity name="ObjectEntity" representedClassName="ObjectEntity" syncable="YES" codeGenerationType="class">
         <attribute name="importedName" optional="YES" attributeType="String"/>
         <attribute name="importedObject" optional="YES" attributeType="Binary"/>
-        <attribute name="importedPreview" optional="YES" attributeType="Binary"/>
-        <attribute name="importedURL" optional="YES" attributeType="String"/>
     </entity>
     <entity name="ProjectEntity" representedClassName="ProjectEntity" syncable="YES" codeGenerationType="class">
         <attribute name="lastModifiedDate" optional="YES" attributeType="Date" usesScalarValueType="NO"/>

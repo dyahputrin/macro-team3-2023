@@ -13,7 +13,7 @@ struct ObjectSidebarView: View {
     @EnvironmentObject var routerView: RouterView
     @StateObject private var ObjectVM = ObjectViewModel()
     
-    @State private var sceneKitView: SceneKitView?
+    @State private var sceneKitView: ThumbnailView?
     
     @FetchRequest(entity: ObjectEntity.entity(),
                   sortDescriptors: [NSSortDescriptor(keyPath: \ObjectEntity.importedName, ascending: true)])
@@ -76,33 +76,13 @@ struct ObjectSidebarView: View {
                                                 .overlay{
                                                     VStack {
                                                         if let usdzData = urlImport.importedObject {
-                                                                           SceneKitView(usdzData: usdzData)
+                                                                           ThumbnailView(usdzData: usdzData)
                                                                                .frame(width: 100, height: 100)
                                                                                .cornerRadius(25)
                                                                                .shadow(radius: 5)
                                                                        }
                                                         Text("\(urlImport.importedName ?? "error")")
-//                                                        if let thumbnailData = urlImport.importedPreview,
-//                                                           let thumbnailImage = UIImage(data: thumbnailData) {
-//                                                            Image(uiImage: thumbnailImage)
-//                                                                .resizable()
-//                                                                .scaledToFill()
-//                                                                .frame(width: 100, height: 100)
-//                                                        } else {
-//                                                            Image("OfficeTable")
-//                                                                .resizable()
-//                                                                .scaledToFill()
-//                                                                .frame(width: 100, height: 100)
-//                                                        }
-//                                                        Text("\(urlImport.importedName ?? "error")")
-//                                                        if let importedObject = urlImport.importedURL, let scene = ObjectVM.coreStringScene(URLName: importedObject) {
-//                                                            SceneView(scene: scene ,options: [.allowsCameraControl])
-//                                                                .frame(width: 800, height: 800)
-//                                                         
-//                                                        } else {
-//                                                            Text("Failed to load the USDZ file.")
-//                                                        }
-                                                        
+                                          
                                                     }
                                                 }
                                         }
