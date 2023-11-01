@@ -12,15 +12,21 @@ struct ScenekitView: UIViewRepresentable {
     typealias UIViewType = SCNView
     var scene: SCNScene
     var view = SCNView()
+    @ObservedObject var objectDimensionData: ObjectDimensionData
+    var roomWidth: Float?
     @Binding var isEditMode: Bool
     
-//    init(scene: SCNScene) {
+//    init(scene: SCNScene, objectDimensionData: ObjectDimensionData, roomWidth: Float, isEditMode: Bool) {
 //        self.scene = scene
+//        self.objectDimensionData = objectDimensionData
+//        self.roomWidth = roomWidth
+//        self.isEditMode = isEditMode
 //    }
 
     func makeUIView(context: Context) -> SCNView {
         view.scene = scene
         view.allowsCameraControl = !isEditMode
+        view.defaultCameraController.translateInCameraSpaceBy(x: 0, y: -0.5, z: (roomWidth ?? 1) - 1)
         
         let tapGesture = UITapGestureRecognizer(target: context.coordinator, action: #selector(context.coordinator.handleTap(_:)))
         view.addGestureRecognizer(tapGesture)
@@ -50,9 +56,11 @@ struct ScenekitView: UIViewRepresentable {
         var parent: ScenekitView
         private var selectedNode: SCNNode?
         private var lastPanTranslation: CGPoint = .zero
+        @State private var objectDimensionData: ObjectDimensionData
         
         init(_ parent: ScenekitView) {
             self.parent = parent
+            self.objectDimensionData = parent.objectDimensionData
             super.init()
         }
         
@@ -88,19 +96,62 @@ struct ScenekitView: UIViewRepresentable {
 //        }
         
         @objc func handleTap(_ gestureRecognizer: UIGestureRecognizer) {
-            guard !parent.isEditMode else {
-                print("Tap detected")
-                let p = gestureRecognizer.location(in: parent.view)
-                let hitResults = parent.view.hitTest(p, options: [:])
-                
+//            guard !parent.isEditMode else {
+//                print("Tap detected")
+//                let p = gestureRecognizer.location(in: parent.view)
+//                let hitResults = parent.view.hitTest(p, options: [:])
+//                
+//                if let result = hitResults.first {
+//                    selectedNode = result.node
+//                    parent.view.allowsCameraControl = false
+//                    let max = selectedNode!.boundingBox.max
+//                    let min = selectedNode!.boundingBox.min
+//
+//                    let dimension = SCNVector3(max.x - min.x, max.y - min.y, max.z - min.z)
+//                    print("\(selectedNode?.name) : \(dimension)")
+//                    addPanGesture()
+//                }
+//                return
+//            }
+            let p = gestureRecognizer.location(in: parent.view)
+            let hitResults = parent.view.hitTest(p, options: [:])
+            
+            if hitResults.count == 0 {
+                parent.isEditMode = false
+                objectDimensionData.reset()
+                print(objectDimensionData.name)
+
+            } else {
+                parent.isEditMode = true
                 if let result = hitResults.first {
                     selectedNode = result.node
                     parent.view.allowsCameraControl = false
-                    let max = selectedNode!.boundingBox.max
-                    let min = selectedNode!.boundingBox.min
+                    
+                    // Get Dimension
+    //                let max = node.convertPosition(worldBoundingBox.min)
+    //                let min = node.boundingBox.min
+                    let worldBoundingBox = selectedNode!.boundingBox
+                    let worldMin = selectedNode!.convertPosition(worldBoundingBox.min, to: nil)
+                    let worldMax = selectedNode!.convertPosition(worldBoundingBox.max, to: nil)
 
-                    let dimension = SCNVector3(max.x - min.x, max.y - min.y, max.z - min.z)
-                    print("\(selectedNode?.name) : \(dimension)")
+    //                let worldDimensions = SCNVector3(
+    //                    worldMax.x - worldMin.x,
+    //                    worldMax.y - worldMin.y,
+    //                    worldMax.z - worldMin.z
+    //                )
+                    
+                    let x = String(format: "%.2f", worldMax.x - worldMin.x)
+                    let y = String(format: "%.2f", worldMax.y - worldMin.y)
+                    let z = String(format: "%.2f", worldMax.z - worldMin.z)
+                    
+                    objectDimensionData.name = selectedNode!.name ?? "Unknown"
+                    objectDimensionData.width = x
+                    objectDimensionData.height = y
+                    objectDimensionData.length = z
+                    
+                    print("Dimension \(x), \(y), \(z)")
+                    print(objectDimensionData.name)
+                    
                     addPanGesture()
                 }
                 return

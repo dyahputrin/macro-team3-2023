@@ -19,7 +19,6 @@
 		940CF47C2AEA5F3E00F3EB7C /* wall1white.usdz in Resources */ = {isa = PBXBuildFile; fileRef = 940CF4782AEA5F3E00F3EB7C /* wall1white.usdz */; };
 		940CF47D2AEA5F3E00F3EB7C /* wall4white.usdz in Resources */ = {isa = PBXBuildFile; fileRef = 940CF4792AEA5F3E00F3EB7C /* wall4white.usdz */; };
 		940CF47E2AEA5F3E00F3EB7C /* wall2white.usdz in Resources */ = {isa = PBXBuildFile; fileRef = 940CF47A2AEA5F3E00F3EB7C /* wall2white.usdz */; };
-		940CF4822AEA649000F3EB7C /* office.usdz in Resources */ = {isa = PBXBuildFile; fileRef = 940CF4812AEA649000F3EB7C /* office.usdz */; };
 		940CF4842AEA69E900F3EB7C /* ObjectDimensionData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 940CF4832AEA69E900F3EB7C /* ObjectDimensionData.swift */; };
 		943595CF2AE8F152000331A9 /* ScenekitView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 943595CE2AE8F152000331A9 /* ScenekitView.swift */; };
 		9487BDFD2ADE93B0004FCC67 /* ShotFileInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9487BDE32ADE93B0004FCC67 /* ShotFileInfo.swift */; };
@@ -90,7 +89,6 @@
 		BE6F996D2AE272A400AC6A69 /* ObjectSidebarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE6F996C2AE272A400AC6A69 /* ObjectSidebarView.swift */; };
 		BE6F996F2AE272BC00AC6A69 /* RoomSidebarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE6F996E2AE272BC00AC6A69 /* RoomSidebarView.swift */; };
 		BE6F99712AE272D800AC6A69 /* TopToolbarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE6F99702AE272D800AC6A69 /* TopToolbarView.swift */; };
-		BEBC5D422AEA693C008C41D2 /* Office.usdz in Resources */ = {isa = PBXBuildFile; fileRef = BEBC5D412AEA693C008C41D2 /* Office.usdz */; };
 		BED427372AE8C39000AD041E /* SCNViewRepresentable.swift in Sources */ = {isa = PBXBuildFile; fileRef = BED427362AE8C39000AD041E /* SCNViewRepresentable.swift */; };
 /* End PBXBuildFile section */
 
@@ -107,7 +105,6 @@
 		940CF4782AEA5F3E00F3EB7C /* wall1white.usdz */ = {isa = PBXFileReference; lastKnownFileType = file.usdz; path = wall1white.usdz; sourceTree = "<group>"; };
 		940CF4792AEA5F3E00F3EB7C /* wall4white.usdz */ = {isa = PBXFileReference; lastKnownFileType = file.usdz; path = wall4white.usdz; sourceTree = "<group>"; };
 		940CF47A2AEA5F3E00F3EB7C /* wall2white.usdz */ = {isa = PBXFileReference; lastKnownFileType = file.usdz; path = wall2white.usdz; sourceTree = "<group>"; };
-		940CF4812AEA649000F3EB7C /* office.usdz */ = {isa = PBXFileReference; lastKnownFileType = file.usdz; path = office.usdz; sourceTree = "<group>"; };
 		940CF4832AEA69E900F3EB7C /* ObjectDimensionData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ObjectDimensionData.swift; sourceTree = "<group>"; };
 		943595CE2AE8F152000331A9 /* ScenekitView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScenekitView.swift; sourceTree = "<group>"; };
 		9487BDE32ADE93B0004FCC67 /* ShotFileInfo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShotFileInfo.swift; sourceTree = "<group>"; };
@@ -230,7 +227,6 @@
 		BE6F996C2AE272A400AC6A69 /* ObjectSidebarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ObjectSidebarView.swift; sourceTree = "<group>"; };
 		BE6F996E2AE272BC00AC6A69 /* RoomSidebarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoomSidebarView.swift; sourceTree = "<group>"; };
 		BE6F99702AE272D800AC6A69 /* TopToolbarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopToolbarView.swift; sourceTree = "<group>"; };
-		BEBC5D412AEA693C008C41D2 /* Office.usdz */ = {isa = PBXFileReference; lastKnownFileType = file.usdz; path = Office.usdz; sourceTree = "<group>"; };
 		BED427362AE8C39000AD041E /* SCNViewRepresentable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SCNViewRepresentable.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -265,7 +261,6 @@
 		21C90BFB2AD685F60003D517 /* 3D Object */ = {
 			isa = PBXGroup;
 			children = (
-				940CF4812AEA649000F3EB7C /* office.usdz */,
 				940CF46D2AEA5AC100F3EB7C /* Ko farel.usdz */,
 				940CF4752AEA5D6500F3EB7C /* hightable.usdz */,
 				940CF4732AEA5C7D00F3EB7C /* floorblack.usdz */,
@@ -280,7 +275,6 @@
 				BE6F989C2AE26BA500AC6A69 /* v2wall4.usdz */,
 				BE229C8B2AEB96CB00AEEFF4 /* OfficeTableGroup.usdz */,
 				94DDE9512ADE8FFA007915FF /* OfficeTable.usdz */,
-				BEBC5D412AEA693C008C41D2 /* Office.usdz */,
 			);
 			path = "3D Object";
 			sourceTree = "<group>";
@@ -623,13 +617,11 @@
 				9487BE262ADE93CF004FCC67 /* ScanPasses-iPhone-FixedHeight-3.mp4 in Resources */,
 				940CF47E2AEA5F3E00F3EB7C /* wall2white.usdz in Resources */,
 				940CF47B2AEA5F3E00F3EB7C /* wall3white.usdz in Resources */,
-				BEBC5D422AEA693C008C41D2 /* Office.usdz in Resources */,
 				BE6F989E2AE26BA500AC6A69 /* v2floor.usdz in Resources */,
 				BE229C8C2AEB96CB00AEEFF4 /* OfficeTableGroup.usdz in Resources */,
 				94DDE9712ADE8FFA007915FF /* OfficeTable.usdz in Resources */,
 				9487BE2B2ADE93CF004FCC67 /* ScanPasses-iPad-FixedHeight-unflippable-low.mp4 in Resources */,
 				9487BE292ADE93CF004FCC67 /* ScanPasses-iPad-FixedHeight-3.mp4 in Resources */,
-				940CF4822AEA649000F3EB7C /* office.usdz in Resources */,
 				BE6F989F2AE26BA500AC6A69 /* v2wall2.usdz in Resources */,
 				94DDE9652ADE8FFA007915FF /* Main.storyboard in Resources */,
 			);
