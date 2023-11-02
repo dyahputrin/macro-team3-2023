@@ -15,6 +15,7 @@ struct CanvasView: View {
     @Environment(\.presentationMode) var presentationMode
     @State private var showBackAlert = false
     @State private var isSaveClicked = false
+    @State private var isProjectSaved = false
     
     @State private var sheetPresented = true
     @State private var isSetButtonTapped = false
@@ -168,7 +169,9 @@ struct CanvasView: View {
                 }.alert(isPresented: $showSaveAlert) {
                     Alert(
                         title: Text("\(roomSceneViewModel.projectData.nameProject) Saved"),
-                        dismissButton: .default(Text("OK"))
+                        dismissButton: .default(Text("OK"), action: {
+                            isSaveClicked = true
+                        })
                     )
                 }
             }
@@ -199,16 +202,19 @@ struct CanvasView: View {
         .navigationBarItems(leading: Button(action: {
             if !isSaveClicked {
                 showBackAlert = true
-            } else if isSaveClicked {
+            } else if isSaveClicked || isProjectSaved {
                 presentationMode.wrappedValue.dismiss()
             }
         }) {
             Image(systemName: "chevron.left")
         }).alert(isPresented: $showBackAlert) {
             Alert(
-                title: Text("Are you sure?"),
-                message: Text("This project is not saved yet. Do you want to save your changes before closing this project?"),
-                primaryButton: .default(Text("Yes")),
+                title: Text("Save Project"),
+                message: Text("Do you want to save changes before leaving?"),
+                primaryButton: .default(Text("Save"), action: {
+                    roomSceneViewModel.saveProject(viewContext: viewContext)
+                    showSaveAlert = true
+                }),
                 secondaryButton: .destructive(Text("No"), action: {
                     presentationMode.wrappedValue.dismiss()
                 })
