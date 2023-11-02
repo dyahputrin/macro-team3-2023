@@ -11,8 +11,11 @@ import SceneKit
 struct CanvasView: View {
     @Environment(\.managedObjectContext) private var viewContext
     @EnvironmentObject var routerView: RouterView
+    
     @Environment(\.presentationMode) var presentationMode
     @State private var showBackAlert = false
+    @State private var isSaveClicked = false
+    
     @State private var sheetPresented = true
     @State private var isSetButtonTapped = false
     @State var objectsButtonClicked: Bool
@@ -150,6 +153,7 @@ struct CanvasView: View {
             // SAVE
             ToolbarItemGroup {
                 Button(action: {
+                    isSaveClicked = true
                     showSaveAlert = true
                     roomSceneViewModel.saveProject(viewContext: viewContext)
                 })
@@ -191,12 +195,25 @@ struct CanvasView: View {
 //            GuidedCaptureView()
 //        })
         .navigationTitle(routerView.project == nil ? "NewProject" : roomSceneViewModel.projectData.nameProject)
-//        .navigationBarBackButtonHidden(true)
-//        .navigationBarItems(leading: Button(action: {
-//            showBackAlert = true
-//        }) {
-//            Image(systemName: "chevron.left")
-//        })
+        .navigationBarBackButtonHidden(true)
+        .navigationBarItems(leading: Button(action: {
+            if !isSaveClicked {
+                showBackAlert = true
+            } else if isSaveClicked {
+                presentationMode.wrappedValue.dismiss()
+            }
+        }) {
+            Image(systemName: "chevron.left")
+        }).alert(isPresented: $showBackAlert) {
+            Alert(
+                title: Text("Are you sure?"),
+                message: Text("This project is not saved yet. Do you want to save your changes before closing this project?"),
+                primaryButton: .default(Text("Yes")),
+                secondaryButton: .destructive(Text("No"), action: {
+                    presentationMode.wrappedValue.dismiss()
+                })
+            )
+        }
         .toolbarTitleMenu {
             Button(action: {
                 renameClicked = true
