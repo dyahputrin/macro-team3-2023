@@ -47,12 +47,16 @@ struct CanvasView: View {
     
     @State private var isEditMode: Bool = false
     
+    @State private var sceneObjects: [SceneObjectModel] = []
+    @State private var nodePositions: [String: SCNVector3] = [:]
+    @State private var nodeRotation: [String: SCNVector4] = [:]
+    
     var body: some View {
         
         GeometryReader { geometry in
             if routerView.project?.projectID == nil{
                 ZStack {
-                    let scenekitView = ScenekitView(scene: roomSceneViewModel.makeScene1(width: roomSceneViewModel.canvasData.roomWidth, height: roomSceneViewModel.canvasData.roomHeight, length: roomSceneViewModel.canvasData.roomLength)!, isEditMode: $isEditMode)
+                    let scenekitView = ScenekitView(scene: roomSceneViewModel.makeScene1(width: roomSceneViewModel.canvasData.roomWidth, height: roomSceneViewModel.canvasData.roomHeight, length: roomSceneViewModel.canvasData.roomLength)!, isEditMode: $isEditMode, nodePositions: $nodePositions, nodeRotation: $nodeRotation)
                     
                     scenekitView
                         .edgesIgnoringSafeArea(.bottom)
@@ -60,23 +64,11 @@ struct CanvasView: View {
                         .onAppear {
                             currentScenekitView = scenekitView
                         }
-                    //                    SCNViewRepresentable(
-                    //                        scene: roomSceneViewModel.makeScene1(width: roomSceneViewModel.canvasData.roomWidth, height: roomSceneViewModel.canvasData.roomHeight, length: roomSceneViewModel.canvasData.roomLength)!,
-                    //                        allowsCameraControl: true,
-                    //                        onDisappear: { view in
-                    //                            print("SCNView is stored in CanvasView")
-                    //                            roomSceneViewModel.takeSnapshotAndSave(sceneView: scnView!, activeProjectID: activeProjectID, viewContext: viewContext)
-                    //                        }
-                    //                    )
-                    //                    .edgesIgnoringSafeArea(.bottom)
-                    //                    SceneView(scene: roomSceneViewModel.makeScene1(width: roomSceneViewModel.canvasData.roomWidth, height: roomSceneViewModel.canvasData.roomHeight, length: roomSceneViewModel.canvasData.roomLength), options: [.allowsCameraControl])
-                    //                        .edgesIgnoringSafeArea(.bottom)
-                    //                        .id(sceneViewID)
                 }
             }
             else {
                 ZStack {
-                    let scenekitView = ScenekitView(scene: roomSceneViewModel.loadSceneFromCoreData(selectedProjectID: routerView.project!.projectID!, in: viewContext)!, isEditMode: $isEditMode)
+                    let scenekitView = ScenekitView(scene: roomSceneViewModel.loadSceneFromCoreData(selectedProjectID: routerView.project!.projectID!, in: viewContext)!, isEditMode: $isEditMode, nodePositions: $nodePositions, nodeRotation: $nodeRotation)
                     
                     scenekitView
                         .edgesIgnoringSafeArea(.bottom)
@@ -84,18 +76,6 @@ struct CanvasView: View {
                         .onAppear {
                             currentScenekitView = scenekitView
                         }
-                    //                    SCNViewRepresentable(
-                    //                        scene: roomSceneViewModel.loadSceneFromCoreData(selectedProjectID: routerView.project!.projectID!, in: viewContext)!,
-                    //                        allowsCameraControl: true,
-                    //                        onDisappear: { view in
-                    //                            print("SCNView is stored in CanvasView")
-                    //                            roomSceneViewModel.takeSnapshotAndSave(sceneView: scnView!, activeProjectID: activeProjectID, viewContext: viewContext)
-                    //                        }
-                    //                    )
-                    //                    .edgesIgnoringSafeArea(.bottom)
-                    //                    SceneView(scene: roomSceneViewModel.loadSceneFromCoreData(selectedProjectID: routerView.project!.projectID!, in: viewContext), options: [.allowsCameraControl])
-                    //                        .edgesIgnoringSafeArea(.bottom)
-                    //                        .id(sceneViewID)
                 }
             }
             
@@ -171,11 +151,12 @@ struct CanvasView: View {
                         .padding()
                 }
                 Button(action: {
-                    showSaveAlert = true
-                    roomSceneViewModel.saveProject(viewContext: viewContext)
+//                    roomSceneViewModel.saveProject(viewContext: viewContext)
+                    roomSceneViewModel.saveProject1(viewContext: viewContext, scenekitView: currentScenekitView!)
                     // add snapshot function here
 //                    snapshotImage = roomSceneViewModel.takeSnapshot(scenekitView: currentScenekitView!)
                     roomSceneViewModel.saveSnapshot(activeProjectID: activeProjectID, viewContext: viewContext, snapshotImageArg: snapshotImage, scenekitView: currentScenekitView!)
+                    showSaveAlert = true
                     
                 })
                 {

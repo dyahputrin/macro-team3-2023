@@ -61,6 +61,7 @@
 		94DDE96C2ADE8FFA007915FF /* RoomSceneView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94DDE94B2ADE8FFA007915FF /* RoomSceneView.swift */; };
 		94DDE9712ADE8FFA007915FF /* OfficeTable.usdz in Resources */ = {isa = PBXBuildFile; fileRef = 94DDE9512ADE8FFA007915FF /* OfficeTable.usdz */; };
 		94DDE9732ADE8FFA007915FF /* RoomScene.scn in Resources */ = {isa = PBXBuildFile; fileRef = 94DDE9532ADE8FFA007915FF /* RoomScene.scn */; };
+		BE107D712AEFAB8A001C5F01 /* SceneObjectModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE107D702AEFAB8A001C5F01 /* SceneObjectModel.swift */; };
 		BE10DDB32AE7A34C007D1A8E /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BE10DDB22AE7A34C007D1A8E /* Preview Assets.xcassets */; };
 		BE1AE87E2AD3D65900F586CD /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BE1AE87D2AD3D65900F586CD /* Assets.xcassets */; };
 		BE229C8C2AEB96CB00AEEFF4 /* OfficeTableGroup.usdz in Resources */ = {isa = PBXBuildFile; fileRef = BE229C8B2AEB96CB00AEEFF4 /* OfficeTableGroup.usdz */; };
@@ -139,6 +140,7 @@
 		94DDE9512ADE8FFA007915FF /* OfficeTable.usdz */ = {isa = PBXFileReference; lastKnownFileType = file.usdz; path = OfficeTable.usdz; sourceTree = "<group>"; };
 		94DDE9532ADE8FFA007915FF /* RoomScene.scn */ = {isa = PBXFileReference; lastKnownFileType = file.bplist; path = RoomScene.scn; sourceTree = "<group>"; };
 		94DDE9552ADE8FFA007915FF /* macro2023App.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = macro2023App.swift; sourceTree = "<group>"; };
+		BE107D702AEFAB8A001C5F01 /* SceneObjectModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneObjectModel.swift; sourceTree = "<group>"; };
 		BE10DDB22AE7A34C007D1A8E /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		BE1AE8762AD3D65800F586CD /* macro2023.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = macro2023.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		BE1AE87D2AD3D65900F586CD /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -501,6 +503,7 @@
 			children = (
 				94DDE9492ADE8FFA007915FF /* CanvasData.swift */,
 				BED427362AE8C39000AD041E /* SCNViewRepresentable.swift */,
+				BE107D702AEFAB8A001C5F01 /* SceneObjectModel.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -647,6 +650,7 @@
 				210C7FF22AD531C200E01229 /* Model.xcdatamodeld in Sources */,
 				210C80142AD5343400E01229 /* Persistence.swift in Sources */,
 				21C90C412AD6A15B0003D517 /* RouterView.swift in Sources */,
+				BE107D712AEFAB8A001C5F01 /* SceneObjectModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

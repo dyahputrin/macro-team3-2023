@@ -8,6 +8,7 @@
         <attribute name="projectName" optional="YES" attributeType="String"/>
         <attribute name="projectScene" optional="YES" attributeType="Binary"/>
         <attribute name="projectThumbnail" optional="YES" attributeType="Binary"/>
+        <attribute name="sceneObjects" optional="YES" attributeType="Binary"/>
         <attribute name="widthRoom" optional="YES" attributeType="Float" defaultValueString="0.0" usesScalarValueType="YES"/>
     </entity>
 </model>

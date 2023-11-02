@@ -64,6 +64,7 @@ struct ProjectView: View {
     @State var activeProjectID: UUID
     @State var activeScene: SCNScene
     
+    
     var body: some View {
         //        let _ = dataContentViewModel.printAllData(in: viewContext)
         NavigationStack(path: $routerView.path){
@@ -123,7 +124,7 @@ struct ProjectView: View {
                                     dataContentViewModel.dataCanvas.isRenameAlertPresented = true
                                 }
                                 Button("Delete", systemImage: "trash", role: .destructive){
-                                    let _ = print(newProjectName.projectScene)
+//                                    let _ = print(newProjectName.projectScene)
                                     dataContentViewModel.deleteProject(viewContext: viewContext, project: newProjectName)
                                 }
                             }))
@@ -169,9 +170,9 @@ struct ProjectView: View {
         
     }
 }
-
-#Preview {
-    ProjectView(activeProjectID: UUID(), activeScene: SCNScene()).environment(\.managedObjectContext,PersistenceController.preview.container.viewContext)
-        .environmentObject(RouterView())
-}
+//
+//#Preview {
+//    ProjectView(activeProjectID: UUID(), activeScene: SCNScene()).environment(\.managedObjectContext,PersistenceController.preview.container.viewContext)
+//        .environmentObject(RouterView())
+//}
 

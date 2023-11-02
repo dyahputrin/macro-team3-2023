@@ -29,6 +29,8 @@ struct RoomSidebarView: View {
                   sortDescriptors: [NSSortDescriptor(keyPath: \ProjectEntity.projectName, ascending: true)])
     var projectEntity: FetchedResults<ProjectEntity>
     
+//    @Binding var currentScenekitView: ScenekitView?
+    
     var body: some View {
         GeometryReader { geometry in
             HStack {
@@ -90,6 +92,7 @@ struct RoomSidebarView: View {
                                                 }
                                                 
                                                 roomSceneViewModel.updateRoomSize(newWidth: width, newHeight: height, newLength: length, activeProjectID: activeProjectID, viewContext: viewContext)
+//                                                roomSceneViewModel.updateRoomSize1(newWidth: width, newHeight: height, newLength: length, activeProjectID: activeProjectID, viewContext: viewContext, currentScenekitView: currentScenekitView)
                                                 sceneViewID = UUID()
                                             } else {
                                                 // Handle invalid input
