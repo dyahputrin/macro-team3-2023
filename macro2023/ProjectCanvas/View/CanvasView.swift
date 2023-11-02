@@ -11,6 +11,8 @@ import SceneKit
 struct CanvasView: View {
     @Environment(\.managedObjectContext) private var viewContext
     @EnvironmentObject var routerView: RouterView
+    @Environment(\.presentationMode) var presentationMode
+    @State private var showBackAlert = false
     @State private var sheetPresented = true
     @State private var isSetButtonTapped = false
     @State var objectsButtonClicked: Bool
@@ -39,6 +41,8 @@ struct CanvasView: View {
     @State private var showingObjectList = false
     @State private var objectSizeViewOffset: CGFloat = 0
     
+    var sideBarWidth = UIScreen.main.bounds.size.width * 0.2
+    
     var body: some View {
         
         GeometryReader { geometry in
@@ -60,33 +64,25 @@ struct CanvasView: View {
             
             if objectsButtonClicked == true {
                 ObjectSidebarView()
-                   // .transition(.moveAndFade)
-                    .animation(.default, value: objectsButtonClicked)
+                    .animation(.easeInOut(duration: 0.5), value: objectsButtonClicked)
                 
             } else if roomButtonClicked == true {
                 RoomSidebarView(roomWidthText: $roomWidthText, roomLengthText: $roomLengthText, roomHeightText: $roomHeightText,  sceneViewID: $sceneViewID, roomSceneViewModel: roomSceneViewModel)
-                    //.transition(.moveAndFade)
-                    .animation(.default, value: roomButtonClicked)
+                    .animation(.easeInOut(duration: 2), value: roomButtonClicked)
             }
             
-//            if showingObjectList == true {
-//                ObjectListView()
-//            }
-            
-//            if selectedAnObject == true {
-//                ObjectListView()
-//                ObjectSizeView(roomWidthText:.constant("2"), roomLengthText: .constant("2"), roomHeightText: .constant("2"), sceneViewID: .constant(UUID()), roomSceneViewModel: CanvasDataViewModel(canvasData: CanvasData(roomWidth: 0, roomHeight: 0, roomLength: 0), projectData: ProjectData()))
-//            }
-            
-            //ObjectListView(showingObjectList: $showingObjectList)
+            ObjectListView(showingObjectList: $showingObjectList)
+                //.animation(.easeInOut(duration: 0.3), value: showingObjectList)
             
             if selectedAnObject == true {
-                ObjectSizeView(roomWidthText:.constant("2"), roomLengthText: .constant("2"), roomHeightText: .constant("2"), sceneViewID: .constant(UUID()), roomSceneViewModel: CanvasDataViewModel(canvasData: CanvasData(roomWidth: 0, roomHeight: 0, roomLength: 0), projectData: ProjectData()))
+                ObjectSizeView(roomWidthText:.constant("2"), roomLengthText: .constant("2"), roomHeightText: .constant("2"), sceneViewID: .constant(UUID()) ,roomSceneViewModel: CanvasDataViewModel(canvasData: CanvasData(roomWidth: 0, roomHeight: 0, roomLength: 0), projectData: ProjectData()))
                     .offset(x: objectSizeViewOffset)
+                    .animation(.easeInOut(duration: 0.5), value: showingObjectList)
+                    .padding(.leading, showingObjectList ? (sideBarWidth + 10) : 0)
             }
         }
         .onAppear {
-            sheetPresented = true
+            roomButtonClicked = true
         }
         //        .sheet(isPresented: $sheetPresented) {
         //            SizePopUpView(sheetPresented: $sheetPresented, isSetButtonTapped: $isSetButtonTapped, roomSceneViewModel: roomSceneViewModel, sceneViewID: $sceneViewID, roomWidthText: $roomWidthText, roomLengthText: $roomLengthText, roomHeightText: $roomHeightText)
@@ -195,6 +191,12 @@ struct CanvasView: View {
 //            GuidedCaptureView()
 //        })
         .navigationTitle(routerView.project == nil ? "NewProject" : roomSceneViewModel.projectData.nameProject)
+//        .navigationBarBackButtonHidden(true)
+//        .navigationBarItems(leading: Button(action: {
+//            showBackAlert = true
+//        }) {
+//            Image(systemName: "chevron.left")
+//        })
         .toolbarTitleMenu {
             Button(action: {
                 renameClicked = true

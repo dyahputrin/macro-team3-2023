@@ -8,85 +8,148 @@
 import SwiftUI
 
 struct ObjectListView: View {
-    //@State private var showingObjectList = false
-    
     @Binding var showingObjectList: Bool
-    var sideBarWidth = UIScreen.main.bounds.size.width * 0.25
-    var sideBarHeight = UIScreen.main.bounds.size.height * 0.4
+    var sideBarWidth = UIScreen.main.bounds.size.width * 0.2
+    var sideBarHeight = UIScreen.main.bounds.size.height
+    
+    @State var wallList = true
+    @State var objectList = true
+    @State var isWallHidden: [Bool] = [false, false, false, false]
+    @State var isObjectHidden: [Bool] = [false, false, false, false]
+    @State var objects: [String] = [
+        "Object 1",
+        "Object 2",
+        "Object 3",
+        "Object 4"
+    ]
     
     var body: some View {
-        let columns = [
-            GridItem(.flexible()),
-            GridItem(.flexible())
+        let walls = [
+            "Wall 1",
+            "Wall 2",
+            "Wall 3",
+            "Wall 4"
         ]
         
-        Spacer()
+//        let objects = [
+//            "Object 1",
+//            "Object 2",
+//            "Object 3",
+//            "Object 4"
+//        ]
+        
         HStack {
             ZStack(alignment: .top) {
-                VStack(alignment: .leading, content: {
-                    RoundedRectangle(cornerRadius: 20)
-                        .foregroundColor(Color.systemGray6)
-                        .frame(width: sideBarWidth, height: sideBarHeight)
-                        .overlay(
-                            VStack(alignment: .leading) {
-                                Text("Objects in Canvas")
-                                    .font(.headline)
-                                    .bold()
-                                    .padding(.top)
-                                    .padding(.horizontal, 30)
-                                ScrollView(.vertical) {
-                                    LazyVGrid(columns: columns, spacing: 3) {
-                                        ForEach(1..<21, id: \.self) { index in
-                                            Button(action: {})
-                                            {
-                                                Text("My Object \(index)")
-                                                    .underline()
-                                                    .font(.subheadline)
-                                                    .padding(.vertical, 10)
-                                                    .foregroundColor(.black)
-                                            }
-                                        }
-                                    }
-                                    .padding()
-                                }
-                            }
-                                .frame(width: sideBarWidth, height: sideBarHeight - 20)
-                                //.frame(width: 320, height: 380)
-                            
-                        )
-                })
                 
                 MenuChevron
                     .foregroundColor(Color.systemGray6)
+                
+                List {
+                    Section(isExpanded: $wallList,
+                        content: {
+                        ForEach(walls.indices, id: \.self) { index in
+                            HStack {
+                                Text(walls[index])
+                                    .foregroundColor(isWallHidden[index] ? .gray : .black)
+                                Spacer()
+                                Button(action: {
+                                    isWallHidden[index].toggle()
+                                }, label: {
+                                    if !isWallHidden[index] {
+                                        Image(systemName: "eye")
+                                            .foregroundColor(Color.accentColor)
+                                    } else if isWallHidden[index] {
+                                        Image(systemName: "eye.slash")
+                                            .foregroundColor(.gray)
+                                    }
+                                })
+                               
+                            }
+                        }
+                    }, header: {
+                        Image(systemName: "square.split.bottomrightquarter")
+                        Text("Wall List")
+                    })
+                    
+                    Section(isExpanded: $objectList,
+                        content: {
+                        ForEach(objects.indices, id: \.self) { index in
+                            HStack {
+                                Text(objects[index])
+                                    .foregroundColor(isObjectHidden[index] ? .gray : .black)
+                                Spacer()
+                                Button(action: {
+                                    //removeObject(at: index)
+                                    isObjectHidden[index].toggle()
+                                }, label: {
+                                    if !isObjectHidden[index] {
+                                        Image(systemName: "eye")
+                                            .foregroundColor(Color.accentColor)
+                                    } else if isObjectHidden[index] {
+                                        Image(systemName: "eye.slash")
+                                            .foregroundColor(.gray)
+                                    }
+                                })
+                            }
+                            
+                            .swipeActions(edge: .trailing) {
+                                Button(role: .destructive, action: {removeObject(at: index)}, label: {Text("Remove")})
+                                    .tint(.red)
+                            }
+                        }
+                       // .onDelete(perform: deleteObject)
+                    }, header: {
+                        Image(systemName: "chair.lounge")
+                        Text("Objects List")
+                    })
+                }
+                .listStyle(.sidebar)
             }
             .frame(width: sideBarWidth)
             .offset(x: showingObjectList ? 0 : -sideBarWidth)
             .animation(.default, value: showingObjectList)
             Spacer()
         }
+        .padding(.top, 1)
+        .font(.subheadline)
+        .animation(.easeInOut(duration: 5), value: showingObjectList)
     }
+    
+    private func removeObject(at index: Int) {
+        withAnimation{
+            objects.remove(at: index)
+            print(objects)
+        }
+    }
+//    private func deleteObject(at offsets: IndexSet) {
+//            withAnimation {
+//                objects.remove(atOffsets: offsets)
+//                //print(objects)
+//            }
+//        }
+    
     
     var MenuChevron: some View {
         ZStack {
-            RoundedRectangle(cornerRadius: 24)
-                .frame(width: 80, height: 80)
-                .rotationEffect(Angle(degrees: 45))
-                .offset(x: showingObjectList ? -18 : -10)
+            RoundedRectangle(cornerRadius: 14)
+                .frame(width: 70, height: 100)
+                .offset(x: showingObjectList ? -18 : -15)
                 .onTapGesture {
                     showingObjectList.toggle()
                 }
+                .foregroundColor(.white)
 
             Image(systemName: "chevron.right")
-                .foregroundColor(.black)
                 .bold()
                 .rotationEffect(
                   showingObjectList ?
                     Angle(degrees: 180) : Angle(degrees: 0))
-                .offset(x: showingObjectList ? -4 : 8)
-                .foregroundColor(Color.systemGray6)
+                .offset(x: 2)
+                .foregroundColor(.gray)
+                .font(.title3)
         }
-        .offset(x: sideBarWidth / 2, y: 8)
-        .animation(.default, value: showingObjectList)
+        .offset(x: sideBarWidth / 1.8, y: 20)
+        
     }
 }
 
