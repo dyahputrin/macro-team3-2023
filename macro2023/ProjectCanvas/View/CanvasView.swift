@@ -17,6 +17,8 @@ struct CanvasView: View {
     @State var roomButtonClicked: Bool
     @State var povButtonClicked: Bool
     
+//    @Binding var selectedURL: Data?
+    
     @Binding var viewfinderButtonClicked: Bool
     @Binding var isImporting: Bool
     @Binding var isExporting: Bool
@@ -47,14 +49,28 @@ struct CanvasView: View {
     
     @ObservedObject var objectDimensionData: ObjectDimensionData = ObjectDimensionData()
     
-    var scenekitView: ScenekitView {
-        if routerView.project?.projectID == nil {
-            return ScenekitView(scene: roomSceneViewModel.makeScene1(width: roomSceneViewModel.canvasData.roomWidth, height: roomSceneViewModel.canvasData.roomHeight, length: roomSceneViewModel.canvasData.roomLength)!, objectDimensionData: objectDimensionData, roomWidth: Float(roomSceneViewModel.canvasData.roomWidth), isEditMode: $isEditMode
-            )
-        } else {
-            return ScenekitView(scene: roomSceneViewModel.loadSceneFromCoreData(selectedProjectID: routerView.project!.projectID!, in: viewContext)!, objectDimensionData: objectDimensionData, roomWidth: Float(routerView.project!.widthRoom), isEditMode: $isEditMode)
-        }
-    }
+//    var sceneKitView: ScenekitView {
+//        if routerView.project?.projectID == nil {
+//            if let xxx = roomSceneViewModel.makeScene1(width: roomSceneViewModel.canvasData.roomWidth, height: roomSceneViewModel.canvasData.roomHeight, length: roomSceneViewModel.canvasData.roomLength){
+//                return ScenekitView(scene: $roomSceneViewModel.rootScene, objectDimensionData: objectDimensionData, roomWidth: Float(roomSceneViewModel.canvasData.roomWidth), isEditMode: $isEditMode
+//                )
+//                
+//            }else{
+//                return ScenekitView(scene: $roomSceneViewModel.rootScene, objectDimensionData: objectDimensionData, roomWidth: Float(roomSceneViewModel.canvasData.roomWidth), isEditMode: $isEditMode)
+//            }
+////            return ScenekitView(scene: roomSceneViewModel.makeScene1(width: roomSceneViewModel.canvasData.roomWidth, height: roomSceneViewModel.canvasData.roomHeight, length: roomSceneViewModel.canvasData.roomLength)!, objectDimensionData: objectDimensionData, roomWidth: Float(roomSceneViewModel.canvasData.roomWidth), isEditMode: $isEditMode
+////            )
+//        } else {
+//            if let xxx = roomSceneViewModel.makeScene1(width: roomSceneViewModel.canvasData.roomWidth, height: roomSceneViewModel.canvasData.roomHeight, length: roomSceneViewModel.canvasData.roomLength){
+//                return ScenekitView(scene: $roomSceneViewModel.rootScene, objectDimensionData: objectDimensionData, roomWidth: Float(roomSceneViewModel.canvasData.roomWidth), isEditMode: $isEditMode
+//                )
+//                
+//            }else{
+//                return ScenekitView(scene: $roomSceneViewModel.rootScene, objectDimensionData: objectDimensionData, roomWidth: Float(roomSceneViewModel.canvasData.roomWidth), isEditMode: $isEditMode)
+//            }
+////            return ScenekitView(scene: roomSceneViewModel.loadSceneFromCoreData(selectedProjectID: routerView.project!.projectID!, in: viewContext)!, objectDimensionData: objectDimensionData, roomWidth: Float(routerView.project!.widthRoom), isEditMode: $isEditMode)
+//        }
+//    }
     
     @State private var currentScenekitView: ScenekitView? = nil
     @State private var snapshotImage: UIImage? = nil
@@ -66,7 +82,8 @@ struct CanvasView: View {
         GeometryReader { geometry in
             if routerView.project?.projectID == nil{
                 ZStack {
-//                    let scenekitView = ScenekitView(scene: roomSceneViewModel.makeScene1(width: roomSceneViewModel.canvasData.roomWidth, height: roomSceneViewModel.canvasData.roomHeight, length: roomSceneViewModel.canvasData.roomLength)!, objectDimensionData: objectDimensionData, isEditMode: $isEditMode)
+                    let scenekitView = ScenekitView(objectDimensionData: objectDimensionData, scene: $roomSceneViewModel.rootScene, isEditMode: $isEditMode, roomWidth: Float(roomSceneViewModel.canvasData.roomWidth)
+                    )
                     
                     scenekitView
                         .edgesIgnoringSafeArea(.bottom)
@@ -74,48 +91,30 @@ struct CanvasView: View {
                         .onAppear {
                             currentScenekitView = scenekitView
                         }
-                    //                    SCNViewRepresentable(
-                    //                        scene: roomSceneViewModel.makeScene1(width: roomSceneViewModel.canvasData.roomWidth, height: roomSceneViewModel.canvasData.roomHeight, length: roomSceneViewModel.canvasData.roomLength)!,
-                    //                        allowsCameraControl: true,
-                    //                        onDisappear: { view in
-                    //                            print("SCNView is stored in CanvasView")
-                    //                            roomSceneViewModel.takeSnapshotAndSave(sceneView: scnView!, activeProjectID: activeProjectID, viewContext: viewContext)
-                    //                        }
-                    //                    )
-                    //                    .edgesIgnoringSafeArea(.bottom)
-                    //                    SceneView(scene: roomSceneViewModel.makeScene1(width: roomSceneViewModel.canvasData.roomWidth, height: roomSceneViewModel.canvasData.roomHeight, length: roomSceneViewModel.canvasData.roomLength), options: [.allowsCameraControl])
-                    //                        .edgesIgnoringSafeArea(.bottom)
-                    //                        .id(sceneViewID)
+                    
                 }
             }
             else {
                 ZStack {
-//                    let scenekitView = ScenekitView(scene: roomSceneViewModel.loadSceneFromCoreData(selectedProjectID: routerView.project!.projectID!, in: viewContext)!, objectDimensionData: objectDimensionData, isEditMode: $isEditMode)
+                    let scenekitView = ScenekitView(objectDimensionData: objectDimensionData, scene: $roomSceneViewModel.rootScene, isEditMode: $isEditMode, roomWidth: Float(roomSceneViewModel.canvasData.roomWidth)
+//                                                    // ini core data nanti diganti
+                    )
+//                    let scenekitView = ScenekitView(scene: roomSceneViewModel.loadSceneFromCoreData(selectedProjectID: routerView.project!.projectID!, in: viewContext)!, objectDimensionData: objectDimensionData, roomWidth: Float(routerView.project!.widthRoom), isEditMode: $isEditMode)
                     
                     scenekitView
                         .edgesIgnoringSafeArea(.bottom)
                         .id(sceneViewID)
                         .onAppear {
                             currentScenekitView = scenekitView
+                            roomSceneViewModel.loadSceneFromCoreData(selectedProjectID: routerView.project!.projectID!, in: viewContext) 
                         }
-                    //                    SCNViewRepresentable(
-                    //                        scene: roomSceneViewModel.loadSceneFromCoreData(selectedProjectID: routerView.project!.projectID!, in: viewContext)!,
-                    //                        allowsCameraControl: true,
-                    //                        onDisappear: { view in
-                    //                            print("SCNView is stored in CanvasView")
-                    //                            roomSceneViewModel.takeSnapshotAndSave(sceneView: scnView!, activeProjectID: activeProjectID, viewContext: viewContext)
-                    //                        }
-                    //                    )
-                    //                    .edgesIgnoringSafeArea(.bottom)
-                    //                    SceneView(scene: roomSceneViewModel.loadSceneFromCoreData(selectedProjectID: routerView.project!.projectID!, in: viewContext), options: [.allowsCameraControl])
-                    //                        .edgesIgnoringSafeArea(.bottom)
-                    //                        .id(sceneViewID)
+                    
                 }
             }
             
             if objectsButtonClicked == true {
-                ObjectSidebarView()
-                   // .transition(.moveAndFade)
+                ObjectSidebarView(roomSceneViewModel:roomSceneViewModel)
+                   
                     .animation(.easeInOut, value: objectsButtonClicked)
                 
             } else if roomButtonClicked == true {
@@ -124,9 +123,6 @@ struct CanvasView: View {
                     .animation(.easeInOut, value: roomButtonClicked)
             }
             
-//            if showingObjectList == true {
-//                ObjectListView()
-//            }
 
             if objectDimensionData.name != "--" {
                 ObjectSizeView(roomWidthText:.constant("2"), roomLengthText: .constant("2"), roomHeightText: .constant("2"), sceneViewID: .constant(UUID()), roomSceneViewModel: CanvasDataViewModel(canvasData: CanvasData(roomWidth: 0, roomHeight: 0, roomLength: 0), projectData: ProjectData()), objectDimensionData: objectDimensionData)
@@ -199,17 +195,11 @@ struct CanvasView: View {
             
             // UNDO & SAVE
             ToolbarItemGroup {
-//                Button(action: {})
-//                {
-//                    Image(systemName: "arrow.uturn.backward.circle")
-//                        .foregroundColor(.black)
-//                        .padding()
-//                }
+
                 Button(action: {
                     showSaveAlert = true
                     roomSceneViewModel.saveProject(viewContext: viewContext)
-                    // add snapshot function here
-//                    snapshotImage = roomSceneViewModel.takeSnapshot(scenekitView: currentScenekitView!)
+
                     roomSceneViewModel.saveSnapshot(activeProjectID: activeProjectID, viewContext: viewContext, snapshotImageArg: snapshotImage, scenekitView: currentScenekitView!)
                     
                 })
@@ -242,9 +232,7 @@ struct CanvasView: View {
                 }
             }
         }
-        //        .fullScreenCover(isPresented: $isGuidedCaptureViewPresented, content: {
-        //            GuidedCaptureView()
-        //        })
+        
         .navigationTitle(checkRename ? roomSceneViewModel.projectData.nameProject : (routerView.project == nil ? "NewProject" : roomSceneViewModel.projectData.nameProject))
         .toolbarTitleMenu {
             Button(action: {
@@ -286,7 +274,7 @@ struct CanvasView: View {
                 }            }
         }
         .onDisappear{
-//            roomSceneViewModel.saveSnapshot(activeProjectID: activeProjectID, viewContext: viewContext, snapshotImageArg: snapshotImage)
+
             
             print("CanvasView is disappearing")
             if routerView.path.count > 0 {

@@ -17,6 +17,8 @@ class CanvasData: ObservableObject {
     @Published var roomWidthText: String
     @Published var roomLengthText: String
     
+    @Published var importedObjectData : [Data]
+    
     init(roomWidth: CGFloat, roomHeight: CGFloat, roomLength: CGFloat) {
         self.roomWidth = roomWidth
         self.roomHeight = roomHeight
@@ -24,6 +26,7 @@ class CanvasData: ObservableObject {
         self.roomWidthText = ""
         self.roomHeightText = ""
         self.roomLengthText = ""
+        self.importedObjectData = []
     }
 }
 

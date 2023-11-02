@@ -51,7 +51,7 @@ class ObjectViewModel: UIViewController, ObservableObject, UIDocumentPickerDeleg
 
                 do {
                     let usdzData = try Data(contentsOf: fileURL)
-                    objectEntity.importedName = fileURL.lastPathComponent
+                    objectEntity.importedName = fileURL.deletingPathExtension().lastPathComponent
                     objectEntity.importedObject = usdzData
                     try context.save()
                     print("USDZ data and file name saved to Core Data.")
@@ -68,4 +68,7 @@ class ObjectViewModel: UIViewController, ObservableObject, UIDocumentPickerDeleg
             return ThumbnailView(usdzData: data)
         }
 
+    func cutUSDZString(){
+        
+    }
 }
