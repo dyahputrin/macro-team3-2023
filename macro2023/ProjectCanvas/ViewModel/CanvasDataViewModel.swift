@@ -9,12 +9,15 @@ import Foundation
 import SceneKit
 import CoreData
 import Combine
+import SwiftUI
 
 class CanvasDataViewModel: ObservableObject {
     
     @Published var canvasData: CanvasData
     @Published var projectData: ProjectData
     @Published var rootScene:SCNScene? = nil
+    
+    var tempScene: SCNScene?
     
     private var cancellables = Set<AnyCancellable>()
     var sceneOri:SCNScene? = nil
@@ -297,9 +300,10 @@ class CanvasDataViewModel: ObservableObject {
                 newProject.widthRoom = Float(canvasData.roomWidth)
                 newProject.heightRoom = Float(canvasData.roomHeight)
                 newProject.lengthRoom = Float(canvasData.roomLength)
-                if let scene = sceneOri {
+                if let scene = rootScene {
                     if let scnData = try? NSKeyedArchiver.archivedData(withRootObject: scene, requiringSecureCoding: true) {
                         newProject.projectScene = scnData
+                        print("rootscene \(rootScene)")
                     } else {
                         print("Failed to archive the SCN scene")
                     }
@@ -327,7 +331,7 @@ class CanvasDataViewModel: ObservableObject {
     }
     
     // function to retrieve project scene from core data
-    func loadSceneFromCoreData(selectedProjectID : UUID , in viewContext: NSManagedObjectContext){
+    func loadSceneFromCoreData(selectedProjectID : UUID , in viewContext: NSManagedObjectContext) -> Binding<SCNScene?> {
         print("LOAD SCENE FROM CD: \(selectedProjectID)")
         let fetchRequest: NSFetchRequest<ProjectEntity> = ProjectEntity.fetchRequest()
         fetchRequest.predicate = NSPredicate(format: "projectID == %@", selectedProjectID as CVarArg)
@@ -337,7 +341,17 @@ class CanvasDataViewModel: ObservableObject {
             if let entity = entities.first, let scnData = entity.projectScene {
                 
                 if let scene = try NSKeyedUnarchiver.unarchivedObject(ofClass: SCNScene.self, from: scnData) {
-                    rootScene = scene
+                    tempScene = scene
+                    let binding = Binding(
+                        get: { self.tempScene },
+                        set: { newScene in
+                            self.tempScene = newScene
+                            // Optionally, you can save the `newScene` back to CoreData here
+                        }
+                    )
+
+                    self.tempScene = scene
+                    return binding
                 } else {
                     print("Failed to unarchive the SCN scene data")
                 }
@@ -345,6 +359,8 @@ class CanvasDataViewModel: ObservableObject {
         } catch {
             print("Failed to fetch CoreData entity: \(error)")
         }
+
+        return Binding(get: {nil}, set: { _ in})
     }
     
     func saveSnapshot(activeProjectID: UUID, viewContext: NSManagedObjectContext, snapshotImageArg: UIImage?, scenekitView: ScenekitView) {

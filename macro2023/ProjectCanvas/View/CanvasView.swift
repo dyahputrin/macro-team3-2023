@@ -96,17 +96,16 @@ struct CanvasView: View {
             }
             else {
                 ZStack {
-                    let scenekitView = ScenekitView(objectDimensionData: objectDimensionData, scene: $roomSceneViewModel.rootScene, isEditMode: $isEditMode, roomWidth: Float(roomSceneViewModel.canvasData.roomWidth)
+//                    let scenekitView = ScenekitView(objectDimensionData: objectDimensionData, scene: $roomSceneViewModel.rootScene, isEditMode: $isEditMode, roomWidth: Float(roomSceneViewModel.canvasData.roomWidth))
 //                                                    // ini core data nanti diganti
-                    )
-//                    let scenekitView = ScenekitView(scene: roomSceneViewModel.loadSceneFromCoreData(selectedProjectID: routerView.project!.projectID!, in: viewContext)!, objectDimensionData: objectDimensionData, roomWidth: Float(routerView.project!.widthRoom), isEditMode: $isEditMode)
+                    let scenekitView = ScenekitView(objectDimensionData: objectDimensionData, scene: roomSceneViewModel.loadSceneFromCoreData(selectedProjectID: routerView.project!.projectID!, in: viewContext), isEditMode: $isEditMode, roomWidth: Float(routerView.project!.widthRoom))
                     
                     scenekitView
                         .edgesIgnoringSafeArea(.bottom)
                         .id(sceneViewID)
                         .onAppear {
+//                            roomSceneViewModel.loadSceneFromCoreData(selectedProjectID: routerView.project!.projectID!, in: viewContext)
                             currentScenekitView = scenekitView
-                            roomSceneViewModel.loadSceneFromCoreData(selectedProjectID: routerView.project!.projectID!, in: viewContext) 
                         }
                     
                 }
