@@ -80,17 +80,19 @@ struct ObjectSidebarView: View {
                                                 .overlay{
                                                     VStack {
                                                         if let usdzData = urlImport.importedObject {
-                                                            let _ = print("Ini yg di cari : ",usdzData)
+//                                                            let _ = print("Ini yg di cari : ",usdzData)
                                                             ThumbnailView(usdzData: usdzData)
                                                                 .frame(width: 100, height: 100)
                                                                 .cornerRadius(25)
                                                                 .shadow(radius: 5)
                                                                 .onTapGesture {
                                                                     if let usdzData = urlImport.importedObject {
-                                                                        roomSceneViewModel.canvasData.importedObjectData.append(usdzData)
-                                                                        let _ = print(roomSceneViewModel.canvasData.importedObjectData)
+//                                                                        roomSceneViewModel.canvasData.importedObjectData.append(usdzData)
+//                                                                        let _ = print(roomSceneViewModel.canvasData.importedObjectData)
+//                                                                        let _ = print(usdzData)
                                                                     }
-                                                                    roomSceneViewModel.addImportObjectChild()
+//                                                                    let urlData = roomSceneViewModel.canvasData.importedObjectData
+                                                                    roomSceneViewModel.addImportObjectChild(data: usdzData)
                                                                 }
                                                         }
                                                         Text("\(urlImport.importedName ?? "error")")

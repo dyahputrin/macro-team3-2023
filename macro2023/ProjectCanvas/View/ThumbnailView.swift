@@ -19,6 +19,7 @@ struct ThumbnailView: UIViewRepresentable {
     func updateUIView(_ uiView: SCNView, context: Context) {
         if let usdzData = usdzData {
             if let scene = loadUSDZModel(data: usdzData) {
+                print("data:",usdzData)
                 uiView.scene = scene
             }
         }
@@ -26,6 +27,7 @@ struct ThumbnailView: UIViewRepresentable {
 
     private func loadUSDZModel(data: Data) -> SCNScene? {
         if let usdzURL = saveDataToTemporaryFile(data: data) {
+            print("usdzurl:",usdzURL)
             return try? SCNScene(url: usdzURL)
         }
         return nil

@@ -82,7 +82,7 @@ struct CanvasView: View {
         GeometryReader { geometry in
             if routerView.project?.projectID == nil{
                 ZStack {
-                    let scenekitView = ScenekitView(scene: $roomSceneViewModel.rootScene, objectDimensionData: objectDimensionData, roomWidth: Float(roomSceneViewModel.canvasData.roomWidth), isEditMode: $isEditMode
+                    let scenekitView = ScenekitView(objectDimensionData: objectDimensionData, scene: $roomSceneViewModel.rootScene, isEditMode: $isEditMode, roomWidth: Float(roomSceneViewModel.canvasData.roomWidth)
                     )
                     
                     scenekitView
@@ -96,15 +96,17 @@ struct CanvasView: View {
             }
             else {
                 ZStack {
-                    let scenekitView = ScenekitView(scene: $roomSceneViewModel.rootScene, objectDimensionData: objectDimensionData, roomWidth: Float(roomSceneViewModel.canvasData.roomWidth), isEditMode: $isEditMode
-                                                    // ini core data nanti diganti
+                    let scenekitView = ScenekitView(objectDimensionData: objectDimensionData, scene: $roomSceneViewModel.rootScene, isEditMode: $isEditMode, roomWidth: Float(roomSceneViewModel.canvasData.roomWidth)
+//                                                    // ini core data nanti diganti
                     )
+//                    let scenekitView = ScenekitView(scene: roomSceneViewModel.loadSceneFromCoreData(selectedProjectID: routerView.project!.projectID!, in: viewContext)!, objectDimensionData: objectDimensionData, roomWidth: Float(routerView.project!.widthRoom), isEditMode: $isEditMode)
                     
                     scenekitView
                         .edgesIgnoringSafeArea(.bottom)
                         .id(sceneViewID)
                         .onAppear {
                             currentScenekitView = scenekitView
+                            roomSceneViewModel.loadSceneFromCoreData(selectedProjectID: routerView.project!.projectID!, in: viewContext) 
                         }
                     
                 }

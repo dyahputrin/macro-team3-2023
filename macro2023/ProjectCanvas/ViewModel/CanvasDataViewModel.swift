@@ -14,10 +14,10 @@ class CanvasDataViewModel: ObservableObject {
     
     @Published var canvasData: CanvasData
     @Published var projectData: ProjectData
+    @Published var rootScene:SCNScene? = nil
     
     private var cancellables = Set<AnyCancellable>()
     var sceneOri:SCNScene? = nil
-    @Published var rootScene:SCNScene? = nil
     init(canvasData: CanvasData, projectData: ProjectData) {
         self.canvasData = canvasData
         self.projectData = projectData
@@ -85,11 +85,11 @@ class CanvasDataViewModel: ObservableObject {
         }
         
         //TEMPORARY
-        if let wall4Asset = SCNScene(named: "OfficeTableGroup.usdz"),
-           let wall4Node = wall4Asset.rootNode.childNodes.first?.clone() {
-            wall4Node.scale = SCNVector3(1, 1, 1)
-            rootScene?.rootNode.addChildNode(wall4Node)
-        }
+//        if let wall4Asset = SCNScene(named: "OfficeTableGroup.usdz"),
+//           let wall4Node = wall4Asset.rootNode.childNodes.first?.clone() {
+//            wall4Node.scale = SCNVector3(1, 1, 1)
+//            rootScene?.rootNode.addChildNode(wall4Node)
+//        }
         
         // Add camera
         let camera = SCNCamera()
@@ -101,35 +101,28 @@ class CanvasDataViewModel: ObservableObject {
         sceneOri = rootScene
         return rootScene
     }
-    func addImportObjectChild(){
+    func addImportObjectChild(data: Data){
 //        for binaryData in canvasData.importedObjectData {
-//            if let modelURL = createUSDZFile(data: binaryData) {
-//                if let modelNode = SCNReferenceNode(url: modelURL) {
-//                    rootScene?.rootNode.addChildNode(modelNode)
-//                }
-//            }
+            if let modelURL = createUSDZFile(data: data) {
+                if let modelasset = try? SCNScene(url: modelURL), let modelNode = modelasset.rootNode.childNodes.first?.clone() {
+                    self.rootScene?.rootNode.addChildNode(modelNode)
+                    print("node",modelNode)
+                }
+                print("Putri bermain catur",modelURL)
+            }
 //        }
-//        print("Putri bermain catur")
-        
-        if let wall4Asset = SCNScene(named: "OfficeTableGroup.usdz"),
-           let wall4Node = wall4Asset.rootNode.childNodes.first?.clone() {
-            wall4Node.scale = SCNVector3(Int.random(in: 0...10), 1, 1)
-            self.rootScene?.rootNode.addChildNode(wall4Node)
-        }
     }
     
     func createUSDZFile(data: Data) -> URL? {
+        let fileManager = FileManager.default
+        let tempDir = FileManager.default.temporaryDirectory
+        let usdzFileURL = tempDir.appendingPathComponent(UUID().uuidString).appendingPathExtension("usdz")
+
         do {
-            // Create a temporary file with a .usdz extension
-            let tempDirectory = FileManager.default.temporaryDirectory
-            let usdzFileURL = tempDirectory.appendingPathComponent(UUID().uuidString).appendingPathExtension("usdz")
-            
-            // Write the binary data to the file
             try data.write(to: usdzFileURL)
-            
             return usdzFileURL
         } catch {
-            print("Error creating USDZ file: \(error)")
+            print("Error saving data to a temporary file: \(error.localizedDescription)")
             return nil
         }
     }
@@ -185,7 +178,6 @@ class CanvasDataViewModel: ObservableObject {
 //        } catch {
 //            print("Failed to fetch or unarchive: \(error)")
 //        }
-        
         
         let rootNode = rootScene?.rootNode
         let nodeNames = ["wall1white", "wall2white", "wall3white", "wall4white", "floorblack"]
@@ -335,7 +327,7 @@ class CanvasDataViewModel: ObservableObject {
     }
     
     // function to retrieve project scene from core data
-    func loadSceneFromCoreData(selectedProjectID : UUID , in viewContext: NSManagedObjectContext) -> SCNScene? {
+    func loadSceneFromCoreData(selectedProjectID : UUID , in viewContext: NSManagedObjectContext){
         print("LOAD SCENE FROM CD: \(selectedProjectID)")
         let fetchRequest: NSFetchRequest<ProjectEntity> = ProjectEntity.fetchRequest()
         fetchRequest.predicate = NSPredicate(format: "projectID == %@", selectedProjectID as CVarArg)
@@ -345,7 +337,7 @@ class CanvasDataViewModel: ObservableObject {
             if let entity = entities.first, let scnData = entity.projectScene {
                 
                 if let scene = try NSKeyedUnarchiver.unarchivedObject(ofClass: SCNScene.self, from: scnData) {
-                    return scene
+                    rootScene = scene
                 } else {
                     print("Failed to unarchive the SCN scene data")
                 }
@@ -353,7 +345,6 @@ class CanvasDataViewModel: ObservableObject {
         } catch {
             print("Failed to fetch CoreData entity: \(error)")
         }
-        return nil
     }
     
     func saveSnapshot(activeProjectID: UUID, viewContext: NSManagedObjectContext, snapshotImageArg: UIImage?, scenekitView: ScenekitView) {
