@@ -22,6 +22,7 @@ class CanvasDataViewModel: ObservableObject {
     
     private var cancellables = Set<AnyCancellable>()
     var sceneOri:SCNScene? = nil
+    
     init(canvasData: CanvasData, projectData: ProjectData) {
         self.canvasData = canvasData
         self.projectData = projectData
@@ -332,7 +333,7 @@ class CanvasDataViewModel: ObservableObject {
     }
     
     // function to retrieve project scene from core data
-    func loadSceneFromCoreData(selectedProjectID : UUID , in viewContext: NSManagedObjectContext) -> SCNScene? {
+    func loadSceneFromCoreData(selectedProjectID : UUID , in viewContext: NSManagedObjectContext) -> Binding<SCNScene?> {
         if hasLoadedFromCoreData == false {
             print("LOAD SCENE FROM CD: \(selectedProjectID)")
             let fetchRequest: NSFetchRequest<ProjectEntity> = ProjectEntity.fetchRequest()
@@ -343,20 +344,20 @@ class CanvasDataViewModel: ObservableObject {
                 if let entity = entities.first, let scnData = entity.projectScene {
                     
                     if let scene = try NSKeyedUnarchiver.unarchivedObject(ofClass: SCNScene.self, from: scnData) {
-                        self.rootScene = scene
+//                        self.rootScene = scene
                         print("Scenee \(scene)")
-                        return scene
-//                        tempScene = scene
-//                        let binding = Binding(
-//                            get: { self.tempScene },
-//                            set: { newScene in
-//                                self.tempScene = newScene
-//                                // Optionally, you can save the `newScene` back to CoreData here
-//                            }
-//                        )
-//
-//                        self.tempScene = scene
-//                        return binding
+//                        return scene
+                        tempScene = scene
+                        let binding = Binding(
+                            get: { self.tempScene },
+                            set: { newScene in
+                                self.tempScene = newScene
+                                // Optionally, you can save the `newScene` back to CoreData here
+                            }
+                        )
+
+                        self.tempScene = scene
+                        return binding
                     } else {
                         print("Failed to unarchive the SCN scene data")
                     }
@@ -368,8 +369,8 @@ class CanvasDataViewModel: ObservableObject {
             hasLoadedFromCoreData = true
         }
         
-        return nil
-//        return Binding(get: {nil}, set: { _ in})
+//        return nil
+        return Binding(get: {nil}, set: { _ in})
     }
     
     func saveSnapshot(activeProjectID: UUID, viewContext: NSManagedObjectContext, snapshotImageArg: UIImage?, scenekitView: ScenekitView) {

@@ -39,13 +39,13 @@ struct ObjectSizeView: View {
                                 HStack(alignment: .firstTextBaseline) {
                                     Button(action: {})
                                     {
-//                                        Text("REMOVE")
-//                                            .underline()
-//                                            .foregroundColor(.red)
-//                                            .font(.subheadline)
-//                                            .bold()
-                                        Image(systemName: "trash.fill")
-                                            .foregroundStyle(.red)
+                                        Text("REMOVE")
+                                            .underline()
+                                            .foregroundColor(.red)
+                                            .font(.subheadline)
+                                            .bold()
+//                                        Image(systemName: "trash.fill")
+//                                            .foregroundStyle(.red)
                                         //.padding(.leading, 50)
                                     }
                                 }

@@ -120,9 +120,9 @@ struct CanvasView: View {
             }
             else {
                 ZStack {
-                    let scenekitView = ScenekitView(objectDimensionData: objectDimensionData, scene: $roomSceneViewModel.rootScene, isEditMode: $isEditMode, roomWidth: Float(roomSceneViewModel.canvasData.roomWidth))
+//                    let scenekitView = ScenekitView(objectDimensionData: objectDimensionData, scene: $roomSceneViewModel.rootScene, isEditMode: $isEditMode, roomWidth: Float(roomSceneViewModel.canvasData.roomWidth))
 //                                                    // ini core data nanti diganti
-//                    let scenekitView = ScenekitView(objectDimensionData: objectDimensionData, scene: roomSceneViewModel.loadSceneFromCoreData(selectedProjectID: routerView.project!.projectID!, in: viewContext), isEditMode: $isEditMode, roomWidth: Float(routerView.project!.widthRoom))
+                    let scenekitView = ScenekitView(objectDimensionData: objectDimensionData, scene: roomSceneViewModel.loadSceneFromCoreData(selectedProjectID: routerView.project!.projectID!, in: viewContext), isEditMode: $isEditMode, roomWidth: Float(routerView.project!.widthRoom))
                     
                     scenekitView
                         .edgesIgnoringSafeArea(.bottom)
@@ -153,10 +153,10 @@ struct CanvasView: View {
             
         }
         .onAppear {
-            if routerView.project?.projectID != nil {
-                let tempScene: SCNScene? = roomSceneViewModel.loadSceneFromCoreData(selectedProjectID: routerView.project!.projectID!, in: viewContext)
-                roomSceneViewModel.rootScene = tempScene
-            }
+//            if routerView.project?.projectID != nil {
+//                let tempScene: SCNScene? = roomSceneViewModel.loadSceneFromCoreData(selectedProjectID: routerView.project!.projectID!, in: viewContext)
+//                roomSceneViewModel.rootScene = tempScene
+//            }
         }
         .toolbarRole(.editor)
         .toolbarBackground(Color.white)
@@ -238,7 +238,11 @@ struct CanvasView: View {
                 }.alert(isPresented: $showSaveAlert) {
                     Alert(
                         title: Text("\(roomSceneViewModel.projectData.nameProject) Saved"),
-                        dismissButton: .default(Text("OK"))
+                        dismissButton: .default(Text("OK")) {
+                            if routerView.path.count > 0 {
+                                routerView.path.removeLast()
+                            }
+                        }
                     )
                 }
             }
