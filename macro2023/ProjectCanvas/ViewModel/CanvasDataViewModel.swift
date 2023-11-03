@@ -187,20 +187,38 @@ class CanvasDataViewModel: ObservableObject {
         var objects: [SceneObjectModel] = []
         scene.rootNode.enumerateChildNodes { (node, _) in
             if shouldExcludeNode(node) {
-                print("EXCLUDE NODE SCENE -> \(node.name) : \(node.position)")
                 return
             }
-            if let name = node.name, let position = nodePositions[name], let rotation = nodeRotation[name] {
-                let object = SceneObjectModel(
-                    id: name,
-                    position: position,
-                    rotation: rotation
-                )
-                print("SAVE NODE SCENE -> \(node.name) : \(node.position) - \(node.rotation)")
-                objects.append(object)
+            
+            if let name = node.name {
+                print("Current Node -> \(name) : \(node.position) - \(node.rotation)")
+                if let expectedPosition = nodePositions[name] {
+                    print("Expected Position for \(name): \(expectedPosition)")
+                } else {
+                    print("No expected position provided for \(name)")
+                }
+                if let expectedRotation = nodeRotation[name] {
+                    print("Expected Rotation for \(name): \(expectedRotation)")
+                } else {
+                    print("No expected rotation provided for \(name)")
+                }
             }
-        }
-        return objects
+            
+            if let name = node.name, let position = nodePositions[name], let rotation = nodeRotation[name] {
+                    let object = SceneObjectModel(
+                        id: name,
+                        position: position,
+                        rotation: rotation
+                    )
+                    objects.append(object)
+                    print("Saving Node \(name): Position -> \(position), Rotation -> \(rotation)")
+                }
+            }
+        
+            for object in objects {
+                print("Saved Object Scene -> \(object.id ?? "nil") : \(object.position) - \(object.rotation)")
+            }
+            return objects
     }
     
     func saveProject1(viewContext: NSManagedObjectContext, scenekitView: ScenekitView) {
@@ -228,6 +246,7 @@ class CanvasDataViewModel: ObservableObject {
         fetchRequest.predicate = NSPredicate(format: "projectID == %@", projectUUID as CVarArg)
         do {
             let sceneObjectsData = try NSKeyedArchiver.archivedData(withRootObject: sceneObjects, requiringSecureCoding: true)
+            print("Archived sceneObjects data size: \(sceneObjectsData.count) bytes")
             if let existingProject = try viewContext.fetch(fetchRequest).first {
                 existingProject.projectName = projectName
                 existingProject.sceneObjects = sceneObjectsData
@@ -333,7 +352,7 @@ class CanvasDataViewModel: ObservableObject {
 //    }
     
     func loadSceneFromCoreData(selectedProjectID: UUID, in viewContext: NSManagedObjectContext) -> SCNScene? {
-        print("LOAD SCENE FROM CD: \(selectedProjectID)")
+//        print("LOAD SCENE FROM CD: \(selectedProjectID)")
         let fetchRequest: NSFetchRequest<ProjectEntity> = ProjectEntity.fetchRequest()
         fetchRequest.predicate = NSPredicate(format: "projectID == %@", selectedProjectID as CVarArg)
         
@@ -347,8 +366,10 @@ class CanvasDataViewModel: ObservableObject {
                 for sceneObject in sceneObjects {
                     if let id = sceneObject.id, let position = sceneObject.position, let rotation = sceneObject.rotation, let node = scene.rootNode.childNode(withName: id, recursively: true) {
                         node.position = position
+                        
+                        print("Loaded node scene -> \(id) : \(position) - \(rotation)")
                         node.rotation = rotation
-                        print("LOADED NODE SCENE -> \(node.name) : \(node.position) - \(node.rotation)")
+                        print("Applied Rotation to \(node.name): \(node.rotation)")
                     }
                 }
                 

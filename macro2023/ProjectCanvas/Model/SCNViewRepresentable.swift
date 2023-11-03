@@ -12,15 +12,10 @@ import simd
 struct ScenekitView: UIViewRepresentable {
     typealias UIViewType = SCNView
     var scene: SCNScene
-//    @Binding var scene: SCNScene?
     var view = SCNView()
     @Binding var isEditMode: Bool
     @Binding var nodePositions: [String: SCNVector3]
     @Binding var nodeRotation: [String: SCNQuaternion]
-    
-    //    init(scene: SCNScene) {
-    //        self.scene = scene
-    //    }
     
     func makeUIView(context: Context) -> SCNView {
         view.scene = scene
@@ -45,7 +40,6 @@ struct ScenekitView: UIViewRepresentable {
         scene.rootNode.enumerateChildNodes { (node, _) in
             if let name = node.name {
                 nodePositions[name] = node.worldPosition
-                nodeRotation[name] = node.rotation
                 print("\(node.name): \(node.worldPosition) - \(node.rotation)")
             }
         }
@@ -60,7 +54,6 @@ struct ScenekitView: UIViewRepresentable {
     }
     
     class Coordinator: NSObject, UIGestureRecognizerDelegate {
-        //        private weak var scnView: SCNView?
         var parent: ScenekitView
         private var selectedNode: SCNNode?
         private var lastPanTranslation: CGPoint = .zero
@@ -70,37 +63,6 @@ struct ScenekitView: UIViewRepresentable {
             self.parent = parent
             super.init()
         }
-        
-        //        init(_ scnView: SCNView) {
-        //            self.scnView = scnView
-        //            super.init()
-        //        }
-        //
-        //        init(_ view: SCNView) {
-        //            self.view = view
-        //            super.init()
-        //        }
-        
-        //        @objc func handleTap(_ gestureRecognize: UIGestureRecognizer) {
-        //            // check what nodes are tapped
-        //            let p = gestureRecognize.location(in: view)
-        //            let hitResults = view.hitTest(p, options: [:])
-        //
-        //            // check that we clicked on at least one object
-        //            if hitResults.count > 0 {
-        //
-        //                // retrieved the first clicked object
-        //                let result = hitResults[0]
-        ////                print("\(result)")
-        //                let node = result.node
-        //
-        //                let max = node.boundingBox.max
-        //                let min = node.boundingBox.min
-        //
-        //                let dimension = SCNVector3(max.x - min.x, max.y - min.y, max.z - min.z)
-        //                print("\(node.name) : \(dimension)")
-        //            }
-        //        }
         
         @objc func handleTap(_ gestureRecognizer: UIGestureRecognizer) {
             guard !parent.isEditMode else {
@@ -113,7 +75,7 @@ struct ScenekitView: UIViewRepresentable {
                     let max = selectedNode!.boundingBox.max
                     let min = selectedNode!.boundingBox.min
                     let dimension = SCNVector3(max.x - min.x, max.y - min.y, max.z - min.z)
-                    print("\(selectedNode?.name) : \(dimension)")
+//                    print("\(selectedNode?.name) : \(dimension)")
                     addPanGesture()
                 }
                 return
@@ -172,34 +134,41 @@ struct ScenekitView: UIViewRepresentable {
         }
         
         private func rotateNode(_ node: SCNNode) {
-            //            let rotation = SCNAction.rotateBy(x: 0, y: CGFloat.pi/2, z: 0, duration: 0.2)
-            //            node.runAction(rotation)
-            //            let rotateAction = SCNAction.rotateBy(x: 0, y: CGFloat.pi/2, z: 0, duration: 0.2)
-            //               node.runAction(rotateAction) {
-            //                   // Save the rotation
-            //                   if let nodeName = node.name {
-            //                       let rotation = node.rotation
-            //                       print("NODE ROTATION: \(rotation)")
-            //                       self.parent.nodeRotation[nodeName] = rotation
-            //                   }
-            //               }
-           let rotationAngle = Float.pi / 2
-           let rotationAxis = SCNVector3(0, 1, 0) // Rotate around the y-axis
-           
-           // Convert axis-angle to quaternion
-           let rotationQuaternion = simd_quatf(angle: rotationAngle, axis: simd_normalize(simd_float3(rotationAxis)))
-           
-           // Apply the new rotation
-           let currentOrientation = simd_quatf(ix: node.orientation.x, iy: node.orientation.y, iz: node.orientation.z, r: node.orientation.w)
-           let combinedOrientation = rotationQuaternion * currentOrientation
-           
-           // Update the node's orientation
-           node.orientation = SCNVector4(x: combinedOrientation.imag.x, y: combinedOrientation.imag.y, z: combinedOrientation.imag.z, w: combinedOrientation.real)
-               
-            if let nodeName = node.name {
-                parent.nodeRotation[nodeName] = node.orientation
-                print("NODE ROTATION: \(node.orientation)")
-            }
+//            let rotateAction = SCNAction.rotateBy(x: 0, y: CGFloat.pi/2, z: 0, duration: 0.2)
+//               node.runAction(rotateAction) {
+//                   if let nodeName = node.name {
+//                       let rotation = node.rotation
+//                       self.parent.nodeRotation[nodeName] = rotation
+//                       print("ROTATE NODE -> \(nodeName) : \(self.parent.nodeRotation[nodeName])")
+//                   }
+//               }
+            // Define the rotation axis and angle
+           let rotationAxis = SCNVector3(0, 1, 0) // Y axis
+           let rotationAngle = Float.pi / 2 // 90 degrees
+
+           // Create a quaternion from the axis and angle
+           let rotationQuaternion = SCNQuaternion(
+               x: rotationAxis.x * sin(rotationAngle / 2),
+               y: rotationAxis.y * sin(rotationAngle / 2),
+               z: rotationAxis.z * sin(rotationAngle / 2),
+               w: cos(rotationAngle / 2)
+           )
+
+           // Create the rotation action
+           let rotateAction = SCNAction.rotateBy(x: 0, y: CGFloat(rotationAngle), z: 0, duration: 0.2)
+
+           // Run the rotation action
+           node.runAction(rotateAction) {
+               // After the rotation action completes
+               if let nodeName = node.name {
+                   // Combine the new rotation with the current rotation
+                   let combinedOrientation = rotationQuaternion * node.orientation
+                   
+                   // Update the nodeRotation dictionary with the new combined rotation
+                   self.parent.nodeRotation[nodeName] = combinedOrientation
+                   print("ROTATE NODE -> \(nodeName) : \(self.parent.nodeRotation[nodeName])")
+               }
+           }
         }
 
         
@@ -219,17 +188,17 @@ struct ScenekitView: UIViewRepresentable {
         func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldRecognizeSimultaneouslyWith otherGestureRecognizer: UIGestureRecognizer) -> Bool {
             return true
         }
-        
-        
-        
     }
 }
 
-extension SCNVector4 {
-    static func * (left: SCNVector4, right: SCNVector4) -> SCNVector4 {
-        let q1 = simd_quatf(ix: left.x, iy: left.y, iz: left.z, r: left.w)
-        let q2 = simd_quatf(ix: right.x, iy: right.y, iz: right.z, r: right.w)
-        let result = q1 * q2
-        return SCNVector4(result.imag.x, result.imag.y, result.imag.z, result.real)
-    }
+func * (left: SCNQuaternion, right: SCNQuaternion) -> SCNQuaternion {
+    let leftW = left.w, leftX = left.x, leftY = left.y, leftZ = left.z
+    let rightW = right.w, rightX = right.x, rightY = right.y, rightZ = right.z
+    
+    return SCNQuaternion(
+        x: leftW * rightX + leftX * rightW + leftY * rightZ - leftZ * rightY,
+        y: leftW * rightY - leftX * rightZ + leftY * rightW + leftZ * rightX,
+        z: leftW * rightZ + leftX * rightY - leftY * rightX + leftZ * rightW,
+        w: leftW * rightW - leftX * rightX - leftY * rightY - leftZ * rightZ
+    )
 }
