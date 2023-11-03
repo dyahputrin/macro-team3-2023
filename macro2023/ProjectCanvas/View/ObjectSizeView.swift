@@ -23,9 +23,10 @@ struct ObjectSizeView: View {
             HStack {
                 RoundedRectangle(cornerRadius: 15)
                     .foregroundColor(Color.systemGray6)
-                    .frame(width: 300, height: 135)
+                
+                    .frame(width: 250, height: 150)
                     .overlay(
-                        VStack(alignment: .center, content: {
+                        VStack(alignment: .leading, content: {
                             HStack {
                                 Text("\(objectName)")
                                     .bold()
@@ -35,28 +36,28 @@ struct ObjectSizeView: View {
                                     .lineLimit(2)
                                 
                                 Spacer()
-                                HStack(alignment: .firstTextBaseline) {
-                                    Button(action: {})
-                                    {
-                                        Text("REMOVE")
-                                            .underline()
-                                            .foregroundColor(.red)
-                                            .font(.subheadline)
-                                            .bold()
-                                        //.padding(.leading, 50)
-                                    }
-                                }
+//                                HStack(alignment: .firstTextBaseline) {
+//                                    Button(action: {})
+//                                    {
+//                                        Text("REMOVE")
+//                                            .underline()
+//                                            .foregroundColor(.red)
+//                                            .font(.subheadline)
+//                                            .bold()
+//                                        //.padding(.leading, 50)
+//                                    }
+//                                }
                             }
                             .padding(.horizontal)
                             
-                            HStack {
-                                Text("W:   \(roomWidthText) m    ")
-                                Text("L:   \(roomLengthText) m    ")
-                                Text("H:   \(roomHeightText) m")
+                            VStack {
+                                Text("W :   \(roomWidthText) m")
+                                Text("L :   \(roomLengthText) m")
+                                Text("H :   \(roomHeightText) m")
                             }
-                            .padding(.top)
+                            .padding()
                         })
-                        .padding(.vertical)
+                        .padding(.top)
                     )
                     .aspectRatio(contentMode: .fit)
                     .padding(.leading)
@@ -67,5 +68,5 @@ struct ObjectSizeView: View {
 }
 
 #Preview {
-    ObjectSizeView(roomWidthText:.constant("2"), roomLengthText: .constant("2"), roomHeightText: .constant("2"), sceneViewID: .constant(UUID()), roomSceneViewModel: CanvasDataViewModel(canvasData: CanvasData(roomWidth: 0, roomHeight: 0, roomLength: 0), projectData: ProjectData()))
+    ObjectSizeView(roomWidthText:.constant("2.00"), roomLengthText: .constant("2.00"), roomHeightText: .constant("2.00"), sceneViewID: .constant(UUID()), roomSceneViewModel: CanvasDataViewModel(canvasData: CanvasData(roomWidth: 0, roomHeight: 0, roomLength: 0), projectData: ProjectData()))
 }

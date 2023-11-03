@@ -62,7 +62,8 @@ struct ObjectSidebarView: View {
                             
                         }
                         .padding()
-                        .background(Color.systemGray6)
+                        //.background(Color.systemGray6)
+                        .background(.regularMaterial)
                     )
                     .frame(width: geometry.size.width * 0.3)
                     .padding(.top, 1)

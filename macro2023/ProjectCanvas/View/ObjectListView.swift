@@ -11,7 +11,8 @@ struct ObjectListView: View {
     @Binding var showingObjectList: Bool
     var sideBarWidth = UIScreen.main.bounds.size.width * 0.2
     var sideBarHeight = UIScreen.main.bounds.size.height
-    
+    @State private var selectedObject: Int?
+    @State private var selectedWall: Int?
     @State var wallList = true
     @State var objectList = true
     @State var isWallHidden: [Bool] = [false, false, false, false]
@@ -31,18 +32,10 @@ struct ObjectListView: View {
             "Wall 4"
         ]
         
-//        let objects = [
-//            "Object 1",
-//            "Object 2",
-//            "Object 3",
-//            "Object 4"
-//        ]
-        
         HStack {
             ZStack(alignment: .top) {
                 
                 MenuChevron
-                    .foregroundColor(Color.systemGray6)
                 
                 List {
                     Section(isExpanded: $wallList,
@@ -53,18 +46,33 @@ struct ObjectListView: View {
                                     .foregroundColor(isWallHidden[index] ? .gray : .black)
                                 Spacer()
                                 Button(action: {
-                                    isWallHidden[index].toggle()
+                                    //isWallHidden[index].toggle()
+                                    if selectedWall == index {
+                                        selectedWall = nil // Deselect if already selected
+                                    } else {
+                                        selectedWall = index
+                                        selectedObject = nil
+                                    }
                                 }, label: {
                                     if !isWallHidden[index] {
                                         Image(systemName: "eye")
                                             .foregroundColor(Color.accentColor)
+                                            .onTapGesture {
+                                                isWallHidden[index].toggle()
+                                            }
                                     } else if isWallHidden[index] {
                                         Image(systemName: "eye.slash")
                                             .foregroundColor(.gray)
+                                            .onTapGesture {
+                                                isWallHidden[index].toggle()
+                                            }
                                     }
                                 })
                                
                             }
+                            .listRowBackground(
+                                       selectedWall == index ? Color.accentColor.opacity(0.2) : Color.white
+                                   )
                         }
                     }, header: {
                         Image(systemName: "square.split.bottomrightquarter")
@@ -80,18 +88,32 @@ struct ObjectListView: View {
                                 Spacer()
                                 Button(action: {
                                     //removeObject(at: index)
-                                    isObjectHidden[index].toggle()
+                                    //isObjectHidden[index].toggle()
+                                    if selectedObject == index {
+                                        selectedObject = nil 
+                                    } else {
+                                        selectedObject = index
+                                        selectedWall = nil
+                                    }
                                 }, label: {
                                     if !isObjectHidden[index] {
                                         Image(systemName: "eye")
                                             .foregroundColor(Color.accentColor)
+                                            .onTapGesture {
+                                                isObjectHidden[index].toggle()
+                                            }
                                     } else if isObjectHidden[index] {
                                         Image(systemName: "eye.slash")
                                             .foregroundColor(.gray)
+                                            .onTapGesture {
+                                                isObjectHidden[index].toggle()
+                                            }
                                     }
                                 })
                             }
-                            
+                            .listRowBackground(
+                                       selectedObject == index ? Color.accentColor.opacity(0.15) : Color.white
+                                   )
                             .swipeActions(edge: .trailing) {
                                 Button(role: .destructive, action: {removeObject(at: index)}, label: {Text("Remove")})
                                     .tint(.red)
@@ -100,9 +122,11 @@ struct ObjectListView: View {
                        // .onDelete(perform: deleteObject)
                     }, header: {
                         Image(systemName: "chair.lounge")
-                        Text("Objects List")
+                        Text("Object List")
                     })
                 }
+                .background(.regularMaterial)
+                .scrollContentBackground(.hidden)
                 .listStyle(.sidebar)
             }
             .frame(width: sideBarWidth)
@@ -137,7 +161,8 @@ struct ObjectListView: View {
                 .onTapGesture {
                     showingObjectList.toggle()
                 }
-                .foregroundColor(.white)
+                //.foregroundColor(.white)
+                .foregroundStyle(.regularMaterial)
 
             Image(systemName: "chevron.right")
                 .bold()

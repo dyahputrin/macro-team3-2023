@@ -68,7 +68,7 @@ struct CanvasView: View {
             
             if objectsButtonClicked == true {
                 ObjectSidebarView()
-                    .animation(.easeInOut(duration: 0.5), value: objectsButtonClicked)
+                    .animation(.easeInOut(duration: 2), value: objectsButtonClicked)
                 
             } else if roomButtonClicked == true {
                 RoomSidebarView(roomWidthText: $roomWidthText, roomLengthText: $roomLengthText, roomHeightText: $roomHeightText,  sceneViewID: $sceneViewID, roomSceneViewModel: roomSceneViewModel)
@@ -148,6 +148,7 @@ struct CanvasView: View {
                     }
 
                 }
+                .padding(.vertical, 5)
                 .padding(.trailing, 200)
             }
             
@@ -166,6 +167,7 @@ struct CanvasView: View {
                             .font(.subheadline)
                             .foregroundColor(.black)
                     }
+                    .padding(.bottom, 5)
                 }.alert(isPresented: $showSaveAlert) {
                     Alert(
                         title: Text("\(roomSceneViewModel.projectData.nameProject) Saved"),
