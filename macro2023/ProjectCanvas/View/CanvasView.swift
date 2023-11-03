@@ -49,6 +49,30 @@ struct CanvasView: View {
     
     @ObservedObject var objectDimensionData: ObjectDimensionData = ObjectDimensionData()
     
+    init(
+        objectsButtonClicked: Bool,
+        roomButtonClicked: Bool,
+        povButtonClicked: Bool,
+        viewfinderButtonClicked: Binding<Bool>,
+        isImporting: Binding<Bool>,
+        isExporting: Binding<Bool>,
+        isSetButtonSidebarTapped: Binding<Bool>,
+        activeProjectID: Binding<UUID>,
+        activeScene: Binding<SCNScene>
+    ) {
+        _objectsButtonClicked = State(initialValue: objectsButtonClicked)
+        _roomButtonClicked = State(initialValue: roomButtonClicked)
+        _povButtonClicked = State(initialValue: povButtonClicked)
+        _viewfinderButtonClicked = viewfinderButtonClicked
+        _isImporting = isImporting
+        _isExporting = isExporting
+        _isSetButtonSidebarTapped = isSetButtonSidebarTapped
+        _activeProjectID = activeProjectID
+        _activeScene = activeScene
+    }
+
+    
+    
 //    var sceneKitView: ScenekitView {
 //        if routerView.project?.projectID == nil {
 //            if let xxx = roomSceneViewModel.makeScene1(width: roomSceneViewModel.canvasData.roomWidth, height: roomSceneViewModel.canvasData.roomHeight, length: roomSceneViewModel.canvasData.roomLength){
@@ -96,9 +120,9 @@ struct CanvasView: View {
             }
             else {
                 ZStack {
-//                    let scenekitView = ScenekitView(objectDimensionData: objectDimensionData, scene: $roomSceneViewModel.rootScene, isEditMode: $isEditMode, roomWidth: Float(roomSceneViewModel.canvasData.roomWidth))
+                    let scenekitView = ScenekitView(objectDimensionData: objectDimensionData, scene: $roomSceneViewModel.rootScene, isEditMode: $isEditMode, roomWidth: Float(roomSceneViewModel.canvasData.roomWidth))
 //                                                    // ini core data nanti diganti
-                    let scenekitView = ScenekitView(objectDimensionData: objectDimensionData, scene: roomSceneViewModel.loadSceneFromCoreData(selectedProjectID: routerView.project!.projectID!, in: viewContext), isEditMode: $isEditMode, roomWidth: Float(routerView.project!.widthRoom))
+//                    let scenekitView = ScenekitView(objectDimensionData: objectDimensionData, scene: roomSceneViewModel.loadSceneFromCoreData(selectedProjectID: routerView.project!.projectID!, in: viewContext), isEditMode: $isEditMode, roomWidth: Float(routerView.project!.widthRoom))
                     
                     scenekitView
                         .edgesIgnoringSafeArea(.bottom)
@@ -127,6 +151,12 @@ struct CanvasView: View {
                 ObjectSizeView(roomWidthText:.constant("2"), roomLengthText: .constant("2"), roomHeightText: .constant("2"), sceneViewID: .constant(UUID()), roomSceneViewModel: CanvasDataViewModel(canvasData: CanvasData(roomWidth: 0, roomHeight: 0, roomLength: 0), projectData: ProjectData()), objectDimensionData: objectDimensionData)
             }
             
+        }
+        .onAppear {
+            if routerView.project?.projectID != nil {
+                let tempScene: SCNScene? = roomSceneViewModel.loadSceneFromCoreData(selectedProjectID: routerView.project!.projectID!, in: viewContext)
+                roomSceneViewModel.rootScene = tempScene
+            }
         }
         .toolbarRole(.editor)
         .toolbarBackground(Color.white)
