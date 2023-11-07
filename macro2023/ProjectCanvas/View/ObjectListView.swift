@@ -46,13 +46,13 @@ struct ObjectListView: View {
                                     .foregroundColor(isWallHidden[index] ? .gray : .black)
                                 Spacer()
                                 Button(action: {
-                                    //isWallHidden[index].toggle()
-                                    if selectedWall == index {
-                                        selectedWall = nil // Deselect if already selected
-                                    } else {
-                                        selectedWall = index
-                                        selectedObject = nil
-                                    }
+//                                    if selectedWall == index {
+//                                        selectedWall = nil
+//                                    } else {
+//                                        selectedWall = index
+//                                        selectedObject = nil
+//                                    }
+                                    selectWall(index)
                                 }, label: {
                                     if !isWallHidden[index] {
                                         Image(systemName: "eye")
@@ -87,14 +87,13 @@ struct ObjectListView: View {
                                     .foregroundColor(isObjectHidden[index] ? .gray : .black)
                                 Spacer()
                                 Button(action: {
-                                    //removeObject(at: index)
-                                    //isObjectHidden[index].toggle()
-                                    if selectedObject == index {
-                                        selectedObject = nil 
-                                    } else {
-                                        selectedObject = index
-                                        selectedWall = nil
-                                    }
+//                                    if selectedObject == index {
+//                                        selectedObject = nil 
+//                                    } else {
+//                                        selectedObject = index
+//                                        selectedWall = nil
+//                                    }
+                                    selectObject(index)
                                 }, label: {
                                     if !isObjectHidden[index] {
                                         Image(systemName: "eye")
@@ -119,7 +118,6 @@ struct ObjectListView: View {
                                     .tint(.red)
                             }
                         }
-                       // .onDelete(perform: deleteObject)
                     }, header: {
                         Image(systemName: "chair.lounge")
                         Text("Object List")
@@ -145,12 +143,37 @@ struct ObjectListView: View {
             print(objects)
         }
     }
-//    private func deleteObject(at offsets: IndexSet) {
-//            withAnimation {
-//                objects.remove(atOffsets: offsets)
-//                //print(objects)
-//            }
-//        }
+    
+    private func deselectIfHidden() {
+            if let selectedWall = selectedWall, isWallHidden[selectedWall] {
+                self.selectedWall = nil
+            }
+
+            if let selectedObject = selectedObject, isObjectHidden[selectedObject] {
+                self.selectedObject = nil
+            }
+        }
+    
+    private func selectWall(_ index: Int) {
+        if selectedWall == index {
+            selectedWall = nil
+        } else if !isWallHidden[index] {
+            selectedWall = index
+            selectedObject = nil
+        }
+        deselectIfHidden()
+    }
+
+    private func selectObject(_ index: Int) {
+        if selectedObject == index {
+            selectedObject = nil
+        } else if !isObjectHidden[index] {
+            selectedObject = index
+            selectedWall = nil
+        }
+        deselectIfHidden()
+        
+    }
     
     
     var MenuChevron: some View {
@@ -161,7 +184,6 @@ struct ObjectListView: View {
                 .onTapGesture {
                     showingObjectList.toggle()
                 }
-                //.foregroundColor(.white)
                 .foregroundStyle(.regularMaterial)
 
             Image(systemName: "chevron.right")
