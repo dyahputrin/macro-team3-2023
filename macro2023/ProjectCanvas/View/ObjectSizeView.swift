@@ -23,7 +23,6 @@ struct ObjectSizeView: View {
             HStack {
                 RoundedRectangle(cornerRadius: 15)
                     .foregroundColor(Color.systemGray6)
-                
                     .frame(width: 250, height: 150)
                     .overlay(
                         VStack(alignment: .leading, content: {

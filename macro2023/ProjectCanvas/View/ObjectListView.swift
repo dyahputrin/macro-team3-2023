@@ -46,12 +46,6 @@ struct ObjectListView: View {
                                     .foregroundColor(isWallHidden[index] ? .gray : .black)
                                 Spacer()
                                 Button(action: {
-//                                    if selectedWall == index {
-//                                        selectedWall = nil
-//                                    } else {
-//                                        selectedWall = index
-//                                        selectedObject = nil
-//                                    }
                                     selectWall(index)
                                 }, label: {
                                     if !isWallHidden[index] {
@@ -77,7 +71,11 @@ struct ObjectListView: View {
                     }, header: {
                         Image(systemName: "square.split.bottomrightquarter")
                         Text("Wall List")
-                    })
+                    }).onChange(of: isWallHidden) {
+                        if let selectedWall = selectedWall, isWallHidden[selectedWall] {
+                            self.selectedWall = nil
+                        }
+                    }
                     
                     Section(isExpanded: $objectList,
                         content: {
@@ -87,12 +85,6 @@ struct ObjectListView: View {
                                     .foregroundColor(isObjectHidden[index] ? .gray : .black)
                                 Spacer()
                                 Button(action: {
-//                                    if selectedObject == index {
-//                                        selectedObject = nil 
-//                                    } else {
-//                                        selectedObject = index
-//                                        selectedWall = nil
-//                                    }
                                     selectObject(index)
                                 }, label: {
                                     if !isObjectHidden[index] {
@@ -121,7 +113,11 @@ struct ObjectListView: View {
                     }, header: {
                         Image(systemName: "chair.lounge")
                         Text("Object List")
-                    })
+                    }).onChange(of: isObjectHidden) {
+                        if let selectedObject = selectedObject, isObjectHidden[selectedObject] {
+                            self.selectedObject = nil
+                        }
+                    }
                 }
                 .background(.regularMaterial)
                 .scrollContentBackground(.hidden)
@@ -144,16 +140,6 @@ struct ObjectListView: View {
         }
     }
     
-    private func deselectIfHidden() {
-            if let selectedWall = selectedWall, isWallHidden[selectedWall] {
-                self.selectedWall = nil
-            }
-
-            if let selectedObject = selectedObject, isObjectHidden[selectedObject] {
-                self.selectedObject = nil
-            }
-        }
-    
     private func selectWall(_ index: Int) {
         if selectedWall == index {
             selectedWall = nil
@@ -161,7 +147,6 @@ struct ObjectListView: View {
             selectedWall = index
             selectedObject = nil
         }
-        deselectIfHidden()
     }
 
     private func selectObject(_ index: Int) {
@@ -171,8 +156,6 @@ struct ObjectListView: View {
             selectedObject = index
             selectedWall = nil
         }
-        deselectIfHidden()
-        
     }
     
     
