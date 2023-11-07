@@ -34,6 +34,7 @@
 //                } else {
 //                    Button(action: {
 //                        appModel.endCamera()
+//                        AppDelegate.orientationLock = .landscape
 //                        dismiss()
 //                    }, label: {
 //                        Text("Cancel")

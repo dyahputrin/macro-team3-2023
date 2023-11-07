@@ -165,8 +165,10 @@ struct ProjectView: View {
                 }
                 
             }
+        }.onAppear {
+            UIDevice.current.setValue(UIInterfaceOrientation.portrait.rawValue, forKey: "orientation") // Forcing the rotation to portrait
+            AppDelegate.orientationLock = .landscape // And making sure it stays that way
         }
-        
     }
 }
 

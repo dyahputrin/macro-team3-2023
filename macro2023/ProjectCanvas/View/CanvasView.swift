@@ -265,6 +265,9 @@ struct CanvasView: View {
                 }
             }
         }
+//        .fullScreenCover(isPresented: $isGuidedCaptureViewPresented, content: {
+//            GuidedCaptureView()
+//        })
         
         .navigationTitle(checkRename ? roomSceneViewModel.projectData.nameProject : (routerView.project == nil ? "NewProject" : roomSceneViewModel.projectData.nameProject))
         .toolbarTitleMenu {
@@ -304,7 +307,11 @@ struct CanvasView: View {
                     } catch {
                         print("Failed to unarchive SCN scene: \(error)")
                     }
-                }            }
+                }
+            }
+            
+            AppDelegate.orientationLock = .landscape // And making sure it stays that way
+                
         }
         .onDisappear{
 
