@@ -11,6 +11,13 @@
 		210C80142AD5343400E01229 /* Persistence.swift in Sources */ = {isa = PBXBuildFile; fileRef = 210C80132AD5343400E01229 /* Persistence.swift */; };
 		2128E7E12AE7A2C900FD6B99 /* ObjectViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2128E7E02AE7A2C900FD6B99 /* ObjectViewModel.swift */; };
 		2135F0642AF105B500A3DD9A /* ThumbnailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2135F0632AF105B500A3DD9A /* ThumbnailView.swift */; };
+		218753922AFA175700A8BE7A /* Cupboard1.usdz in Resources */ = {isa = PBXBuildFile; fileRef = 2187538B2AFA175400A8BE7A /* Cupboard1.usdz */; };
+		218753932AFA175700A8BE7A /* Cupboard2.usdz in Resources */ = {isa = PBXBuildFile; fileRef = 2187538C2AFA175400A8BE7A /* Cupboard2.usdz */; };
+		218753942AFA175700A8BE7A /* Table.usdz in Resources */ = {isa = PBXBuildFile; fileRef = 2187538D2AFA175500A8BE7A /* Table.usdz */; };
+		218753952AFA175700A8BE7A /* sofa.usdz in Resources */ = {isa = PBXBuildFile; fileRef = 2187538E2AFA175600A8BE7A /* sofa.usdz */; };
+		218753962AFA175700A8BE7A /* HighTable.usdz in Resources */ = {isa = PBXBuildFile; fileRef = 2187538F2AFA175700A8BE7A /* HighTable.usdz */; };
+		218753972AFA175700A8BE7A /* people.usdz in Resources */ = {isa = PBXBuildFile; fileRef = 218753902AFA175700A8BE7A /* people.usdz */; };
+		218753982AFA175700A8BE7A /* highchair.usdz in Resources */ = {isa = PBXBuildFile; fileRef = 218753912AFA175700A8BE7A /* highchair.usdz */; };
 		21C90C192AD694880003D517 /* ProjectData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21C90C182AD694880003D517 /* ProjectData.swift */; };
 		21C90C412AD6A15B0003D517 /* RouterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21C90C402AD6A15B0003D517 /* RouterView.swift */; };
 		21C90C432AD7CC810003D517 /* ProjectViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21C90C422AD7CC810003D517 /* ProjectViewModel.swift */; };
@@ -99,6 +106,13 @@
 		210C80132AD5343400E01229 /* Persistence.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Persistence.swift; sourceTree = "<group>"; };
 		2128E7E02AE7A2C900FD6B99 /* ObjectViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ObjectViewModel.swift; sourceTree = "<group>"; };
 		2135F0632AF105B500A3DD9A /* ThumbnailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThumbnailView.swift; sourceTree = "<group>"; };
+		2187538B2AFA175400A8BE7A /* Cupboard1.usdz */ = {isa = PBXFileReference; lastKnownFileType = file.usdz; path = Cupboard1.usdz; sourceTree = "<group>"; };
+		2187538C2AFA175400A8BE7A /* Cupboard2.usdz */ = {isa = PBXFileReference; lastKnownFileType = file.usdz; path = Cupboard2.usdz; sourceTree = "<group>"; };
+		2187538D2AFA175500A8BE7A /* Table.usdz */ = {isa = PBXFileReference; lastKnownFileType = file.usdz; path = Table.usdz; sourceTree = "<group>"; };
+		2187538E2AFA175600A8BE7A /* sofa.usdz */ = {isa = PBXFileReference; lastKnownFileType = file.usdz; path = sofa.usdz; sourceTree = "<group>"; };
+		2187538F2AFA175700A8BE7A /* HighTable.usdz */ = {isa = PBXFileReference; lastKnownFileType = file.usdz; path = HighTable.usdz; sourceTree = "<group>"; };
+		218753902AFA175700A8BE7A /* people.usdz */ = {isa = PBXFileReference; lastKnownFileType = file.usdz; path = people.usdz; sourceTree = "<group>"; };
+		218753912AFA175700A8BE7A /* highchair.usdz */ = {isa = PBXFileReference; lastKnownFileType = file.usdz; path = highchair.usdz; sourceTree = "<group>"; };
 		21C90C182AD694880003D517 /* ProjectData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectData.swift; sourceTree = "<group>"; };
 		21C90C402AD6A15B0003D517 /* RouterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RouterView.swift; sourceTree = "<group>"; };
 		21C90C422AD7CC810003D517 /* ProjectViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectViewModel.swift; sourceTree = "<group>"; };
@@ -248,6 +262,7 @@
 		210C7FEB2AD52BED00E01229 /* Object */ = {
 			isa = PBXGroup;
 			children = (
+				2187538A2AFA170C00A8BE7A /* 3D Asset */,
 				21C90BFB2AD685F60003D517 /* 3D Object */,
 			);
 			path = Object;
@@ -260,6 +275,20 @@
 				210C80132AD5343400E01229 /* Persistence.swift */,
 			);
 			path = CoreData;
+			sourceTree = "<group>";
+		};
+		2187538A2AFA170C00A8BE7A /* 3D Asset */ = {
+			isa = PBXGroup;
+			children = (
+				2187538B2AFA175400A8BE7A /* Cupboard1.usdz */,
+				2187538C2AFA175400A8BE7A /* Cupboard2.usdz */,
+				218753912AFA175700A8BE7A /* highchair.usdz */,
+				2187538F2AFA175700A8BE7A /* HighTable.usdz */,
+				218753902AFA175700A8BE7A /* people.usdz */,
+				2187538E2AFA175600A8BE7A /* sofa.usdz */,
+				2187538D2AFA175500A8BE7A /* Table.usdz */,
+			);
+			path = "3D Asset";
 			sourceTree = "<group>";
 		};
 		21C90BFB2AD685F60003D517 /* 3D Object */ = {
@@ -600,6 +629,13 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				218753922AFA175700A8BE7A /* Cupboard1.usdz in Resources */,
+				218753932AFA175700A8BE7A /* Cupboard2.usdz in Resources */,
+				218753942AFA175700A8BE7A /* Table.usdz in Resources */,
+				218753952AFA175700A8BE7A /* sofa.usdz in Resources */,
+				218753962AFA175700A8BE7A /* HighTable.usdz in Resources */,
+				218753972AFA175700A8BE7A /* people.usdz in Resources */,
+				218753982AFA175700A8BE7A /* highchair.usdz in Resources */,
 				940CF47C2AEA5F3E00F3EB7C /* wall1white.usdz in Resources */,
 				BE6F98A02AE26BA500AC6A69 /* v2wall1.usdz in Resources */,
 				9487BE232ADE93CF004FCC67 /* ScanPasses-iPhone-FixedHeight-1.mp4 in Resources */,
@@ -829,7 +865,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"macro2023/Preview Content\"";
-				DEVELOPMENT_TEAM = 4QQ5D4534V;
+				DEVELOPMENT_TEAM = 28N6P267AM;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_NSCameraUsageDescription = "Camera needed to function";
@@ -864,7 +900,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"macro2023/Preview Content\"";
-				DEVELOPMENT_TEAM = 4QQ5D4534V;
+				DEVELOPMENT_TEAM = 28N6P267AM;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_NSCameraUsageDescription = "Camera needed to function";

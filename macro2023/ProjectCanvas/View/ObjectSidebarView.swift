@@ -51,6 +51,8 @@ struct ObjectSidebarView: View {
                                 ScrollView {
                                     LazyVGrid(columns: columns, spacing: 30) {
                                         
+//                                          hehe
+                                        
                                         ForEach(1..<15, id: \.self) { index in
                                             Image(systemName: "plus.app.fill")
                                                 .frame(width: 100, height: 100)
@@ -92,7 +94,7 @@ struct ObjectSidebarView: View {
 //                                                                        let _ = print(usdzData)
                                                                     }
 //                                                                    let urlData = roomSceneViewModel.canvasData.importedObjectData
-                                                                    roomSceneViewModel.addImportObjectChild(data: usdzData)
+                                                                    roomSceneViewModel.addImportObjectChild(data: usdzData, name: urlImport.importedName!)
                                                                 }
                                                         }
                                                         Text("\(urlImport.importedName ?? "error")")

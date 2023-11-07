@@ -104,10 +104,12 @@ class CanvasDataViewModel: ObservableObject {
         sceneOri = rootScene
         return rootScene
     }
-    func addImportObjectChild(data: Data){
+    func addImportObjectChild(data: Data, name: String){
 //        for binaryData in canvasData.importedObjectData {
             if let modelURL = createUSDZFile(data: data) {
                 if let modelasset = try? SCNScene(url: modelURL), let modelNode = modelasset.rootNode.childNodes.first?.clone() {
+                    modelNode.name = name
+//                    print("nameee \(name)")
                     self.rootScene?.rootNode.addChildNode(modelNode)
                     print("node",modelNode)
                 }
@@ -386,5 +388,6 @@ class CanvasDataViewModel: ObservableObject {
             print("Failed to save snapshot: \(error)")
         }
     }
+    
     
 }

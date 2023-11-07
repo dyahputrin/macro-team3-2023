@@ -13,6 +13,11 @@ struct ObjectSizeView: View {
     @Binding var roomHeightText: String
     @Binding var sceneViewID: UUID
     var roomSceneViewModel: CanvasDataViewModel
+    @EnvironmentObject var routerView: RouterView
+    
+    @FetchRequest(entity: ObjectEntity.entity(),
+                  sortDescriptors: [NSSortDescriptor(keyPath: \ObjectEntity.importedName, ascending: true)])
+    var importsObject: FetchedResults<ObjectEntity>
     
     @ObservedObject var objectDimensionData: ObjectDimensionData
     
@@ -37,7 +42,9 @@ struct ObjectSizeView: View {
                                 
                                 Spacer()
                                 HStack(alignment: .firstTextBaseline) {
-                                    Button(action: {})
+                                    Button(action: {
+                                        objectDimensionData.selectedChildNode?.removeFromParentNode()
+                                    })
                                     {
 //                                        Text("REMOVE")
 //                                            .underline()

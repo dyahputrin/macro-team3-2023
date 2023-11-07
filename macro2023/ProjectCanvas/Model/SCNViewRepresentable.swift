@@ -86,6 +86,7 @@ struct ScenekitView: UIViewRepresentable {
                     objectDimensionData.width = x
                     objectDimensionData.height = y
                     objectDimensionData.length = z
+                    objectDimensionData.selectedChildNode = selectedNode
                     
                     print("Dimension \(x), \(y), \(z)")
                     print(objectDimensionData.name)

@@ -123,7 +123,7 @@ struct CanvasView: View {
             }
             
 
-            if objectDimensionData.name != "--" {
+            if objectDimensionData.name != "--"{
                 ObjectSizeView(roomWidthText:.constant("2"), roomLengthText: .constant("2"), roomHeightText: .constant("2"), sceneViewID: .constant(UUID()), roomSceneViewModel: CanvasDataViewModel(canvasData: CanvasData(roomWidth: 0, roomHeight: 0, roomLength: 0), projectData: ProjectData()), objectDimensionData: objectDimensionData)
             }
             
