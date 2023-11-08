@@ -39,7 +39,6 @@ class CanvasDataViewModel: ObservableObject {
     }
     
     // function to make the scene with a room, but the wall width is always 1
-//    @MainActor
     func makeScene1(width: CGFloat, height: CGFloat, length: CGFloat) -> SCNScene? {
         rootScene = SCNScene(named: "RoomScene.scn")
         rootScene?.background.contents = UIColor.lightGray
@@ -89,13 +88,6 @@ class CanvasDataViewModel: ObservableObject {
             rootScene?.rootNode.addChildNode(wall4Node)
         }
         
-        //TEMPORARY
-//        if let wall4Asset = SCNScene(named: "OfficeTableGroup.usdz"),
-//           let wall4Node = wall4Asset.rootNode.childNodes.first?.clone() {
-//            wall4Node.scale = SCNVector3(1, 1, 1)
-//            rootScene?.rootNode.addChildNode(wall4Node)
-//        }
-        
         // Add camera
         let camera = SCNCamera()
         let cameraNode = SCNNode()
@@ -106,23 +98,24 @@ class CanvasDataViewModel: ObservableObject {
         sceneOri = rootScene
         return rootScene
     }
+    
     func addImportObjectChild(data: Data){
-//        for binaryData in canvasData.importedObjectData {
-            if let modelURL = createUSDZFile(data: data) {
-                if let modelasset = try? SCNScene(url: modelURL), let modelNode = modelasset.rootNode.childNodes.first?.clone() {
-                    self.rootScene?.rootNode.addChildNode(modelNode)
-                    print("node",modelNode)
-                }
-                print("Putri bermain catur",modelURL)
+        //        for binaryData in canvasData.importedObjectData {
+        if let modelURL = createUSDZFile(data: data) {
+            if let modelasset = try? SCNScene(url: modelURL), let modelNode = modelasset.rootNode.childNodes.first?.clone() {
+                self.rootScene?.rootNode.addChildNode(modelNode)
+                print("node",modelNode)
             }
-//        }
+            print("Putri bermain catur",modelURL)
+        }
+        //        }
     }
     
     func createUSDZFile(data: Data) -> URL? {
         let fileManager = FileManager.default
         let tempDir = FileManager.default.temporaryDirectory
         let usdzFileURL = tempDir.appendingPathComponent(UUID().uuidString).appendingPathExtension("usdz")
-
+        
         do {
             try data.write(to: usdzFileURL)
             return usdzFileURL
@@ -139,50 +132,50 @@ class CanvasDataViewModel: ObservableObject {
         canvasData.roomHeight = newHeight
         canvasData.roomLength = newLength
         
-//        let fetchRequest: NSFetchRequest<ProjectEntity> = ProjectEntity.fetchRequest()
-//        fetchRequest.predicate = NSPredicate(format: "projectID == %@", activeProjectID as CVarArg)
-//        do {
-//            let results = try viewContext.fetch(fetchRequest)
-//            if let projectEntity = results.first, let sceneData = projectEntity.projectScene {
-//                let scene = try NSKeyedUnarchiver.unarchivedObject(ofClass: SCNScene.self, from: sceneData)
-//                if let scene = scene {
-//                    // Accessing the root node
-//                    let rootNode = scene.rootNode
-//                    let nodeNames = ["wall1white", "wall2white", "wall3white", "wall4white", "floorblack"]
-//                    
-//                    rootNode.enumerateChildNodes{ (node, _) in
-//                        if let nodeName = node.name, nodeNames.contains(nodeName) {
-//                            print("Found node with name: \(nodeName)")
-//                            switch nodeName {
-//                            case "floorblack":
-//                                node.scale = SCNVector3(newWidth, 1, newLength)
-//                                node.position = SCNVector3(0, (1-newHeight)/2,0)
-//                            case "wall1white":
-//                                node.scale = SCNVector3(1, newHeight, newLength)
-//                                node.position = SCNVector3((1-newWidth)/2 - 0.001, 0, 0)
-//                            case "wall2white":
-//                                node.scale = SCNVector3(newWidth, newHeight, 1)
-//                                node.position = SCNVector3(0, 0, (1-newLength)/2 - 0.001)
-//                            case "wall3white":
-//                                node.scale = SCNVector3(1, newHeight, newLength)
-//                                node.position = SCNVector3((newWidth-1)/2 + 0.001, 0, 0)
-//                            case "wall4white":
-//                                node.scale = SCNVector3(newWidth, newHeight, 1)
-//                                node.position = SCNVector3(0, 0, (newLength-1)/2 + 0.001)
-//                            default:
-//                                print("Unknown node name: \(nodeName)")
-//                            }
-//                        }
-//                    }
-//                    
-//                    let updatedSceneData = try NSKeyedArchiver.archivedData(withRootObject: scene, requiringSecureCoding: false)
-//                    projectEntity.projectScene = updatedSceneData
-//                    try viewContext.save()
-//                }
-//            }
-//        } catch {
-//            print("Failed to fetch or unarchive: \(error)")
-//        }
+        //        let fetchRequest: NSFetchRequest<ProjectEntity> = ProjectEntity.fetchRequest()
+        //        fetchRequest.predicate = NSPredicate(format: "projectID == %@", activeProjectID as CVarArg)
+        //        do {
+        //            let results = try viewContext.fetch(fetchRequest)
+        //            if let projectEntity = results.first, let sceneData = projectEntity.projectScene {
+        //                let scene = try NSKeyedUnarchiver.unarchivedObject(ofClass: SCNScene.self, from: sceneData)
+        //                if let scene = scene {
+        //                    // Accessing the root node
+        //                    let rootNode = scene.rootNode
+        //                    let nodeNames = ["wall1white", "wall2white", "wall3white", "wall4white", "floorblack"]
+        //
+        //                    rootNode.enumerateChildNodes{ (node, _) in
+        //                        if let nodeName = node.name, nodeNames.contains(nodeName) {
+        //                            print("Found node with name: \(nodeName)")
+        //                            switch nodeName {
+        //                            case "floorblack":
+        //                                node.scale = SCNVector3(newWidth, 1, newLength)
+        //                                node.position = SCNVector3(0, (1-newHeight)/2,0)
+        //                            case "wall1white":
+        //                                node.scale = SCNVector3(1, newHeight, newLength)
+        //                                node.position = SCNVector3((1-newWidth)/2 - 0.001, 0, 0)
+        //                            case "wall2white":
+        //                                node.scale = SCNVector3(newWidth, newHeight, 1)
+        //                                node.position = SCNVector3(0, 0, (1-newLength)/2 - 0.001)
+        //                            case "wall3white":
+        //                                node.scale = SCNVector3(1, newHeight, newLength)
+        //                                node.position = SCNVector3((newWidth-1)/2 + 0.001, 0, 0)
+        //                            case "wall4white":
+        //                                node.scale = SCNVector3(newWidth, newHeight, 1)
+        //                                node.position = SCNVector3(0, 0, (newLength-1)/2 + 0.001)
+        //                            default:
+        //                                print("Unknown node name: \(nodeName)")
+        //                            }
+        //                        }
+        //                    }
+        //
+        //                    let updatedSceneData = try NSKeyedArchiver.archivedData(withRootObject: scene, requiringSecureCoding: false)
+        //                    projectEntity.projectScene = updatedSceneData
+        //                    try viewContext.save()
+        //                }
+        //            }
+        //        } catch {
+        //            print("Failed to fetch or unarchive: \(error)")
+        //        }
         
         let rootNode = rootScene?.rootNode
         let nodeNames = ["wall1white", "wall2white", "wall3white", "wall4white", "floorblack"]
@@ -216,37 +209,37 @@ class CanvasDataViewModel: ObservableObject {
     // function for updating room size
     func updateRoomSize1(newWidth: CGFloat, newHeight: CGFloat, newLength: CGFloat, scene: ScenekitView) {
         
-//        canvasData.roomWidth = newWidth
-//        canvasData.roomHeight = newHeight
-//        canvasData.roomLength = newLength
-//        
-//        let rootNode = scene.scene.rootNode
-//        let nodeNames = ["wall1white", "wall2white", "wall3white", "wall4white", "floorblack"]
-//        
-//        rootNode.enumerateChildNodes{ (node, _) in
-//            if let nodeName = node.name, nodeNames.contains(nodeName) {
-//                print("Found node with name: \(nodeName)")
-//                switch nodeName {
-//                case "floorblack":
-//                    node.scale = SCNVector3(newWidth, 1, newLength)
-//                    node.position = SCNVector3(0, (1-newHeight)/2,0)
-//                case "wall1white":
-//                    node.scale = SCNVector3(1, newHeight, newLength)
-//                    node.position = SCNVector3((1-newWidth)/2 - 0.001, 0, 0)
-//                case "wall2white":
-//                    node.scale = SCNVector3(newWidth, newHeight, 1)
-//                    node.position = SCNVector3(0, 0, (1-newLength)/2 - 0.001)
-//                case "wall3white":
-//                    node.scale = SCNVector3(1, newHeight, newLength)
-//                    node.position = SCNVector3((newWidth-1)/2 + 0.001, 0, 0)
-//                case "wall4white":
-//                    node.scale = SCNVector3(newWidth, newHeight, 1)
-//                    node.position = SCNVector3(0, 0, (newLength-1)/2 + 0.001)
-//                default:
-//                    print("Unknown node name: \(nodeName)")
-//                }
-//            }
-//        }
+        //        canvasData.roomWidth = newWidth
+        //        canvasData.roomHeight = newHeight
+        //        canvasData.roomLength = newLength
+        //
+        //        let rootNode = scene.scene.rootNode
+        //        let nodeNames = ["wall1white", "wall2white", "wall3white", "wall4white", "floorblack"]
+        //
+        //        rootNode.enumerateChildNodes{ (node, _) in
+        //            if let nodeName = node.name, nodeNames.contains(nodeName) {
+        //                print("Found node with name: \(nodeName)")
+        //                switch nodeName {
+        //                case "floorblack":
+        //                    node.scale = SCNVector3(newWidth, 1, newLength)
+        //                    node.position = SCNVector3(0, (1-newHeight)/2,0)
+        //                case "wall1white":
+        //                    node.scale = SCNVector3(1, newHeight, newLength)
+        //                    node.position = SCNVector3((1-newWidth)/2 - 0.001, 0, 0)
+        //                case "wall2white":
+        //                    node.scale = SCNVector3(newWidth, newHeight, 1)
+        //                    node.position = SCNVector3(0, 0, (1-newLength)/2 - 0.001)
+        //                case "wall3white":
+        //                    node.scale = SCNVector3(1, newHeight, newLength)
+        //                    node.position = SCNVector3((newWidth-1)/2 + 0.001, 0, 0)
+        //                case "wall4white":
+        //                    node.scale = SCNVector3(newWidth, newHeight, 1)
+        //                    node.position = SCNVector3(0, 0, (newLength-1)/2 + 0.001)
+        //                default:
+        //                    print("Unknown node name: \(nodeName)")
+        //                }
+        //            }
+        //        }
     }
     
     // function for convert text to cgfloat for room size
@@ -272,7 +265,6 @@ class CanvasDataViewModel: ObservableObject {
     // function to save project
     func saveProject(viewContext: NSManagedObjectContext) {
         var projectName = projectData.nameProject
-        
         // Check if the project name is empty or nil
         if projectName.isEmpty{
             var counter = 1
@@ -286,34 +278,55 @@ class CanvasDataViewModel: ObservableObject {
                 counter += 1
             } while true
         }
-        let projectUUID = projectData.uuid
         
-        // Fetch the existing project with the same UUID
+        let projectUUID = projectData.uuid
         let fetchRequest: NSFetchRequest<ProjectEntity> = ProjectEntity.fetchRequest()
         fetchRequest.predicate = NSPredicate(format: "projectID == %@", projectUUID as CVarArg)
         do {
-            if let existingProject = try viewContext.fetch(fetchRequest).first {
-                existingProject.projectName = projectName
-            } else {
-                // No existing project found, create a new one
-                let newProject = ProjectEntity(context: viewContext)
-                newProject.projectID = projectUUID
-                newProject.projectName = projectName
-                newProject.widthRoom = Float(canvasData.roomWidth)
-                newProject.heightRoom = Float(canvasData.roomHeight)
-                newProject.lengthRoom = Float(canvasData.roomLength)
-                if let scene = rootScene {
-                    if let scnData = try? NSKeyedArchiver.archivedData(withRootObject: scene, requiringSecureCoding: true) {
-                        newProject.projectScene = scnData
-                        print("rootscene \(rootScene)")
-                    } else {
-                        print("Failed to archive the SCN scene")
-                    }
+            //            if let existingProject = try viewContext.fetch(fetchRequest).first {
+            //                existingProject.projectName = projectName
+            //            } else {
+            //                // No existing project found, create a new one
+            //                let newProject = ProjectEntity(context: viewContext)
+            //                newProject.projectID = projectUUID
+            //                newProject.projectName = projectName
+            //                newProject.widthRoom = Float(canvasData.roomWidth)
+            //                newProject.heightRoom = Float(canvasData.roomHeight)
+            //                newProject.lengthRoom = Float(canvasData.roomLength)
+            //                if let scene = rootScene {
+            //                    if let scnData = try? NSKeyedArchiver.archivedData(withRootObject: scene, requiringSecureCoding: true) {
+            //                        newProject.projectScene = scnData
+            //                        print("rootscene \(rootScene)")
+            //                    } else {
+            //                        print("Failed to archive the SCN scene")
+            //                    }
+            //                }
+            //
+            //            }
+            //            try viewContext.save()
+            let existingProject = try viewContext.fetch(fetchRequest).first
+            let projectToSave = existingProject ?? ProjectEntity(context: viewContext)
+            
+            projectToSave.projectID = projectUUID
+            projectToSave.projectName = projectName
+            projectToSave.widthRoom = Float(canvasData.roomWidth)
+            projectToSave.heightRoom = Float(canvasData.roomHeight)
+            projectToSave.lengthRoom = Float(canvasData.roomLength)
+            
+            // Archive the rootScene if necessary
+            if let scene = rootScene {
+                do {
+                    let scnData = try NSKeyedArchiver.archivedData(withRootObject: scene, requiringSecureCoding: true)
+                    projectToSave.projectScene = scnData
+                } catch {
+                    print("Failed to archive the SCN scene: \(error)")
                 }
-                
             }
+            
             // Save the context
-            try viewContext.save()
+            if viewContext.hasChanges {
+                try viewContext.save()
+            }
         } catch {
             print("Error saving project: \(error)")
         }
@@ -333,45 +346,38 @@ class CanvasDataViewModel: ObservableObject {
     }
     
     // function to retrieve project scene from core data
-    func loadSceneFromCoreData(selectedProjectID : UUID , in viewContext: NSManagedObjectContext) -> Binding<SCNScene?> {
-        if hasLoadedFromCoreData == false {
-            print("LOAD SCENE FROM CD: \(selectedProjectID)")
-            let fetchRequest: NSFetchRequest<ProjectEntity> = ProjectEntity.fetchRequest()
-            fetchRequest.predicate = NSPredicate(format: "projectID == %@", selectedProjectID as CVarArg)
-            do {
-                let entities = try viewContext.fetch(fetchRequest)
-                
-                if let entity = entities.first, let scnData = entity.projectScene {
-                    
-                    if let scene = try NSKeyedUnarchiver.unarchivedObject(ofClass: SCNScene.self, from: scnData) {
-//                        self.rootScene = scene
-                        print("Scenee \(scene)")
-//                        return scene
-                        tempScene = scene
-                        let binding = Binding(
-                            get: { self.tempScene },
-                            set: { newScene in
-                                self.tempScene = newScene
-                                // Optionally, you can save the `newScene` back to CoreData here
-                            }
-                        )
-
-                        self.tempScene = scene
-                        return binding
-                    } else {
-                        print("Failed to unarchive the SCN scene data")
-                    }
-                }
-            } catch {
-                print("Failed to fetch CoreData entity: \(error)")
-            }
-            
-            hasLoadedFromCoreData = true
-        }
-        
-//        return nil
-        return Binding(get: {nil}, set: { _ in})
-    }
+    //    func loadSceneFromCoreData(selectedProjectID : UUID , in viewContext: NSManagedObjectContext) -> Binding<SCNScene?> {
+    //        if hasLoadedFromCoreData == false {
+    //            print("LOAD SCENE FROM CD: \(selectedProjectID)")
+    //            let fetchRequest: NSFetchRequest<ProjectEntity> = ProjectEntity.fetchRequest()
+    //            fetchRequest.predicate = NSPredicate(format: "projectID == %@", selectedProjectID as CVarArg)
+    //            do {
+    //                let entities = try viewContext.fetch(fetchRequest)
+    //                if let entity = entities.first, let scnData = entity.projectScene {
+    //                    if let scene = try NSKeyedUnarchiver.unarchivedObject(ofClass: SCNScene.self, from: scnData) {
+    ////                        self.rootScene = scene
+    //                        print("Scenee \(scene)")
+    ////                        return scene
+    //                        tempScene = scene
+    //                        let binding = Binding(
+    //                            get: { self.tempScene },
+    //                            set: { newScene in
+    //                                self.tempScene = newScene
+    //                            }
+    //                        )
+    //                        self.tempScene = scene
+    //                        return binding
+    //                    } else {
+    //                        print("Failed to unarchive the SCN scene data")
+    //                    }
+    //                }
+    //            } catch {
+    //                print("Failed to fetch CoreData entity: \(error)")
+    //            }
+    //            hasLoadedFromCoreData = true
+    //        }
+    //        return Binding(get: {nil}, set: { _ in})
+    //    }
     
     func saveSnapshot(activeProjectID: UUID, viewContext: NSManagedObjectContext, snapshotImageArg: UIImage?, scenekitView: ScenekitView) {
         let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "ProjectEntity")
@@ -395,6 +401,44 @@ class CanvasDataViewModel: ObservableObject {
         } catch {
             print("Failed to save snapshot: \(error)")
         }
+    }
+    
+    // ------------ //
+    func loadSceneFromCoreData(selectedProjectID: UUID, in viewContext: NSManagedObjectContext) {
+         if !hasLoadedFromCoreData {
+             print("LOAD SCENE FROM CD: \(selectedProjectID)")
+             let fetchRequest: NSFetchRequest<ProjectEntity> = ProjectEntity.fetchRequest()
+             fetchRequest.predicate = NSPredicate(format: "projectID == %@", selectedProjectID as CVarArg)
+             
+             do {
+                 let entities = try viewContext.fetch(fetchRequest)
+                 if let entity = entities.first, let scnData = entity.projectScene {
+                     if let scene = try NSKeyedUnarchiver.unarchivedObject(ofClass: SCNScene.self, from: scnData) {
+                         DispatchQueue.main.async { [weak self] in
+                             self?.rootScene = scene // Assign the scene to rootScene property
+                         }
+                         print("Scene loaded successfully.")
+                     } else {
+                         print("Failed to unarchive the SCN scene data")
+                     }
+                 }
+             } catch {
+                 print("Failed to fetch CoreData entity: \(error)")
+             }
+             hasLoadedFromCoreData = true
+         }
+     }
+     
+     // Function to get a binding to the rootScene
+    func sceneBinding() -> Binding<SCNScene?> {
+        Binding<SCNScene?>(
+            get: { [weak self] in
+                self?.rootScene
+            },
+            set: { [weak self] newScene in
+                self?.rootScene = newScene
+            }
+        )
     }
     
 }
