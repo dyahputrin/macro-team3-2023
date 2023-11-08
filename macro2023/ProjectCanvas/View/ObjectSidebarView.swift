@@ -9,7 +9,7 @@ import SwiftUI
 import SceneKit
 
 struct ObjectSidebarView: View {
-    @Environment(\.managedObjectContext) private var viewContext
+    private let viewContext = PersistenceController.shared.viewContext
     @EnvironmentObject var routerView: RouterView
     @StateObject private var ObjectVM = ObjectViewModel()
 //    @StateObject private var roomSceneViewModel = CanvasDataViewModel(canvasData: CanvasData(roomWidth: 0, roomHeight: 0, roomLength: 0), projectData: ProjectData())
@@ -80,18 +80,11 @@ struct ObjectSidebarView: View {
                                                 .overlay{
                                                     VStack {
                                                         if let usdzData = urlImport.importedObject {
-//                                                            let _ = print("Ini yg di cari : ",usdzData)
                                                             ThumbnailView(usdzData: usdzData)
                                                                 .frame(width: 100, height: 100)
                                                                 .cornerRadius(25)
                                                                 .shadow(radius: 5)
                                                                 .onTapGesture {
-                                                                    if let usdzData = urlImport.importedObject {
-//                                                                        roomSceneViewModel.canvasData.importedObjectData.append(usdzData)
-//                                                                        let _ = print(roomSceneViewModel.canvasData.importedObjectData)
-//                                                                        let _ = print(usdzData)
-                                                                    }
-//                                                                    let urlData = roomSceneViewModel.canvasData.importedObjectData
                                                                     roomSceneViewModel.addImportObjectChild(data: usdzData)
                                                                 }
                                                         }
@@ -117,9 +110,3 @@ struct ObjectSidebarView: View {
         }
     }
 }
-
-//#Preview {
-//    ObjectSidebarView().environment(\.managedObjectContext,PersistenceController.preview.container.viewContext)
-//        .environmentObject(RouterView())
-//}
-

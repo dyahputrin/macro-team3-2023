@@ -45,9 +45,9 @@ struct RoundedCorners: View {
 }
 
 struct ProjectView: View {
-    @StateObject var dataContentViewModel = ProjectViewModel()
+    @StateObject var dataContentViewModel : ProjectViewModel
     
-    @Environment(\.managedObjectContext) private var viewContext
+    private let viewContext = PersistenceController.shared.viewContext
     
     @EnvironmentObject var routerView:RouterView
     
@@ -71,6 +71,7 @@ struct ProjectView: View {
                 LazyVGrid(columns: columns) {
                     Button(action: {
                         routerView.path.append("canvas")
+//                        dataContentViewModel.saveFirstName(viewContext: viewContext)
                     }, label: {
                         RoundedRectangle(cornerRadius: 16, style: .circular)
                             .frame(width: 200, height: 200)
@@ -159,7 +160,7 @@ struct ProjectView: View {
             }
             .navigationDestination(for: String.self) { val in
                 if val == "canvas"{
-                    CanvasView(objectsButtonClicked: false, roomButtonClicked: false, povButtonClicked: false, viewfinderButtonClicked: .constant(false), isImporting: .constant(false), isExporting: .constant(false), isSetButtonSidebarTapped: .constant(false), activeProjectID: $activeProjectID, activeScene: $activeScene)
+                    CanvasView(objectsButtonClicked: false, roomButtonClicked: false, povButtonClicked: false, viewfinderButtonClicked: .constant(false), isImporting: .constant(false), isExporting: .constant(false), isSetButtonSidebarTapped: .constant(false), activeProjectID: $activeProjectID, activeScene: $activeScene,projectData: dataContentViewModel.dataCanvas ,routerView:routerView)
                 }else{
                     
                 }
@@ -169,9 +170,9 @@ struct ProjectView: View {
         
     }
 }
-
-#Preview {
-    ProjectView(activeProjectID: UUID(), activeScene: SCNScene()).environment(\.managedObjectContext,PersistenceController.preview.container.viewContext)
-        .environmentObject(RouterView())
-}
+//
+//#Preview {
+//    ProjectView(activeProjectID: UUID(), activeScene: SCNScene()).environment(\.managedObjectContext,PersistenceController.preview.container.viewContext)
+//        .environmentObject(RouterView())
+//}
 

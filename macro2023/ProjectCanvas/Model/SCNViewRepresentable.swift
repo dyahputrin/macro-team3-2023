@@ -12,9 +12,9 @@ struct ScenekitView: UIViewRepresentable {
     @ObservedObject var objectDimensionData: ObjectDimensionData
     @Binding var scene: SCNScene?
     @Binding var isEditMode: Bool
+    @Binding var roomWidth: Float
     typealias UIViewType = SCNView
     var view = SCNView()
-    var roomWidth: Float?
 
     func makeUIView(context: Context) -> SCNView {
         view.scene = scene

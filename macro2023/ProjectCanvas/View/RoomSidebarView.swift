@@ -23,7 +23,7 @@ struct RoomSidebarView: View {
     @Binding var activeScene: SCNScene
     var roomSceneViewModel: CanvasDataViewModel
     
-    @Environment(\.managedObjectContext) private var viewContext
+    private let viewContext = PersistenceController.shared.viewContext
     @EnvironmentObject var routerView: RouterView
     @FetchRequest(entity: ProjectEntity.entity(),
                   sortDescriptors: [NSSortDescriptor(keyPath: \ProjectEntity.projectName, ascending: true)])
