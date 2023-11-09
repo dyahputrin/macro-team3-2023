@@ -55,6 +55,8 @@ struct CanvasView: View {
     var sideBarWidth = UIScreen.main.bounds.size.width * 0.2
     
     @ObservedObject var objectDimensionData: ObjectDimensionData = ObjectDimensionData()
+    @State private var sceneBinding: Binding<SCNScene?> = .constant(nil)
+
     
     init(
         objectsButtonClicked: Bool,
@@ -80,6 +82,7 @@ struct CanvasView: View {
         _activeScene = activeScene
         _roomSceneViewModel = StateObject(wrappedValue:CanvasDataViewModel(canvasData: CanvasData(roomWidth: 0, roomHeight: 0, roomLength: 0), projectData: projectData, routerView: routerView))
     }
+    
     @State private var currentScenekitView: ScenekitView? = nil
     @State private var snapshotImage: UIImage? = nil
     
@@ -334,10 +337,3 @@ struct CanvasView: View {
     }
 }
 
-
-
-// #Preview {
-//     CanvasView(objectsButtonClicked: false, roomButtonClicked: false, viewfinderButtonClicked: .constant(false), isImporting: .constant(false), isExporting: .constant(false), isSetButtonSidebarTapped: .constant(false))
-//         .environment(\.managedObjectContext,PersistenceController.preview.container.viewContext)
-//             .environmentObject(RouterView())
-// }

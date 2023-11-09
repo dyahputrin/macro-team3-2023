@@ -107,6 +107,7 @@ class CanvasDataViewModel: ObservableObject {
         
         return rootScene
     }
+    
     func addImportObjectChild(data: Data){
         if let modelURL = createUSDZFile(data: data) {
             if let modelasset = try? SCNScene(url: modelURL), let modelNode = modelasset.rootNode.childNodes.first?.clone() {
@@ -233,7 +234,6 @@ class CanvasDataViewModel: ObservableObject {
     // function to save project
     func saveProject(viewContext: NSManagedObjectContext) {
         var projectName = projectData.nameProject
-        
         // Check if the project name is empty or nil
         if projectName.isEmpty {
             var counter = 1
@@ -250,7 +250,6 @@ class CanvasDataViewModel: ObservableObject {
         
         let projectUUID = projectData.uuid
         
-        // Fetch the existing project with the same UUID
         let fetchRequest: NSFetchRequest<ProjectEntity> = ProjectEntity.fetchRequest()
         fetchRequest.predicate = NSPredicate(format: "projectID == %@", projectUUID as CVarArg)
         
@@ -289,7 +288,9 @@ class CanvasDataViewModel: ObservableObject {
             }
             
             // Save the context
-            try viewContext.save()
+            if viewContext.hasChanges {
+                try viewContext.save()
+            }
         } catch {
             print("Error saving project: \(error)")
         }
