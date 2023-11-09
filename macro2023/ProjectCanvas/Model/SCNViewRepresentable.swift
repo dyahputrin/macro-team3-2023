@@ -145,16 +145,6 @@ struct ScenekitView: UIViewRepresentable {
                         (maxBounds.z + minBounds.z) / 2
                     )
                     
-                    arrowX = createArrowNode(axis: SCNVector3(1, 0, 0), color: .red, arrowName: "axisArrowX")
-                    arrowY = createArrowNode(axis: SCNVector3(0, 1, 0), color: .green, arrowName: "axisArrowY")
-                    arrowZ = createArrowNode(axis: SCNVector3(0, 0, 1), color: .blue, arrowName: "axisArrowZ")
-                    
-                    parent.scene?.rootNode.addChildNode(arrowX!)
-                    parent.scene?.rootNode.addChildNode(arrowY!)
-                    parent.scene?.rootNode.addChildNode(arrowZ!)
-                    
-                    updateArrowPositionsToMatchNode(node: node)
-                    
                     let worldBoundingBox = selectedNode!.boundingBox
                     let worldMin = selectedNode!.convertPosition(worldBoundingBox.min, to: nil)
                     let worldMax = selectedNode!.convertPosition(worldBoundingBox.max, to: nil)
@@ -170,6 +160,20 @@ struct ScenekitView: UIViewRepresentable {
                     
                     print("Dimension \(x), \(y), \(z)")
                     print(objectDimensionData.name)
+                    
+                    let xFloat = worldMax.x - worldMin.x
+                    let yFloat = worldMax.y - worldMin.y
+                    let zFloat = worldMax.z - worldMin.z
+                    
+                    arrowX = createArrowNode(axis: SCNVector3(1, 0, 0), color: .red, arrowName: "axisArrowX", X: xFloat, Y: yFloat, Z: zFloat)
+                    arrowY = createArrowNode(axis: SCNVector3(0, 1, 0), color: .green, arrowName: "axisArrowY", X: xFloat, Y: yFloat, Z: zFloat)
+                    arrowZ = createArrowNode(axis: SCNVector3(0, 0, 1), color: .blue, arrowName: "axisArrowZ", X: xFloat, Y: yFloat, Z: zFloat)
+                    
+                    parent.scene?.rootNode.addChildNode(arrowX!)
+                    parent.scene?.rootNode.addChildNode(arrowY!)
+                    parent.scene?.rootNode.addChildNode(arrowZ!)
+                    
+                    updateArrowPositionsToMatchNode(node: node)
                 }
                 
             }
@@ -289,7 +293,7 @@ struct ScenekitView: UIViewRepresentable {
             return true
         }
         
-        func createArrowNode(axis: SCNVector3, color: UIColor, arrowName: String) -> SCNNode {
+        func createArrowNode(axis: SCNVector3, color: UIColor, arrowName: String, X: Float, Y: Float, Z: Float) -> SCNNode {
             let cylinder = SCNCylinder(radius: 0.01, height: 1.0)
             cylinder.radialSegmentCount = 12
             let cylinderMaterial = SCNMaterial()
@@ -297,7 +301,7 @@ struct ScenekitView: UIViewRepresentable {
             cylinderMaterial.transparency = 0
             cylinder.firstMaterial = cylinderMaterial
 
-            let cone = SCNCone(topRadius: 0, bottomRadius: 0.04, height: 0.1)
+            let cone = SCNCone(topRadius: 0, bottomRadius: 0.07, height: 0.15)
             cone.radialSegmentCount = 12
             let coneMaterial = SCNMaterial()
             coneMaterial.diffuse.contents = color
@@ -310,12 +314,12 @@ struct ScenekitView: UIViewRepresentable {
 //            cylinderNode.addChildNode(coneNode)
             
             // Define the total height of the arrow for positioning the torus
-            let totalHeight = (Double(objectDimensionData.width) ?? 0.1) / 2.0 // cylinder height + cone height
-            let torusRadius = (Double(objectDimensionData.width) ?? 0.1) + 0.1 // Adjust as necessary
+            let totalHeight = X / 2.0 // cylinder height + cone height
+            let torusRadius = X // Adjust as necessary
            let torusThickness = 0.03 // Adjust as necessary
 
            // Create the torus as the rotation indicator
-           let torus = SCNTorus(ringRadius: torusRadius, pipeRadius: torusThickness)
+            let torus = SCNTorus(ringRadius: CGFloat(torusRadius), pipeRadius: torusThickness)
             torus.firstMaterial?.diffuse.contents = Color(.cyan)
            let torusNode = SCNNode(geometry: torus)
             torusNode.position = SCNVector3(0, Float(totalHeight) / 2 + 0.1, 0)
@@ -327,18 +331,19 @@ struct ScenekitView: UIViewRepresentable {
                 cylinderNode.eulerAngles = SCNVector3(CGFloat.pi / 2, 0, 0)
                 cylinderNode.name = "axisArrowX"
                 coneNode.eulerAngles = SCNVector3(CGFloat.pi / 2, 0, 0)
-                coneNode.position = SCNVector3(0, Float(totalHeight) / 2 + 0.1, (Float(objectDimensionData.width) ?? 0.1) + 0.3)
+                coneNode.position = SCNVector3(0, Float(totalHeight) / 2 + 0.1, X + 0.15)
                 coneNode.name = "axisArrowX"
             } else if axis.y != 0 {
                 cylinderNode.eulerAngles = SCNVector3(0, CGFloat.pi / 2, 0)
                 cylinderNode.name = "axisArrowY"
                 coneNode.eulerAngles = SCNVector3(0, CGFloat.pi / 2, 0)
+                coneNode.position = SCNVector3(0, Y + 0.15, 0)
                 coneNode.name = "axisArrowY"
             } else if axis.z != 0 {
                 cylinderNode.eulerAngles = SCNVector3(0, 0, CGFloat.pi / 2)
                 cylinderNode.name = "axisArrowZ"
                 coneNode.eulerAngles = SCNVector3(0, 0, CGFloat.pi / 2)
-                coneNode.position = SCNVector3((Float(objectDimensionData.width) ?? 0.1) - 0.5, Float(totalHeight) / 2 + 0.1, 0)
+                coneNode.position = SCNVector3(-0.15 - Z, Float(totalHeight) / 2 + 0.1, 0)
                 coneNode.name = "axisArrowZ"
             }
             

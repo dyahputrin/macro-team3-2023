@@ -18,7 +18,7 @@ class CanvasDataViewModel: ObservableObject {
     @Published var rootScene:SCNScene? = nil
     var floor = SCNNode()
     var grayMaterial = SCNMaterial()
-    var floorGeometry = SCNBox(width: 10, height: 0.01, length: 10, chamferRadius: 0)
+    var floorGeometry = SCNFloor()
     
     var tempScene: SCNScene?
     private let viewContext = PersistenceController.shared.viewContext
@@ -34,8 +34,11 @@ class CanvasDataViewModel: ObservableObject {
 
         floorGeometry.materials = [grayMaterial]
         
+        self.floor.geometry?.materials = [grayMaterial]
+        
         self.floor = SCNNode(geometry: floorGeometry)
-        floor.geometry = SCNFloor()
+        self.floor.opacity = 0.5
+//        floor.geometry = SCNFloor()
         
         if routerView.project?.projectName == nil {
             self.makeScene1(width: 0, height: 0, length: 0)
