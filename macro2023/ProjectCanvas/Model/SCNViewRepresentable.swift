@@ -19,7 +19,7 @@ struct ScenekitView: UIViewRepresentable {
     func makeUIView(context: Context) -> SCNView {
         view.scene = scene
         view.allowsCameraControl = !isEditMode
-        view.defaultCameraController.translateInCameraSpaceBy(x: 0, y: -0.5, z: (roomWidth ?? 1) - 1)
+        view.defaultCameraController.translateInCameraSpaceBy(x: 0, y: 1, z: (roomWidth ?? 1) - 1)
         
         let tapGesture = UITapGestureRecognizer(target: context.coordinator, action: #selector(context.coordinator.handleTap(_:)))
         view.addGestureRecognizer(tapGesture)
