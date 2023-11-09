@@ -11,6 +11,12 @@ import SceneKit
 struct CanvasView: View {
     private let viewContext = PersistenceController.shared.viewContext
     @EnvironmentObject var routerView: RouterView
+    
+    @Environment(\.presentationMode) var presentationMode
+    @State private var showBackAlert = false
+    @State private var isSaveClicked = false
+    @State private var isProjectSaved = false
+    
     @State private var sheetPresented = true
     @State private var isSetButtonTapped = false
     @State var objectsButtonClicked: Bool
@@ -44,6 +50,9 @@ struct CanvasView: View {
     @State private var checkRename = false
     @State private var selectedAnObject = true
     @State private var showingObjectList = false
+    @State private var objectSizeViewOffset: CGFloat = 0
+    
+    var sideBarWidth = UIScreen.main.bounds.size.width * 0.2
     
     @ObservedObject var objectDimensionData: ObjectDimensionData = ObjectDimensionData()
     
@@ -99,52 +108,57 @@ struct CanvasView: View {
             }
             
             if objectsButtonClicked == true {
-                ObjectSidebarView(roomSceneViewModel:roomSceneViewModel)
-                
-                    .animation(.easeInOut, value: objectsButtonClicked)
+                ObjectSidebarView()
+                    .animation(.easeInOut(duration: 2), value: objectsButtonClicked)
                 
             } else if roomButtonClicked == true {
-                RoomSidebarView(roomWidthText: $roomWidthText, roomLengthText: $roomLengthText, roomHeightText: $roomHeightText,  sceneViewID: $sceneViewID, activeProjectID: $activeProjectID, activeScene: $activeScene, roomSceneViewModel: roomSceneViewModel)
-                    .animation(.easeInOut, value: roomButtonClicked)
+                RoomSidebarView(roomWidthText: $roomWidthText, roomLengthText: $roomLengthText, roomHeightText: $roomHeightText,  sceneViewID: $sceneViewID, roomSceneViewModel: roomSceneViewModel)
+                    .animation(.easeInOut(duration: 2), value: roomButtonClicked)
             }
             
+            ObjectListView(showingObjectList: $showingObjectList)
+                //.animation(.easeInOut(duration: 0.3), value: showingObjectList)
             
-            if objectDimensionData.name != "--" {
-                ObjectSizeView(roomWidthText:.constant("2"), roomLengthText: .constant("2"), roomHeightText: .constant("2"), sceneViewID: .constant(UUID()), roomSceneViewModel: CanvasDataViewModel(canvasData: CanvasData(roomWidth: 0, roomHeight: 0, roomLength: 0), projectData: ProjectData(), routerView: RouterView()), objectDimensionData: objectDimensionData)
+            if selectedAnObject == true {
+                ObjectSizeView(roomWidthText:.constant("2"), roomLengthText: .constant("2"), roomHeightText: .constant("2"), sceneViewID: .constant(UUID()) ,roomSceneViewModel: CanvasDataViewModel(canvasData: CanvasData(roomWidth: 0, roomHeight: 0, roomLength: 0), projectData: ProjectData()))
+                    .offset(x: objectSizeViewOffset)
+                    .animation(.easeInOut(duration: 0.5), value: showingObjectList)
+                    .padding(.leading, showingObjectList ? (sideBarWidth + 10) : 0)
             }
-            
         }
+        .onAppear {
+            roomButtonClicked = true
+        }
+        //        .sheet(isPresented: $sheetPresented) {
+        //            SizePopUpView(sheetPresented: $sheetPresented, isSetButtonTapped: $isSetButtonTapped, roomSceneViewModel: roomSceneViewModel, sceneViewID: $sceneViewID, roomWidthText: $roomWidthText, roomLengthText: $roomLengthText, roomHeightText: $roomHeightText)
+        //                .interactiveDismissDisabled()
+        //        }
         .toolbarRole(.editor)
         .toolbarBackground(Color.white)
         .toolbar {
             ToolbarItemGroup {
                 HStack {
-                    //POV TOP VIEW
-                    Button(action: {
-                        povButtonClicked.toggle()
-                    })
-                    {
-                        Image(systemName: "light.panel")
-                            .foregroundColor(povButtonClicked ? .accentColor :  .black)
-                    }
-                    .padding(.trailing)
                     
                     //VIEWFINDER
-                    Menu {
-                        Button(action: {
-                            self.isGuidedCaptureViewPresented = true
-                        }, label: {
-                            Text("Scan objects")
-                        })
-                        Button(action: {
-                            self.isRoomCaptureViewPresented = true
-                        }, label: {
-                            Text("Scan room")
-                        })
-                    } label: {
-                        Label("Viewfinder", systemImage: "viewfinder")
-                            .foregroundColor(.black)
-                    }
+                        Menu {
+                            Button(action: {
+                                self.isGuidedCaptureViewPresented = true
+                            }, label: {
+                                Text("Scan objects")
+                            })
+                            Button(action: {
+                                self.isRoomCaptureViewPresented = true
+                            }, label: {
+                                Text("Scan room")
+                            })
+                        } label: {
+                            Label("Viewfinder", systemImage: "viewfinder")
+                                .foregroundColor(.black)
+                            Text("Scan")
+                                .font(.subheadline)
+                                .foregroundColor(.black)
+                        }
+                        .padding(.trailing, 50)
                     
                     //EDIT MODE TOGGLE
                     Button(action : {
@@ -160,9 +174,13 @@ struct CanvasView: View {
                         roomButtonClicked.toggle()
                         objectsButtonClicked = false
                     }) {
-                        Image(systemName: "square.split.bottomrightquarter")
-                            .foregroundColor(roomButtonClicked ? .accentColor : .black)
-                            .padding()
+                        VStack {
+                            Image(systemName: "square.split.bottomrightquarter")
+                                .foregroundColor(roomButtonClicked ? .accentColor : .black)
+                            Text("Room")
+                                .font(.subheadline)
+                                .foregroundColor(roomButtonClicked ? .accentColor : .black)
+                        }
                     }
                     
                     //OBJECTS
@@ -170,17 +188,25 @@ struct CanvasView: View {
                         objectsButtonClicked.toggle()
                         roomButtonClicked = false
                     }) {
-                        Image(systemName: "chair.lounge")
-                            .foregroundColor(objectsButtonClicked ? .accentColor : .black)
+                        VStack {
+                            Image(systemName: "chair.lounge")
+                                .foregroundColor(objectsButtonClicked ? .accentColor : .black)
+                            Text("Objects")
+                                .font(.subheadline)
+                                .foregroundColor(objectsButtonClicked ? .accentColor : .black)
+                        }
                     }
+
                 }
-                .padding(.trailing, 100)
+                .padding(.vertical, 5)
+                .padding(.trailing, 200)
             }
             
-            // UNDO & SAVE
+            // SAVE
             ToolbarItemGroup {
                 
                 Button(action: {
+                    isSaveClicked = true
                     showSaveAlert = true
                     roomSceneViewModel.saveProject(viewContext: viewContext)
                     
@@ -188,8 +214,14 @@ struct CanvasView: View {
                     
                 })
                 {
-                    Image(systemName: "square.and.arrow.down")
-                        .foregroundColor(.black)
+                    VStack {
+                        Image(systemName: "square.and.arrow.down")
+                            .foregroundColor(.black)
+                        Text("Save")
+                            .font(.subheadline)
+                            .foregroundColor(.black)
+                    }
+                    .padding(.bottom, 5)
                 }.alert(isPresented: $showSaveAlert) {
                     Alert(
                         title: Text("\(roomSceneViewModel.projectData.nameProject) Saved"),
@@ -197,6 +229,7 @@ struct CanvasView: View {
                             if routerView.path.count > 0 {
                                 routerView.path.removeLast()
                             }
+                            isSaveClicked = true
                         }
                     )
                 }
@@ -223,8 +256,29 @@ struct CanvasView: View {
 //        .fullScreenCover(isPresented: $isGuidedCaptureViewPresented, content: {
 //            GuidedCaptureView()
 //        })
-        
-        .navigationTitle(checkRename ? roomSceneViewModel.projectData.nameProject : (routerView.project == nil ? "NewProject" : roomSceneViewModel.projectData.nameProject))
+        .navigationTitle(routerView.project == nil ? "NewProject" : roomSceneViewModel.projectData.nameProject)
+        .navigationBarBackButtonHidden(true)
+        .navigationBarItems(leading: Button(action: {
+            if !isSaveClicked {
+                showBackAlert = true
+            } else if isSaveClicked || isProjectSaved {
+                presentationMode.wrappedValue.dismiss()
+            }
+        }) {
+            Image(systemName: "chevron.left")
+        }).alert(isPresented: $showBackAlert) {
+            Alert(
+                title: Text("Save Project"),
+                message: Text("Do you want to save changes before leaving?"),
+                primaryButton: .default(Text("Save"), action: {
+                    roomSceneViewModel.saveProject(viewContext: viewContext)
+                    showSaveAlert = true
+                }),
+                secondaryButton: .destructive(Text("No"), action: {
+                    presentationMode.wrappedValue.dismiss()
+                })
+            )
+        }
         .toolbarTitleMenu {
             Button(action: {
                 renameClicked = true
