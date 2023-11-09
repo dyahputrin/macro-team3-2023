@@ -14,4 +14,8 @@
         <attribute name="projectThumbnail" optional="YES" attributeType="Binary"/>
         <attribute name="widthRoom" optional="YES" attributeType="Float" defaultValueString="0.0" usesScalarValueType="YES"/>
     </entity>
+    <entity name="RoomPlanEntity" representedClassName="RoomPlanEntity" syncable="YES" codeGenerationType="class">
+        <attribute name="roomPlanName" optional="YES" attributeType="String"/>
+        <attribute name="roomPlanObject" optional="YES" attributeType="Binary"/>
+    </entity>
 </model>

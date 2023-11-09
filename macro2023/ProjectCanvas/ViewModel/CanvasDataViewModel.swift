@@ -16,29 +16,33 @@ class CanvasDataViewModel: ObservableObject {
     @Published var projectData: ProjectData
     @Published var routerView: RouterView
     @Published var rootScene:SCNScene? = nil
+    var floor = SCNNode()
+    var grayMaterial = SCNMaterial()
+    var floorGeometry = SCNBox(width: 10, height: 0.01, length: 10, chamferRadius: 0)
     
     var tempScene: SCNScene?
     private let viewContext = PersistenceController.shared.viewContext
     private var hasLoadedFromCoreData = false
     
     private var cancellables = Set<AnyCancellable>()
-    var sceneOri:SCNScene? = nil
     
     init(canvasData: CanvasData, projectData: ProjectData, routerView: RouterView) {
         self.canvasData = canvasData
         self.projectData = projectData
         self.routerView = routerView
+        grayMaterial.diffuse.contents = UIColor.gray
+
+        floorGeometry.materials = [grayMaterial]
+        
+        self.floor = SCNNode(geometry: floorGeometry)
+        floor.geometry = SCNFloor()
         
         if routerView.project?.projectName == nil {
-            let _ = print("Ava jelek")
             self.makeScene1(width: 0, height: 0, length: 0)
         } else {
-            print("gagagaagagaagag")
-            print("Peoject Data",projectData.uuid)
             self.loadSceneFromCoreData(selectedProjectID: projectData.uuid, in: viewContext)
         }
     }
-    
     
     // function to add a marker for rootNode
     func addMarkerToRootNode(scene: SCNScene) {
@@ -56,7 +60,7 @@ class CanvasDataViewModel: ObservableObject {
         rootScene?.background.contents = UIColor.lightGray
         
         // Add floor
-        if let floorAsset = SCNScene(named: "floorblack.usdz"),
+        if let floorAsset = SCNScene(named: "v3floorputih.usdz"),
            let floorNode = floorAsset.rootNode.childNodes.first?.clone() {
             floorNode.scale = SCNVector3(width, 1, length)
             //            floorNode.position = SCNVector3(0, (height/2)-height + 0.5,0)
@@ -65,7 +69,7 @@ class CanvasDataViewModel: ObservableObject {
         }
         
         // Add wall 1
-        if let wall1Asset = SCNScene(named: "wall1white.usdz"),
+        if let wall1Asset = SCNScene(named: "v3wall1putih.usdz"),
            let wall1Node = wall1Asset.rootNode.childNodes.first?.clone() {
             wall1Node.scale = SCNVector3(1, height, length)
             //            wall1Node.position = SCNVector3((width/2)-width + 0.5, 0, 0)
@@ -74,7 +78,7 @@ class CanvasDataViewModel: ObservableObject {
         }
         
         // Add wall 2
-        if let wall2Asset = SCNScene(named: "wall2white.usdz"),
+        if let wall2Asset = SCNScene(named: "v3wall2putih.usdz"),
            let wall2Node = wall2Asset.rootNode.childNodes.first?.clone() {
             wall2Node.scale = SCNVector3(width, height, 1)
             //            wall2Node.position = SCNVector3(0, 0, (length/2)-length + 0.5)
@@ -83,7 +87,7 @@ class CanvasDataViewModel: ObservableObject {
         }
         
         // Add wall 3
-        if let wall3Asset = SCNScene(named: "wall3white.usdz"),
+        if let wall3Asset = SCNScene(named: "v3wall3putih.usdz"),
            let wall3Node = wall3Asset.rootNode.childNodes.first?.clone() {
             wall3Node.scale = SCNVector3(1, height, length)
             //            wall3Node.position = SCNVector3((width*0.5)-0.5, 0, 0)
@@ -92,33 +96,18 @@ class CanvasDataViewModel: ObservableObject {
         }
         
         // Add wall 4
-        if let wall4Asset = SCNScene(named: "wall4white.usdz"),
+        if let wall4Asset = SCNScene(named: "v3wall4putih.usdz"),
            let wall4Node = wall4Asset.rootNode.childNodes.first?.clone() {
             wall4Node.scale = SCNVector3(width, height, 1)
             //            wall4Node.position = SCNVector3(0, 0, length-(length/2)-0.5 )
             wall4Node.position = SCNVector3(0, 0, (length-1)/2 + 0.001)
             rootScene?.rootNode.addChildNode(wall4Node)
         }
+        rootScene?.rootNode.addChildNode(floor)
         
-        //TEMPORARY
-        //        if let wall4Asset = SCNScene(named: "OfficeTableGroup.usdz"),
-        //           let wall4Node = wall4Asset.rootNode.childNodes.first?.clone() {
-        //            wall4Node.scale = SCNVector3(1, 1, 1)
-        //            rootScene?.rootNode.addChildNode(wall4Node)
-        //        }
-        
-        // Add camera
-        let camera = SCNCamera()
-        let cameraNode = SCNNode()
-        cameraNode.camera = camera
-        cameraNode.position = SCNVector3(x: 0, y: 5, z: 5)
-        rootScene?.rootNode.addChildNode(cameraNode)
-        
-        sceneOri = rootScene
         return rootScene
     }
     func addImportObjectChild(data: Data){
-        //        for binaryData in canvasData.importedObjectData {
         if let modelURL = createUSDZFile(data: data) {
             if let modelasset = try? SCNScene(url: modelURL), let modelNode = modelasset.rootNode.childNodes.first?.clone() {
                 self.rootScene?.rootNode.addChildNode(modelNode)
@@ -126,7 +115,13 @@ class CanvasDataViewModel: ObservableObject {
             }
             print("Putri bermain catur",modelURL)
         }
-        //        }
+    }
+    
+    func addNodeToRootScene(named asset: String) {
+        if let assetScene = SCNScene(named: asset) ,
+           let assetNode = assetScene.rootNode.childNodes.first?.clone(){
+            rootScene?.rootNode.addChildNode(assetNode)
+        }
     }
     
     func createUSDZFile(data: Data) -> URL? {
@@ -150,71 +145,26 @@ class CanvasDataViewModel: ObservableObject {
         canvasData.roomHeight = newHeight
         canvasData.roomLength = newLength
         
-        //        let fetchRequest: NSFetchRequest<ProjectEntity> = ProjectEntity.fetchRequest()
-        //        fetchRequest.predicate = NSPredicate(format: "projectID == %@", activeProjectID as CVarArg)
-        //        do {
-        //            let results = try viewContext.fetch(fetchRequest)
-        //            if let projectEntity = results.first, let sceneData = projectEntity.projectScene {
-        //                let scene = try NSKeyedUnarchiver.unarchivedObject(ofClass: SCNScene.self, from: sceneData)
-        //                if let scene = scene {
-        //                    // Accessing the root node
-        //                    let rootNode = scene.rootNode
-        //                    let nodeNames = ["wall1white", "wall2white", "wall3white", "wall4white", "floorblack"]
-        //
-        //                    rootNode.enumerateChildNodes{ (node, _) in
-        //                        if let nodeName = node.name, nodeNames.contains(nodeName) {
-        //                            print("Found node with name: \(nodeName)")
-        //                            switch nodeName {
-        //                            case "floorblack":
-        //                                node.scale = SCNVector3(newWidth, 1, newLength)
-        //                                node.position = SCNVector3(0, (1-newHeight)/2,0)
-        //                            case "wall1white":
-        //                                node.scale = SCNVector3(1, newHeight, newLength)
-        //                                node.position = SCNVector3((1-newWidth)/2 - 0.001, 0, 0)
-        //                            case "wall2white":
-        //                                node.scale = SCNVector3(newWidth, newHeight, 1)
-        //                                node.position = SCNVector3(0, 0, (1-newLength)/2 - 0.001)
-        //                            case "wall3white":
-        //                                node.scale = SCNVector3(1, newHeight, newLength)
-        //                                node.position = SCNVector3((newWidth-1)/2 + 0.001, 0, 0)
-        //                            case "wall4white":
-        //                                node.scale = SCNVector3(newWidth, newHeight, 1)
-        //                                node.position = SCNVector3(0, 0, (newLength-1)/2 + 0.001)
-        //                            default:
-        //                                print("Unknown node name: \(nodeName)")
-        //                            }
-        //                        }
-        //                    }
-        //
-        //                    let updatedSceneData = try NSKeyedArchiver.archivedData(withRootObject: scene, requiringSecureCoding: false)
-        //                    projectEntity.projectScene = updatedSceneData
-        //                    try viewContext.save()
-        //                }
-        //            }
-        //        } catch {
-        //            print("Failed to fetch or unarchive: \(error)")
-        //        }
-        
         let rootNode = rootScene?.rootNode
-        let nodeNames = ["wall1white", "wall2white", "wall3white", "wall4white", "floorblack"]
+        let nodeNames = ["v3wall1putih", "v3wall2putih", "v3wall3putih", "v3wall4putih", "v3floorputih"]
         
         rootNode?.enumerateChildNodes{ (node, _) in
             if let nodeName = node.name, nodeNames.contains(nodeName) {
                 print("Found node with name: \(nodeName)")
                 switch nodeName {
-                case "floorblack":
+                case "v3floorputih":
                     node.scale = SCNVector3(newWidth, 1, newLength)
-                    node.position = SCNVector3(0, (1-newHeight)/2,0)
-                case "wall1white":
+                    node.position = SCNVector3(0, 0,0)
+                case "v3wall1putih":
                     node.scale = SCNVector3(1, newHeight, newLength)
                     node.position = SCNVector3((1-newWidth)/2 - 0.001, 0, 0)
-                case "wall2white":
+                case "v3wall2putih":
                     node.scale = SCNVector3(newWidth, newHeight, 1)
                     node.position = SCNVector3(0, 0, (1-newLength)/2 - 0.001)
-                case "wall3white":
+                case "v3wall3putih":
                     node.scale = SCNVector3(1, newHeight, newLength)
                     node.position = SCNVector3((newWidth-1)/2 + 0.001, 0, 0)
-                case "wall4white":
+                case "v3wall4putih":
                     node.scale = SCNVector3(newWidth, newHeight, 1)
                     node.position = SCNVector3(0, 0, (newLength-1)/2 + 0.001)
                 default:

@@ -11,6 +11,13 @@
 		210C80142AD5343400E01229 /* Persistence.swift in Sources */ = {isa = PBXBuildFile; fileRef = 210C80132AD5343400E01229 /* Persistence.swift */; };
 		2128E7E12AE7A2C900FD6B99 /* ObjectViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2128E7E02AE7A2C900FD6B99 /* ObjectViewModel.swift */; };
 		2135F0642AF105B500A3DD9A /* ThumbnailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2135F0632AF105B500A3DD9A /* ThumbnailView.swift */; };
+		213E259E2AFB7A0600737AD8 /* RoomPlanViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 213E259D2AFB7A0600737AD8 /* RoomPlanViewModel.swift */; };
+		213E25A52AFCBAED00737AD8 /* v3wall2putih.usdz in Resources */ = {isa = PBXBuildFile; fileRef = 213E259F2AFCBAEC00737AD8 /* v3wall2putih.usdz */; };
+		213E25A62AFCBAED00737AD8 /* v3wall1putih.usdz in Resources */ = {isa = PBXBuildFile; fileRef = 213E25A02AFCBAEC00737AD8 /* v3wall1putih.usdz */; };
+		213E25A72AFCBAED00737AD8 /* v3wall4putih.usdz in Resources */ = {isa = PBXBuildFile; fileRef = 213E25A12AFCBAEC00737AD8 /* v3wall4putih.usdz */; };
+		213E25A82AFCBAED00737AD8 /* v3wall3putih.usdz in Resources */ = {isa = PBXBuildFile; fileRef = 213E25A22AFCBAEC00737AD8 /* v3wall3putih.usdz */; };
+		213E25A92AFCBAED00737AD8 /* v3floorhitam.usdz in Resources */ = {isa = PBXBuildFile; fileRef = 213E25A32AFCBAED00737AD8 /* v3floorhitam.usdz */; };
+		213E25AA2AFCBAED00737AD8 /* v3floorputih.usdz in Resources */ = {isa = PBXBuildFile; fileRef = 213E25A42AFCBAED00737AD8 /* v3floorputih.usdz */; };
 		21C90C192AD694880003D517 /* ProjectData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21C90C182AD694880003D517 /* ProjectData.swift */; };
 		21C90C412AD6A15B0003D517 /* RouterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21C90C402AD6A15B0003D517 /* RouterView.swift */; };
 		21C90C432AD7CC810003D517 /* ProjectViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21C90C422AD7CC810003D517 /* ProjectViewModel.swift */; };
@@ -99,6 +106,13 @@
 		210C80132AD5343400E01229 /* Persistence.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Persistence.swift; sourceTree = "<group>"; };
 		2128E7E02AE7A2C900FD6B99 /* ObjectViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ObjectViewModel.swift; sourceTree = "<group>"; };
 		2135F0632AF105B500A3DD9A /* ThumbnailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThumbnailView.swift; sourceTree = "<group>"; };
+		213E259D2AFB7A0600737AD8 /* RoomPlanViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoomPlanViewModel.swift; sourceTree = "<group>"; };
+		213E259F2AFCBAEC00737AD8 /* v3wall2putih.usdz */ = {isa = PBXFileReference; lastKnownFileType = file.usdz; path = v3wall2putih.usdz; sourceTree = "<group>"; };
+		213E25A02AFCBAEC00737AD8 /* v3wall1putih.usdz */ = {isa = PBXFileReference; lastKnownFileType = file.usdz; path = v3wall1putih.usdz; sourceTree = "<group>"; };
+		213E25A12AFCBAEC00737AD8 /* v3wall4putih.usdz */ = {isa = PBXFileReference; lastKnownFileType = file.usdz; path = v3wall4putih.usdz; sourceTree = "<group>"; };
+		213E25A22AFCBAEC00737AD8 /* v3wall3putih.usdz */ = {isa = PBXFileReference; lastKnownFileType = file.usdz; path = v3wall3putih.usdz; sourceTree = "<group>"; };
+		213E25A32AFCBAED00737AD8 /* v3floorhitam.usdz */ = {isa = PBXFileReference; lastKnownFileType = file.usdz; path = v3floorhitam.usdz; sourceTree = "<group>"; };
+		213E25A42AFCBAED00737AD8 /* v3floorputih.usdz */ = {isa = PBXFileReference; lastKnownFileType = file.usdz; path = v3floorputih.usdz; sourceTree = "<group>"; };
 		21C90C182AD694880003D517 /* ProjectData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectData.swift; sourceTree = "<group>"; };
 		21C90C402AD6A15B0003D517 /* RouterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RouterView.swift; sourceTree = "<group>"; };
 		21C90C422AD7CC810003D517 /* ProjectViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectViewModel.swift; sourceTree = "<group>"; };
@@ -265,6 +279,12 @@
 		21C90BFB2AD685F60003D517 /* 3D Object */ = {
 			isa = PBXGroup;
 			children = (
+				213E25A32AFCBAED00737AD8 /* v3floorhitam.usdz */,
+				213E25A42AFCBAED00737AD8 /* v3floorputih.usdz */,
+				213E25A02AFCBAEC00737AD8 /* v3wall1putih.usdz */,
+				213E259F2AFCBAEC00737AD8 /* v3wall2putih.usdz */,
+				213E25A22AFCBAEC00737AD8 /* v3wall3putih.usdz */,
+				213E25A12AFCBAEC00737AD8 /* v3wall4putih.usdz */,
 				940CF46D2AEA5AC100F3EB7C /* Ko farel.usdz */,
 				940CF4752AEA5D6500F3EB7C /* hightable.usdz */,
 				940CF4732AEA5C7D00F3EB7C /* floorblack.usdz */,
@@ -527,6 +547,7 @@
 			children = (
 				94DDE94A2ADE8FFA007915FF /* CanvasDataViewModel.swift */,
 				2128E7E02AE7A2C900FD6B99 /* ObjectViewModel.swift */,
+				213E259D2AFB7A0600737AD8 /* RoomPlanViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -600,6 +621,12 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				213E25A52AFCBAED00737AD8 /* v3wall2putih.usdz in Resources */,
+				213E25A62AFCBAED00737AD8 /* v3wall1putih.usdz in Resources */,
+				213E25A72AFCBAED00737AD8 /* v3wall4putih.usdz in Resources */,
+				213E25A82AFCBAED00737AD8 /* v3wall3putih.usdz in Resources */,
+				213E25A92AFCBAED00737AD8 /* v3floorhitam.usdz in Resources */,
+				213E25AA2AFCBAED00737AD8 /* v3floorputih.usdz in Resources */,
 				940CF47C2AEA5F3E00F3EB7C /* wall1white.usdz in Resources */,
 				BE6F98A02AE26BA500AC6A69 /* v2wall1.usdz in Resources */,
 				9487BE232ADE93CF004FCC67 /* ScanPasses-iPhone-FixedHeight-1.mp4 in Resources */,
@@ -662,6 +689,7 @@
 				974199552AE7A26900D96E7F /* ObjectSizeView.swift in Sources */,
 				9487BE102ADE93B0004FCC67 /* GuidedCaptureView.swift in Sources */,
 				9487BDFD2ADE93B0004FCC67 /* ShotFileInfo.swift in Sources */,
+				213E259E2AFB7A0600737AD8 /* RoomPlanViewModel.swift in Sources */,
 				9487BE0A2ADE93B0004FCC67 /* OnboardingButtonView.swift in Sources */,
 				9487BE022ADE93B0004FCC67 /* OnboardingTutorialView+LocalizedString.swift in Sources */,
 				9487BE142ADE93B0004FCC67 /* CaptureFolderManager.swift in Sources */,

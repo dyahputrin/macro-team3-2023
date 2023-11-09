@@ -12,9 +12,7 @@ struct ObjectSidebarView: View {
     private let viewContext = PersistenceController.shared.viewContext
     @EnvironmentObject var routerView: RouterView
     @StateObject private var ObjectVM = ObjectViewModel()
-//    @StateObject private var roomSceneViewModel = CanvasDataViewModel(canvasData: CanvasData(roomWidth: 0, roomHeight: 0, roomLength: 0), projectData: ProjectData())
     
-//    @Binding var activeScene: SCNScene?
     @ObservedObject var roomSceneViewModel:CanvasDataViewModel
     @State private var sceneKitView: ThumbnailView?
     
@@ -26,6 +24,7 @@ struct ObjectSidebarView: View {
     @State var thumbnailPreview : Image?
     @State var isShowingScene: Bool = false
     var section = ["Objects", "Imports"]
+    var defaultAsset: [String] = ["hightable.usdz", "Ko farel.usdz", "OfficeTable.usdz"]
     
     var body: some View {
         
@@ -50,13 +49,26 @@ struct ObjectSidebarView: View {
                             if currentSection == "Objects" {
                                 ScrollView {
                                     LazyVGrid(columns: columns, spacing: 30) {
-                                        
-                                        ForEach(1..<15, id: \.self) { index in
-                                            Image(systemName: "plus.app.fill")
+                                        ForEach(defaultAsset,id: \.self){ asset in
+                                            RoundedRectangle(cornerRadius: 25, style: .circular)
+                                                .shadow(radius:5)
                                                 .frame(width: 100, height: 100)
-                                                .font(.system(size: 100))
-                                                .shadow(radius: 5)
+                                                .foregroundColor(.clear)
+                                                .overlay{
+                                                    VStack {
+                                                        SceneView(scene: SCNScene(named: asset), options: [.autoenablesDefaultLighting])
+                                                            .frame(width: 100, height: 100)
+                                                            .cornerRadius(25)
+                                                            .shadow(radius:5)
+                                                            .onTapGesture {
+                                                                roomSceneViewModel.addNodeToRootScene(named: asset)
+                                                            }
+                                                        let fullNameArr = asset.split(separator:".")
+                                                        Text(fullNameArr[0])
+                                                    }
+                                                }
                                         }
+                                        
                                     }
                                     .padding(.vertical)
                                 }
