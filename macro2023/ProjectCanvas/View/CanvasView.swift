@@ -108,23 +108,21 @@ struct CanvasView: View {
             }
             
             if objectsButtonClicked == true {
-                ObjectSidebarView()
+                ObjectSidebarView(roomSceneViewModel: roomSceneViewModel)
                     .animation(.easeInOut(duration: 2), value: objectsButtonClicked)
                 
             } else if roomButtonClicked == true {
-                RoomSidebarView(roomWidthText: $roomWidthText, roomLengthText: $roomLengthText, roomHeightText: $roomHeightText,  sceneViewID: $sceneViewID, roomSceneViewModel: roomSceneViewModel)
+                RoomSidebarView(roomWidthText: $roomWidthText, roomLengthText: $roomLengthText, roomHeightText: $roomHeightText,  sceneViewID: $sceneViewID, activeProjectID: $activeProjectID, activeScene: $activeScene, roomSceneViewModel: roomSceneViewModel)
                     .animation(.easeInOut(duration: 2), value: roomButtonClicked)
             }
             
             ObjectListView(showingObjectList: $showingObjectList)
                 //.animation(.easeInOut(duration: 0.3), value: showingObjectList)
             
-            if selectedAnObject == true {
-                ObjectSizeView(roomWidthText:.constant("2"), roomLengthText: .constant("2"), roomHeightText: .constant("2"), sceneViewID: .constant(UUID()) ,roomSceneViewModel: CanvasDataViewModel(canvasData: CanvasData(roomWidth: 0, roomHeight: 0, roomLength: 0), projectData: ProjectData()))
-                    .offset(x: objectSizeViewOffset)
-                    .animation(.easeInOut(duration: 0.5), value: showingObjectList)
-                    .padding(.leading, showingObjectList ? (sideBarWidth + 10) : 0)
+            if objectDimensionData.name != "--" {
+                ObjectSizeView(roomWidthText:.constant("2"), roomLengthText: .constant("2"), roomHeightText: .constant("2"), sceneViewID: .constant(UUID()), roomSceneViewModel: CanvasDataViewModel(canvasData: CanvasData(roomWidth: 0, roomHeight: 0, roomLength: 0), projectData: ProjectData(), routerView: RouterView()), objectDimensionData: objectDimensionData)
             }
+
         }
         .onAppear {
             roomButtonClicked = true
