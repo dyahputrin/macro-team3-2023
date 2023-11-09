@@ -12,9 +12,9 @@ struct ScenekitView: UIViewRepresentable {
     @ObservedObject var objectDimensionData: ObjectDimensionData
     @Binding var scene: SCNScene?
     @Binding var isEditMode: Bool
+    @Binding var roomWidth: Float
     typealias UIViewType = SCNView
     var view = SCNView()
-    var roomWidth: Float?
 
     func makeUIView(context: Context) -> SCNView {
         view.scene = scene
@@ -62,7 +62,7 @@ struct ScenekitView: UIViewRepresentable {
             let p = gestureRecognizer.location(in: parent.view)
             let hitResults = parent.view.hitTest(p, options: [:])
             
-            if hitResults.count == 0 {
+            if hitResults.count == 0 || hitResults.first!.node.name == nil {
                 parent.isEditMode = false
                 objectDimensionData.reset()
                 print(objectDimensionData.name)
@@ -83,6 +83,7 @@ struct ScenekitView: UIViewRepresentable {
                     let z = String(format: "%.2f", worldMax.z - worldMin.z)
                     
                     objectDimensionData.name = selectedNode!.name ?? "Unknown"
+                    print(selectedNode?.name)
                     objectDimensionData.width = x
                     objectDimensionData.height = y
                     objectDimensionData.length = z

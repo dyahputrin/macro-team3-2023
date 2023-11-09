@@ -21,4 +21,6 @@ struct ProjectData {
     
     var isRenameAlertPresented = false
     var newProjectName: String = ""
+    
+    var defaultAsset:[String] = ["hightable.usdz","Ko farel.usdz","OfficaTable.usdz"]
 }

@@ -5,7 +5,7 @@ import CoreData
 import SceneKit
 import ModelIO
 
-class ObjectViewModel: UIViewController, ObservableObject, UIDocumentPickerDelegate {
+class RoomPlanViewModel: UIViewController, ObservableObject, UIDocumentPickerDelegate {
     @Published var selectedURL: URL?
     
     func presentDocumentPicker() {
@@ -40,15 +40,15 @@ class ObjectViewModel: UIViewController, ObservableObject, UIDocumentPickerDeleg
             let usdzData = try Data(contentsOf: fileURL)
             
             // Check if a file with the same content already exists
-            let fetchRequest: NSFetchRequest<ObjectEntity> = ObjectEntity.fetchRequest()
-            fetchRequest.predicate = NSPredicate(format: "importedObject == %@", usdzData as CVarArg)
+            let fetchRequest: NSFetchRequest<RoomPlanEntity> = RoomPlanEntity.fetchRequest()
+            fetchRequest.predicate = NSPredicate(format: "roomPlanObject == %@", usdzData as CVarArg)
 
             if let existingObject = try context.fetch(fetchRequest).first {
                 print("An object with the same content already exists. Not saving again.")
             } else {
-                let objectEntity = ObjectEntity(context: context)
-                objectEntity.importedName = fileURL.deletingPathExtension().lastPathComponent
-                objectEntity.importedObject = usdzData
+                let roomplanEntity = RoomPlanEntity(context: context)
+                roomplanEntity.roomPlanName = fileURL.deletingPathExtension().lastPathComponent
+                roomplanEntity.roomPlanObject = usdzData
 
                 do {
                     try context.save()

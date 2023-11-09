@@ -22,14 +22,24 @@ struct RoomSidebarView: View {
     @Binding var activeProjectID: UUID
     @Binding var activeScene: SCNScene
     var roomSceneViewModel: CanvasDataViewModel
+    @StateObject private var RoomVM = RoomPlanViewModel()
+    @State private var sceneKitView: ThumbnailView?
     
-    @Environment(\.managedObjectContext) private var viewContext
+    @FetchRequest(entity: RoomPlanEntity.entity(),
+                  sortDescriptors: [NSSortDescriptor(keyPath: \RoomPlanEntity.roomPlanName, ascending: true)])
+    var roomPlans: FetchedResults<RoomPlanEntity>
+    
+    private let viewContext = PersistenceController.shared.viewContext
     @EnvironmentObject var routerView: RouterView
     @FetchRequest(entity: ProjectEntity.entity(),
                   sortDescriptors: [NSSortDescriptor(keyPath: \ProjectEntity.projectName, ascending: true)])
     var projectEntity: FetchedResults<ProjectEntity>
     
     var body: some View {
+        let columns = [
+            GridItem(.flexible()),
+            GridItem(.flexible())
+        ]
         GeometryReader { geometry in
             HStack {
                 Spacer()
@@ -88,7 +98,6 @@ struct RoomSidebarView: View {
                                                         print("Failed to unarchive SCN scene: \(error)")
                                                     }
                                                 }
-                                                
                                                 roomSceneViewModel.updateRoomSize(newWidth: width, newHeight: height, newLength: length, activeProjectID: activeProjectID, viewContext: viewContext)
                                                 sceneViewID = UUID()
                                             } else {
@@ -112,19 +121,37 @@ struct RoomSidebarView: View {
                                 
                             } else if currentSection == "Imports" {
                                 ScrollView {
-                                    let columns = [
-                                        GridItem(.flexible()),
-                                        GridItem(.flexible())
-                                    ]
                                     LazyVGrid(columns: columns, spacing: 30) {
-                                        ImportButtonView(isImporting: .constant(false))
                                         
-                                        ForEach(2..<15, id: \.self) { index in
-                                            Image(systemName: "plus.app.fill")
+                                        Button(action: {
+                                            RoomVM.presentDocumentPicker()
+                                        }, label: {
+                                            Image(systemName: "plus")
+                                                .foregroundStyle(Color(hex: 0x28B0E5))
+                                                .font(.system(size: 50))
                                                 .frame(width: 100, height: 100)
-                                                .font(.system(size: 100))
-                                                .shadow(radius: 5)
+                                        })
+                                        ForEach(roomPlans, id: \.self){ importedRoomPlan in
+                                            RoundedRectangle(cornerRadius: 25, style: .circular)
+                                                .shadow(radius:5)
+                                                .frame(width: 100, height: 100)
+                                                .foregroundColor(.clear)
+                                                .overlay{
+                                                    VStack {
+                                                        if let usdzData = importedRoomPlan.roomPlanObject {
+                                                            ThumbnailView(usdzData: usdzData)
+                                                                .frame(width: 100, height: 100)
+                                                                .cornerRadius(25)
+                                                                .shadow(radius: 5)
+                                                                .onTapGesture {
+                                                                    roomSceneViewModel.addImportObjectChild(data: usdzData)
+                                                                }
+                                                        }
+                                                        Text("\(importedRoomPlan.roomPlanName ?? "error")")
+                                                    }
+                                                }
                                         }
+                                        
                                     }
                                     .padding(.top)
                                 }

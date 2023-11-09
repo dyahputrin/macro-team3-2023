@@ -18,7 +18,7 @@ struct macro2023App: App {
     @StateObject var routerView = RouterView()
     var body: some Scene {
         WindowGroup {
-            ProjectView(activeProjectID: UUID(), activeScene: SCNScene())
+            ProjectView(dataContentViewModel: ProjectViewModel(dataCanvas: ProjectData()), activeProjectID: UUID(), activeScene: SCNScene())
                 .environment(\.managedObjectContext,persistenceController.container.viewContext)
                 .environmentObject(routerView)
         }
