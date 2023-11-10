@@ -15,7 +15,7 @@ struct ScenekitView: UIViewRepresentable {
     typealias UIViewType = SCNView
     var view = SCNView()
     var roomWidth: Float?
-
+    
     func makeUIView(context: Context) -> SCNView {
         view.scene = scene
         view.allowsCameraControl = !isEditMode
@@ -23,17 +23,14 @@ struct ScenekitView: UIViewRepresentable {
         
         let tapGesture = UITapGestureRecognizer(target: context.coordinator, action: #selector(context.coordinator.handleTap(_:)))
         view.addGestureRecognizer(tapGesture)
-        
-        
-        
+
         return view
     }
-
+    
     func updateUIView(_ uiView: SCNView, context: Context) {
         uiView.allowsCameraControl = !isEditMode
-
     }
-
+    
     func makeCoordinator() -> Coordinator {
         Coordinator(self)
     }
@@ -41,7 +38,7 @@ struct ScenekitView: UIViewRepresentable {
     func snapshot() -> UIImage? {
         return view.snapshot()
     }
-
+    
     class Coordinator: NSObject, UIGestureRecognizerDelegate {
         var parent: ScenekitView
         private var selectedNode: SCNNode?
@@ -51,6 +48,7 @@ struct ScenekitView: UIViewRepresentable {
         var arrowX: SCNNode?
         var arrowY: SCNNode?
         var arrowZ: SCNNode?
+        var arrowRotation: SCNNode?
         
         init(_ parent: ScenekitView) {
             self.parent = parent
@@ -69,41 +67,44 @@ struct ScenekitView: UIViewRepresentable {
                 return
             } else {
                 parent.isEditMode = true
-                selectedNode?.childNodes.forEach { node in
-                    if node.name?.hasPrefix("axisArrow") == true {
-                        node.opacity = 0.3
-                    }
-                }
-                
-                if let result = hitResults.first(where: { $0.node.name?.hasPrefix("axisArrow") == true }) {
-                    // Set the tapped arrow's opacity to 1.0
-                    result.node.opacity = 1.0
-                    result.node.parent?.opacity = 1.0
+                if let result = hitResults.first(where: { $0.node.name?.hasPrefix("axisArrowY") == true }) {
+                    arrowY?.opacity = 1.0
+                    arrowX?.opacity = 0.5
+                    arrowZ?.opacity = 0.5
+                    arrowRotation?.opacity = 0.5
                     selectedAxis = result.node.name
+                    print("result node name : \(result.node.name)")
+                    addPanGesture()
+                } else if let result = hitResults.first(where: { $0.node.name?.hasPrefix("axisArrowZ") == true }) {
+                    arrowZ?.opacity = 1.0
+                    arrowX?.opacity = 0.5
+                    arrowY?.opacity = 0.5
+                    arrowRotation?.opacity = 0.5
+                    selectedAxis = result.node.name
+                    print("result node name : \(result.node.name)")
+                    addPanGesture()
+                } else if let result = hitResults.first(where: { $0.node.name?.hasPrefix("axisArrowX") == true }) {
+                    arrowX?.opacity = 1.0
+                    arrowY?.opacity = 0.5
+                    arrowZ?.opacity = 0.5
+                    arrowRotation?.opacity = 0.5
+                    selectedAxis = result.node.name
+                    print("result node name : \(result.node.name)")
+                    addPanGesture()
+                } else if let result = hitResults.first(where: { $0.node.name?.hasPrefix("axisArrowRotation") == true }) {
+                    arrowX?.opacity = 0.5
+                    arrowY?.opacity = 0.5
+                    arrowZ?.opacity = 0.5
+                    arrowRotation?.opacity = 1.0
+                    selectedAxis = result.node.name
+                    print("result node name : \(result.node.name)")
                     addPanGesture()
                 } else if let result = hitResults.first {
+                    print("HIT TEST 2")
+                    deselectNodeAndArrows()
                     processNodeSelection(result.node)
                     selectedAxis = nil
                 }
-                
-//                if let result = hitResults.first(where: { $0.node.name?.hasPrefix("axisArrow") == true }) {
-//                    print("HIT TEST 1")
-//                    selectedNode?.childNodes.forEach { node in
-//                        if node.name?.hasPrefix("axisArrowY") == true || node.name?.hasPrefix("axisArrowZ") == true || node.name?.hasPrefix("axisArrowX") == true || node.name?.hasPrefix("axisArrowRotation") == true {
-//                            node.opacity = 0.5
-//                        }
-//                    }
-////                     Then set the tapped arrow's opacity to 1.0
-//                    result.node.opacity = 1.0
-//                    result.node.parent?.opacity = 1.0
-//                    selectedAxis = result.node.name
-//                    print("result node name : \(result.node.name)")
-//                    addPanGesture()
-//                } else if let result = hitResults.first {
-//                    print("HIT TEST 2")
-//                    processNodeSelection(result.node)
-//                    selectedAxis = nil
-//                }
                 
             }
             
@@ -111,11 +112,9 @@ struct ScenekitView: UIViewRepresentable {
         
         private func processNodeSelection(_ node: SCNNode) {
             if arrowX != nil && arrowY != nil && arrowZ != nil {
-                    updateArrowPositionsToMatchNode(node: node)
+                updateArrowPositionsToMatchNode(node: node)
             } else {
-                
                 deselectNodeAndArrows()
-                
                 selectedNode = node
                 parent.view.allowsCameraControl = false
                 
@@ -185,7 +184,7 @@ struct ScenekitView: UIViewRepresentable {
             arrowX?.removeFromParentNode()
             arrowY?.removeFromParentNode()
             arrowZ?.removeFromParentNode()
-
+            
             arrowX = nil
             arrowY = nil
             arrowZ = nil
@@ -193,20 +192,17 @@ struct ScenekitView: UIViewRepresentable {
         
         @objc func handlePan(_ gestureRecognizer: UIPanGestureRecognizer) {
             guard !parent.isEditMode else {
-                
-                print("Pan detected")
-                
+//                print("Pan detected")
                 guard let selectedNode = selectedNode else {return}
                 
                 let translation = gestureRecognizer.translation(in: parent.view)
                 print("translation \(translation)")
                 
                 let cameraNode = parent.view.pointOfView
-                
                 if gestureRecognizer.numberOfTouches == 1 {
                     handleOneFingerPan(translation: translation, for: selectedNode, cameraNode: cameraNode!)
                 }
-            
+                
                 switch gestureRecognizer.state {
                 case .began:
                     lastPanTranslation = translation
@@ -215,11 +211,8 @@ struct ScenekitView: UIViewRepresentable {
                 default:
                     lastPanTranslation = .zero
                 }
-                
                 return
-                
             }
-            
         }
         
         private func handleOneFingerPan(translation: CGPoint, for node: SCNNode, cameraNode: SCNNode) {
@@ -229,33 +222,29 @@ struct ScenekitView: UIViewRepresentable {
                 y: Float(lastPanTranslation.y - translation.y),
                 z: 0
             )
-
+            
             let (angle, axis) = cameraNode.orientation.toAxisAngle()
             let rotationMatrix = SCNMatrix4MakeRotation(Float(angle), axis.x, axis.y, axis.z)
-
             translationDelta = SCNVector3MultMatrix4(translationDelta, rotationMatrix)
-
+            
             var newPos = node.position
             switch selectedAxis {
             case "axisArrowX":
                 newPos.z += translationDelta.z * scaleFactor
-                
             case "axisArrowY":
                 newPos.y += translationDelta.y * scaleFactor
             case "axisArrowZ":
                 newPos.x += translationDelta.x * scaleFactor
             case "axisArrowRotation":
-                // Assuming you want to rotate around the Y-axis
                 let rotation = (Float(translation.x) - Float(lastPanTranslation.x)) * scaleFactor
                 node.eulerAngles.y += rotation
             default:
                 break
             }
-
             node.position = newPos
             updateArrowPositionsToMatchNode(node: node)
             lastPanTranslation = translation
-
+            
         }
         
         private func updateArrowPositionsToMatchNode(node: SCNNode) {
@@ -289,92 +278,51 @@ struct ScenekitView: UIViewRepresentable {
         }
         
         func createArrowNode(axis: SCNVector3, color: UIColor, arrowName: String) -> SCNNode {
-            let cylinder = SCNCylinder(radius: 0.01, height: 1.0)
-            cylinder.radialSegmentCount = 12
-            let cylinderMaterial = SCNMaterial()
-            cylinderMaterial.diffuse.contents = color
-            cylinderMaterial.transparency = 0
-            cylinder.firstMaterial = cylinderMaterial
-
+            
             let cone = SCNCone(topRadius: 0, bottomRadius: 0.04, height: 0.1)
             cone.radialSegmentCount = 12
             let coneMaterial = SCNMaterial()
             coneMaterial.diffuse.contents = color
-//            coneMaterial.transparency = 0.7
             cone.firstMaterial = coneMaterial
-
-            let cylinderNode = SCNNode(geometry: cylinder)
+            
             let coneNode = SCNNode(geometry: cone)
             coneNode.position = SCNVector3(0, 0.5, 0) // Adjust based on cylinder height
-//            cylinderNode.addChildNode(coneNode)
             
             // Define the total height of the arrow for positioning the torus
-            let totalHeight = (Double(objectDimensionData.width) ?? 0.1) / 2.0 // cylinder height + cone height
-            let torusRadius = (Double(objectDimensionData.width) ?? 0.1) + 0.1 // Adjust as necessary
-           let torusThickness = 0.03 // Adjust as necessary
-
-           // Create the torus as the rotation indicator
-           let torus = SCNTorus(ringRadius: torusRadius, pipeRadius: torusThickness)
-            torus.firstMaterial?.diffuse.contents = Color(.cyan)
-           let torusNode = SCNNode(geometry: torus)
-            torusNode.position = SCNVector3(0, Float(totalHeight) / 2 + 0.1, 0)
-           torusNode.eulerAngles = SCNVector3(0, Float.pi / 2, 0)// Lay the torus flat
-
+            let totalHeight = (Double(objectDimensionData.width) ?? 0.1) / 2.0 
+            let torusRadius = (Double(objectDimensionData.width) ?? 0.1) + 0.1
+            let torusThickness = 0.02
+            
+            // Create the torus as the rotation indicator
+            let torus = SCNTorus(ringRadius: torusRadius, pipeRadius: torusThickness)
+            torus.firstMaterial?.diffuse.contents = UIColor(Color(.gray))
+            arrowRotation = SCNNode(geometry: torus)
+            arrowRotation?.position = SCNVector3(0, Float(totalHeight) / 2 + 0.1, 0)
+            arrowRotation?.eulerAngles = SCNVector3(0, Float.pi / 2, 0)
             
             // Rotate the arrow according to the axis
             if axis.x != 0 {
-                cylinderNode.eulerAngles = SCNVector3(CGFloat.pi / 2, 0, 0)
-                cylinderNode.name = "axisArrowX"
                 coneNode.eulerAngles = SCNVector3(CGFloat.pi / 2, 0, 0)
                 coneNode.position = SCNVector3(0, Float(totalHeight) / 2 + 0.1, (Float(objectDimensionData.width) ?? 0.1) + 0.3)
                 coneNode.name = "axisArrowX"
             } else if axis.y != 0 {
-                cylinderNode.eulerAngles = SCNVector3(0, CGFloat.pi / 2, 0)
-                cylinderNode.name = "axisArrowY"
                 coneNode.eulerAngles = SCNVector3(0, CGFloat.pi / 2, 0)
                 coneNode.name = "axisArrowY"
             } else if axis.z != 0 {
-                cylinderNode.eulerAngles = SCNVector3(0, 0, CGFloat.pi / 2)
-                cylinderNode.name = "axisArrowZ"
                 coneNode.eulerAngles = SCNVector3(0, 0, CGFloat.pi / 2)
                 coneNode.position = SCNVector3((Float(objectDimensionData.width) ?? 0.1) - 0.5, Float(totalHeight) / 2 + 0.1, 0)
                 coneNode.name = "axisArrowZ"
             }
             
             let parentNode = SCNNode()
-//            parentNode.addChildNode(cylinderNode)
+//            coneNode.opacity = 0.5
+//            arrowRotation?.opacity = 0.5
             parentNode.addChildNode(coneNode)
-            parentNode.addChildNode(torusNode) // Add the torus node to the parent
-
-            // Set the name for both the cylinder and cone
-            cylinderNode.name = arrowName
-            coneNode.name = arrowName
-            torusNode.name = "axisArrowRotation" // Optionally, give the torus the same name
-
-            // Set the name for the parent node
+            parentNode.addChildNode(arrowRotation!) // Add the torus node to the parent
+            arrowRotation?.name = "axisArrowRotation" // Optionally, give the torus the same name
             parentNode.name = arrowName
-
+            
             return parentNode
-        }
-        
-        func createRotationPlane(axis: SCNVector3, color: UIColor) -> SCNNode {
-            // Create a large plane for the outer ring
-            let outerPlane = SCNTorus(ringRadius: 0.1, pipeRadius: 0.01)
-            outerPlane.firstMaterial?.diffuse.contents = color
-            outerPlane.firstMaterial?.isDoubleSided = true
-
-            let rotationPlaneNode = SCNNode(geometry: outerPlane)
-
-            // Rotate the plane to be perpendicular to the axis
-            if axis.x != 0 {
-                rotationPlaneNode.eulerAngles = SCNVector3(0, CGFloat.pi / 2, 0)
-            } else if axis.y != 0 {
-                rotationPlaneNode.eulerAngles = SCNVector3(CGFloat.pi / 2, 0, 0)
-            } else if axis.z != 0 {
-                rotationPlaneNode.eulerAngles = SCNVector3(0, 0, CGFloat.pi / 2)
-            }
-
-            return rotationPlaneNode
         }
         
         func SCNVector3MultMatrix4(_ vector: SCNVector3, _ matrix: SCNMatrix4) -> SCNVector3 {
