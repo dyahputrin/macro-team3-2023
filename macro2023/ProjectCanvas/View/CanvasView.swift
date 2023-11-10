@@ -22,7 +22,7 @@ struct CanvasView: View {
     @State var objectsButtonClicked: Bool
     @State var roomButtonClicked: Bool
     @State var povButtonClicked: Bool
-
+    
     @Binding var viewfinderButtonClicked: Bool
     @Binding var isImporting: Bool
     @Binding var isExporting: Bool
@@ -56,7 +56,6 @@ struct CanvasView: View {
     
     @ObservedObject var objectDimensionData: ObjectDimensionData = ObjectDimensionData()
     @State private var sceneBinding: Binding<SCNScene?> = .constant(nil)
-
     
     init(
         objectsButtonClicked: Bool,
@@ -90,24 +89,32 @@ struct CanvasView: View {
     @State private var roomWidth: Float = 0.0
     @State private var sceneRefreshToggle = false
     
+    @State var coordinator: Coordinator?
+    @State private var isViewVisible = true
+    
     var body: some View {
         
         GeometryReader { geometry in
-           
+            
             ZStack {
-                    let scenekitView =
-                    ScenekitView(
-                        objectDimensionData: objectDimensionData,
-                        scene: $roomSceneViewModel.rootScene,
-                        isEditMode: $isEditMode,
-                        roomWidth: $roomWidth
-                    )
-                    scenekitView
-                        .edgesIgnoringSafeArea(.bottom)
-                        .id(sceneViewID)
-                        .onAppear {
-                            currentScenekitView = scenekitView
-                        }
+                let scenekitView =
+                ScenekitView(
+                    objectDimensionData: objectDimensionData,
+                    scene: $roomSceneViewModel.rootScene,
+                    isEditMode: $isEditMode,
+                    roomWidth: $roomWidth, coordinator: $coordinator, isViewVisible: $isViewVisible
+                )
+                
+                scenekitView
+                    .edgesIgnoringSafeArea(.bottom)
+                    .id(sceneViewID)
+                    .onAppear {
+                        currentScenekitView = scenekitView
+//                        coordinator = Coordinator(currentScenekitView!)
+//                        if coordinator != nil {
+//                            coordinator?.deselectNodeAndArrows()
+//                        }
+                    }
             }
             
             if objectsButtonClicked == true {
@@ -120,20 +127,16 @@ struct CanvasView: View {
             }
             
             ObjectListView(showingObjectList: $showingObjectList)
-                //.animation(.easeInOut(duration: 0.3), value: showingObjectList)
+            //.animation(.easeInOut(duration: 0.3), value: showingObjectList)
             
             if objectDimensionData.name != "--" {
                 ObjectSizeView(roomWidthText:.constant("2"), roomLengthText: .constant("2"), roomHeightText: .constant("2"), sceneViewID: .constant(UUID()), roomSceneViewModel: CanvasDataViewModel(canvasData: CanvasData(roomWidth: 0, roomHeight: 0, roomLength: 0), projectData: ProjectData(), routerView: RouterView()), objectDimensionData: objectDimensionData)
             }
-
+            
         }
         .onAppear {
             roomButtonClicked = true
         }
-        //        .sheet(isPresented: $sheetPresented) {
-        //            SizePopUpView(sheetPresented: $sheetPresented, isSetButtonTapped: $isSetButtonTapped, roomSceneViewModel: roomSceneViewModel, sceneViewID: $sceneViewID, roomWidthText: $roomWidthText, roomLengthText: $roomLengthText, roomHeightText: $roomHeightText)
-        //                .interactiveDismissDisabled()
-        //        }
         .toolbarRole(.editor)
         .toolbarBackground(Color.white)
         .toolbar {
@@ -141,25 +144,25 @@ struct CanvasView: View {
                 HStack {
                     
                     //VIEWFINDER
-                        Menu {
-                            Button(action: {
-                                self.isGuidedCaptureViewPresented = true
-                            }, label: {
-                                Text("Scan objects")
-                            })
-                            Button(action: {
-                                self.isRoomCaptureViewPresented = true
-                            }, label: {
-                                Text("Scan room")
-                            })
-                        } label: {
-                            Label("Viewfinder", systemImage: "viewfinder")
-                                .foregroundColor(.black)
-                            Text("Scan")
-                                .font(.subheadline)
-                                .foregroundColor(.black)
-                        }
-                        .padding(.trailing, 50)
+                    Menu {
+                        Button(action: {
+                            self.isGuidedCaptureViewPresented = true
+                        }, label: {
+                            Text("Scan objects")
+                        })
+                        Button(action: {
+                            self.isRoomCaptureViewPresented = true
+                        }, label: {
+                            Text("Scan room")
+                        })
+                    } label: {
+                        Label("Viewfinder", systemImage: "viewfinder")
+                            .foregroundColor(.black)
+                        Text("Scan")
+                            .font(.subheadline)
+                            .foregroundColor(.black)
+                    }
+                    .padding(.trailing, 50)
                     
                     //EDIT MODE TOGGLE
                     Button(action : {
@@ -197,7 +200,7 @@ struct CanvasView: View {
                                 .foregroundColor(objectsButtonClicked ? .accentColor : .black)
                         }
                     }
-
+                    
                 }
                 .padding(.vertical, 5)
                 .padding(.trailing, 200)
@@ -209,6 +212,7 @@ struct CanvasView: View {
                 Button(action: {
                     isSaveClicked = true
                     showSaveAlert = true
+                    
                     roomSceneViewModel.saveProject(viewContext: viewContext)
                     
                     roomSceneViewModel.saveSnapshot(activeProjectID: activeProjectID, viewContext: viewContext, snapshotImageArg: snapshotImage, scenekitView: currentScenekitView!)
@@ -254,9 +258,9 @@ struct CanvasView: View {
                 }
             }
         }
-//        .fullScreenCover(isPresented: $isGuidedCaptureViewPresented, content: {
-//            GuidedCaptureView()
-//        })
+        //        .fullScreenCover(isPresented: $isGuidedCaptureViewPresented, content: {
+        //            GuidedCaptureView()
+        //        })
         .navigationTitle(routerView.project == nil ? "NewProject" : roomSceneViewModel.projectData.nameProject)
         .navigationBarBackButtonHidden(true)
         .navigationBarItems(leading: Button(action: {
@@ -321,11 +325,10 @@ struct CanvasView: View {
             }
             
             AppDelegate.orientationLock = .landscape // And making sure it stays that way
-                
+            
         }
         .onDisappear{
-            
-            
+            coordinator?.deselectNodeAndArrows()
             print("CanvasView is disappearing")
             if routerView.path.count > 0 {
                 routerView.path.removeLast()
