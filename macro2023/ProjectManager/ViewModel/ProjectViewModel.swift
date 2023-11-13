@@ -68,16 +68,16 @@ class ProjectViewModel: ObservableObject {
         return scene
     }
     
-    func cameraNode()-> SCNNode?{
-        var cameraNode: SCNNode? {
-            let cameraNode = SCNNode()
-            cameraNode.camera = SCNCamera()
-            cameraNode.position = SCNVector3(x: 0, y:0, z: 15)
-            cameraNode.rotation = SCNVector4(0, 0, 0, Float.pi / 2)
-            return cameraNode
-        }
-        return cameraNode
-    }
+//    func cameraNode()-> SCNNode?{
+//        var cameraNode: SCNNode? {
+//            let cameraNode = SCNNode()
+//            cameraNode.camera = SCNCamera()
+//            cameraNode.position = SCNVector3(x: 0, y:0, z: 15)
+//            cameraNode.rotation = SCNVector4(0, 0, 0, Float.pi / 2)
+//            return cameraNode
+//        }
+//        return cameraNode
+//    }
     
     func deleteProject(viewContext: NSManagedObjectContext, project: ProjectEntity) {
         viewContext.delete(project)

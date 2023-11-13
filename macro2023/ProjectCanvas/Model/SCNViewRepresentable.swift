@@ -19,7 +19,11 @@ struct ScenekitView: UIViewRepresentable {
     func makeUIView(context: Context) -> SCNView {
         view.scene = scene
         view.allowsCameraControl = !isEditMode
-        view.defaultCameraController.translateInCameraSpaceBy(x: 0, y: 1, z: (roomWidth ?? 1) - 1)
+        view.defaultCameraController.translateInCameraSpaceBy(x: 0, y: 1, z: (roomWidth))
+        
+//        if let camera = view.pointOfView?.camera {
+//            camera.zFar = 10000
+//        }
         
         let tapGesture = UITapGestureRecognizer(target: context.coordinator, action: #selector(context.coordinator.handleTap(_:)))
         view.addGestureRecognizer(tapGesture)
@@ -68,6 +72,11 @@ struct ScenekitView: UIViewRepresentable {
                 return
             } else {
                 parent.isEditMode = true
+                arrowY?.opacity = 0.5
+                arrowX?.opacity = 0.5
+                arrowZ?.opacity = 0.5
+                arrowRotation?.opacity = 0.5
+                
                 if let result = hitResults.first(where: { $0.node.name?.hasPrefix("axisArrowY") == true }) {
                     arrowY?.opacity = 1.0
                     arrowX?.opacity = 0.5
@@ -106,36 +115,42 @@ struct ScenekitView: UIViewRepresentable {
                     processNodeSelection(result.node)
                     selectedAxis = nil
                 }
-                
             }
-            
         }
         
         private func processNodeSelection(_ node: SCNNode) {
             if arrowX != nil && arrowY != nil && arrowZ != nil {
                 updateArrowPositionsToMatchNode(node: node)
             } else {
-                
                 deselectNodeAndArrows()
-                
+
                 selectedNode = node
                 parent.view.allowsCameraControl = false
+//                let worldBoundingBox = selectedNode!.boundingBox
+//                let worldMin = selectedNode!.convertPosition(worldBoundingBox.min, to: nil)
+//                let worldMax = selectedNode!.convertPosition(worldBoundingBox.max, to: nil)
+//                
+//                let x = String(format: "%.2f", worldMax.x - worldMin.x)
+//                let y = String(format: "%.2f", worldMax.y - worldMin.y)
+//                let z = String(format: "%.2f", worldMax.z - worldMin.z)
+//                
+//                objectDimensionData.name = selectedNode!.name ?? "Unknown"
+//                print(selectedNode?.name)
+//                objectDimensionData.width = x
+//                objectDimensionData.height = y
+//                objectDimensionData.length = z
+                
+                let worldBoundingBox = selectedNode!.presentation.boundingBox
+                let x = String(format: "%.2f", worldBoundingBox.max.x - worldBoundingBox.min.x)
+                let y = String(format: "%.2f", worldBoundingBox.max.y - worldBoundingBox.min.y)
+                let z = String(format: "%.2f", worldBoundingBox.max.z - worldBoundingBox.min.z)
+
+                objectDimensionData.name = selectedNode!.name ?? "Unknown"
+                objectDimensionData.width = x
+                objectDimensionData.height = y
+                objectDimensionData.length = z
                 
                 if let nodeName = selectedNode?.name, ["wall1", "wall2", "wall3", "wall4", "floor", "floorScene"].contains(nodeName) {
-                    let worldBoundingBox = selectedNode!.boundingBox
-                    let worldMin = selectedNode!.convertPosition(worldBoundingBox.min, to: nil)
-                    let worldMax = selectedNode!.convertPosition(worldBoundingBox.max, to: nil)
-                    
-                    let x = String(format: "%.2f", worldMax.x - worldMin.x)
-                    let y = String(format: "%.2f", worldMax.y - worldMin.y)
-                    let z = String(format: "%.2f", worldMax.z - worldMin.z)
-                    
-                    objectDimensionData.name = selectedNode!.name ?? "Unknown"
-                    print(selectedNode?.name)
-                    objectDimensionData.width = x
-                    objectDimensionData.height = y
-                    objectDimensionData.length = z
-                    
                     print("Dimension \(x), \(y), \(z)")
                     print(objectDimensionData.name)
                     
@@ -147,14 +162,24 @@ struct ScenekitView: UIViewRepresentable {
                         (maxBounds.z + minBounds.z) / 2
                     )
                     
-                    let worldBoundingBox = selectedNode!.boundingBox
-                    let worldMin = selectedNode!.convertPosition(worldBoundingBox.min, to: nil)
-                    let worldMax = selectedNode!.convertPosition(worldBoundingBox.max, to: nil)
+//                    let worldBoundingBox = selectedNode!.boundingBox
+//                    let worldMin = selectedNode!.convertPosition(worldBoundingBox.min, to: nil)
+//                    let worldMax = selectedNode!.convertPosition(worldBoundingBox.max, to: nil)
+//                    
+//                    let x = String(format: "%.2f", worldMax.x - worldMin.x)
+//                    let y = String(format: "%.2f", worldMax.y - worldMin.y)
+//                    let z = String(format: "%.2f", worldMax.z - worldMin.z)
+//                    
+//                    objectDimensionData.name = selectedNode!.name ?? "Unknown"
+//                    objectDimensionData.width = x
+//                    objectDimensionData.height = y
+//                    objectDimensionData.length = z
                     
-                    let x = String(format: "%.2f", worldMax.x - worldMin.x)
-                    let y = String(format: "%.2f", worldMax.y - worldMin.y)
-                    let z = String(format: "%.2f", worldMax.z - worldMin.z)
-                    
+                    let worldBoundingBox = selectedNode!.presentation.boundingBox
+                    let x = String(format: "%.2f", worldBoundingBox.max.x - worldBoundingBox.min.x)
+                    let y = String(format: "%.2f", worldBoundingBox.max.y - worldBoundingBox.min.y)
+                    let z = String(format: "%.2f", worldBoundingBox.max.z - worldBoundingBox.min.z)
+
                     objectDimensionData.name = selectedNode!.name ?? "Unknown"
                     objectDimensionData.width = x
                     objectDimensionData.height = y
@@ -163,13 +188,17 @@ struct ScenekitView: UIViewRepresentable {
                     print("Dimension \(x), \(y), \(z)")
                     print(objectDimensionData.name)
                     
-                    let xFloat = worldMax.x - worldMin.x
-                    let yFloat = worldMax.y - worldMin.y
-                    let zFloat = worldMax.z - worldMin.z
+                    let xFloat = Float(x)
+                    let yFloat = Float(y)
+                    let zFloat = Float(z)
                     
-                    arrowX = createArrowNode(axis: SCNVector3(1, 0, 0), color: .red, arrowName: "axisArrowX", X: xFloat, Y: yFloat, Z: zFloat)
-                    arrowY = createArrowNode(axis: SCNVector3(0, 1, 0), color: .green, arrowName: "axisArrowY", X: xFloat, Y: yFloat, Z: zFloat)
-                    arrowZ = createArrowNode(axis: SCNVector3(0, 0, 1), color: .blue, arrowName: "axisArrowZ", X: xFloat, Y: yFloat, Z: zFloat)
+//                    let xFloat = worldMax.x - worldMin.x
+//                    let yFloat = worldMax.y - worldMin.y
+//                    let zFloat = worldMax.z - worldMin.z
+                    
+                    arrowX = createArrowNode(axis: SCNVector3(1, 0, 0), color: .red, arrowName: "axisArrowX", X: xFloat ?? 0.0, Y: yFloat ?? 0.0, Z: zFloat ?? 0.0)
+                    arrowY = createArrowNode(axis: SCNVector3(0, 1, 0), color: .green, arrowName: "axisArrowY", X: xFloat ?? 0.0, Y: yFloat ?? 0.0, Z: zFloat ?? 0.0)
+                    arrowZ = createArrowNode(axis: SCNVector3(0, 0, 1), color: .blue, arrowName: "axisArrowZ", X: xFloat ?? 0.0, Y: yFloat ?? 0.0, Z: zFloat ?? 0.0)
                     
                     parent.scene?.rootNode.addChildNode(arrowX!)
                     parent.scene?.rootNode.addChildNode(arrowY!)
@@ -296,33 +325,23 @@ struct ScenekitView: UIViewRepresentable {
         }
         
         func createArrowNode(axis: SCNVector3, color: UIColor, arrowName: String, X: Float, Y: Float, Z: Float) -> SCNNode {
-            let cylinder = SCNCylinder(radius: 0.01, height: 1.0)
-            cylinder.radialSegmentCount = 12
-            let cylinderMaterial = SCNMaterial()
-            cylinderMaterial.diffuse.contents = color
-            cylinderMaterial.transparency = 0
-            cylinder.firstMaterial = cylinderMaterial
-            
             let cone = SCNCone(topRadius: 0, bottomRadius: 0.07, height: 0.15)
             cone.radialSegmentCount = 12
             let coneMaterial = SCNMaterial()
             coneMaterial.diffuse.contents = color
-            //            coneMaterial.transparency = 0.7
             cone.firstMaterial = coneMaterial
             
-            let cylinderNode = SCNNode(geometry: cylinder)
             let coneNode = SCNNode(geometry: cone)
-            coneNode.position = SCNVector3(0, 0.5, 0) // Adjust based on cylinder height
-            //            cylinderNode.addChildNode(coneNode)
+            coneNode.position = SCNVector3(0, 0.5, 0)
             
             // Define the total height of the arrow for positioning the torus
-            let totalHeight = X / 2.0 // cylinder height + cone height
-            let torusRadius = X // Adjust as necessary
-            let torusThickness = 0.03 // Adjust as necessary
+            let totalHeight = X / 2.0
+            let torusRadius = X
+            let torusThickness = 0.03
             
             // Create the torus as the rotation indicator
             let torus = SCNTorus(ringRadius: CGFloat(torusRadius), pipeRadius: torusThickness)
-            torus.firstMaterial?.diffuse.contents = Color(.cyan)
+            torus.firstMaterial?.diffuse.contents = UIColor(Color(.white))
             let torusNode = SCNNode(geometry: torus)
             torusNode.position = SCNVector3(0, Float(totalHeight) / 2 + 0.1, 0)
             torusNode.eulerAngles = SCNVector3(0, Float.pi / 2, 0)// Lay the torus flat
@@ -330,36 +349,23 @@ struct ScenekitView: UIViewRepresentable {
             
             // Rotate the arrow according to the axis
             if axis.x != 0 {
-                cylinderNode.eulerAngles = SCNVector3(CGFloat.pi / 2, 0, 0)
-                cylinderNode.name = "axisArrowX"
                 coneNode.eulerAngles = SCNVector3(CGFloat.pi / 2, 0, 0)
                 coneNode.position = SCNVector3(0, Float(totalHeight) / 2 + 0.1, X + 0.15)
                 coneNode.name = "axisArrowX"
             } else if axis.y != 0 {
-                cylinderNode.eulerAngles = SCNVector3(0, CGFloat.pi / 2, 0)
-                cylinderNode.name = "axisArrowY"
                 coneNode.eulerAngles = SCNVector3(0, CGFloat.pi / 2, 0)
                 coneNode.position = SCNVector3(0, Y + 0.15, 0)
                 coneNode.name = "axisArrowY"
             } else if axis.z != 0 {
-                cylinderNode.eulerAngles = SCNVector3(0, 0, CGFloat.pi / 2)
-                cylinderNode.name = "axisArrowZ"
                 coneNode.eulerAngles = SCNVector3(0, 0, CGFloat.pi / 2)
                 coneNode.position = SCNVector3(-0.15 - Z, Float(totalHeight) / 2 + 0.1, 0)
                 coneNode.name = "axisArrowZ"
             }
             
             let parentNode = SCNNode()
-            //            parentNode.addChildNode(cylinderNode)
             parentNode.addChildNode(coneNode)
-            parentNode.addChildNode(torusNode) // Add the torus node to the parent
-            
-            // Set the name for both the cylinder and cone
-            cylinderNode.name = arrowName
-            coneNode.name = arrowName
-            torusNode.name = "axisArrowRotation" // Optionally, give the torus the same name
-            
-            // Set the name for the parent node
+            parentNode.addChildNode(torusNode)
+            torusNode.name = "axisArrowRotation"
             parentNode.name = arrowName
             
             return parentNode
