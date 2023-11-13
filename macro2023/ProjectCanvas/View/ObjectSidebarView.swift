@@ -62,6 +62,7 @@ struct ObjectSidebarView: View {
                                                             .shadow(radius:5)
                                                             .onTapGesture {
                                                                 roomSceneViewModel.addNodeToRootScene(named: asset)
+                                                                roomSceneViewModel.isObjectHidden.append(false)
                                                             }
                                                         let fullNameArr = asset.split(separator:".")
                                                         Text(fullNameArr[0])
@@ -98,6 +99,7 @@ struct ObjectSidebarView: View {
                                                                 .shadow(radius: 5)
                                                                 .onTapGesture {
                                                                     roomSceneViewModel.addImportObjectChild(data: usdzData)
+//                                                                    self.roomSceneViewModel.canvasData.listChildNodes.append(urlImport.importedName!)
                                                                 }
                                                         }
                                                         Text("\(urlImport.importedName ?? "error")")

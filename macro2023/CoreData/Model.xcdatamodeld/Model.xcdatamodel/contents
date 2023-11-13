@@ -8,6 +8,7 @@
         <attribute name="heightRoom" optional="YES" attributeType="Float" defaultValueString="0.0" usesScalarValueType="YES"/>
         <attribute name="lastModifiedDate" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
         <attribute name="lengthRoom" optional="YES" attributeType="Float" defaultValueString="0.0" usesScalarValueType="YES"/>
+        <attribute name="projectChildSaved" optional="YES" attributeType="Binary"/>
         <attribute name="projectID" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
         <attribute name="projectName" optional="YES" attributeType="String"/>
         <attribute name="projectScene" optional="YES" attributeType="Binary"/>

@@ -15,109 +15,58 @@ struct ObjectListView: View {
     @State private var selectedWall: Int?
     @State var wallList = true
     @State var objectList = true
-    @State var isWallHidden: [Bool] = [false, false, false, false]
-    @State var isObjectHidden: [Bool] = [false, false, false, false]
-    @State var objects: [String] = [
-        "Object 1",
-        "Object 2",
-        "Object 3",
-        "Object 4"
-    ]
+    @ObservedObject var objectDimensionData: ObjectDimensionData
+    @ObservedObject var roomSceneViewModel:CanvasDataViewModel
     
     var body: some View {
-        let walls = [
-            "Wall 1",
-            "Wall 2",
-            "Wall 3",
-            "Wall 4"
-        ]
-        
         HStack {
             ZStack(alignment: .top) {
-                
                 MenuChevron
-                
                 List {
                     Section(isExpanded: $wallList,
-                        content: {
-                        ForEach(walls.indices, id: \.self) { index in
-                            HStack {
-                                Text(walls[index])
-                                    .foregroundColor(isWallHidden[index] ? .gray : .black)
-                                Spacer()
-                                Button(action: {
-                                    selectWall(index)
-                                }, label: {
-                                    if !isWallHidden[index] {
-                                        Image(systemName: "eye")
-                                            .foregroundColor(Color.accentColor)
-                                            .onTapGesture {
-                                                isWallHidden[index].toggle()
-                                            }
-                                    } else if isWallHidden[index] {
-                                        Image(systemName: "eye.slash")
-                                            .foregroundColor(.gray)
-                                            .onTapGesture {
-                                                isWallHidden[index].toggle()
-                                            }
-                                    }
-                                })
-                               
+                            content: {
+                        
+                        ForEach(roomSceneViewModel.listWallNodes , id:\.self){ wallNodes in
+                            if roomSceneViewModel.canvasData.roomWidth != 0 && roomSceneViewModel.canvasData.roomHeight != 0 && roomSceneViewModel.canvasData.roomLength != 0{
+                                HStack{
+                                    let indexWall = roomSceneViewModel.listWallNodes.firstIndex(of:wallNodes)
+                                    Text("\(wallNodes.name!)")
+                                        .foregroundColor(roomSceneViewModel.isWallHidden[indexWall!] ? .gray : . black)
+                                    Spacer()
+                                    Image(systemName: roomSceneViewModel.isWallHidden[indexWall!] ? "eye.slash" : "eye")
+                                        .foregroundColor(roomSceneViewModel.isWallHidden[indexWall!] ? Color.gray : Color.accentColor)
+                                        .onTapGesture {
+                                            wallNodes.isHidden.toggle()
+                                            roomSceneViewModel.isWallHidden[indexWall!] = wallNodes.isHidden
+                                        }
+                                }
                             }
-                            .listRowBackground(
-                                       selectedWall == index ? Color.accentColor.opacity(0.2) : Color.white
-                                   )
                         }
+                        
                     }, header: {
                         Image(systemName: "square.split.bottomrightquarter")
                         Text("Wall List")
-                    }).onChange(of: isWallHidden) {
-                        if let selectedWall = selectedWall, isWallHidden[selectedWall] {
-                            self.selectedWall = nil
-                        }
-                    }
-                    
+                    })
                     Section(isExpanded: $objectList,
-                        content: {
-                        ForEach(objects.indices, id: \.self) { index in
-                            HStack {
-                                Text(objects[index])
-                                    .foregroundColor(isObjectHidden[index] ? .gray : .black)
+                            content: {
+                        ForEach(roomSceneViewModel.listChildNodes , id:\.self){ item in
+                            HStack{
+                                let indexObject = roomSceneViewModel.listChildNodes.firstIndex(of:item)
+                                Text("\(item.childNodes[0].childNodes[0].name!)")
+                                    .foregroundColor(roomSceneViewModel.isObjectHidden[indexObject!] ? .gray : .black)
                                 Spacer()
-                                Button(action: {
-                                    selectObject(index)
-                                }, label: {
-                                    if !isObjectHidden[index] {
-                                        Image(systemName: "eye")
-                                            .foregroundColor(Color.accentColor)
-                                            .onTapGesture {
-                                                isObjectHidden[index].toggle()
-                                            }
-                                    } else if isObjectHidden[index] {
-                                        Image(systemName: "eye.slash")
-                                            .foregroundColor(.gray)
-                                            .onTapGesture {
-                                                isObjectHidden[index].toggle()
-                                            }
+                                Image(systemName: roomSceneViewModel.isObjectHidden[indexObject!] ? "eye.slash" : "eye")
+                                    .foregroundColor(roomSceneViewModel.isObjectHidden[indexObject!] ? Color.gray : Color.accentColor)
+                                    .onTapGesture {
+                                        item.isHidden.toggle()
+                                        roomSceneViewModel.isObjectHidden[indexObject!] = item.isHidden
                                     }
-                                })
-                            }
-                            .listRowBackground(
-                                       selectedObject == index ? Color.accentColor.opacity(0.15) : Color.white
-                                   )
-                            .swipeActions(edge: .trailing) {
-                                Button(role: .destructive, action: {removeObject(at: index)}, label: {Text("Remove")})
-                                    .tint(.red)
                             }
                         }
                     }, header: {
                         Image(systemName: "chair.lounge")
                         Text("Object List")
-                    }).onChange(of: isObjectHidden) {
-                        if let selectedObject = selectedObject, isObjectHidden[selectedObject] {
-                            self.selectedObject = nil
-                        }
-                    }
+                    })
                 }
                 .background(.regularMaterial)
                 .scrollContentBackground(.hidden)
@@ -133,32 +82,6 @@ struct ObjectListView: View {
         .animation(.easeInOut(duration: 5), value: showingObjectList)
     }
     
-    private func removeObject(at index: Int) {
-        withAnimation{
-            objects.remove(at: index)
-            print(objects)
-        }
-    }
-    
-    private func selectWall(_ index: Int) {
-        if selectedWall == index {
-            selectedWall = nil
-        } else if !isWallHidden[index] {
-            selectedWall = index
-            selectedObject = nil
-        }
-    }
-
-    private func selectObject(_ index: Int) {
-        if selectedObject == index {
-            selectedObject = nil
-        } else if !isObjectHidden[index] {
-            selectedObject = index
-            selectedWall = nil
-        }
-    }
-    
-    
     var MenuChevron: some View {
         ZStack {
             RoundedRectangle(cornerRadius: 14)
@@ -168,11 +91,11 @@ struct ObjectListView: View {
                     showingObjectList.toggle()
                 }
                 .foregroundStyle(.regularMaterial)
-
+            
             Image(systemName: "chevron.right")
                 .bold()
                 .rotationEffect(
-                  showingObjectList ?
+                    showingObjectList ?
                     Angle(degrees: 180) : Angle(degrees: 0))
                 .offset(x: 2)
                 .foregroundColor(.gray)
@@ -183,6 +106,6 @@ struct ObjectListView: View {
     }
 }
 
-#Preview {
-    ObjectListView(showingObjectList: .constant(true))
-}
+//#Preview {
+//    ObjectListView(showingObjectList: .constant(true))
+//}

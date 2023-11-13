@@ -16,6 +16,11 @@ class CanvasDataViewModel: ObservableObject {
     @Published var projectData: ProjectData
     @Published var routerView: RouterView
     @Published var rootScene:SCNScene? = nil
+    @Published var listChildNodes : [SCNNode]
+    @Published var listWallNodes : [SCNNode]
+    @Published var isObjectHidden : [Bool]
+    @Published var isWallHidden : [Bool]
+    
     var floor = SCNNode()
     var grayMaterial = SCNMaterial()
     var floorGeometry = SCNFloor()
@@ -30,15 +35,19 @@ class CanvasDataViewModel: ObservableObject {
         self.canvasData = canvasData
         self.projectData = projectData
         self.routerView = routerView
+        self.listChildNodes = []
+        self.listWallNodes = []
+        self.isObjectHidden = []
+        self.isWallHidden = []
         grayMaterial.diffuse.contents = UIColor.gray
-
+        
         floorGeometry.materials = [grayMaterial]
         
         self.floor.geometry?.materials = [grayMaterial]
         
         self.floor = SCNNode(geometry: floorGeometry)
         self.floor.opacity = 0.5
-//        floor.geometry = SCNFloor()
+        //        floor.geometry = SCNFloor()
         
         if routerView.project?.projectName == nil {
             self.makeScene1(width: 0, height: 0, length: 0)
@@ -68,6 +77,7 @@ class CanvasDataViewModel: ObservableObject {
             floorNode.scale = SCNVector3(width, 1, length)
             //            floorNode.position = SCNVector3(0, (height/2)-height + 0.5,0)
             floorNode.position = SCNVector3(0, (1-height)/2,0)
+//            self.listWallNodes.append(floorNode)
             rootScene?.rootNode.addChildNode(floorNode)
         }
         
@@ -77,6 +87,7 @@ class CanvasDataViewModel: ObservableObject {
             wall1Node.scale = SCNVector3(1, height, length)
             //            wall1Node.position = SCNVector3((width/2)-width + 0.5, 0, 0)
             wall1Node.position = SCNVector3((1-width)/2 - 0.001, 0, 0)
+//            self.listWallNodes.append(wall1Node)
             rootScene?.rootNode.addChildNode(wall1Node)
         }
         
@@ -86,6 +97,7 @@ class CanvasDataViewModel: ObservableObject {
             wall2Node.scale = SCNVector3(width, height, 1)
             //            wall2Node.position = SCNVector3(0, 0, (length/2)-length + 0.5)
             wall2Node.position = SCNVector3(0, 0, (1-length)/2 - 0.001)
+//            self.listWallNodes.append(wall2Node)
             rootScene?.rootNode.addChildNode(wall2Node)
         }
         
@@ -95,6 +107,7 @@ class CanvasDataViewModel: ObservableObject {
             wall3Node.scale = SCNVector3(1, height, length)
             //            wall3Node.position = SCNVector3((width*0.5)-0.5, 0, 0)
             wall3Node.position = SCNVector3((width-1)/2 + 0.001, 0, 0)
+//            self.listWallNodes.append(wall3Node)
             rootScene?.rootNode.addChildNode(wall3Node)
         }
         
@@ -104,6 +117,7 @@ class CanvasDataViewModel: ObservableObject {
             wall4Node.scale = SCNVector3(width, height, 1)
             //            wall4Node.position = SCNVector3(0, 0, length-(length/2)-0.5 )
             wall4Node.position = SCNVector3(0, 0, (length-1)/2 + 0.001)
+//            self.listWallNodes.append(wall4Node)
             rootScene?.rootNode.addChildNode(wall4Node)
         }
         rootScene?.rootNode.addChildNode(floor)
@@ -124,6 +138,7 @@ class CanvasDataViewModel: ObservableObject {
     func addNodeToRootScene(named asset: String) {
         if let assetScene = SCNScene(named: asset) ,
            let assetNode = assetScene.rootNode.childNodes.first?.clone(){
+            self.listChildNodes.append(assetNode)
             rootScene?.rootNode.addChildNode(assetNode)
         }
     }
@@ -148,6 +163,8 @@ class CanvasDataViewModel: ObservableObject {
         canvasData.roomWidth = newWidth
         canvasData.roomHeight = newHeight
         canvasData.roomLength = newLength
+        self.listWallNodes.removeAll()
+        self.isWallHidden.removeAll()
         
         let rootNode = rootScene?.rootNode
         let nodeNames = ["v3wall1putih", "v3wall2putih", "v3wall3putih", "v3wall4putih", "v3floorputih"]
@@ -162,15 +179,23 @@ class CanvasDataViewModel: ObservableObject {
                 case "v3wall1putih":
                     node.scale = SCNVector3(1, newHeight, newLength)
                     node.position = SCNVector3((1-newWidth)/2 - 0.001, 0, 0)
+                    self.listWallNodes.append(node)
+                    self.isWallHidden.append(node.isHidden)
                 case "v3wall2putih":
                     node.scale = SCNVector3(newWidth, newHeight, 1)
                     node.position = SCNVector3(0, 0, (1-newLength)/2 - 0.001)
+                    self.listWallNodes.append(node)
+                    self.isWallHidden.append(node.isHidden)
                 case "v3wall3putih":
                     node.scale = SCNVector3(1, newHeight, newLength)
                     node.position = SCNVector3((newWidth-1)/2 + 0.001, 0, 0)
+                    self.listWallNodes.append(node)
+                    self.isWallHidden.append(node.isHidden)
                 case "v3wall4putih":
                     node.scale = SCNVector3(newWidth, newHeight, 1)
                     node.position = SCNVector3(0, 0, (newLength-1)/2 + 0.001)
+                    self.listWallNodes.append(node)
+                    self.isWallHidden.append(node.isHidden)
                 default:
                     print("Unknown node name: \(nodeName)")
                 }
@@ -181,37 +206,6 @@ class CanvasDataViewModel: ObservableObject {
     // function for updating room size
     func updateRoomSize1(newWidth: CGFloat, newHeight: CGFloat, newLength: CGFloat, scene: ScenekitView) {
         
-        //        canvasData.roomWidth = newWidth
-        //        canvasData.roomHeight = newHeight
-        //        canvasData.roomLength = newLength
-        //
-        //        let rootNode = scene.scene.rootNode
-        //        let nodeNames = ["wall1white", "wall2white", "wall3white", "wall4white", "floorblack"]
-        //
-        //        rootNode.enumerateChildNodes{ (node, _) in
-        //            if let nodeName = node.name, nodeNames.contains(nodeName) {
-        //                print("Found node with name: \(nodeName)")
-        //                switch nodeName {
-        //                case "floorblack":
-        //                    node.scale = SCNVector3(newWidth, 1, newLength)
-        //                    node.position = SCNVector3(0, (1-newHeight)/2,0)
-        //                case "wall1white":
-        //                    node.scale = SCNVector3(1, newHeight, newLength)
-        //                    node.position = SCNVector3((1-newWidth)/2 - 0.001, 0, 0)
-        //                case "wall2white":
-        //                    node.scale = SCNVector3(newWidth, newHeight, 1)
-        //                    node.position = SCNVector3(0, 0, (1-newLength)/2 - 0.001)
-        //                case "wall3white":
-        //                    node.scale = SCNVector3(1, newHeight, newLength)
-        //                    node.position = SCNVector3((newWidth-1)/2 + 0.001, 0, 0)
-        //                case "wall4white":
-        //                    node.scale = SCNVector3(newWidth, newHeight, 1)
-        //                    node.position = SCNVector3(0, 0, (newLength-1)/2 + 0.001)
-        //                default:
-        //                    print("Unknown node name: \(nodeName)")
-        //                }
-        //            }
-        //        }
     }
     
     // function for convert text to cgfloat for room size
@@ -281,6 +275,23 @@ class CanvasDataViewModel: ObservableObject {
                 newProject.heightRoom = Float(canvasData.roomHeight)
                 newProject.lengthRoom = Float(canvasData.roomLength)
                 
+                isObjectHidden = Array(repeating: false, count: isObjectHidden.count)
+                isWallHidden = Array(repeating: false, count: isWallHidden.count)
+                
+                //Reset Child Node
+                if let data = try? NSKeyedArchiver.archivedData(withRootObject: listChildNodes, requiringSecureCoding: false) {
+                    newProject.projectChildSaved = data
+                    for childrenNode in listChildNodes{
+                        print("hehe")
+                        childrenNode.removeFromParentNode()
+                    }
+                    listChildNodes.removeAll()
+                    isObjectHidden.removeAll()
+                } else {
+                    // Handle the error if the conversion fails
+                    print("Error converting SCNNode array to Data")
+                }
+                
                 if let scene = rootScene {
                     if let scnData = try? NSKeyedArchiver.archivedData(withRootObject: scene, requiringSecureCoding: true) {
                         newProject.projectScene = scnData
@@ -288,8 +299,8 @@ class CanvasDataViewModel: ObservableObject {
                         print("Failed to archive the SCN scene")
                     }
                 }
+                
             }
-            
             // Save the context
             if viewContext.hasChanges {
                 try viewContext.save()
@@ -321,36 +332,31 @@ class CanvasDataViewModel: ObservableObject {
             do {
                 let entities = try viewContext.fetch(fetchRequest)
                 
-                if let entity = entities.first, let scnData = entity.projectScene {
+                if let entity = entities.first, let scnData = entity.projectScene, let nodeData = entity.projectChildSaved {
                     
                     if let scene = try NSKeyedUnarchiver.unarchivedObject(ofClass: SCNScene.self, from: scnData) {
-                        //                        self.rootScene = scene
-                        print("Scenee \(scene)")
-                        //                        return scene
-                        tempScene = scene
-                        let binding = Binding(
-                            get: { self.tempScene },
-                            set: { newScene in
-                                self.tempScene = newScene
-                                // Optionally, you can save the `newScene` back to CoreData here
-                            }
-                        )
-                        
-                        self.tempScene = scene
                         rootScene = scene
-                        return binding
                     } else {
                         print("Failed to unarchive the SCN scene data")
                     }
+                    
+                    if let unarchivedNodes = try? NSKeyedUnarchiver.unarchiveTopLevelObjectWithData(nodeData) as? [SCNNode] {
+                        for node in unarchivedNodes {
+                            listChildNodes.append(node)
+                            rootScene?.rootNode.addChildNode(node)
+                            isObjectHidden.append(node.isHidden)
+                            print("Unarchived Node: \(node)")
+                        }
+                    }
                 }
+                
             } catch {
                 print("Failed to fetch CoreData entity: \(error)")
             }
             
             hasLoadedFromCoreData = true
+            
         }
-        
-        //        return nil
         return Binding(get: {nil}, set: { _ in})
     }
     

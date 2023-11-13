@@ -13,6 +13,11 @@ struct ObjectSizeView: View {
     @Binding var roomHeightText: String
     @Binding var sceneViewID: UUID
     var roomSceneViewModel: CanvasDataViewModel
+    @EnvironmentObject var routerView: RouterView
+    
+    @FetchRequest(entity: ObjectEntity.entity(),
+                  sortDescriptors: [NSSortDescriptor(keyPath: \ObjectEntity.importedName, ascending: true)])
+    var importsObject: FetchedResults<ObjectEntity>
     
     @ObservedObject var objectDimensionData: ObjectDimensionData
     
@@ -22,7 +27,6 @@ struct ObjectSizeView: View {
             Spacer()
             HStack {
                 RoundedRectangle(cornerRadius: 15)
-//                    .foregroundColor(Color.systemGray6)
                     .foregroundStyle(.thinMaterial)
                     .frame(width: 250, height: 180)
                     .overlay(
@@ -32,24 +36,20 @@ struct ObjectSizeView: View {
                                     .bold()
                                     .font(.title3)
                                     .bold()
-                                //.padding(.top)
                                     .lineLimit(2)
                                 
                                 Spacer()
-//                                HStack(alignment: .firstTextBaseline) {
-//                                    Button(action: {})
-//                                    {
-//                                        Text("REMOVE")
-//                                            .underline()
-//                                            .foregroundColor(.red)
-//                                            .font(.subheadline)
-//                                            .bold()
-//                                        //.padding(.leading, 50)
-//                                    }
-//                                }
+                                HStack(alignment: .firstTextBaseline) {
+                                    Button(action: {
+                                        objectDimensionData.selectedChildNode?.removeFromParentNode()
+                                    })
+                                    {
+                                        Image(systemName: "trash.fill")
+                                            .foregroundStyle(.red)
+                                    }
+                                }
                             }
                             .padding(.horizontal)
-//                            .padding(.top)
                             
                             VStack() {
                                 HStack {
@@ -70,7 +70,7 @@ struct ObjectSizeView: View {
                             .padding(.top)
                             .padding(.leading)
                         })
-                        .padding(.top)
+                        .padding(.vertical)
                     )
                     .aspectRatio(contentMode: .fit)
                     .padding(.leading)

@@ -10,6 +10,7 @@ import SceneKit
 
 struct ScenekitView: UIViewRepresentable {
     @ObservedObject var objectDimensionData: ObjectDimensionData
+    @ObservedObject var canvasData : CanvasData
     @Binding var scene: SCNScene?
     @Binding var isEditMode: Bool
     @Binding var roomWidth: Float
@@ -69,6 +70,7 @@ struct ScenekitView: UIViewRepresentable {
                 return
             } else {
                 parent.isEditMode = true
+                objectDimensionData.selectedChildNode = hitResults.first?.node
                 selectedNode?.childNodes.forEach { node in
                     if node.name?.hasPrefix("axisArrow") == true {
                         node.opacity = 0.3
@@ -85,26 +87,6 @@ struct ScenekitView: UIViewRepresentable {
                     processNodeSelection(result.node)
                     selectedAxis = nil
                 }
-                
-//                if let result = hitResults.first(where: { $0.node.name?.hasPrefix("axisArrow") == true }) {
-//                    print("HIT TEST 1")
-//                    selectedNode?.childNodes.forEach { node in
-//                        if node.name?.hasPrefix("axisArrowY") == true || node.name?.hasPrefix("axisArrowZ") == true || node.name?.hasPrefix("axisArrowX") == true || node.name?.hasPrefix("axisArrowRotation") == true {
-//                            node.opacity = 0.5
-//                        }
-//                    }
-////                     Then set the tapped arrow's opacity to 1.0
-//                    result.node.opacity = 1.0
-//                    result.node.parent?.opacity = 1.0
-//                    selectedAxis = result.node.name
-//                    print("result node name : \(result.node.name)")
-//                    addPanGesture()
-//                } else if let result = hitResults.first {
-//                    print("HIT TEST 2")
-//                    processNodeSelection(result.node)
-//                    selectedAxis = nil
-//                }
-                
             }
             
         }

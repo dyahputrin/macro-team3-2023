@@ -98,6 +98,7 @@ struct CanvasView: View {
                     let scenekitView =
                     ScenekitView(
                         objectDimensionData: objectDimensionData,
+                        canvasData: roomSceneViewModel.canvasData,
                         scene: $roomSceneViewModel.rootScene,
                         isEditMode: $isEditMode,
                         roomWidth: $roomWidth
@@ -119,7 +120,7 @@ struct CanvasView: View {
                     .animation(.easeInOut(duration: 2), value: roomButtonClicked)
             }
             
-            ObjectListView(showingObjectList: $showingObjectList)
+            ObjectListView(showingObjectList: $showingObjectList, objectDimensionData: objectDimensionData, roomSceneViewModel: roomSceneViewModel)
                 //.animation(.easeInOut(duration: 0.3), value: showingObjectList)
             
             if objectDimensionData.name != "--" {
@@ -130,10 +131,6 @@ struct CanvasView: View {
         .onAppear {
             roomButtonClicked = true
         }
-        //        .sheet(isPresented: $sheetPresented) {
-        //            SizePopUpView(sheetPresented: $sheetPresented, isSetButtonTapped: $isSetButtonTapped, roomSceneViewModel: roomSceneViewModel, sceneViewID: $sceneViewID, roomWidthText: $roomWidthText, roomLengthText: $roomLengthText, roomHeightText: $roomHeightText)
-        //                .interactiveDismissDisabled()
-        //        }
         .toolbarRole(.editor)
         .toolbarBackground(Color.white)
         .toolbar {
