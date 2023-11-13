@@ -236,7 +236,7 @@ class CanvasDataViewModel: ObservableObject {
     }
     
     // function to save project
-    func saveProject(viewContext: NSManagedObjectContext) {
+    func saveProject(viewContext: NSManagedObjectContext, completion: @escaping (UUID?) -> Void) {
         var projectName = projectData.nameProject
         // Check if the project name is empty or nil
         if projectName.isEmpty {
@@ -294,10 +294,13 @@ class CanvasDataViewModel: ObservableObject {
             // Save the context
             if viewContext.hasChanges {
                 try viewContext.save()
+                completion(projectUUID)
             }
         } catch {
             print("Error saving project: \(error)")
+            completion(nil)
         }
+        
     }
     
     // function to check if a projectName already exist
@@ -356,6 +359,7 @@ class CanvasDataViewModel: ObservableObject {
     }
     
     func saveSnapshot(activeProjectID: UUID, viewContext: NSManagedObjectContext, snapshotImageArg: UIImage?, scenekitView: ScenekitView) {
+        
         let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "ProjectEntity")
         fetchRequest.predicate = NSPredicate(format: "projectID == %@", activeProjectID as CVarArg)
         
@@ -372,6 +376,7 @@ class CanvasDataViewModel: ObservableObject {
                     print("Failed to take snapshot")
                 }
             } else {
+                // function to take the snapshot eventhough there's still no project found with a specific ID
                 print("No project found with ID: \(activeProjectID)")
             }
         } catch {

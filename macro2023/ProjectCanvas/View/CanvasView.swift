@@ -214,10 +214,18 @@ struct CanvasView: View {
                 Button(action: {
                     isSaveClicked = true
                     showSaveAlert = true
-                    
-                    roomSceneViewModel.saveProject(viewContext: viewContext)
+//                    roomSceneViewModel.saveProject(viewContext: viewContext)
+//                    roomSceneViewModel.saveSnapshot(activeProjectID: activeProjectID, viewContext: viewContext, snapshotImageArg: snapshotImage, scenekitView: currentScenekitView!)
                     
                     roomSceneViewModel.saveSnapshot(activeProjectID: activeProjectID, viewContext: viewContext, snapshotImageArg: snapshotImage, scenekitView: currentScenekitView!)
+                    roomSceneViewModel.saveProject(viewContext: viewContext) { activeProjectID in
+                        if let activeProjectID = activeProjectID {
+                            roomSceneViewModel.saveSnapshot(activeProjectID: activeProjectID, viewContext: viewContext, snapshotImageArg: snapshotImage, scenekitView: currentScenekitView!)
+                        } else {
+                            // Handle the case where the project couldn't be saved
+                            print("Project couldn't be saved. Can't take a snapshot.")
+                        }
+                    }
                     
                 })
                 {
@@ -278,7 +286,17 @@ struct CanvasView: View {
                 title: Text("Save Project"),
                 message: Text("Do you want to save changes before leaving?"),
                 primaryButton: .default(Text("Save"), action: {
-                    roomSceneViewModel.saveProject(viewContext: viewContext)
+//                    roomSceneViewModel.saveProject(viewContext: viewContext)
+                    
+                    roomSceneViewModel.saveSnapshot(activeProjectID: activeProjectID, viewContext: viewContext, snapshotImageArg: snapshotImage, scenekitView: currentScenekitView!)
+                    roomSceneViewModel.saveProject(viewContext: viewContext) { activeProjectID in
+                        if let activeProjectID = activeProjectID {
+                            roomSceneViewModel.saveSnapshot(activeProjectID: activeProjectID, viewContext: viewContext, snapshotImageArg: snapshotImage, scenekitView: currentScenekitView!)
+                        } else {
+                            // Handle the case where the project couldn't be saved
+                            print("Project couldn't be saved. Can't take a snapshot.")
+                        }
+                    }
                     showSaveAlert = true
                 }),
                 secondaryButton: .destructive(Text("No"), action: {
