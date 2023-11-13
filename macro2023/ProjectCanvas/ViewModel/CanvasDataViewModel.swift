@@ -38,6 +38,7 @@ class CanvasDataViewModel: ObservableObject {
         
         self.floor = SCNNode(geometry: floorGeometry)
         self.floor.opacity = 0.5
+        self.floor.name = "floorScene"
 //        floor.geometry = SCNFloor()
         
         if routerView.project?.projectName == nil {

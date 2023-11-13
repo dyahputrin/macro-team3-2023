@@ -89,8 +89,9 @@ struct CanvasView: View {
     @State private var roomWidth: Float = 0.0
     @State private var sceneRefreshToggle = false
     
-    @State var coordinator: Coordinator?
+//    @State var coordinator: Coordinator?
     @State private var isViewVisible = true
+//    @State private var arrowCoordinator = ArrowState()
     
     var body: some View {
         
@@ -102,7 +103,7 @@ struct CanvasView: View {
                     objectDimensionData: objectDimensionData,
                     scene: $roomSceneViewModel.rootScene,
                     isEditMode: $isEditMode,
-                    roomWidth: $roomWidth, coordinator: $coordinator, isViewVisible: $isViewVisible
+                    roomWidth: $roomWidth/*, coordinator: $coordinator*/
                 )
                 
                 scenekitView
@@ -111,9 +112,10 @@ struct CanvasView: View {
                     .onAppear {
                         currentScenekitView = scenekitView
 //                        coordinator = Coordinator(currentScenekitView!)
-//                        if coordinator != nil {
-//                            coordinator?.deselectNodeAndArrows()
-//                        }
+                    }
+                    .onDisappear {
+//                        arrowCoordinator.removeArrows()
+//                        coordinator?.deselectNodeAndArrows()
                     }
             }
             
@@ -328,7 +330,6 @@ struct CanvasView: View {
             
         }
         .onDisappear{
-            coordinator?.deselectNodeAndArrows()
             print("CanvasView is disappearing")
             if routerView.path.count > 0 {
                 routerView.path.removeLast()
