@@ -50,30 +50,30 @@ struct ObjectSidebarView: View {
                             if currentSection == "Objects" {
                                 ScrollView {
                                     LazyVGrid(columns: columns, spacing: 30) {
-                                        ForEach(roomSceneViewModel.canvasData.defaultAsset,id: \.self){ asset in
-                                            RoundedRectangle(cornerRadius: 25, style: .circular)
-                                                .shadow(radius:5)
-                                                .frame(width: 100, height: 100)
-                                                .foregroundColor(.clear)
-                                                .overlay{
-                                                    VStack {
-                                                        let fullNameArr = asset.split(separator:".")
-                                                        SceneView(scene: SCNScene(named: asset), options: [.autoenablesDefaultLighting])
-                                                            .frame(width: 100, height: 100)
-                                                            .cornerRadius(25)
-                                                            .shadow(radius:5)
-                                                            .onTapGesture {
+//                                        ForEach(roomSceneViewModel.canvasData.defaultAsset,id: \.self){ asset in
+//                                            RoundedRectangle(cornerRadius: 25, style: .circular)
+//                                                .shadow(radius:5)
+//                                                .frame(width: 100, height: 100)
+//                                                .foregroundColor(.clear)
+//                                                .overlay{
+//                                                    VStack {
+//                                                        let fullNameArr = asset.split(separator:".")
+//                                                        SceneView(scene: SCNScene(named: asset), options: [.autoenablesDefaultLighting])
+//                                                            .frame(width: 100, height: 100)
+//                                                            .cornerRadius(25)
+//                                                            .shadow(radius:5)
+//                                                            .onTapGesture {
 //                                                                objectDimensionData.selectedChildNode.name = String(fullNameArr[0])
-                                                                roomSceneViewModel.addNodeToRootScene(named: asset)
-                                                                roomSceneViewModel.isObjectHidden.append(false)
-                                                                roomSceneViewModel.renamedNode.append(String(fullNameArr[0]))
-                                                                print("hehehe")
-                                                            }
-                                                        Text(fullNameArr[0])
-                                                    }
-                                                }
-                                        }
-                                        
+//                                                                roomSceneViewModel.addNodeToRootScene(named: asset)
+//                                                                roomSceneViewModel.isObjectHidden.append(false)
+//                                                                roomSceneViewModel.renamedNode.append(String(fullNameArr[0]))
+//                                                                print("hehehe")
+//                                                            }
+//                                                        Text(fullNameArr[0])
+//                                                    }
+//                                                }
+//                                        }
+//                                        
                                     }
                                     .padding(.vertical)
                                 }

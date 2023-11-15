@@ -255,8 +255,6 @@ class CanvasDataViewModel: ObservableObject {
         
         do {
             if let existingProject = try viewContext.fetch(fetchRequest).first {
-                // Delete the existing projectScene, if it exists
-                //                viewContext.delete(existingProject)
                 
                 existingProject.projectName = projectName
                 
