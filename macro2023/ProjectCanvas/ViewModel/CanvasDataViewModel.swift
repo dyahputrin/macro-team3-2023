@@ -128,6 +128,7 @@ class CanvasDataViewModel: ObservableObject {
     func addImportObjectChild(data: Data){
         if let modelURL = createUSDZFile(data: data) {
             if let modelasset = try? SCNScene(url: modelURL), let modelNode = modelasset.rootNode.childNodes.first?.clone() {
+                self.listChildNodes.append(modelNode)
                 self.rootScene?.rootNode.addChildNode(modelNode)
                 print("node",modelNode)
             }

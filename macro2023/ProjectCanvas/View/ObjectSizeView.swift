@@ -12,14 +12,15 @@ struct ObjectSizeView: View {
     @Binding var roomLengthText: String
     @Binding var roomHeightText: String
     @Binding var sceneViewID: UUID
-    var roomSceneViewModel: CanvasDataViewModel
     @EnvironmentObject var routerView: RouterView
     
     @FetchRequest(entity: ObjectEntity.entity(),
                   sortDescriptors: [NSSortDescriptor(keyPath: \ObjectEntity.importedName, ascending: true)])
     var importsObject: FetchedResults<ObjectEntity>
     
+    @ObservedObject var roomSceneViewModel:CanvasDataViewModel
     @ObservedObject var objectDimensionData: ObjectDimensionData
+    
     
     var body: some View {
         
@@ -41,7 +42,15 @@ struct ObjectSizeView: View {
                                 Spacer()
                                 HStack(alignment: .firstTextBaseline) {
                                     Button(action: {
-                                        objectDimensionData.selectedChildNode?.removeFromParentNode()
+                                        print(roomSceneViewModel.listChildNodes)
+                                        for cNode in roomSceneViewModel.listChildNodes{
+                                            if objectDimensionData.selectedChildNode.name == cNode.childNodes[0].childNodes[0].name{
+                                                roomSceneViewModel.listChildNodes.removeAll { i in
+                                                    i == cNode
+                                                }
+                                            }
+                                        }
+                                        objectDimensionData.selectedChildNode.removeFromParentNode()
                                     })
                                     {
                                         Image(systemName: "trash.fill")

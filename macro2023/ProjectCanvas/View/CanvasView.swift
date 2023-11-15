@@ -124,7 +124,7 @@ struct CanvasView: View {
                 //.animation(.easeInOut(duration: 0.3), value: showingObjectList)
             
             if objectDimensionData.name != "--" {
-                ObjectSizeView(roomWidthText:.constant("2"), roomLengthText: .constant("2"), roomHeightText: .constant("2"), sceneViewID: .constant(UUID()), roomSceneViewModel: CanvasDataViewModel(canvasData: CanvasData(roomWidth: 0, roomHeight: 0, roomLength: 0), projectData: ProjectData(), routerView: RouterView()), objectDimensionData: objectDimensionData)
+                ObjectSizeView(roomWidthText:.constant("2"), roomLengthText: .constant("2"), roomHeightText: .constant("2"), sceneViewID: .constant(UUID()), routerView: _routerView, roomSceneViewModel: roomSceneViewModel, objectDimensionData: objectDimensionData)
             }
 
         }

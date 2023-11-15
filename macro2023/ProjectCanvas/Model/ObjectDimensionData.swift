@@ -13,7 +13,7 @@ class ObjectDimensionData: ObservableObject {
     @Published var length: String
     @Published var width: String
     @Published var height: String
-    @Published var selectedChildNode : SCNNode?
+    @Published var selectedChildNode : SCNNode
     
     init() {
         self.name = "--"

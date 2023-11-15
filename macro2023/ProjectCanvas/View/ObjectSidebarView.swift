@@ -99,7 +99,7 @@ struct ObjectSidebarView: View {
                                                                 .shadow(radius: 5)
                                                                 .onTapGesture {
                                                                     roomSceneViewModel.addImportObjectChild(data: usdzData)
-//                                                                    self.roomSceneViewModel.canvasData.listChildNodes.append(urlImport.importedName!)
+                                                                   roomSceneViewModel.isObjectHidden.append(false)
                                                                 }
                                                         }
                                                         Text("\(urlImport.importedName ?? "error")")
