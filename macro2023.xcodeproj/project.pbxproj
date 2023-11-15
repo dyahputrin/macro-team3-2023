@@ -21,6 +21,7 @@
 		21C90C192AD694880003D517 /* ProjectData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21C90C182AD694880003D517 /* ProjectData.swift */; };
 		21C90C412AD6A15B0003D517 /* RouterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21C90C402AD6A15B0003D517 /* RouterView.swift */; };
 		21C90C432AD7CC810003D517 /* ProjectViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21C90C422AD7CC810003D517 /* ProjectViewModel.swift */; };
+		5828A8F02B04BD8800F61C7F /* RoomSidebarTip.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5828A8EF2B04BD8800F61C7F /* RoomSidebarTip.swift */; };
 		940CF46E2AEA5AC100F3EB7C /* Ko farel.usdz in Resources */ = {isa = PBXBuildFile; fileRef = 940CF46D2AEA5AC100F3EB7C /* Ko farel.usdz */; };
 		940CF4742AEA5C7D00F3EB7C /* floorblack.usdz in Resources */ = {isa = PBXBuildFile; fileRef = 940CF4732AEA5C7D00F3EB7C /* floorblack.usdz */; };
 		940CF4762AEA5D6500F3EB7C /* hightable.usdz in Resources */ = {isa = PBXBuildFile; fileRef = 940CF4752AEA5D6500F3EB7C /* hightable.usdz */; };
@@ -116,6 +117,7 @@
 		21C90C182AD694880003D517 /* ProjectData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectData.swift; sourceTree = "<group>"; };
 		21C90C402AD6A15B0003D517 /* RouterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RouterView.swift; sourceTree = "<group>"; };
 		21C90C422AD7CC810003D517 /* ProjectViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectViewModel.swift; sourceTree = "<group>"; };
+		5828A8EF2B04BD8800F61C7F /* RoomSidebarTip.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoomSidebarTip.swift; sourceTree = "<group>"; };
 		940CF46D2AEA5AC100F3EB7C /* Ko farel.usdz */ = {isa = PBXFileReference; lastKnownFileType = file.usdz; path = "Ko farel.usdz"; sourceTree = "<group>"; };
 		940CF4732AEA5C7D00F3EB7C /* floorblack.usdz */ = {isa = PBXFileReference; lastKnownFileType = file.usdz; path = floorblack.usdz; sourceTree = "<group>"; };
 		940CF4752AEA5D6500F3EB7C /* hightable.usdz */ = {isa = PBXFileReference; lastKnownFileType = file.usdz; path = hightable.usdz; sourceTree = "<group>"; };
@@ -538,6 +540,7 @@
 				943595CE2AE8F152000331A9 /* ScenekitView.swift */,
 				974199542AE7A26900D96E7F /* ObjectSizeView.swift */,
 				974199562AE7BA2600D96E7F /* ObjectListView.swift */,
+				5828A8EF2B04BD8800F61C7F /* RoomSidebarTip.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -694,6 +697,7 @@
 				9487BE022ADE93B0004FCC67 /* OnboardingTutorialView+LocalizedString.swift in Sources */,
 				9487BE142ADE93B0004FCC67 /* CaptureFolderManager.swift in Sources */,
 				9487BE132ADE93B0004FCC67 /* OnboardingView.swift in Sources */,
+				5828A8F02B04BD8800F61C7F /* RoomSidebarTip.swift in Sources */,
 				2135F0642AF105B500A3DD9A /* ThumbnailView.swift in Sources */,
 				9487BE002ADE93B0004FCC67 /* TutorialVideoView.swift in Sources */,
 				9487BE062ADE93B0004FCC67 /* ProgressBarView.swift in Sources */,
@@ -856,8 +860,8 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_ASSET_PATHS = "\"macro2023/Preview Content\"";
-				DEVELOPMENT_TEAM = 28N6P267AM;
+				DEVELOPMENT_ASSET_PATHS = "";
+				DEVELOPMENT_TEAM = 44349BA3CD;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_NSCameraUsageDescription = "Camera needed to function";
@@ -891,8 +895,8 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_ASSET_PATHS = "\"macro2023/Preview Content\"";
-				DEVELOPMENT_TEAM = 28N6P267AM;
+				DEVELOPMENT_ASSET_PATHS = "";
+				DEVELOPMENT_TEAM = 44349BA3CD;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_NSCameraUsageDescription = "Camera needed to function";

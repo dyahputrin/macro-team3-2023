@@ -7,6 +7,7 @@
 
 import SwiftUI
 import SceneKit
+import TipKit
 
 @main
 struct macro2023App: App {
@@ -22,6 +23,10 @@ struct macro2023App: App {
                 .environment(\.managedObjectContext,persistenceController.container.viewContext)
                 .environmentObject(routerView)
         }
+    }
+    
+    init() {
+        try? Tips.configure()
     }
 }
 

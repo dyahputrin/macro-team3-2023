@@ -90,6 +90,8 @@ struct CanvasView: View {
     @State private var roomWidth: Float = 0.0
     @State private var sceneRefreshToggle = false
     
+    let closeSidebarTip = RoomNavbarTip()
+    
     var body: some View {
         
         GeometryReader { geometry in
@@ -178,8 +180,10 @@ struct CanvasView: View {
                             Text("Room")
                                 .font(.subheadline)
                                 .foregroundColor(roomButtonClicked ? .accentColor : .black)
+                                
                         }
                     }
+                    .popoverTip(closeSidebarTip, arrowEdge: .top)
                     
                     //OBJECTS
                     Button(action : {
