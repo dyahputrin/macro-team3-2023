@@ -67,6 +67,7 @@ struct ObjectSidebarView: View {
                                                         Text(fullNameArr[0])
                                                     }
                                                 }
+                                                .padding()
                                         }
                                         
                                     }
@@ -104,6 +105,7 @@ struct ObjectSidebarView: View {
                                                         
                                                     }
                                                 }
+                                                .padding()
                                         }
                                         
                                     }
