@@ -33,30 +33,12 @@ struct ObjectSizeView: View {
                     .overlay(
                         VStack(alignment: .leading, content: {
                             HStack {
-                                Text("\(objectDimensionData.name)")
+                                Text("HeHE : \(objectDimensionData.selectedChildNode.name ?? "")")
+//                                Text("babi : \(roomSceneViewModel.renamedNode)")
                                     .bold()
                                     .font(.title3)
                                     .bold()
                                     .lineLimit(2)
-                                
-                                Spacer()
-                                HStack(alignment: .firstTextBaseline) {
-                                    Button(action: {
-                                        print(roomSceneViewModel.listChildNodes)
-                                        for cNode in roomSceneViewModel.listChildNodes{
-                                            if objectDimensionData.selectedChildNode.name == cNode.childNodes[0].childNodes[0].name{
-                                                roomSceneViewModel.listChildNodes.removeAll { i in
-                                                    i == cNode
-                                                }
-                                            }
-                                        }
-                                        objectDimensionData.selectedChildNode.removeFromParentNode()
-                                    })
-                                    {
-                                        Image(systemName: "trash.fill")
-                                            .foregroundStyle(.red)
-                                    }
-                                }
                             }
                             .padding(.horizontal)
                             

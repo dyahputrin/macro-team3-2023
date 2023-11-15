@@ -112,7 +112,7 @@ struct CanvasView: View {
             }
             
             if objectsButtonClicked == true {
-                ObjectSidebarView(roomSceneViewModel: roomSceneViewModel)
+                ObjectSidebarView(roomSceneViewModel: roomSceneViewModel, objectDimensionData: objectDimensionData)
                     .animation(.easeInOut(duration: 2), value: objectsButtonClicked)
                 
             } else if roomButtonClicked == true {

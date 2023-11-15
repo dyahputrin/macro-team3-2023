@@ -47,26 +47,44 @@ struct ObjectListView: View {
                         Image(systemName: "square.split.bottomrightquarter")
                         Text("Wall List")
                     })
-                    Section(isExpanded: $objectList,
-                            content: {
-                        ForEach(roomSceneViewModel.listChildNodes , id:\.self){ item in
-                            HStack{
-                                let indexObject = roomSceneViewModel.listChildNodes.firstIndex(of:item)
-                                Text("\(item.childNodes[0].childNodes[0].name!)")
-                                    .foregroundColor(roomSceneViewModel.isObjectHidden[indexObject!] ? .gray : .black)
-                                Spacer()
-                                Image(systemName: roomSceneViewModel.isObjectHidden[indexObject!] ? "eye.slash" : "eye")
-                                    .foregroundColor(roomSceneViewModel.isObjectHidden[indexObject!] ? Color.gray : Color.accentColor)
-                                    .onTapGesture {
-                                        item.isHidden.toggle()
-                                        roomSceneViewModel.isObjectHidden[indexObject!] = item.isHidden
+                    Section(isExpanded: $objectList, content: {
+                        ForEach(roomSceneViewModel.listChildNodes , id:\.self) { item in
+                            HStack {
+                                if let indexObject = roomSceneViewModel.listChildNodes.firstIndex(of: item) {
+                                    if (roomSceneViewModel.listChildNodes[indexObject].childNodes.first?.childNodes.first) != nil {
+                                        Text(roomSceneViewModel.renamedNode[indexObject])
+                                            .foregroundColor(roomSceneViewModel.isObjectHidden[indexObject] ? .gray : .black)
                                     }
+                                    Spacer()
+                                    Image(systemName: roomSceneViewModel.isObjectHidden[indexObject] ? "eye.slash" : "eye")
+                                        .foregroundColor(roomSceneViewModel.isObjectHidden[indexObject] ? Color.gray : Color.accentColor)
+                                        .onTapGesture {
+                                            item.isHidden.toggle()
+                                            roomSceneViewModel.isObjectHidden[indexObject] = item.isHidden
+                                        }
+                                }
+                            }
+                            .swipeActions {
+                                Button(action: {
+                                    item.removeFromParentNode()
+                                    if let index = roomSceneViewModel.listChildNodes.firstIndex(of: item) {
+                                        roomSceneViewModel.listChildNodes.remove(at: index)
+                                        roomSceneViewModel.renamedNode.remove(at: index)
+                                        roomSceneViewModel.isObjectHidden.remove(at: index)
+                                    }
+                                }) {
+                                    Text("Remove")
+                                        .foregroundColor(Color.white)
+//                                        .background(Color.red)
+                                }
+                                .tint(.red)
                             }
                         }
                     }, header: {
                         Image(systemName: "chair.lounge")
                         Text("Object List")
                     })
+
                 }
                 .background(.regularMaterial)
                 .scrollContentBackground(.hidden)
@@ -104,7 +122,13 @@ struct ObjectListView: View {
         .offset(x: sideBarWidth / 1.8, y: 20)
         
     }
+    
+    func deleteListItem(at offsets: IndexSet) {
+        roomSceneViewModel.listChildNodes.remove(atOffsets: offsets)
+        // Perform any additional cleanup or data updates as needed
+    }
 }
+
 
 //#Preview {
 //    ObjectListView(showingObjectList: .constant(true))

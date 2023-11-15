@@ -19,6 +19,8 @@ class CanvasData: ObservableObject {
     
     @Published var importedObjectData : [Data]
     
+    @Published var defaultAsset: [String] = ["hightable.usdz", "Ko farel.usdz", "OfficeTable.usdz"]
+    
     init(roomWidth: CGFloat, roomHeight: CGFloat, roomLength: CGFloat) {
         self.roomWidth = roomWidth
         self.roomHeight = roomHeight

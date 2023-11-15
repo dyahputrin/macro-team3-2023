@@ -20,6 +20,7 @@ class CanvasDataViewModel: ObservableObject {
     @Published var listWallNodes : [SCNNode]
     @Published var isObjectHidden : [Bool]
     @Published var isWallHidden : [Bool]
+    @Published var renamedNode : [String]
     
     var floor = SCNNode()
     var grayMaterial = SCNMaterial()
@@ -39,6 +40,7 @@ class CanvasDataViewModel: ObservableObject {
         self.listWallNodes = []
         self.isObjectHidden = []
         self.isWallHidden = []
+        self.renamedNode = []
         grayMaterial.diffuse.contents = UIColor.gray
         
         floorGeometry.materials = [grayMaterial]

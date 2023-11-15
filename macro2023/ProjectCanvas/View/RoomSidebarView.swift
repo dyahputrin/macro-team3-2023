@@ -144,7 +144,9 @@ struct RoomSidebarView: View {
                                                                 .cornerRadius(25)
                                                                 .shadow(radius: 5)
                                                                 .onTapGesture {
+                                                                    roomSceneViewModel.renamedNode.append(importedRoomPlan.roomPlanName!)
                                                                     roomSceneViewModel.addImportObjectChild(data: usdzData)
+                                                                    roomSceneViewModel.isObjectHidden.append(false)
                                                                 }
                                                         }
                                                         Text("\(importedRoomPlan.roomPlanName ?? "error")")

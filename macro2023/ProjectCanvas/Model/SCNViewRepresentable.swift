@@ -14,7 +14,6 @@ struct ScenekitView: UIViewRepresentable {
     @Binding var scene: SCNScene?
     @Binding var isEditMode: Bool
     @Binding var roomWidth: Float
-
     typealias UIViewType = SCNView
     var view = SCNView()
 
@@ -73,6 +72,10 @@ struct ScenekitView: UIViewRepresentable {
                 let removeValue = hitResults.first?.node
                 parent.isEditMode = true
                 objectDimensionData.selectedChildNode = removeValue!
+                guard let anak = removeValue?.childNodes else {return}
+                for i in anak {
+                    print("Spiman", i.name)
+                }
                 selectedNode?.childNodes.forEach { node in
                     if node.name?.hasPrefix("axisArrow") == true {
                         node.opacity = 0.3

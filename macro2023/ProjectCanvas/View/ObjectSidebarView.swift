@@ -14,6 +14,7 @@ struct ObjectSidebarView: View {
     @StateObject private var ObjectVM = ObjectViewModel()
     
     @ObservedObject var roomSceneViewModel:CanvasDataViewModel
+    @ObservedObject var objectDimensionData: ObjectDimensionData
     @State private var sceneKitView: ThumbnailView?
     
     @FetchRequest(entity: ObjectEntity.entity(),
@@ -24,7 +25,7 @@ struct ObjectSidebarView: View {
     @State var thumbnailPreview : Image?
     @State var isShowingScene: Bool = false
     var section = ["Objects", "Imports"]
-    var defaultAsset: [String] = ["hightable.usdz", "Ko farel.usdz", "OfficeTable.usdz"]
+//    var defaultAsset: [String] = ["hightable.usdz", "Ko farel.usdz", "OfficeTable.usdz"]
     
     var body: some View {
         
@@ -49,22 +50,25 @@ struct ObjectSidebarView: View {
                             if currentSection == "Objects" {
                                 ScrollView {
                                     LazyVGrid(columns: columns, spacing: 30) {
-                                        ForEach(defaultAsset,id: \.self){ asset in
+                                        ForEach(roomSceneViewModel.canvasData.defaultAsset,id: \.self){ asset in
                                             RoundedRectangle(cornerRadius: 25, style: .circular)
                                                 .shadow(radius:5)
                                                 .frame(width: 100, height: 100)
                                                 .foregroundColor(.clear)
                                                 .overlay{
                                                     VStack {
+                                                        let fullNameArr = asset.split(separator:".")
                                                         SceneView(scene: SCNScene(named: asset), options: [.autoenablesDefaultLighting])
                                                             .frame(width: 100, height: 100)
                                                             .cornerRadius(25)
                                                             .shadow(radius:5)
                                                             .onTapGesture {
+//                                                                objectDimensionData.selectedChildNode.name = String(fullNameArr[0])
                                                                 roomSceneViewModel.addNodeToRootScene(named: asset)
                                                                 roomSceneViewModel.isObjectHidden.append(false)
+                                                                roomSceneViewModel.renamedNode.append(String(fullNameArr[0]))
+                                                                print("hehehe")
                                                             }
-                                                        let fullNameArr = asset.split(separator:".")
                                                         Text(fullNameArr[0])
                                                     }
                                                 }
@@ -98,8 +102,9 @@ struct ObjectSidebarView: View {
                                                                 .cornerRadius(25)
                                                                 .shadow(radius: 5)
                                                                 .onTapGesture {
+                                                                    roomSceneViewModel.renamedNode.append(urlImport.importedName!)
                                                                     roomSceneViewModel.addImportObjectChild(data: usdzData)
-                                                                   roomSceneViewModel.isObjectHidden.append(false)
+                                                                    roomSceneViewModel.isObjectHidden.append(false)
                                                                 }
                                                         }
                                                         Text("\(urlImport.importedName ?? "error")")
