@@ -7,6 +7,8 @@
 
 import SwiftUI
 import SceneKit
+import RealityKit
+import RoomPlan
 
 struct CanvasView: View {
     private let viewContext = PersistenceController.shared.viewContext
@@ -40,6 +42,7 @@ struct CanvasView: View {
     
     @State private var isRoomCaptureViewPresented = false
     @State private var isGuidedCaptureViewPresented = false
+    @State private var isNotSupported = false
     
     @FetchRequest(entity: ProjectEntity.entity(),
                   sortDescriptors: [NSSortDescriptor(keyPath: \ProjectEntity.projectName, ascending: true)])
@@ -142,12 +145,20 @@ struct CanvasView: View {
                     //VIEWFINDER
                         Menu {
                             Button(action: {
-                                self.isGuidedCaptureViewPresented = true
+                                if (ObjectCaptureSession.isSupported) {
+                                    self.isGuidedCaptureViewPresented = true
+                                } else {
+                                    isNotSupported = true
+                                }
                             }, label: {
                                 Text("Scan objects")
                             })
                             Button(action: {
-                                self.isRoomCaptureViewPresented = true
+                                if (RoomCaptureSession.isSupported) {
+                                    self.isRoomCaptureViewPresented = true
+                                } else {
+                                    isNotSupported = true
+                                }
                             }, label: {
                                 Text("Scan room")
                             })
@@ -169,7 +180,7 @@ struct CanvasView: View {
                             .padding()
                     }
                     
-                    // ROOM
+                    // Object
                     Button(action : {
                         roomButtonClicked.toggle()
                         objectsButtonClicked = false
@@ -185,7 +196,7 @@ struct CanvasView: View {
                     }
                     .popoverTip(closeSidebarTip, arrowEdge: .top)
                     
-                    //OBJECTS
+                    //Room
                     Button(action : {
                         objectsButtonClicked.toggle()
                         roomButtonClicked = false
@@ -235,6 +246,9 @@ struct CanvasView: View {
                         }
                     )
                 }
+                .alert(isPresented: $isNotSupported) {
+                    Alert(title: Text("This feature is not supported"))
+                }
             }
         }
         // ROOM PLAN
@@ -255,9 +269,9 @@ struct CanvasView: View {
                 }
             }
         }
-//        .fullScreenCover(isPresented: $isGuidedCaptureViewPresented, content: {
-//            GuidedCaptureView()
-//        })
+        .fullScreenCover(isPresented: $isGuidedCaptureViewPresented, content: {
+            GuidedCaptureView()
+        })
         .navigationTitle(routerView.project == nil ? "NewProject" : roomSceneViewModel.projectData.nameProject)
         .navigationBarBackButtonHidden(true)
         .navigationBarItems(leading: Button(action: {

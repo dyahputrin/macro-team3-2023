@@ -116,7 +116,7 @@ struct RoomSidebarView: View {
                                                         .font(.title3).bold()
                                                         .foregroundColor(.white)
                                                 }
-                                                .popoverTip(createYourRoomTip, arrowEdge: .top)
+//                                                .popoverTip(createYourRoomTip, arrowEdge: .top)
                                         }
                                         .padding(.top, 30)
                                     }
