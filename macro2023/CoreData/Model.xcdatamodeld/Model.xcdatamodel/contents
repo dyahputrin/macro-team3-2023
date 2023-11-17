@@ -3,12 +3,13 @@
     <entity name="ObjectEntity" representedClassName="ObjectEntity" syncable="YES" codeGenerationType="class">
         <attribute name="importedName" optional="YES" attributeType="String"/>
         <attribute name="importedObject" optional="YES" attributeType="Binary"/>
+        <relationship name="childObject" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="ProjectEntity" inverseName="parentObject" inverseEntity="ProjectEntity"/>
     </entity>
     <entity name="ProjectEntity" representedClassName="ProjectEntity" syncable="YES" codeGenerationType="class">
         <attribute name="heightRoom" optional="YES" attributeType="Float" defaultValueString="0.0" usesScalarValueType="YES"/>
         <attribute name="lastModifiedDate" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
         <attribute name="lengthRoom" optional="YES" attributeType="Float" defaultValueString="0.0" usesScalarValueType="YES"/>
-        <attribute name="projectChildNameSaved" optional="YES" attributeType="String"/>
+        <attribute name="projectChildNameSaved" optional="YES" attributeType="Binary"/>
         <attribute name="projectChildSaved" optional="YES" attributeType="Binary"/>
         <attribute name="projectID" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
         <attribute name="projectName" optional="YES" attributeType="String"/>
@@ -16,9 +17,12 @@
         <attribute name="projectThumbnail" optional="YES" attributeType="Binary"/>
         <attribute name="projectWallSaved" optional="YES" attributeType="Binary"/>
         <attribute name="widthRoom" optional="YES" attributeType="Float" defaultValueString="0.0" usesScalarValueType="YES"/>
+        <relationship name="parentObject" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="ObjectEntity" inverseName="childObject" inverseEntity="ObjectEntity"/>
+        <relationship name="parentRoom" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="RoomPlanEntity"/>
     </entity>
     <entity name="RoomPlanEntity" representedClassName="RoomPlanEntity" syncable="YES" codeGenerationType="class">
         <attribute name="roomPlanName" optional="YES" attributeType="String"/>
         <attribute name="roomPlanObject" optional="YES" attributeType="Binary"/>
+        <relationship name="childRoom" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="RoomPlanEntity" inverseName="childRoom" inverseEntity="RoomPlanEntity"/>
     </entity>
 </model>

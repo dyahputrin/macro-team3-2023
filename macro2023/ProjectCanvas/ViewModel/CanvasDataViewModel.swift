@@ -132,6 +132,7 @@ class CanvasDataViewModel: ObservableObject {
         if let modelURL = createUSDZFile(data: data) {
             if let modelasset = try? SCNScene(url: modelURL), let modelNode = modelasset.rootNode.childNodes.first?.clone() {
                 self.listChildNodes.append(modelNode)
+                let _ = print("feli nama",modelNode.name)
                 self.rootScene?.rootNode.addChildNode(modelNode)
                 print("node",modelNode)
             }
@@ -179,6 +180,8 @@ class CanvasDataViewModel: ObservableObject {
                 case "v3floorputih":
                     node.scale = SCNVector3(newWidth, 1, newLength)
                     node.position = SCNVector3(0, 0,0)
+                    self.listWallNodes.append(node)
+                    self.isWallHidden.append(node.isHidden)
                 case "v3wall1putih":
                     node.scale = SCNVector3(1, newHeight, newLength)
                     node.position = SCNVector3((1-newWidth)/2 - 0.001, 0, 0)
@@ -248,7 +251,7 @@ class CanvasDataViewModel: ObservableObject {
             } while true
         }
         
-        var projectUUID = projectData.uuid
+        let projectUUID = projectData.uuid
         
         let fetchRequest: NSFetchRequest<ProjectEntity> = ProjectEntity.fetchRequest()
         fetchRequest.predicate = NSPredicate(format: "projectID == %@", projectUUID as CVarArg)
@@ -257,6 +260,43 @@ class CanvasDataViewModel: ObservableObject {
             if let existingProject = try viewContext.fetch(fetchRequest).first {
                 
                 existingProject.projectName = projectName
+                existingProject.widthRoom = Float(canvasData.roomWidth)
+                existingProject.heightRoom = Float(canvasData.roomHeight)
+                existingProject.lengthRoom = Float(canvasData.roomLength)
+                
+                isObjectHidden = Array(repeating: false, count: isObjectHidden.count)
+                isWallHidden = Array(repeating: false, count: isWallHidden.count)
+                
+                if let dataWall = try? NSKeyedArchiver.archivedData(withRootObject: listWallNodes, requiringSecureCoding: false) {
+                    existingProject.projectWallSaved = dataWall
+                    for wallChildNode in listWallNodes{
+                        wallChildNode.removeFromParentNode()
+                    }
+                    listWallNodes.removeAll()
+                } else {
+                    print("Error converting SCNNode array to Data")
+                }
+                
+                if let childName = try? NSKeyedArchiver.archivedData(withRootObject: renamedNode, requiringSecureCoding: false) {
+                    existingProject.projectChildNameSaved = childName
+                    renamedNode.removeAll()
+                } else {
+                    print("Error converting SCNNode array to Data")
+                }
+                
+                //Reset Child Node
+                if let data = try? NSKeyedArchiver.archivedData(withRootObject: listChildNodes, requiringSecureCoding: false) {
+                    existingProject.projectChildSaved = data
+                    for childrenNode in listChildNodes{
+                        childrenNode.removeFromParentNode()
+                    }
+                    
+                    listChildNodes.removeAll()
+                    isObjectHidden.removeAll()
+                } else {
+                    // Handle the error if the conversion fails
+                    print("Error converting SCNNode array to Data")
+                }
                 
                 if let scene = rootScene {
                     if let scnData = try? NSKeyedArchiver.archivedData(withRootObject: scene, requiringSecureCoding: true) {
@@ -270,8 +310,8 @@ class CanvasDataViewModel: ObservableObject {
             } else {
                 // No existing project found, create a new one
                 let newProject = ProjectEntity(context: viewContext)
-                projectUUID = UUID()
-                newProject.projectID = projectUUID
+//                projectUUID = UUID()
+                newProject.projectID = UUID()
                 newProject.projectName = projectName
                 newProject.widthRoom = Float(canvasData.roomWidth)
                 newProject.heightRoom = Float(canvasData.roomHeight)
@@ -280,6 +320,23 @@ class CanvasDataViewModel: ObservableObject {
                 isObjectHidden = Array(repeating: false, count: isObjectHidden.count)
                 isWallHidden = Array(repeating: false, count: isWallHidden.count)
                 
+                if let dataWall = try? NSKeyedArchiver.archivedData(withRootObject: listWallNodes, requiringSecureCoding: false) {
+                    newProject.projectWallSaved = dataWall
+                    for wallChildNode in listWallNodes{
+                        wallChildNode.removeFromParentNode()
+                    }
+                    listWallNodes.removeAll()
+                } else {
+                    print("Error converting SCNNode array to Data")
+                }
+                
+                if let childName = try? NSKeyedArchiver.archivedData(withRootObject: renamedNode, requiringSecureCoding: false) {
+                    newProject.projectChildNameSaved = childName
+                    renamedNode.removeAll()
+                } else {
+                    print("Error converting SCNNode array to Data")
+                }
+                
                 //Reset Child Node
                 if let data = try? NSKeyedArchiver.archivedData(withRootObject: listChildNodes, requiringSecureCoding: false) {
                     newProject.projectChildSaved = data
@@ -287,26 +344,13 @@ class CanvasDataViewModel: ObservableObject {
                         childrenNode.removeFromParentNode()
                     }
                     
-                    for childNodeNameSaved in renamedNode{
-                        newProject.projectChildNameSaved = childNodeNameSaved
-                    }
-                    
                     listChildNodes.removeAll()
                     isObjectHidden.removeAll()
-                    renamedNode.removeAll()
                 } else {
                     // Handle the error if the conversion fails
                     print("Error converting SCNNode array to Data")
                 }
                 
-                if let dataWall = try? NSKeyedArchiver.archivedData(withRootObject: listWallNodes, requiringSecureCoding: false) {
-                    newProject.projectWallSaved = dataWall
-                    for wallChildNode in listWallNodes{
-                        wallChildNode.removeFromParentNode()
-                    }
-                } else {
-                    print("Error converting SCNNode array to Data")
-                }
                 
                 if let scene = rootScene {
                     if let scnData = try? NSKeyedArchiver.archivedData(withRootObject: scene, requiringSecureCoding: true) {
@@ -355,20 +399,31 @@ class CanvasDataViewModel: ObservableObject {
                     } else {
                         print("Failed to unarchive the SCN scene data")
                     }
+                    if let unarchivedWall = try? NSKeyedUnarchiver.unarchiveTopLevelObjectWithData(wallData) as? [SCNNode] {
+                        for wallNode in unarchivedWall {
+                            listWallNodes.append(wallNode)
+                            isWallHidden.append(wallNode.isHidden)
+                            rootScene?.rootNode.addChildNode(wallNode)
+                            print("Unarchived Node: \(wallNode)")
+                        }
+                    }
                     
                     if let unarchivedNodes = try? NSKeyedUnarchiver.unarchiveTopLevelObjectWithData(nodeData) as? [SCNNode] {
                         for node in unarchivedNodes {
                             listChildNodes.append(node)
                             rootScene?.rootNode.addChildNode(node)
-                            renamedNode.append(node.name!)
                             isObjectHidden.append(node.isHidden)
+                            canvasData.roomHeight = CGFloat(entity.heightRoom)
+                            canvasData.roomWidth = CGFloat(entity.widthRoom)
+                            canvasData.roomLength = CGFloat(entity.lengthRoom)
                             print("Unarchived Node: \(node)")
                         }
                     }
-                    if let unarchivedWall = try? NSKeyedUnarchiver.unarchiveTopLevelObjectWithData(wallData) as? [SCNNode] {
-                        for wallNode in unarchivedWall {
-                            listWallNodes.append(wallNode)
-                            print("Unarchived Node: \(wallNode)")
+                    
+//                    if let
+                    if let unarchivedNamed = try? NSKeyedUnarchiver.unarchiveTopLevelObjectWithData(savedNameNode) as? [String] {
+                        for childNameNodeSaved in unarchivedNamed {
+                            renamedNode.append(childNameNodeSaved)
                         }
                     }
                 }

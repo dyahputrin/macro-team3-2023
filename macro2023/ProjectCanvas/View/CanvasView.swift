@@ -254,7 +254,7 @@ struct CanvasView: View {
 //        .fullScreenCover(isPresented: $isGuidedCaptureViewPresented, content: {
 //            GuidedCaptureView()
 //        })
-        .navigationTitle(routerView.project == nil ? "NewProject" : roomSceneViewModel.projectData.nameProject)
+        .navigationTitle((routerView.project == nil ? "NewProject" : routerView.project?.projectName)!)
         .navigationBarBackButtonHidden(true)
         .navigationBarItems(leading: Button(action: {
             if !isSaveClicked {
@@ -270,6 +270,7 @@ struct CanvasView: View {
                 message: Text("Do you want to save changes before leaving?"),
                 primaryButton: .default(Text("Save"), action: {
                     roomSceneViewModel.saveProject(viewContext: viewContext)
+                    roomSceneViewModel.projectData.nameProject = newProjectName
                     showSaveAlert = true
                 }),
                 secondaryButton: .destructive(Text("No"), action: {
@@ -303,9 +304,9 @@ struct CanvasView: View {
             })
         })
         .onAppear{
-//            if routerView.project != nil{
-//                roomSceneViewModel.projectData.nameProject = routerView.project!.projectName!
-//                roomSceneViewModel.projectData.uuid = routerView.project!.projectID!
+            if routerView.project != nil{
+                roomSceneViewModel.projectData.nameProject = routerView.project!.projectName!
+                roomSceneViewModel.projectData.uuid = routerView.project!.projectID!
 //                activeProjectID = routerView.project!.projectID!
 //                if let project = routerView.project,
 //                   let sceneData = project.projectScene {
@@ -315,7 +316,7 @@ struct CanvasView: View {
 //                        print("Failed to unarchive SCN scene: \(error)")
 //                    }
 //                }
-//            }
+            }
             
             AppDelegate.orientationLock = .landscape // And making sure it stays that way
                 
@@ -326,7 +327,7 @@ struct CanvasView: View {
                 routerView.path.removeLast()
             }
             roomSceneViewModel.projectData.nameProject = ""
-            roomSceneViewModel.projectData.uuid = UUID()
+//            roomSceneViewModel.projectData.uuid = UUID()
             routerView.project = nil
         }
     }
