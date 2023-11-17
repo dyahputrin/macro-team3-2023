@@ -8,11 +8,13 @@
         <attribute name="heightRoom" optional="YES" attributeType="Float" defaultValueString="0.0" usesScalarValueType="YES"/>
         <attribute name="lastModifiedDate" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
         <attribute name="lengthRoom" optional="YES" attributeType="Float" defaultValueString="0.0" usesScalarValueType="YES"/>
+        <attribute name="projectChildNameSaved" optional="YES" attributeType="String"/>
         <attribute name="projectChildSaved" optional="YES" attributeType="Binary"/>
         <attribute name="projectID" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
         <attribute name="projectName" optional="YES" attributeType="String"/>
         <attribute name="projectScene" optional="YES" attributeType="Binary"/>
         <attribute name="projectThumbnail" optional="YES" attributeType="Binary"/>
+        <attribute name="projectWallSaved" optional="YES" attributeType="Binary"/>
         <attribute name="widthRoom" optional="YES" attributeType="Float" defaultValueString="0.0" usesScalarValueType="YES"/>
     </entity>
     <entity name="RoomPlanEntity" representedClassName="RoomPlanEntity" syncable="YES" codeGenerationType="class">

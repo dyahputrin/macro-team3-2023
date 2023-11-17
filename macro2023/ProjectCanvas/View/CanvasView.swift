@@ -303,26 +303,24 @@ struct CanvasView: View {
             })
         })
         .onAppear{
-            if routerView.project != nil{
-                roomSceneViewModel.projectData.nameProject = routerView.project!.projectName!
-                roomSceneViewModel.projectData.uuid = routerView.project!.projectID!
-                activeProjectID = routerView.project!.projectID!
-                if let project = routerView.project,
-                   let sceneData = project.projectScene {
-                    do {
-                        activeScene = try NSKeyedUnarchiver.unarchivedObject(ofClass: SCNScene.self, from: sceneData)!
-                    } catch {
-                        print("Failed to unarchive SCN scene: \(error)")
-                    }
-                }
-            }
+//            if routerView.project != nil{
+//                roomSceneViewModel.projectData.nameProject = routerView.project!.projectName!
+//                roomSceneViewModel.projectData.uuid = routerView.project!.projectID!
+//                activeProjectID = routerView.project!.projectID!
+//                if let project = routerView.project,
+//                   let sceneData = project.projectScene {
+//                    do {
+//                        activeScene = try NSKeyedUnarchiver.unarchivedObject(ofClass: SCNScene.self, from: sceneData)!
+//                    } catch {
+//                        print("Failed to unarchive SCN scene: \(error)")
+//                    }
+//                }
+//            }
             
             AppDelegate.orientationLock = .landscape // And making sure it stays that way
                 
         }
         .onDisappear{
-            
-            
             print("CanvasView is disappearing")
             if routerView.path.count > 0 {
                 routerView.path.removeLast()

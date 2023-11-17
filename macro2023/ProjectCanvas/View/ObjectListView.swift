@@ -75,7 +75,6 @@ struct ObjectListView: View {
                                 }) {
                                     Text("Remove")
                                         .foregroundColor(Color.white)
-//                                        .background(Color.red)
                                 }
                                 .tint(.red)
                             }

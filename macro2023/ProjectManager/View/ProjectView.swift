@@ -130,7 +130,7 @@ struct ProjectView: View {
                             .onTapGesture {
                                 routerView.path.append("canvas")
                                 routerView.project = newProjectName
-//                                 routerView.uuid = newProjectName.projectID
+                                // routerView.uuid = newProjectName.projectID
                             }
                             .alert("Rename Project", isPresented: $dataContentViewModel.dataCanvas.isRenameAlertPresented) {
                                 TextField("Enter a new project name", text: $currentProjectName)
