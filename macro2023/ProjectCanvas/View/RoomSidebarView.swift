@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import TipKit
 import SceneKit
 
 struct RoomSidebarView: View {
@@ -34,6 +35,8 @@ struct RoomSidebarView: View {
     @FetchRequest(entity: ProjectEntity.entity(),
                   sortDescriptors: [NSSortDescriptor(keyPath: \ProjectEntity.projectName, ascending: true)])
     var projectEntity: FetchedResults<ProjectEntity>
+    
+    let createYourRoomTip = RoomSidebarTip()
     
     var body: some View {
         let columns = [
@@ -113,6 +116,7 @@ struct RoomSidebarView: View {
                                                         .font(.title3).bold()
                                                         .foregroundColor(.white)
                                                 }
+                                                .popoverTip(createYourRoomTip, arrowEdge: .top)
                                         }
                                         .padding(.top, 30)
                                     }
