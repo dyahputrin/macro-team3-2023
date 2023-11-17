@@ -29,6 +29,11 @@
 		940CF47D2AEA5F3E00F3EB7C /* wall4white.usdz in Resources */ = {isa = PBXBuildFile; fileRef = 940CF4792AEA5F3E00F3EB7C /* wall4white.usdz */; };
 		940CF47E2AEA5F3E00F3EB7C /* wall2white.usdz in Resources */ = {isa = PBXBuildFile; fileRef = 940CF47A2AEA5F3E00F3EB7C /* wall2white.usdz */; };
 		940CF4842AEA69E900F3EB7C /* ObjectDimensionData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 940CF4832AEA69E900F3EB7C /* ObjectDimensionData.swift */; };
+		942658B82B05C6BF00F6C290 /* demoHighChair.usdz in Resources */ = {isa = PBXBuildFile; fileRef = 942658B12B05C6BC00F6C290 /* demoHighChair.usdz */; };
+		942658B92B05C6BF00F6C290 /* demobackdropbunga.usdz in Resources */ = {isa = PBXBuildFile; fileRef = 942658B22B05C6BD00F6C290 /* demobackdropbunga.usdz */; };
+		942658BA2B05C6BF00F6C290 /* demoroomwall2.usdz in Resources */ = {isa = PBXBuildFile; fileRef = 942658B32B05C6BD00F6C290 /* demoroomwall2.usdz */; };
+		942658BB2B05C6BF00F6C290 /* demomeja2.usdz in Resources */ = {isa = PBXBuildFile; fileRef = 942658B42B05C6BE00F6C290 /* demomeja2.usdz */; };
+		942658BC2B05C6BF00F6C290 /* demomeja1.usdz in Resources */ = {isa = PBXBuildFile; fileRef = 942658B52B05C6BF00F6C290 /* demomeja1.usdz */; };
 		943595CF2AE8F152000331A9 /* ScenekitView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 943595CE2AE8F152000331A9 /* ScenekitView.swift */; };
 		9487BDFD2ADE93B0004FCC67 /* ShotFileInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9487BDE32ADE93B0004FCC67 /* ShotFileInfo.swift */; };
 		9487BDFE2ADE93B0004FCC67 /* TimedMessageList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9487BDE42ADE93B0004FCC67 /* TimedMessageList.swift */; };
@@ -124,6 +129,11 @@
 		940CF4792AEA5F3E00F3EB7C /* wall4white.usdz */ = {isa = PBXFileReference; lastKnownFileType = file.usdz; path = wall4white.usdz; sourceTree = "<group>"; };
 		940CF47A2AEA5F3E00F3EB7C /* wall2white.usdz */ = {isa = PBXFileReference; lastKnownFileType = file.usdz; path = wall2white.usdz; sourceTree = "<group>"; };
 		940CF4832AEA69E900F3EB7C /* ObjectDimensionData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ObjectDimensionData.swift; sourceTree = "<group>"; };
+		942658B12B05C6BC00F6C290 /* demoHighChair.usdz */ = {isa = PBXFileReference; lastKnownFileType = file.usdz; path = demoHighChair.usdz; sourceTree = "<group>"; };
+		942658B22B05C6BD00F6C290 /* demobackdropbunga.usdz */ = {isa = PBXFileReference; lastKnownFileType = file.usdz; path = demobackdropbunga.usdz; sourceTree = "<group>"; };
+		942658B32B05C6BD00F6C290 /* demoroomwall2.usdz */ = {isa = PBXFileReference; lastKnownFileType = file.usdz; path = demoroomwall2.usdz; sourceTree = "<group>"; };
+		942658B42B05C6BE00F6C290 /* demomeja2.usdz */ = {isa = PBXFileReference; lastKnownFileType = file.usdz; path = demomeja2.usdz; sourceTree = "<group>"; };
+		942658B52B05C6BF00F6C290 /* demomeja1.usdz */ = {isa = PBXFileReference; lastKnownFileType = file.usdz; path = demomeja1.usdz; sourceTree = "<group>"; };
 		943595CE2AE8F152000331A9 /* ScenekitView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScenekitView.swift; sourceTree = "<group>"; };
 		9487BDE32ADE93B0004FCC67 /* ShotFileInfo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShotFileInfo.swift; sourceTree = "<group>"; };
 		9487BDE42ADE93B0004FCC67 /* TimedMessageList.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TimedMessageList.swift; sourceTree = "<group>"; };
@@ -279,6 +289,11 @@
 		21C90BFB2AD685F60003D517 /* 3D Object */ = {
 			isa = PBXGroup;
 			children = (
+				942658B22B05C6BD00F6C290 /* demobackdropbunga.usdz */,
+				942658B12B05C6BC00F6C290 /* demoHighChair.usdz */,
+				942658B52B05C6BF00F6C290 /* demomeja1.usdz */,
+				942658B42B05C6BE00F6C290 /* demomeja2.usdz */,
+				942658B32B05C6BD00F6C290 /* demoroomwall2.usdz */,
 				213E25A32AFCBAED00737AD8 /* v3floorhitam.usdz */,
 				213E25A42AFCBAED00737AD8 /* v3floorputih.usdz */,
 				213E25A02AFCBAEC00737AD8 /* v3wall1putih.usdz */,
@@ -625,7 +640,10 @@
 				213E25A62AFCBAED00737AD8 /* v3wall1putih.usdz in Resources */,
 				213E25A72AFCBAED00737AD8 /* v3wall4putih.usdz in Resources */,
 				213E25A82AFCBAED00737AD8 /* v3wall3putih.usdz in Resources */,
+				942658B82B05C6BF00F6C290 /* demoHighChair.usdz in Resources */,
 				213E25A92AFCBAED00737AD8 /* v3floorhitam.usdz in Resources */,
+				942658B92B05C6BF00F6C290 /* demobackdropbunga.usdz in Resources */,
+				942658BC2B05C6BF00F6C290 /* demomeja1.usdz in Resources */,
 				213E25AA2AFCBAED00737AD8 /* v3floorputih.usdz in Resources */,
 				940CF47C2AEA5F3E00F3EB7C /* wall1white.usdz in Resources */,
 				BE6F98A02AE26BA500AC6A69 /* v2wall1.usdz in Resources */,
@@ -644,7 +662,9 @@
 				94DDE9672ADE8FFA007915FF /* UnsupportedDevice.storyboard in Resources */,
 				94DDE9642ADE8FFA007915FF /* LaunchScreen.storyboard in Resources */,
 				940CF47D2AEA5F3E00F3EB7C /* wall4white.usdz in Resources */,
+				942658BA2B05C6BF00F6C290 /* demoroomwall2.usdz in Resources */,
 				BE10DDB32AE7A34C007D1A8E /* Preview Assets.xcassets in Resources */,
+				942658BB2B05C6BF00F6C290 /* demomeja2.usdz in Resources */,
 				BE1AE87E2AD3D65900F586CD /* Assets.xcassets in Resources */,
 				9487BE2A2ADE93CF004FCC67 /* ScanPasses-iPad-FixedHeight-1.mp4 in Resources */,
 				9487BE262ADE93CF004FCC67 /* ScanPasses-iPhone-FixedHeight-3.mp4 in Resources */,
@@ -857,7 +877,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"macro2023/Preview Content\"";
-				DEVELOPMENT_TEAM = 28N6P267AM;
+				DEVELOPMENT_TEAM = 4QQ5D4534V;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_NSCameraUsageDescription = "Camera needed to function";
@@ -892,7 +912,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"macro2023/Preview Content\"";
-				DEVELOPMENT_TEAM = 28N6P267AM;
+				DEVELOPMENT_TEAM = 4QQ5D4534V;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_NSCameraUsageDescription = "Camera needed to function";
