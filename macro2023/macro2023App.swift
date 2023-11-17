@@ -26,7 +26,8 @@ struct macro2023App: App {
     }
     
     init() {
-        try? Tips.configure()
+        try? Tips.configure([
+            .displayFrequency(.immediate)])
     }
 }
 
