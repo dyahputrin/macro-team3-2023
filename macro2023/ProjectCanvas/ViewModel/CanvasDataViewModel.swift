@@ -22,10 +22,20 @@ class CanvasDataViewModel: ObservableObject {
     @Published var isWallHidden : [Bool]
     @Published var renamedNode : [String]
     
+    @Published var selectedChildNode: SCNNode? = nil
+    @Published var listSelected:Bool?
     
+    @ObservedObject var objectDimensionData : ObjectDimensionData 
     var floor = SCNNode()
     var grayMaterial = SCNMaterial()
     var floorGeometry = SCNFloor()
+    
+    var arrowX: SCNNode?
+    var arrowY: SCNNode?
+    var arrowZ: SCNNode?
+    
+    var torusNode : SCNNode?
+    var torusHighNode : SCNNode?
     
     var tempScene: SCNScene?
     private let viewContext = PersistenceController.shared.viewContext
@@ -33,7 +43,7 @@ class CanvasDataViewModel: ObservableObject {
     
     private var cancellables = Set<AnyCancellable>()
     
-    init(canvasData: CanvasData, projectData: ProjectData, routerView: RouterView) {
+    init(canvasData: CanvasData, projectData: ProjectData, routerView: RouterView, objectDimensionData:ObjectDimensionData) {
         self.canvasData = canvasData
         self.projectData = projectData
         self.routerView = routerView
@@ -42,6 +52,7 @@ class CanvasDataViewModel: ObservableObject {
         self.isObjectHidden = []
         self.isWallHidden = []
         self.renamedNode = []
+        
         grayMaterial.diffuse.contents = UIColor.gray
         
         floorGeometry.materials = [grayMaterial]
@@ -50,13 +61,18 @@ class CanvasDataViewModel: ObservableObject {
         
         self.floor = SCNNode(geometry: floorGeometry)
         self.floor.opacity = 0.5
+//        self.arrowX = nil
+//        self.arrowY = nil
+//        self.arrowZ = nil
         //        floor.geometry = SCNFloor()
-        
+        self.objectDimensionData = objectDimensionData
         if routerView.project?.projectName == nil {
             self.makeScene1(width: 0, height: 0, length: 0)
         } else {
             self.loadSceneFromCoreData(selectedProjectID:(routerView.project?.projectID)!, in: viewContext)
         }
+        
+        
     }
     
     // function to add a marker for rootNode
@@ -460,6 +476,103 @@ class CanvasDataViewModel: ObservableObject {
         } catch {
             print("Failed to save snapshot: \(error)")
         }
+    }
+    
+    func processNodeSelection(selectedNode: SCNNode) {
+         if arrowX != nil && arrowY != nil && arrowZ != nil {
+                 updateArrowPositionsToMatchNode(node: selectedNode)
+         } else {
+             
+             deselectNodeAndArrows(selectedNode: selectedNode)
+//             allow camera control false
+             
+             if let nodeName = selectedNode.name, ["wall1", "wall2", "wall3", "wall4", "floor"].contains(nodeName) {
+                 let worldBoundingBox = selectedNode.boundingBox
+                 let worldMin = selectedNode.convertPosition(worldBoundingBox.min, to: nil)
+                 let worldMax = selectedNode.convertPosition(worldBoundingBox.max, to: nil)
+                 
+                 let x = String(format: "%.2f", worldMax.x - worldMin.x)
+                 let y = String(format: "%.2f", worldMax.y - worldMin.y)
+                 let z = String(format: "%.2f", worldMax.z - worldMin.z)
+                 
+                 objectDimensionData.name = selectedNode.name ?? "Unknown"
+                 objectDimensionData.width = x
+                 objectDimensionData.height = y
+                 objectDimensionData.length = z
+                 
+             } else {
+                 let (minBounds, maxBounds) = selectedNode.boundingBox
+                 let midPoint = SCNVector3(
+                     (maxBounds.x + minBounds.x) / 2,
+                     (maxBounds.y + minBounds.y) / 2,
+                     (maxBounds.z + minBounds.z) / 2
+                 )
+                 
+                 let worldBoundingBox = selectedNode.boundingBox
+                 let worldMin = selectedNode.convertPosition(worldBoundingBox.min, to: nil)
+                 let worldMax = selectedNode.convertPosition(worldBoundingBox.max, to: nil)
+                 
+                 let x = String(format: "%.2f", worldMax.x - worldMin.x)
+                 let y = String(format: "%.2f", worldMax.y - worldMin.y)
+                 let z = String(format: "%.2f", worldMax.z - worldMin.z)
+                 
+                 objectDimensionData.name = selectedNode.name ?? "Unknown"
+                 objectDimensionData.width = x
+                 objectDimensionData.height = y
+                 objectDimensionData.length = z
+                 
+                 let xFloat = worldMax.x - worldMin.x
+                 let yFloat = worldMax.y - worldMin.y
+                 let zFloat = worldMax.z - worldMin.z
+                 
+                 let torusRadius = xFloat// Adjust as necessary
+                 let torusThickness = 0.005 // Adjust as necessary
+                 let totalHeight = yFloat
+                 
+                 let torus = SCNTorus(ringRadius: CGFloat(torusRadius), pipeRadius: torusThickness)
+                 torus.firstMaterial?.diffuse.contents = Color(.cyan)
+                 torusNode = SCNNode(geometry: torus)
+                 torusNode?.position = SCNVector3(0, Float(totalHeight) / 2 + 0.1, 0)
+                 torusNode?.eulerAngles = SCNVector3(0, Float.pi / 2, 0)//ini bikin flat
+                 
+                 torusHighNode = SCNNode(geometry: torus)
+                 torusHighNode?.position = SCNVector3(0, Float(totalHeight) / 2 + 0.1, 0)
+                 torusHighNode?.eulerAngles = SCNVector3(0, 0, Float.pi / 2)
+                 
+                 rootScene?.rootNode.addChildNode(torusNode!)
+                 rootScene?.rootNode.addChildNode(torusHighNode!)
+                 
+                 updateArrowPositionsToMatchNode(node: selectedNode)
+             }
+             
+         }
+         
+     }
+    
+    func updateArrowPositionsToMatchNode(node: SCNNode) {
+       // Make sure the arrows exist
+       guard let arrowX = self.arrowX, let arrowY = self.arrowY, let arrowZ = self.arrowZ else {
+           return
+       }
+       
+       let worldPosition = node.presentation.worldPosition // Use presentation for smooth updates
+       arrowX.worldPosition = worldPosition
+       arrowY.worldPosition = worldPosition
+       arrowZ.worldPosition = worldPosition
+   }
+    
+    func deselectNodeAndArrows(selectedNode: SCNNode) {
+        selectedNode.childNodes.filter { $0.name?.hasPrefix("axisArrow") == true }
+            .forEach { $0.removeFromParentNode() }
+        objectDimensionData.reset()
+        
+        torusNode?.removeFromParentNode()
+        torusHighNode?.removeFromParentNode()
+
+        arrowX = nil
+        arrowY = nil
+        arrowZ = nil
+        torusNode = nil
     }
     
 }

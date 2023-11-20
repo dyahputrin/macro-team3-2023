@@ -56,7 +56,6 @@ struct CanvasView: View {
     
     @ObservedObject var objectDimensionData: ObjectDimensionData = ObjectDimensionData()
     @State private var sceneBinding: Binding<SCNScene?> = .constant(nil)
-
     
     init(
         objectsButtonClicked: Bool,
@@ -70,6 +69,7 @@ struct CanvasView: View {
         activeScene: Binding<SCNScene>,
         projectData: ProjectData,
         routerView: RouterView
+        
     ) {
         _objectsButtonClicked = State(initialValue: objectsButtonClicked)
         _roomButtonClicked = State(initialValue: roomButtonClicked)
@@ -80,7 +80,7 @@ struct CanvasView: View {
         _isSetButtonSidebarTapped = isSetButtonSidebarTapped
         _activeProjectID = activeProjectID
         _activeScene = activeScene
-        _roomSceneViewModel = StateObject(wrappedValue:CanvasDataViewModel(canvasData: CanvasData(roomWidth: 0, roomHeight: 0, roomLength: 0), projectData: projectData, routerView: routerView))
+        _roomSceneViewModel  = StateObject(wrappedValue: CanvasDataViewModel(canvasData: CanvasData(roomWidth: 0, roomHeight: 0, roomLength: 0), projectData: projectData, routerView: routerView, objectDimensionData: ObjectDimensionData()))
     }
     
     @State private var currentScenekitView: ScenekitView? = nil
@@ -99,6 +99,7 @@ struct CanvasView: View {
                     ScenekitView(
                         objectDimensionData: objectDimensionData,
                         canvasData: roomSceneViewModel.canvasData,
+                        roomSceneViewModel:roomSceneViewModel, 
                         scene: $roomSceneViewModel.rootScene,
                         isEditMode: $isEditMode,
                         roomWidth: $roomWidth
@@ -123,7 +124,7 @@ struct CanvasView: View {
             ObjectListView(showingObjectList: $showingObjectList, objectDimensionData: objectDimensionData, roomSceneViewModel: roomSceneViewModel)
                 //.animation(.easeInOut(duration: 0.3), value: showingObjectList)
             
-            if objectDimensionData.name != "--" {
+            if objectDimensionData.name != "--"{
                 ObjectSizeView(roomWidthText:.constant("2"), roomLengthText: .constant("2"), roomHeightText: .constant("2"), sceneViewID: .constant(UUID()), routerView: _routerView, roomSceneViewModel: roomSceneViewModel, objectDimensionData: objectDimensionData)
             }
 

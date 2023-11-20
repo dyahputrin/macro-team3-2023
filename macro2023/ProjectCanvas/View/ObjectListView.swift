@@ -61,7 +61,7 @@ struct ObjectListView: View {
                                         .onTapGesture {
                                             item.isHidden.toggle()
                                             roomSceneViewModel.isObjectHidden[indexObject] = item.isHidden
-                                        }
+                                                                                    }
                                 }
                             }
                             .swipeActions {
@@ -77,6 +77,20 @@ struct ObjectListView: View {
                                         .foregroundColor(Color.white)
                                 }
                                 .tint(.red)
+                            }
+                            .onTapGesture{
+                                if roomSceneViewModel.selectedChildNode == item {
+                                    roomSceneViewModel.selectedChildNode = nil
+                                    roomSceneViewModel.listSelected = false
+                                    roomSceneViewModel.deselectNodeAndArrows(selectedNode: item)
+                                } else {
+                                    if let selectedChild = roomSceneViewModel.selectedChildNode {
+                                        roomSceneViewModel.deselectNodeAndArrows(selectedNode: selectedChild)
+                                    }
+                                    roomSceneViewModel.selectedChildNode = item
+                                    roomSceneViewModel.listSelected = true
+                                    roomSceneViewModel.processNodeSelection(selectedNode: item)
+                                }
                             }
                         }
                     }, header: {
