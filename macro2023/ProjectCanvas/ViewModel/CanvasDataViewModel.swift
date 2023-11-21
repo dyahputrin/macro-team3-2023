@@ -430,6 +430,7 @@ class CanvasDataViewModel: ObservableObject {
                 if let entity = entities.first, let scnData = entity.projectScene, let nodeData = entity.projectChildSaved , let savedNameNode = entity.projectChildNameSaved, let wallData = entity.projectWallSaved{
                     
                     if let scene = try NSKeyedUnarchiver.unarchivedObject(ofClass: SCNScene.self, from: scnData) {
+                        
                         rootScene = scene
                     } else {
                         print("Failed to unarchive the SCN scene data")

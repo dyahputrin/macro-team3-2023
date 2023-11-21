@@ -122,7 +122,6 @@ struct CanvasView: View {
             }
             
             ObjectListView(showingObjectList: $showingObjectList, objectDimensionData: objectDimensionData, roomSceneViewModel: roomSceneViewModel)
-                //.animation(.easeInOut(duration: 0.3), value: showingObjectList)
             
             if objectDimensionData.name != "--"{
                 ObjectSizeView(roomWidthText:.constant("2"), roomLengthText: .constant("2"), roomHeightText: .constant("2"), sceneViewID: .constant(UUID()), routerView: _routerView, roomSceneViewModel: roomSceneViewModel, objectDimensionData: objectDimensionData)
@@ -269,13 +268,13 @@ struct CanvasView: View {
             Alert(
                 title: Text("Save Project"),
                 message: Text("Do you want to save changes before leaving?"),
-                primaryButton: .default(Text("Save"), action: {
+                primaryButton: .destructive(Text("No"), action: {
+                    presentationMode.wrappedValue.dismiss()
+                }),
+                secondaryButton: .default(Text("Save"), action: {
                     roomSceneViewModel.saveProject(viewContext: viewContext)
                     roomSceneViewModel.projectData.nameProject = newProjectName
                     showSaveAlert = true
-                }),
-                secondaryButton: .destructive(Text("No"), action: {
-                    presentationMode.wrappedValue.dismiss()
                 })
             )
         }
@@ -308,15 +307,6 @@ struct CanvasView: View {
             if routerView.project != nil{
                 roomSceneViewModel.projectData.nameProject = routerView.project!.projectName!
                 roomSceneViewModel.projectData.uuid = routerView.project!.projectID!
-//                activeProjectID = routerView.project!.projectID!
-//                if let project = routerView.project,
-//                   let sceneData = project.projectScene {
-//                    do {
-//                        activeScene = try NSKeyedUnarchiver.unarchivedObject(ofClass: SCNScene.self, from: sceneData)!
-//                    } catch {
-//                        print("Failed to unarchive SCN scene: \(error)")
-//                    }
-//                }
             }
             
             AppDelegate.orientationLock = .landscape // And making sure it stays that way

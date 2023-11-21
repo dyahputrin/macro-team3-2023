@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-public var dicek:Bool = false
+public var objectTapped:Bool = false
 
 struct ObjectListView: View {
     @Binding var showingObjectList: Bool
@@ -85,7 +85,7 @@ struct ObjectListView: View {
                                 .tint(.red)
                             }
                             .onTapGesture{
-                                if roomSceneViewModel.selectedChildNode == nil && dicek == true{
+                                if roomSceneViewModel.selectedChildNode == nil && objectTapped == true{
                                     if let selectedChild = roomSceneViewModel.selectedChildNode {
                                         roomSceneViewModel.deselectNodeAndArrows(selectedNode: selectedChild)
                                     }

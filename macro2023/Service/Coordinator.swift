@@ -35,7 +35,7 @@ class Coordinator: NSObject, UIGestureRecognizerDelegate {
             objectDimensionData.reset()
             deselectNodeAndArrows()
             tappedNode = nil
-            dicek = true
+            objectTapped = true
             return
         } else {
             let removeValue = hitResults.first?.node
@@ -57,7 +57,7 @@ class Coordinator: NSObject, UIGestureRecognizerDelegate {
                 processNodeSelection(result.node)
                 selectedAxis = nil
                 tappedNode = result.node
-                dicek = false
+                objectTapped = false
             }
         }
         
@@ -180,7 +180,6 @@ class Coordinator: NSObject, UIGestureRecognizerDelegate {
             }
             return
         }
-        
     }
     
     private func handleOneFingerPan(translation: CGPoint, for node: SCNNode, cameraNode: SCNNode) {
