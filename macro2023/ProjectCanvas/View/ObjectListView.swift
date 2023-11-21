@@ -7,6 +7,8 @@
 
 import SwiftUI
 
+public var dicek:Bool = false
+
 struct ObjectListView: View {
     @Binding var showingObjectList: Bool
     var sideBarWidth = UIScreen.main.bounds.size.width * 0.2
@@ -61,7 +63,11 @@ struct ObjectListView: View {
                                         .onTapGesture {
                                             item.isHidden.toggle()
                                             roomSceneViewModel.isObjectHidden[indexObject] = item.isHidden
-                                                                                    }
+                                            if roomSceneViewModel.selectedChildNode == item {
+                                                roomSceneViewModel.selectedChildNode = nil
+                                                roomSceneViewModel.deselectNodeAndArrows(selectedNode: item)
+                                            }
+                                        }
                                 }
                             }
                             .swipeActions {
@@ -79,17 +85,16 @@ struct ObjectListView: View {
                                 .tint(.red)
                             }
                             .onTapGesture{
-                                if roomSceneViewModel.selectedChildNode == item {
-                                    roomSceneViewModel.selectedChildNode = nil
-                                    roomSceneViewModel.listSelected = false
-                                    roomSceneViewModel.deselectNodeAndArrows(selectedNode: item)
-                                } else {
+                                if roomSceneViewModel.selectedChildNode == nil && dicek == true{
                                     if let selectedChild = roomSceneViewModel.selectedChildNode {
                                         roomSceneViewModel.deselectNodeAndArrows(selectedNode: selectedChild)
                                     }
                                     roomSceneViewModel.selectedChildNode = item
-                                    roomSceneViewModel.listSelected = true
                                     roomSceneViewModel.processNodeSelection(selectedNode: item)
+                                }
+                                else{
+                                    roomSceneViewModel.selectedChildNode = nil
+                                    roomSceneViewModel.deselectNodeAndArrows(selectedNode: item)
                                 }
                             }
                         }

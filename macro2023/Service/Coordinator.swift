@@ -18,6 +18,7 @@ class Coordinator: NSObject, UIGestureRecognizerDelegate {
     var arrowX: SCNNode?
     var arrowY: SCNNode?
     var arrowZ: SCNNode?
+    var tappedNode : SCNNode?
     
     init(_ parent: ScenekitView) {
         self.parent = parent
@@ -29,10 +30,12 @@ class Coordinator: NSObject, UIGestureRecognizerDelegate {
         let p = gestureRecognizer.location(in: parent.view)
         let hitResults = parent.view.hitTest(p, options: [:])
         
-        if hitResults.count == 0 || hitResults.first!.node.name == nil {
+        if hitResults.count == 0 || hitResults.first!.node.name == nil || tappedNode == hitResults.first!.node {
             parent.isEditMode = false
             objectDimensionData.reset()
             deselectNodeAndArrows()
+            tappedNode = nil
+            dicek = true
             return
         } else {
             let removeValue = hitResults.first?.node
@@ -53,6 +56,8 @@ class Coordinator: NSObject, UIGestureRecognizerDelegate {
             } else if let result = hitResults.first {
                 processNodeSelection(result.node)
                 selectedAxis = nil
+                tappedNode = result.node
+                dicek = false
             }
         }
         
@@ -114,14 +119,18 @@ class Coordinator: NSObject, UIGestureRecognizerDelegate {
                 let zFloat = worldMax.z - worldMin.z
                 
                 arrowX = createArrowNode(axis: SCNVector3(1, 0, 0), color: .red, arrowName: "axisArrowX", X: xFloat, Y: yFloat, Z: zFloat)
+                parent.roomSceneViewModel.arrowNode.append(arrowX!)
                 arrowY = createArrowNode(axis: SCNVector3(0, 1, 0), color: .green, arrowName: "axisArrowY", X: xFloat, Y: yFloat, Z: zFloat)
+                parent.roomSceneViewModel.arrowNode.append(arrowY!)
                 arrowZ = createArrowNode(axis: SCNVector3(0, 0, 1), color: .blue, arrowName: "axisArrowZ", X: xFloat, Y: yFloat, Z: zFloat)
+                parent.roomSceneViewModel.arrowNode.append(arrowZ!)
+                     
+                parent.scene?.rootNode.addChildNode(parent.roomSceneViewModel.arrowNode[0])
+                parent.scene?.rootNode.addChildNode(parent.roomSceneViewModel.arrowNode[1])
+                parent.scene?.rootNode.addChildNode(parent.roomSceneViewModel.arrowNode[2])
                 
-                parent.scene?.rootNode.addChildNode(arrowX!)
-                parent.scene?.rootNode.addChildNode(arrowY!)
-                parent.scene?.rootNode.addChildNode(arrowZ!)
-                
-//                parent.roomSceneViewModel.deselectNodeAndArrows(selectedNode: node)
+                parent.roomSceneViewModel.torusNode?.removeFromParentNode()
+                parent.roomSceneViewModel.torusHighNode?.removeFromParentNode()
                 
                 updateArrowPositionsToMatchNode(node: node)
             }
@@ -137,10 +146,10 @@ class Coordinator: NSObject, UIGestureRecognizerDelegate {
         objectDimensionData.reset()
         selectedNode = nil
         
-        arrowX?.removeFromParentNode()
-        arrowY?.removeFromParentNode()
-        arrowZ?.removeFromParentNode()
-
+        for childArrowNode in parent.roomSceneViewModel.arrowNode{
+            childArrowNode.removeFromParentNode()
+        }
+        parent.roomSceneViewModel.arrowNode.removeAll()
         arrowX = nil
         arrowY = nil
         arrowZ = nil
@@ -169,9 +178,7 @@ class Coordinator: NSObject, UIGestureRecognizerDelegate {
             default:
                 lastPanTranslation = .zero
             }
-            
             return
-            
         }
         
     }

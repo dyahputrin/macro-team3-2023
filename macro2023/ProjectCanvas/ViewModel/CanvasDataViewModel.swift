@@ -23,16 +23,12 @@ class CanvasDataViewModel: ObservableObject {
     @Published var renamedNode : [String]
     
     @Published var selectedChildNode: SCNNode? = nil
-    @Published var listSelected:Bool?
+    @Published var arrowNode:[SCNNode]
     
     @ObservedObject var objectDimensionData : ObjectDimensionData 
     var floor = SCNNode()
     var grayMaterial = SCNMaterial()
     var floorGeometry = SCNFloor()
-    
-    var arrowX: SCNNode?
-    var arrowY: SCNNode?
-    var arrowZ: SCNNode?
     
     var torusNode : SCNNode?
     var torusHighNode : SCNNode?
@@ -52,6 +48,7 @@ class CanvasDataViewModel: ObservableObject {
         self.isObjectHidden = []
         self.isWallHidden = []
         self.renamedNode = []
+        self.arrowNode = []
         
         grayMaterial.diffuse.contents = UIColor.gray
         
@@ -307,8 +304,19 @@ class CanvasDataViewModel: ObservableObject {
                         childrenNode.removeFromParentNode()
                     }
                     
+                    for arrowNodeChild in arrowNode{
+                        arrowNodeChild.removeFromParentNode()
+                    }
+                    
                     listChildNodes.removeAll()
                     isObjectHidden.removeAll()
+                    arrowNode.removeAll()
+                    
+                    torusNode?.removeFromParentNode()
+                    torusHighNode?.removeFromParentNode()
+                    
+                    torusNode = nil
+                    torusHighNode = nil
                 } else {
                     // Handle the error if the conversion fails
                     print("Error converting SCNNode array to Data")
@@ -360,8 +368,19 @@ class CanvasDataViewModel: ObservableObject {
                         childrenNode.removeFromParentNode()
                     }
                     
+                    for arrowNodeChild in arrowNode{
+                        arrowNodeChild.removeFromParentNode()
+                    }
+                    
                     listChildNodes.removeAll()
                     isObjectHidden.removeAll()
+                    arrowNode.removeAll()
+                    
+                    torusNode?.removeFromParentNode()
+                    torusHighNode?.removeFromParentNode()
+                    
+                    torusNode = nil
+                    torusHighNode = nil
                 } else {
                     // Handle the error if the conversion fails
                     print("Error converting SCNNode array to Data")
@@ -479,26 +498,12 @@ class CanvasDataViewModel: ObservableObject {
     }
     
     func processNodeSelection(selectedNode: SCNNode) {
-         if arrowX != nil && arrowY != nil && arrowZ != nil {
-                 updateArrowPositionsToMatchNode(node: selectedNode)
-         } else {
-             
              deselectNodeAndArrows(selectedNode: selectedNode)
-//             allow camera control false
              
              if let nodeName = selectedNode.name, ["wall1", "wall2", "wall3", "wall4", "floor"].contains(nodeName) {
                  let worldBoundingBox = selectedNode.boundingBox
                  let worldMin = selectedNode.convertPosition(worldBoundingBox.min, to: nil)
                  let worldMax = selectedNode.convertPosition(worldBoundingBox.max, to: nil)
-                 
-                 let x = String(format: "%.2f", worldMax.x - worldMin.x)
-                 let y = String(format: "%.2f", worldMax.y - worldMin.y)
-                 let z = String(format: "%.2f", worldMax.z - worldMin.z)
-                 
-                 objectDimensionData.name = selectedNode.name ?? "Unknown"
-                 objectDimensionData.width = x
-                 objectDimensionData.height = y
-                 objectDimensionData.length = z
                  
              } else {
                  let (minBounds, maxBounds) = selectedNode.boundingBox
@@ -512,67 +517,41 @@ class CanvasDataViewModel: ObservableObject {
                  let worldMin = selectedNode.convertPosition(worldBoundingBox.min, to: nil)
                  let worldMax = selectedNode.convertPosition(worldBoundingBox.max, to: nil)
                  
-                 let x = String(format: "%.2f", worldMax.x - worldMin.x)
-                 let y = String(format: "%.2f", worldMax.y - worldMin.y)
-                 let z = String(format: "%.2f", worldMax.z - worldMin.z)
-                 
-                 objectDimensionData.name = selectedNode.name ?? "Unknown"
-                 objectDimensionData.width = x
-                 objectDimensionData.height = y
-                 objectDimensionData.length = z
-                 
                  let xFloat = worldMax.x - worldMin.x
                  let yFloat = worldMax.y - worldMin.y
                  let zFloat = worldMax.z - worldMin.z
                  
-                 let torusRadius = xFloat// Adjust as necessary
+                 let torusRadius = xFloat*1.5// Adjust as necessary
                  let torusThickness = 0.005 // Adjust as necessary
                  let totalHeight = yFloat
+                 
                  
                  let torus = SCNTorus(ringRadius: CGFloat(torusRadius), pipeRadius: torusThickness)
                  torus.firstMaterial?.diffuse.contents = Color(.cyan)
                  torusNode = SCNNode(geometry: torus)
                  torusNode?.position = SCNVector3(0, Float(totalHeight) / 2 + 0.1, 0)
                  torusNode?.eulerAngles = SCNVector3(0, Float.pi / 2, 0)//ini bikin flat
-                 
+
                  torusHighNode = SCNNode(geometry: torus)
                  torusHighNode?.position = SCNVector3(0, Float(totalHeight) / 2 + 0.1, 0)
                  torusHighNode?.eulerAngles = SCNVector3(0, 0, Float.pi / 2)
                  
                  rootScene?.rootNode.addChildNode(torusNode!)
                  rootScene?.rootNode.addChildNode(torusHighNode!)
-                 
-                 updateArrowPositionsToMatchNode(node: selectedNode)
-             }
              
          }
          
      }
     
-    func updateArrowPositionsToMatchNode(node: SCNNode) {
-       // Make sure the arrows exist
-       guard let arrowX = self.arrowX, let arrowY = self.arrowY, let arrowZ = self.arrowZ else {
-           return
-       }
-       
-       let worldPosition = node.presentation.worldPosition // Use presentation for smooth updates
-       arrowX.worldPosition = worldPosition
-       arrowY.worldPosition = worldPosition
-       arrowZ.worldPosition = worldPosition
-   }
-    
     func deselectNodeAndArrows(selectedNode: SCNNode) {
-        selectedNode.childNodes.filter { $0.name?.hasPrefix("axisArrow") == true }
-            .forEach { $0.removeFromParentNode() }
+//        selectedNode.childNodes.filter { $0.name?.hasPrefix("axisArrow") == true }
+//            .forEach { $0.removeFromParentNode() }
         objectDimensionData.reset()
         
         torusNode?.removeFromParentNode()
         torusHighNode?.removeFromParentNode()
-
-        arrowX = nil
-        arrowY = nil
-        arrowZ = nil
         torusNode = nil
+        torusHighNode = nil
     }
     
 }
