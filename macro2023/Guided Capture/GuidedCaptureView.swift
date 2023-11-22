@@ -26,7 +26,6 @@ struct GuidedCaptureView: View {
             }
         }
         .onAppear {
-            UIDevice.current.setValue(UIInterfaceOrientation.portrait.rawValue, forKey: "orientation")
             AppDelegate.orientationLock = .portrait // And making sure it stays that way
         }
         .onChange(of: appModel.state) { _, newState in

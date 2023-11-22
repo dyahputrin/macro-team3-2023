@@ -137,16 +137,16 @@ struct RoomSidebarView: View {
                                         })
                                         ForEach(roomPlans, id: \.self){ importedRoomPlan in
                                             RoundedRectangle(cornerRadius: 25, style: .circular)
-                                                .shadow(radius:5)
-                                                .frame(width: 100, height: 100)
+                                                .shadow(radius:2)
+                                                .frame(width: 125, height: 100)
                                                 .foregroundColor(.clear)
                                                 .overlay{
                                                     VStack {
                                                         if let usdzData = importedRoomPlan.roomPlanObject {
                                                             ThumbnailView(usdzData: usdzData)
-                                                                .frame(width: 100, height: 100)
-                                                                .cornerRadius(25)
-                                                                .shadow(radius: 5)
+                                                                .frame(width: 125, height: 125)
+                                                                .cornerRadius(15)
+                                                                .shadow(radius: 2)
                                                                 .onTapGesture {
                                                                     roomSceneViewModel.renamedNode.append(importedRoomPlan.roomPlanName!)
                                                                     roomSceneViewModel.addImportObjectChild(data: usdzData)
@@ -156,6 +156,7 @@ struct RoomSidebarView: View {
                                                         Text("\(importedRoomPlan.roomPlanName ?? "error")")
                                                     }
                                                 }
+                                                .padding()
                                         }
                                         
                                     }

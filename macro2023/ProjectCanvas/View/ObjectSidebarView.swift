@@ -52,16 +52,16 @@ struct ObjectSidebarView: View {
                                     LazyVGrid(columns: columns, spacing: 30) {
                                         ForEach(roomSceneViewModel.canvasData.defaultAsset,id: \.self){ asset in
                                             RoundedRectangle(cornerRadius: 25, style: .circular)
-                                                .shadow(radius:5)
-                                                .frame(width: 100, height: 100)
+                                                .shadow(radius:2)
+                                                .frame(width: 125, height: 125)
                                                 .foregroundColor(.clear)
                                                 .overlay{
                                                     VStack {
                                                         let fullNameArr = asset.split(separator:".")
                                                         SceneView(scene: SCNScene(named: asset), options: [.autoenablesDefaultLighting])
-                                                            .frame(width: 100, height: 100)
-                                                            .cornerRadius(25)
-                                                            .shadow(radius:5)
+                                                            .frame(width: 125, height: 125)
+                                                            .cornerRadius(15)
+                                                            .shadow(radius:2)
                                                             .onTapGesture {
                                                                 objectDimensionData.selectedChildNode.name = String(fullNameArr[0])
                                                                 roomSceneViewModel.addNodeToRootScene(named: asset)
@@ -72,6 +72,7 @@ struct ObjectSidebarView: View {
                                                         Text(fullNameArr[0])
                                                     }
                                                 }
+                                                .padding()
                                         }
                                         
                                     }
@@ -91,16 +92,16 @@ struct ObjectSidebarView: View {
                                         })
                                         ForEach(importsObject, id: \.self){ urlImport in
                                             RoundedRectangle(cornerRadius: 25, style: .circular)
-                                                .shadow(radius:5)
-                                                .frame(width: 100, height: 100)
+                                                .shadow(radius:2)
+                                                .frame(width: 125, height: 125)
                                                 .foregroundColor(.clear)
                                                 .overlay{
                                                     VStack {
                                                         if let usdzData = urlImport.importedObject {
                                                             ThumbnailView(usdzData: usdzData)
-                                                                .frame(width: 100, height: 100)
-                                                                .cornerRadius(25)
-                                                                .shadow(radius: 5)
+                                                                .frame(width: 125, height: 125)
+                                                                .cornerRadius(15)
+                                                                .shadow(radius: 2)
                                                                 .onTapGesture {
                                                                     roomSceneViewModel.renamedNode.append(urlImport.importedName!)
                                                                     roomSceneViewModel.addImportObjectChild(data: usdzData)
@@ -111,6 +112,7 @@ struct ObjectSidebarView: View {
                                                         
                                                     }
                                                 }
+                                                .padding()
                                         }
                                         
                                     }
