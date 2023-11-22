@@ -286,12 +286,12 @@ struct CanvasView: View {
             Alert(
                 title: Text("Save Project"),
                 message: Text("Do you want to save changes before leaving?"),
-                primaryButton: .default(Text("Save"), action: {
+                primaryButton: .destructive(Text("No"), action: {
+                    presentationMode.wrappedValue.dismiss()
+                }),
+                secondaryButton: .default(Text("Save"), action: {
                     roomSceneViewModel.saveProject(viewContext: viewContext)
                     showSaveAlert = true
-                }),
-                secondaryButton: .destructive(Text("No"), action: {
-                    presentationMode.wrappedValue.dismiss()
                 })
             )
         }
@@ -349,4 +349,6 @@ struct CanvasView: View {
         }
     }
 }
-
+//#Preview {
+//    CanvasView(objectsButtonClicked: false, roomButtonClicked: false, viewfinderButtonClicked: .constant(false), isImporting: .constant(false), isExporting: .constant(false), isSetButtonSidebarTapped: .constant(false))
+//}
