@@ -7,6 +7,8 @@
 
 import SwiftUI
 
+public var objectTapped:Bool = false
+
 struct ObjectListView: View {
     @Binding var showingObjectList: Bool
     var sideBarWidth = UIScreen.main.bounds.size.width * 0.2
@@ -61,6 +63,10 @@ struct ObjectListView: View {
                                         .onTapGesture {
                                             item.isHidden.toggle()
                                             roomSceneViewModel.isObjectHidden[indexObject] = item.isHidden
+                                            if roomSceneViewModel.selectedChildNode == item {
+                                                roomSceneViewModel.selectedChildNode = nil
+                                                roomSceneViewModel.deselectNodeAndArrows(selectedNode: item)
+                                            }
                                         }
                                 }
                             }
@@ -77,6 +83,19 @@ struct ObjectListView: View {
                                         .foregroundColor(Color.white)
                                 }
                                 .tint(.red)
+                            }
+                            .onTapGesture{
+                                if roomSceneViewModel.selectedChildNode == nil && objectTapped == true{
+                                    if let selectedChild = roomSceneViewModel.selectedChildNode {
+                                        roomSceneViewModel.deselectNodeAndArrows(selectedNode: selectedChild)
+                                    }
+                                    roomSceneViewModel.selectedChildNode = item
+                                    roomSceneViewModel.processNodeSelection(selectedNode: item)
+                                }
+                                else{
+                                    roomSceneViewModel.selectedChildNode = nil
+                                    roomSceneViewModel.deselectNodeAndArrows(selectedNode: item)
+                                }
                             }
                         }
                     }, header: {

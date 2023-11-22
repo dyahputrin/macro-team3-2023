@@ -32,30 +32,30 @@ struct ObjectSizeView: View {
                     .frame(width: 250, height: 180)
                     .overlay(
                         VStack(alignment: .leading, content: {
-                            HStack {
-                                Text("HeHE : \(objectDimensionData.selectedChildNode.name ?? "")")
-//                                Text("babi : \(roomSceneViewModel.renamedNode)")
-                                    .bold()
-                                    .font(.title3)
-                                    .bold()
-                                    .lineLimit(2)
-                            }
-                            .padding(.horizontal)
-                            
+//                            HStack {
+//                                Text(objectDimensionData.selectedChildNode.name ?? "")
+////                                Text("babi : \(roomSceneViewModel.renamedNode)")
+//                                    .bold()
+//                                    .font(.title3)
+//                                    .bold()
+//                                    .lineLimit(2)
+//                            }
+//                            .padding(.horizontal)
+//                            
                             VStack() {
                                 HStack {
                                     Text("W:   ")
-                                    Text("\(objectDimensionData.width) m    ")
+                                    Text("\(objectDimensionData.width == "--" ? roomSceneViewModel.objectDimensionData.width : objectDimensionData.width) m    ")
                                 }
                                 .padding(.bottom, 2)
                                 HStack {
                                     Text("L:   ")
-                                    Text("\(objectDimensionData.length) m    ")
+                                    Text("\(objectDimensionData.length == "--" ? roomSceneViewModel.objectDimensionData.length : objectDimensionData.length) m    ")
                                 }
                                 .padding(.bottom, 2)
                                 HStack {
                                     Text("H:   ")
-                                    Text("\(objectDimensionData.height) m    ")
+                                    Text("\(objectDimensionData.height == "--" ? roomSceneViewModel.objectDimensionData.height : objectDimensionData.height) m    ")
                                 }
                             }
                             .padding(.top)

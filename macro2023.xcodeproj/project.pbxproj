@@ -18,6 +18,7 @@
 		213E25A82AFCBAED00737AD8 /* v3wall3putih.usdz in Resources */ = {isa = PBXBuildFile; fileRef = 213E25A22AFCBAEC00737AD8 /* v3wall3putih.usdz */; };
 		213E25A92AFCBAED00737AD8 /* v3floorhitam.usdz in Resources */ = {isa = PBXBuildFile; fileRef = 213E25A32AFCBAED00737AD8 /* v3floorhitam.usdz */; };
 		213E25AA2AFCBAED00737AD8 /* v3floorputih.usdz in Resources */ = {isa = PBXBuildFile; fileRef = 213E25A42AFCBAED00737AD8 /* v3floorputih.usdz */; };
+		2161D8EC2B077F6D00487764 /* Coordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2161D8EB2B077F6D00487764 /* Coordinator.swift */; };
 		21C90C192AD694880003D517 /* ProjectData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21C90C182AD694880003D517 /* ProjectData.swift */; };
 		21C90C412AD6A15B0003D517 /* RouterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21C90C402AD6A15B0003D517 /* RouterView.swift */; };
 		21C90C432AD7CC810003D517 /* ProjectViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21C90C422AD7CC810003D517 /* ProjectViewModel.swift */; };
@@ -119,6 +120,7 @@
 		213E25A22AFCBAEC00737AD8 /* v3wall3putih.usdz */ = {isa = PBXFileReference; lastKnownFileType = file.usdz; path = v3wall3putih.usdz; sourceTree = "<group>"; };
 		213E25A32AFCBAED00737AD8 /* v3floorhitam.usdz */ = {isa = PBXFileReference; lastKnownFileType = file.usdz; path = v3floorhitam.usdz; sourceTree = "<group>"; };
 		213E25A42AFCBAED00737AD8 /* v3floorputih.usdz */ = {isa = PBXFileReference; lastKnownFileType = file.usdz; path = v3floorputih.usdz; sourceTree = "<group>"; };
+		2161D8EB2B077F6D00487764 /* Coordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Coordinator.swift; sourceTree = "<group>"; };
 		21C90C182AD694880003D517 /* ProjectData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectData.swift; sourceTree = "<group>"; };
 		21C90C402AD6A15B0003D517 /* RouterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RouterView.swift; sourceTree = "<group>"; };
 		21C90C422AD7CC810003D517 /* ProjectViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectViewModel.swift; sourceTree = "<group>"; };
@@ -327,6 +329,7 @@
 				94DDE93B2ADE8FFA007915FF /* TransitionExtension.swift */,
 				94DDE93D2ADE8FFA007915FF /* ColorExtension.swift */,
 				21C90C402AD6A15B0003D517 /* RouterView.swift */,
+				2161D8EB2B077F6D00487764 /* Coordinator.swift */,
 			);
 			path = Service;
 			sourceTree = "<group>";
@@ -735,6 +738,7 @@
 				9487BDFE2ADE93B0004FCC67 /* TimedMessageList.swift in Sources */,
 				BE6F996F2AE272BC00AC6A69 /* RoomSidebarView.swift in Sources */,
 				9487BE152ADE93B0004FCC67 /* ModelView.swift in Sources */,
+				2161D8EC2B077F6D00487764 /* Coordinator.swift in Sources */,
 				BE6F996D2AE272A400AC6A69 /* ObjectSidebarView.swift in Sources */,
 				94DDE9632ADE8FFA007915FF /* OnboardingViewControllerWrapper.swift in Sources */,
 				BE6F98922AE2672400AC6A69 /* ProjectView.swift in Sources */,
@@ -881,7 +885,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"macro2023/Preview Content\"";
-				DEVELOPMENT_TEAM = 4QQ5D4534V;
+				DEVELOPMENT_TEAM = 28N6P267AM;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_CFBundleDisplayName = Nata;
@@ -919,7 +923,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"macro2023/Preview Content\"";
-				DEVELOPMENT_TEAM = 4QQ5D4534V;
+				DEVELOPMENT_TEAM = 28N6P267AM;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_CFBundleDisplayName = Nata;

@@ -85,6 +85,7 @@ struct ProjectView: View {
                     })
                     .padding(.bottom,30)
                     ForEach(recentlyOpenedItems){ newProjectName in
+                        let _ = print("Project ID Now: \(newProjectName.projectID)")
                         RoundedRectangle(cornerRadius: 16, style: .circular)
                             .frame(width: 200, height: 200)
                             .shadow(radius: 5)
