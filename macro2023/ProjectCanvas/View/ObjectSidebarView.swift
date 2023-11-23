@@ -25,7 +25,6 @@ struct ObjectSidebarView: View {
     @State var thumbnailPreview : Image?
     @State var isShowingScene: Bool = false
     var section = ["Objects", "Imports"]
-//    var defaultAsset: [String] = ["hightable.usdz", "Ko farel.usdz", "OfficeTable.usdz"]
     
     var body: some View {
         

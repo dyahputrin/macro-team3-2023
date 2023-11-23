@@ -31,17 +31,7 @@ struct ObjectSizeView: View {
                     .foregroundStyle(.thinMaterial)
                     .frame(width: 250, height: 180)
                     .overlay(
-                        VStack(alignment: .leading, content: {
-//                            HStack {
-//                                Text(objectDimensionData.selectedChildNode.name ?? "")
-////                                Text("babi : \(roomSceneViewModel.renamedNode)")
-//                                    .bold()
-//                                    .font(.title3)
-//                                    .bold()
-//                                    .lineLimit(2)
-//                            }
-//                            .padding(.horizontal)
-//                            
+                        VStack(alignment: .leading, content: {        
                             VStack() {
                                 HStack {
                                     Text("W:   ")

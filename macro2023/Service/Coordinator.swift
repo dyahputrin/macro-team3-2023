@@ -30,7 +30,7 @@ class Coordinator: NSObject, UIGestureRecognizerDelegate {
         let p = gestureRecognizer.location(in: parent.view)
         let hitResults = parent.view.hitTest(p, options: [:])
         
-        if hitResults.count == 0 || hitResults.first!.node.name == nil || tappedNode == hitResults.first!.node {
+        if hitResults.count == 0 || hitResults.first!.node.name == nil || tappedNode == hitResults.first!.node || hitResults.first?.node.name == "floor" || hitResults.first?.node.name == "wall1" || hitResults.first?.node.name == "wall2" || hitResults.first?.node.name == "wall3" || hitResults.first?.node.name == "wall] ₩"{
             parent.isEditMode = false
             objectDimensionData.reset()
             deselectNodeAndArrows()
@@ -82,13 +82,9 @@ class Coordinator: NSObject, UIGestureRecognizerDelegate {
                 let z = String(format: "%.2f", worldMax.z - worldMin.z)
                 
                 objectDimensionData.name = selectedNode!.name ?? "Unknown"
-                print(selectedNode?.name)
                 objectDimensionData.width = x
                 objectDimensionData.height = y
                 objectDimensionData.length = z
-                
-                print("Dimension \(x), \(y), \(z)")
-                print(objectDimensionData.name)
                 
             } else {
                 let (minBounds, maxBounds) = node.boundingBox
@@ -110,9 +106,6 @@ class Coordinator: NSObject, UIGestureRecognizerDelegate {
                 objectDimensionData.width = x
                 objectDimensionData.height = y
                 objectDimensionData.length = z
-                
-                print("Dimension \(x), \(y), \(z)")
-                print(objectDimensionData.name)
                 
                 let xFloat = worldMax.x - worldMin.x
                 let yFloat = worldMax.y - worldMin.y
@@ -158,12 +151,9 @@ class Coordinator: NSObject, UIGestureRecognizerDelegate {
     @objc func handlePan(_ gestureRecognizer: UIPanGestureRecognizer) {
         guard !parent.isEditMode else {
             
-            print("Pan detected")
-            
             guard let selectedNode = selectedNode else {return}
             
             let translation = gestureRecognizer.translation(in: parent.view)
-            print("translation \(translation)")
             
             let cameraNode = parent.view.pointOfView
             
@@ -199,7 +189,6 @@ class Coordinator: NSObject, UIGestureRecognizerDelegate {
         switch selectedAxis {
         case "axisArrowX":
             newPos.z += translationDelta.z * scaleFactor
-            
         case "axisArrowY":
             newPos.y += translationDelta.y * scaleFactor
         case "axisArrowZ":
@@ -239,7 +228,6 @@ class Coordinator: NSObject, UIGestureRecognizerDelegate {
     func removePanGesture() {
         if let panGesture = parent.view.gestureRecognizers?.first(where: { $0 is UIPanGestureRecognizer }) {
             parent.view.removeGestureRecognizer(panGesture)
-            let _ = print("PAN GESTURE REMOVED")
         }
         
     }
@@ -266,7 +254,6 @@ class Coordinator: NSObject, UIGestureRecognizerDelegate {
         let cylinderNode = SCNNode(geometry: cylinder)
         let coneNode = SCNNode(geometry: cone)
         coneNode.position = SCNVector3(0, 0.5, 0) // Adjust based on cylinder height
-//            cylinderNode.addChildNode(coneNode)
         
         // Define the total height of the arrow for positioning the torus
         let totalHeight = X / 2.0 // cylinder height + cone height
@@ -303,7 +290,6 @@ class Coordinator: NSObject, UIGestureRecognizerDelegate {
         }
         
         let parentNode = SCNNode()
-//            parentNode.addChildNode(cylinderNode)
         parentNode.addChildNode(coneNode)
         parentNode.addChildNode(torusNode) // Add the torus node to the parent
 

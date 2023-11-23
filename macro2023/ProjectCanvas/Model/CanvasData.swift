@@ -19,7 +19,7 @@ class CanvasData: ObservableObject {
     
     @Published var importedObjectData : [Data]
       
-    @Published var defaultAsset: [String] = ["demobackdropbunga.usdz", "demoHighChair.usdz", "demomeja1.usdz", "demomeja2.usdz", "demoroomwall2.usdz"]
+    @Published var defaultAsset: [String] = ["demobackdropbunga.usdz", "demoHighChair.usdz", "demomeja1.usdz", "demomeja2.usdz", "demoroomwall2.usdz","backdroponly.usdz"]
     
     init(roomWidth: CGFloat, roomHeight: CGFloat, roomLength: CGFloat) {
         self.roomWidth = roomWidth

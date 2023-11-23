@@ -58,17 +58,12 @@ class CanvasDataViewModel: ObservableObject {
         
         self.floor = SCNNode(geometry: floorGeometry)
         self.floor.opacity = 0.5
-//        self.arrowX = nil
-//        self.arrowY = nil
-//        self.arrowZ = nil
-        //        floor.geometry = SCNFloor()
         self.objectDimensionData = objectDimensionData
         if routerView.project?.projectName == nil {
             self.makeScene1(width: 0, height: 0, length: 0)
         } else {
             self.loadSceneFromCoreData(selectedProjectID:(routerView.project?.projectID)!, in: viewContext)
         }
-        
         
     }
     
@@ -82,58 +77,47 @@ class CanvasDataViewModel: ObservableObject {
     }
     
     // function to make the scene with a room, but the wall width is always 1
-    //    @MainActor
     func makeScene1(width: CGFloat, height: CGFloat, length: CGFloat) -> SCNScene? {
         rootScene = SCNScene(named: "RoomScene.scn")
         rootScene?.background.contents = UIColor.lightGray
         
         // Add floor
-        if let floorAsset = SCNScene(named: "v3floorputih.usdz"),
+        if let floorAsset = SCNScene(named: "WhiteFloor.usdz"),
            let floorNode = floorAsset.rootNode.childNodes.first?.clone() {
             floorNode.scale = SCNVector3(width, 1, length)
-            //            floorNode.position = SCNVector3(0, (height/2)-height + 0.5,0)
             floorNode.position = SCNVector3(0, (1-height)/2,0)
-            //            self.listWallNodes.append(floorNode)
             rootScene?.rootNode.addChildNode(floorNode)
         }
         
         // Add wall 1
-        if let wall1Asset = SCNScene(named: "v3wall1putih.usdz"),
+        if let wall1Asset = SCNScene(named: "LeftWall.usdz"),
            let wall1Node = wall1Asset.rootNode.childNodes.first?.clone() {
             wall1Node.scale = SCNVector3(1, height, length)
-            //            wall1Node.position = SCNVector3((width/2)-width + 0.5, 0, 0)
             wall1Node.position = SCNVector3((1-width)/2 - 0.001, 0, 0)
-            //            self.listWallNodes.append(wall1Node)
             rootScene?.rootNode.addChildNode(wall1Node)
         }
         
         // Add wall 2
-        if let wall2Asset = SCNScene(named: "v3wall2putih.usdz"),
+        if let wall2Asset = SCNScene(named: "BackWall.usdz"),
            let wall2Node = wall2Asset.rootNode.childNodes.first?.clone() {
             wall2Node.scale = SCNVector3(width, height, 1)
-            //            wall2Node.position = SCNVector3(0, 0, (length/2)-length + 0.5)
             wall2Node.position = SCNVector3(0, 0, (1-length)/2 - 0.001)
-            //            self.listWallNodes.append(wall2Node)
             rootScene?.rootNode.addChildNode(wall2Node)
         }
         
         // Add wall 3
-        if let wall3Asset = SCNScene(named: "v3wall3putih.usdz"),
+        if let wall3Asset = SCNScene(named: "RightWall.usdz"),
            let wall3Node = wall3Asset.rootNode.childNodes.first?.clone() {
             wall3Node.scale = SCNVector3(1, height, length)
-            //            wall3Node.position = SCNVector3((width*0.5)-0.5, 0, 0)
             wall3Node.position = SCNVector3((width-1)/2 + 0.001, 0, 0)
-            //            self.listWallNodes.append(wall3Node)
             rootScene?.rootNode.addChildNode(wall3Node)
         }
         
         // Add wall 4
-        if let wall4Asset = SCNScene(named: "v3wall4putih.usdz"),
+        if let wall4Asset = SCNScene(named: "FrontWall.usdz"),
            let wall4Node = wall4Asset.rootNode.childNodes.first?.clone() {
             wall4Node.scale = SCNVector3(width, height, 1)
-            //            wall4Node.position = SCNVector3(0, 0, length-(length/2)-0.5 )
             wall4Node.position = SCNVector3(0, 0, (length-1)/2 + 0.001)
-            //            self.listWallNodes.append(wall4Node)
             rootScene?.rootNode.addChildNode(wall4Node)
         }
         rootScene?.rootNode.addChildNode(floor)
@@ -145,9 +129,7 @@ class CanvasDataViewModel: ObservableObject {
         if let modelURL = createUSDZFile(data: data) {
             if let modelasset = try? SCNScene(url: modelURL), let modelNode = modelasset.rootNode.childNodes.first?.clone() {
                 self.listChildNodes.append(modelNode)
-                let _ = print("feli nama",modelNode.name)
                 self.rootScene?.rootNode.addChildNode(modelNode)
-                print("node",modelNode)
             }
         }
     }
@@ -184,33 +166,33 @@ class CanvasDataViewModel: ObservableObject {
         self.isWallHidden.removeAll()
         
         let rootNode = rootScene?.rootNode
-        let nodeNames = ["v3wall1putih", "v3wall2putih", "v3wall3putih", "v3wall4putih", "v3floorputih"]
+        let nodeNames = ["LeftWall", "BackWall", "RightWall", "FrontWall", "WhiteFloor"]
         
         rootNode?.enumerateChildNodes{ (node, _) in
             if let nodeName = node.name, nodeNames.contains(nodeName) {
                 print("Found node with name: \(nodeName)")
                 switch nodeName {
-                case "v3floorputih":
+                case "WhiteFloor":
                     node.scale = SCNVector3(newWidth, 1, newLength)
                     node.position = SCNVector3(0, 0,0)
                     self.listWallNodes.append(node)
                     self.isWallHidden.append(node.isHidden)
-                case "v3wall1putih":
+                case "LeftWall":
                     node.scale = SCNVector3(1, newHeight, newLength)
                     node.position = SCNVector3((1-newWidth)/2 - 0.001, 0, 0)
                     self.listWallNodes.append(node)
                     self.isWallHidden.append(node.isHidden)
-                case "v3wall2putih":
+                case "BackWall":
                     node.scale = SCNVector3(newWidth, newHeight, 1)
                     node.position = SCNVector3(0, 0, (1-newLength)/2 - 0.001)
                     self.listWallNodes.append(node)
                     self.isWallHidden.append(node.isHidden)
-                case "v3wall3putih":
+                case "RightWall":
                     node.scale = SCNVector3(1, newHeight, newLength)
                     node.position = SCNVector3((newWidth-1)/2 + 0.001, 0, 0)
                     self.listWallNodes.append(node)
                     self.isWallHidden.append(node.isHidden)
-                case "v3wall4putih":
+                case "FrontWall":
                     node.scale = SCNVector3(newWidth, newHeight, 1)
                     node.position = SCNVector3(0, 0, (newLength-1)/2 + 0.001)
                     self.listWallNodes.append(node)
@@ -220,11 +202,6 @@ class CanvasDataViewModel: ObservableObject {
                 }
             }
         }
-    }
-    
-    // function for updating room size
-    func updateRoomSize1(newWidth: CGFloat, newHeight: CGFloat, newLength: CGFloat, scene: ScenekitView) {
-        
     }
     
     // function for convert text to cgfloat for room size
@@ -334,7 +311,6 @@ class CanvasDataViewModel: ObservableObject {
             } else {
                 // No existing project found, create a new one
                 let newProject = ProjectEntity(context: viewContext)
-//                projectUUID = UUID()
                 newProject.projectID = UUID()
                 newProject.projectName = projectName
                 newProject.widthRoom = Float(canvasData.roomWidth)
@@ -440,7 +416,6 @@ class CanvasDataViewModel: ObservableObject {
                             listWallNodes.append(wallNode)
                             isWallHidden.append(wallNode.isHidden)
                             rootScene?.rootNode.addChildNode(wallNode)
-                            print("Unarchived Node: \(wallNode)")
                         }
                     }
                     
@@ -452,7 +427,6 @@ class CanvasDataViewModel: ObservableObject {
                             canvasData.roomHeight = CGFloat(entity.heightRoom)
                             canvasData.roomWidth = CGFloat(entity.widthRoom)
                             canvasData.roomLength = CGFloat(entity.lengthRoom)
-                            print("Unarchived Node: \(node)")
                         }
                     }
                     
@@ -526,16 +500,20 @@ class CanvasDataViewModel: ObservableObject {
                  let torusThickness = 0.005 // Adjust as necessary
                  let totalHeight = yFloat
                  
+                 let worldPosition = selectedNode.presentation.worldPosition
                  
                  let torus = SCNTorus(ringRadius: CGFloat(torusRadius), pipeRadius: torusThickness)
                  torus.firstMaterial?.diffuse.contents = Color(.cyan)
                  torusNode = SCNNode(geometry: torus)
-                 torusNode?.position = SCNVector3(0, Float(totalHeight) / 2 + 0.1, 0)
+//                 torusNode?.position = SCNVector3(0, Float(totalHeight) / 2 + 0.1, 0)
                  torusNode?.eulerAngles = SCNVector3(0, Float.pi / 2, 0)//ini bikin flat
 
                  torusHighNode = SCNNode(geometry: torus)
-                 torusHighNode?.position = SCNVector3(0, Float(totalHeight) / 2 + 0.1, 0)
+//                 torusHighNode?.position = SCNVector3(0, Float(totalHeight) / 2 + 0.1, 0)
                  torusHighNode?.eulerAngles = SCNVector3(0, 0, Float.pi / 2)
+                 
+                 torusNode?.worldPosition = worldPosition
+                 torusHighNode?.worldPosition = worldPosition
                  
                  rootScene?.rootNode.addChildNode(torusNode!)
                  rootScene?.rootNode.addChildNode(torusHighNode!)
@@ -545,10 +523,7 @@ class CanvasDataViewModel: ObservableObject {
      }
     
     func deselectNodeAndArrows(selectedNode: SCNNode) {
-//        selectedNode.childNodes.filter { $0.name?.hasPrefix("axisArrow") == true }
-//            .forEach { $0.removeFromParentNode() }
         objectDimensionData.reset()
-        
         torusNode?.removeFromParentNode()
         torusHighNode?.removeFromParentNode()
         torusNode = nil

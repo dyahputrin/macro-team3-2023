@@ -128,10 +128,23 @@ struct CanvasView: View {
             
             ObjectListView(showingObjectList: $showingObjectList, objectDimensionData: objectDimensionData, roomSceneViewModel: roomSceneViewModel)
             
-            if objectDimensionData.name != "--"{
-                ObjectSizeView(roomWidthText:.constant("2"), roomLengthText: .constant("2"), roomHeightText: .constant("2"), sceneViewID: .constant(UUID()), routerView: _routerView, roomSceneViewModel: roomSceneViewModel, objectDimensionData: objectDimensionData)
+            if objectDimensionData.name != "--" {
+                let val = objectDimensionData.name
+                switch(val){
+                    case "floor":
+                     let _ = print("floor")
+                case "wall1":
+                 let _ = print("wall1")
+                case "wall2":
+                 let _ = print("wall2")
+                case "wall3":
+                 let _ = print("wall3")
+                case "wall4":
+                 let _ = print("wall4")
+                default:
+                    ObjectSizeView(roomWidthText:.constant("2"), roomLengthText: .constant("2"), roomHeightText: .constant("2"), sceneViewID: .constant(UUID()), routerView: _routerView, roomSceneViewModel: roomSceneViewModel, objectDimensionData: objectDimensionData)
+                }
             }
-
         }
         .onAppear {
             roomButtonClicked = true
@@ -170,15 +183,18 @@ struct CanvasView: View {
                                 .foregroundColor(.black)
                         }
                         .padding(.trailing, 50)
+                        .alert(isPresented: $isNotSupported) {
+                            Alert(title: Text("This feature is not supported"))
+                        }
                     
                     //EDIT MODE TOGGLE
-                    Button(action : {
-                        isEditMode.toggle()
-                    }) {
-                        Image(systemName: "pencil")
-                            .foregroundColor(isEditMode ? .blue : .black)
-                            .padding()
-                    }
+//                    Button(action : {
+//                        isEditMode.toggle()
+//                    }) {
+//                        Image(systemName: "pencil")
+//                            .foregroundColor(isEditMode ? .blue : .black)
+//                            .padding()
+//                    }
                     
                     // Object
                     Button(action : {
@@ -245,9 +261,6 @@ struct CanvasView: View {
                             isSaveClicked = true
                         }
                     )
-                }
-                .alert(isPresented: $isNotSupported) {
-                    Alert(title: Text("This feature is not supported"))
                 }
             }
         }
