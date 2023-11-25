@@ -161,7 +161,7 @@ struct ProjectView: View {
             }
             .navigationDestination(for: String.self) { val in
                 if val == "canvas"{
-                    CanvasView(objectsButtonClicked: false, roomButtonClicked: false, povButtonClicked: false, viewfinderButtonClicked: .constant(false), isImporting: .constant(false), isExporting: .constant(false), isSetButtonSidebarTapped: .constant(false), activeProjectID: $activeProjectID, activeScene: $activeScene,projectData: dataContentViewModel.dataCanvas ,routerView:routerView)
+                    CanvasView(objectsButtonClicked: false, roomButtonClicked: false, povButtonClicked: false, viewfinderButtonClicked: .constant(false), isImporting: .constant(false), isExporting: .constant(false), isSetButtonSidebarTapped: .constant(false), activeProjectID: $activeProjectID, activeScene: $activeScene,projectData: dataContentViewModel.dataCanvas ,routerView:routerView, objectDimensionData: ObjectDimensionData())
                 }else{
                     
                 }

@@ -57,7 +57,7 @@ struct CanvasView: View {
     
     var sideBarWidth = UIScreen.main.bounds.size.width * 0.2
     
-    @ObservedObject var objectDimensionData: ObjectDimensionData = ObjectDimensionData()
+    @StateObject var objectDimensionData: ObjectDimensionData
     @State private var sceneBinding: Binding<SCNScene?> = .constant(nil)
     
     init(
@@ -71,8 +71,8 @@ struct CanvasView: View {
         activeProjectID: Binding<UUID>,
         activeScene: Binding<SCNScene>,
         projectData: ProjectData,
-        routerView: RouterView
-        
+        routerView: RouterView,
+        objectDimensionData: ObjectDimensionData
     ) {
         _objectsButtonClicked = State(initialValue: objectsButtonClicked)
         _roomButtonClicked = State(initialValue: roomButtonClicked)
@@ -83,7 +83,9 @@ struct CanvasView: View {
         _isSetButtonSidebarTapped = isSetButtonSidebarTapped
         _activeProjectID = activeProjectID
         _activeScene = activeScene
-        _roomSceneViewModel  = StateObject(wrappedValue: CanvasDataViewModel(canvasData: CanvasData(roomWidth: 0, roomHeight: 0, roomLength: 0), projectData: projectData, routerView: routerView, objectDimensionData: ObjectDimensionData()))
+//        _objectDimensionData = StateObject(wrappedValue: ObjectDimensionData())
+        _objectDimensionData = StateObject(wrappedValue:  objectDimensionData)
+        _roomSceneViewModel  = StateObject(wrappedValue: CanvasDataViewModel(canvasData: CanvasData(roomWidth: 0, roomHeight: 0, roomLength: 0), projectData: projectData, routerView: routerView, objectDimensionData: objectDimensionData))
     }
     
     @State private var currentScenekitView: ScenekitView? = nil

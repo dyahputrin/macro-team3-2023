@@ -60,22 +60,23 @@ struct ObjectListView: View {
                                         .foregroundColor(roomSceneViewModel.isObjectHidden[indexObject] ? Color.gray : Color.accentColor)
                                         .onTapGesture {
                                             item.isHidden.toggle()
+                                            roomSceneViewModel.deselectNodeAndArrows(selectedNode: item)
                                             roomSceneViewModel.isObjectHidden[indexObject] = item.isHidden
                                             if roomSceneViewModel.selectedChildNode == item {
                                                 roomSceneViewModel.selectedChildNode = nil
-                                                roomSceneViewModel.deselectNodeAndArrows(selectedNode: item)
                                             }
                                         }
                                 }
                             }
                             .swipeActions {
                                 Button(action: {
-                                    item.removeFromParentNode()
+                                    roomSceneViewModel.deselectNodeAndArrows(selectedNode: item)
                                     if let index = roomSceneViewModel.listChildNodes.firstIndex(of: item) {
                                         roomSceneViewModel.listChildNodes.remove(at: index)
                                         roomSceneViewModel.renamedNode.remove(at: index)
                                         roomSceneViewModel.isObjectHidden.remove(at: index)
                                     }
+                                    item.removeFromParentNode()
                                 }) {
                                     Text("Remove")
                                         .foregroundColor(Color.white)
@@ -83,21 +84,14 @@ struct ObjectListView: View {
                                 .tint(.red)
                             }
                             .onTapGesture{
-                                if roomSceneViewModel.selectedChildNode == nil && objectTapped == true{
-                                    if let selectedChild = roomSceneViewModel.selectedChildNode {
-                                        roomSceneViewModel.deselectNodeAndArrows(selectedNode: selectedChild)
+                                item.isHidden.toggle()
+                                roomSceneViewModel.deselectNodeAndArrows(selectedNode: item)
+                                if let indexObject = roomSceneViewModel.listChildNodes.firstIndex(of: item) {
+                                    roomSceneViewModel.isObjectHidden[indexObject] = item.isHidden
+                                    if roomSceneViewModel.selectedChildNode == item {
+                                        roomSceneViewModel.selectedChildNode = nil
                                     }
-                                    if let indexObject = roomSceneViewModel.listChildNodes.firstIndex(of: item) {
-                                        roomSceneViewModel.countNodeNumber = indexObject
-                                    }
-                                    savedTappedNodes = item
-                                    roomSceneViewModel.selectedChildNode = item
-                                    roomSceneViewModel.processNodeSelection(selectedNode: item)
-                                }
-                                else{
-                                    roomSceneViewModel.selectedChildNode = nil
-                                    roomSceneViewModel.deselectNodeAndArrows(selectedNode: item)
-                                   
+                                    
                                 }
                             }
                         }
@@ -105,7 +99,7 @@ struct ObjectListView: View {
                         Image(systemName: "chair.lounge")
                         Text("Object List")
                     })
-
+                    
                 }
                 .background(.regularMaterial)
                 .scrollContentBackground(.hidden)

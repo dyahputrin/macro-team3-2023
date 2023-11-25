@@ -10,10 +10,6 @@ import SceneKit
 
 public var objectTapped:Bool = false
 
-public var arrayPos = [ClassPosition]()
-
-public var savedTappedNodes:SCNNode?
-
 class CanvasData: ObservableObject {
     @Published var roomWidth: CGFloat
     @Published var roomHeight: CGFloat
@@ -25,7 +21,7 @@ class CanvasData: ObservableObject {
     
     @Published var importedObjectData : [Data]
       
-    @Published var defaultAsset: [String] = ["demobackdropbunga.usdz", "demoHighChair.usdz", "demomeja1.usdz", "demomeja2.usdz", "demoroomwall2.usdz","backdroponly.usdz"]
+    @Published var defaultAsset: [String] = ["Backdrop.usdz", "High Chair.usdz", "Tall Table.usdz", "Short Table.usdz"]
     
     init(roomWidth: CGFloat, roomHeight: CGFloat, roomLength: CGFloat) {
         self.roomWidth = roomWidth

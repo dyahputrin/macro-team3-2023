@@ -29,7 +29,7 @@ struct ObjectSizeView: View {
             HStack {
                 RoundedRectangle(cornerRadius: 15)
                     .foregroundStyle(.thinMaterial)
-                    .frame(width: 250, height: 180)
+                    .frame(width: 150, height: 120)
                     .overlay(
                         VStack(alignment: .leading, content: {        
                             VStack() {
@@ -48,7 +48,7 @@ struct ObjectSizeView: View {
                                     Text("\(objectDimensionData.height == "--" ? roomSceneViewModel.objectDimensionData.height : objectDimensionData.height) m    ")
                                 }
                             }
-                            .padding(.top)
+//                            .padding(.top)
                             .padding(.leading)
                         })
                         .padding(.vertical)

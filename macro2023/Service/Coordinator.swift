@@ -32,16 +32,6 @@ class Coordinator: NSObject, UIGestureRecognizerDelegate {
         let hitResults = parent.view.hitTest(p, options: [:])
         
         if hitResults.count == 0 || hitResults.first!.node.name == nil || tappedNode == hitResults.first!.node || hitResults.first?.node.name == "floor" || hitResults.first?.node.name == "wall1" || hitResults.first?.node.name == "wall2" || hitResults.first?.node.name == "wall3" || hitResults.first?.node.name == "wall4"{
-//            if arrayPos.filter{$0.nodeNameNow == tappedNode?.name}.count > 0{
-////                arrayPos.
-//            }
-            var indexPos = arrayPos.enumerated().filter({ tappedNode?.name == $0.element.nodeNameNow }).map({ $0.offset })
-            if indexPos.count > 0 {
-                arrayPos[indexPos.first ?? 0] = ClassPosition(nodeNameNow: tappedNode?.name ?? "", nodeNamePositionNow: lastNodePosition)
-            }
-            else{
-                arrayPos.append(ClassPosition(nodeNameNow: tappedNode?.name ?? "", nodeNamePositionNow: lastNodePosition))
-            }
             
             parent.isEditMode = false
             objectDimensionData.reset()
@@ -51,7 +41,6 @@ class Coordinator: NSObject, UIGestureRecognizerDelegate {
             return
         } else {
             let removeValue = hitResults.first?.node
-//            removeValue.
             parent.isEditMode = true
             objectDimensionData.selectedChildNode = removeValue!
             selectedNode?.childNodes.forEach { node in
@@ -70,7 +59,6 @@ class Coordinator: NSObject, UIGestureRecognizerDelegate {
                 processNodeSelection(result.node)
                 selectedAxis = nil
                 tappedNode = result.node
-//                savedTappedNodes = result.node
                 objectTapped = false
             }
         }
@@ -134,11 +122,7 @@ class Coordinator: NSObject, UIGestureRecognizerDelegate {
                      
                 parent.scene?.rootNode.addChildNode(parent.roomSceneViewModel.arrowNode[0])
                 parent.scene?.rootNode.addChildNode(parent.roomSceneViewModel.arrowNode[1])
-                parent.scene?.rootNode.addChildNode(parent.roomSceneViewModel.arrowNode[2])
-                
-                parent.roomSceneViewModel.torusNode?.removeFromParentNode()
-                parent.roomSceneViewModel.torusHighNode?.removeFromParentNode()
-                
+                parent.scene?.rootNode.addChildNode(parent.roomSceneViewModel.arrowNode[2])  
                 updateArrowPositionsToMatchNode(node: node)
             }
             

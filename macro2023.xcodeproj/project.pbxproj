@@ -13,15 +13,15 @@
 		2135F0642AF105B500A3DD9A /* ThumbnailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2135F0632AF105B500A3DD9A /* ThumbnailView.swift */; };
 		213E259E2AFB7A0600737AD8 /* RoomPlanViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 213E259D2AFB7A0600737AD8 /* RoomPlanViewModel.swift */; };
 		2161D8EC2B077F6D00487764 /* Coordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2161D8EB2B077F6D00487764 /* Coordinator.swift */; };
-		217567802B0F43F900616D61 /* backdroponly.usdz in Resources */ = {isa = PBXBuildFile; fileRef = 217567792B0F423400616D61 /* backdroponly.usdz */; };
 		217567812B0F43F900616D61 /* BackWall.usdz in Resources */ = {isa = PBXBuildFile; fileRef = 2175677A2B0F423400616D61 /* BackWall.usdz */; };
-		217567822B0F43F900616D61 /* demoHighChair.usdz in Resources */ = {isa = PBXBuildFile; fileRef = 2175677B2B0F423400616D61 /* demoHighChair.usdz */; };
-		217567832B0F43F900616D61 /* demoroomwall2.usdz in Resources */ = {isa = PBXBuildFile; fileRef = 217567782B0F423400616D61 /* demoroomwall2.usdz */; };
 		217567842B0F43F900616D61 /* FrontWall.usdz in Resources */ = {isa = PBXBuildFile; fileRef = 2175677F2B0F423400616D61 /* FrontWall.usdz */; };
 		217567852B0F43F900616D61 /* LeftWall.usdz in Resources */ = {isa = PBXBuildFile; fileRef = 2175677E2B0F423400616D61 /* LeftWall.usdz */; };
 		217567862B0F43F900616D61 /* RightWall.usdz in Resources */ = {isa = PBXBuildFile; fileRef = 2175677C2B0F423400616D61 /* RightWall.usdz */; };
 		217567872B0F43F900616D61 /* WhiteFloor.usdz in Resources */ = {isa = PBXBuildFile; fileRef = 2175677D2B0F423400616D61 /* WhiteFloor.usdz */; };
-		2199B4C12B10C9EF005410DF /* ClassPosition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2199B4C02B10C9EF005410DF /* ClassPosition.swift */; };
+		2189A9EA2B11C8AC00402892 /* High Chair.usdz in Resources */ = {isa = PBXBuildFile; fileRef = 2189A9E92B11C8AC00402892 /* High Chair.usdz */; };
+		2189A9EE2B11CFB800402892 /* Short Table.usdz in Resources */ = {isa = PBXBuildFile; fileRef = 2189A9EB2B11CFB700402892 /* Short Table.usdz */; };
+		2189A9EF2B11CFB800402892 /* Backdrop.usdz in Resources */ = {isa = PBXBuildFile; fileRef = 2189A9EC2B11CFB700402892 /* Backdrop.usdz */; };
+		2189A9F02B11CFB800402892 /* Tall Table.usdz in Resources */ = {isa = PBXBuildFile; fileRef = 2189A9ED2B11CFB800402892 /* Tall Table.usdz */; };
 		21C90C192AD694880003D517 /* ProjectData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21C90C182AD694880003D517 /* ProjectData.swift */; };
 		21C90C412AD6A15B0003D517 /* RouterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21C90C402AD6A15B0003D517 /* RouterView.swift */; };
 		21C90C432AD7CC810003D517 /* ProjectViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21C90C422AD7CC810003D517 /* ProjectViewModel.swift */; };
@@ -99,15 +99,15 @@
 		2135F0632AF105B500A3DD9A /* ThumbnailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThumbnailView.swift; sourceTree = "<group>"; };
 		213E259D2AFB7A0600737AD8 /* RoomPlanViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoomPlanViewModel.swift; sourceTree = "<group>"; };
 		2161D8EB2B077F6D00487764 /* Coordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Coordinator.swift; sourceTree = "<group>"; };
-		217567782B0F423400616D61 /* demoroomwall2.usdz */ = {isa = PBXFileReference; lastKnownFileType = file.usdz; path = demoroomwall2.usdz; sourceTree = "<group>"; };
-		217567792B0F423400616D61 /* backdroponly.usdz */ = {isa = PBXFileReference; lastKnownFileType = file.usdz; path = backdroponly.usdz; sourceTree = "<group>"; };
 		2175677A2B0F423400616D61 /* BackWall.usdz */ = {isa = PBXFileReference; lastKnownFileType = file.usdz; path = BackWall.usdz; sourceTree = "<group>"; };
-		2175677B2B0F423400616D61 /* demoHighChair.usdz */ = {isa = PBXFileReference; lastKnownFileType = file.usdz; path = demoHighChair.usdz; sourceTree = "<group>"; };
 		2175677C2B0F423400616D61 /* RightWall.usdz */ = {isa = PBXFileReference; lastKnownFileType = file.usdz; path = RightWall.usdz; sourceTree = "<group>"; };
 		2175677D2B0F423400616D61 /* WhiteFloor.usdz */ = {isa = PBXFileReference; lastKnownFileType = file.usdz; path = WhiteFloor.usdz; sourceTree = "<group>"; };
 		2175677E2B0F423400616D61 /* LeftWall.usdz */ = {isa = PBXFileReference; lastKnownFileType = file.usdz; path = LeftWall.usdz; sourceTree = "<group>"; };
 		2175677F2B0F423400616D61 /* FrontWall.usdz */ = {isa = PBXFileReference; lastKnownFileType = file.usdz; path = FrontWall.usdz; sourceTree = "<group>"; };
-		2199B4C02B10C9EF005410DF /* ClassPosition.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClassPosition.swift; sourceTree = "<group>"; };
+		2189A9E92B11C8AC00402892 /* High Chair.usdz */ = {isa = PBXFileReference; lastKnownFileType = file.usdz; path = "High Chair.usdz"; sourceTree = "<group>"; };
+		2189A9EB2B11CFB700402892 /* Short Table.usdz */ = {isa = PBXFileReference; lastKnownFileType = file.usdz; path = "Short Table.usdz"; sourceTree = "<group>"; };
+		2189A9EC2B11CFB700402892 /* Backdrop.usdz */ = {isa = PBXFileReference; lastKnownFileType = file.usdz; path = Backdrop.usdz; sourceTree = "<group>"; };
+		2189A9ED2B11CFB800402892 /* Tall Table.usdz */ = {isa = PBXFileReference; lastKnownFileType = file.usdz; path = "Tall Table.usdz"; sourceTree = "<group>"; };
 		21C90C182AD694880003D517 /* ProjectData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectData.swift; sourceTree = "<group>"; };
 		21C90C402AD6A15B0003D517 /* RouterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RouterView.swift; sourceTree = "<group>"; };
 		21C90C422AD7CC810003D517 /* ProjectViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectViewModel.swift; sourceTree = "<group>"; };
@@ -261,10 +261,11 @@
 		21C90BFB2AD685F60003D517 /* 3D Object */ = {
 			isa = PBXGroup;
 			children = (
-				217567792B0F423400616D61 /* backdroponly.usdz */,
+				2189A9EC2B11CFB700402892 /* Backdrop.usdz */,
+				2189A9ED2B11CFB800402892 /* Tall Table.usdz */,
+				2189A9EB2B11CFB700402892 /* Short Table.usdz */,
+				2189A9E92B11C8AC00402892 /* High Chair.usdz */,
 				2175677A2B0F423400616D61 /* BackWall.usdz */,
-				2175677B2B0F423400616D61 /* demoHighChair.usdz */,
-				217567782B0F423400616D61 /* demoroomwall2.usdz */,
 				2175677F2B0F423400616D61 /* FrontWall.usdz */,
 				2175677E2B0F423400616D61 /* LeftWall.usdz */,
 				2175677C2B0F423400616D61 /* RightWall.usdz */,
@@ -281,7 +282,6 @@
 				94DDE93D2ADE8FFA007915FF /* ColorExtension.swift */,
 				21C90C402AD6A15B0003D517 /* RouterView.swift */,
 				2161D8EB2B077F6D00487764 /* Coordinator.swift */,
-				2199B4C02B10C9EF005410DF /* ClassPosition.swift */,
 			);
 			path = Service;
 			sourceTree = "<group>";
@@ -594,10 +594,11 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				217567802B0F43F900616D61 /* backdroponly.usdz in Resources */,
+				2189A9EE2B11CFB800402892 /* Short Table.usdz in Resources */,
+				2189A9EF2B11CFB800402892 /* Backdrop.usdz in Resources */,
+				2189A9F02B11CFB800402892 /* Tall Table.usdz in Resources */,
+				2189A9EA2B11C8AC00402892 /* High Chair.usdz in Resources */,
 				217567812B0F43F900616D61 /* BackWall.usdz in Resources */,
-				217567822B0F43F900616D61 /* demoHighChair.usdz in Resources */,
-				217567832B0F43F900616D61 /* demoroomwall2.usdz in Resources */,
 				217567842B0F43F900616D61 /* FrontWall.usdz in Resources */,
 				217567852B0F43F900616D61 /* LeftWall.usdz in Resources */,
 				217567862B0F43F900616D61 /* RightWall.usdz in Resources */,
@@ -635,7 +636,6 @@
 				94DDE96C2ADE8FFA007915FF /* RoomSceneView.swift in Sources */,
 				2128E7E12AE7A2C900FD6B99 /* ObjectViewModel.swift in Sources */,
 				BE6F996B2AE2728B00AC6A69 /* ImportButtonView.swift in Sources */,
-				2199B4C12B10C9EF005410DF /* ClassPosition.swift in Sources */,
 				94DDE9612ADE8FFA007915FF /* ColorExtension.swift in Sources */,
 				94DDE96A2ADE8FFA007915FF /* CanvasData.swift in Sources */,
 				94DDE96B2ADE8FFA007915FF /* CanvasDataViewModel.swift in Sources */,
