@@ -7,8 +7,6 @@
 
 import SwiftUI
 
-public var objectTapped:Bool = false
-
 struct ObjectListView: View {
     @Binding var showingObjectList: Bool
     var sideBarWidth = UIScreen.main.bounds.size.width * 0.2
@@ -89,12 +87,17 @@ struct ObjectListView: View {
                                     if let selectedChild = roomSceneViewModel.selectedChildNode {
                                         roomSceneViewModel.deselectNodeAndArrows(selectedNode: selectedChild)
                                     }
+                                    if let indexObject = roomSceneViewModel.listChildNodes.firstIndex(of: item) {
+                                        roomSceneViewModel.countNodeNumber = indexObject
+                                    }
+                                    savedTappedNodes = item
                                     roomSceneViewModel.selectedChildNode = item
                                     roomSceneViewModel.processNodeSelection(selectedNode: item)
                                 }
                                 else{
                                     roomSceneViewModel.selectedChildNode = nil
                                     roomSceneViewModel.deselectNodeAndArrows(selectedNode: item)
+                                   
                                 }
                             }
                         }

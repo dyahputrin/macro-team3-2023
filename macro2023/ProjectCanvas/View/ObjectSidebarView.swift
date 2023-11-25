@@ -66,6 +66,7 @@ struct ObjectSidebarView: View {
                                                                 roomSceneViewModel.addNodeToRootScene(named: asset)
                                                                 roomSceneViewModel.isObjectHidden.append(false)
                                                                 roomSceneViewModel.renamedNode.append(String(fullNameArr[0]))
+                                                                
                                                                 print("hehehe")
                                                             }
                                                         Text(fullNameArr[0])
@@ -105,6 +106,7 @@ struct ObjectSidebarView: View {
                                                                     roomSceneViewModel.renamedNode.append(urlImport.importedName!)
                                                                     roomSceneViewModel.addImportObjectChild(data: usdzData)
                                                                     roomSceneViewModel.isObjectHidden.append(false)
+                                                                    
                                                                 }
                                                         }
                                                         Text("\(urlImport.importedName ?? "error")")

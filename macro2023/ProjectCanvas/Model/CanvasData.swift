@@ -8,6 +8,12 @@
 import Foundation
 import SceneKit
 
+public var objectTapped:Bool = false
+
+public var arrayPos = [ClassPosition]()
+
+public var savedTappedNodes:SCNNode?
+
 class CanvasData: ObservableObject {
     @Published var roomWidth: CGFloat
     @Published var roomHeight: CGFloat

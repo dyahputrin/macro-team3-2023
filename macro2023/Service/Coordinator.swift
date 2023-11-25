@@ -19,6 +19,7 @@ class Coordinator: NSObject, UIGestureRecognizerDelegate {
     var arrowY: SCNNode?
     var arrowZ: SCNNode?
     var tappedNode : SCNNode?
+    var lastNodePosition : SCNVector3 = SCNVector3(x: 0, y: 0, z: 0)
     
     init(_ parent: ScenekitView) {
         self.parent = parent
@@ -30,7 +31,18 @@ class Coordinator: NSObject, UIGestureRecognizerDelegate {
         let p = gestureRecognizer.location(in: parent.view)
         let hitResults = parent.view.hitTest(p, options: [:])
         
-        if hitResults.count == 0 || hitResults.first!.node.name == nil || tappedNode == hitResults.first!.node || hitResults.first?.node.name == "floor" || hitResults.first?.node.name == "wall1" || hitResults.first?.node.name == "wall2" || hitResults.first?.node.name == "wall3" || hitResults.first?.node.name == "wall] ₩"{
+        if hitResults.count == 0 || hitResults.first!.node.name == nil || tappedNode == hitResults.first!.node || hitResults.first?.node.name == "floor" || hitResults.first?.node.name == "wall1" || hitResults.first?.node.name == "wall2" || hitResults.first?.node.name == "wall3" || hitResults.first?.node.name == "wall4"{
+//            if arrayPos.filter{$0.nodeNameNow == tappedNode?.name}.count > 0{
+////                arrayPos.
+//            }
+            var indexPos = arrayPos.enumerated().filter({ tappedNode?.name == $0.element.nodeNameNow }).map({ $0.offset })
+            if indexPos.count > 0 {
+                arrayPos[indexPos.first ?? 0] = ClassPosition(nodeNameNow: tappedNode?.name ?? "", nodeNamePositionNow: lastNodePosition)
+            }
+            else{
+                arrayPos.append(ClassPosition(nodeNameNow: tappedNode?.name ?? "", nodeNamePositionNow: lastNodePosition))
+            }
+            
             parent.isEditMode = false
             objectDimensionData.reset()
             deselectNodeAndArrows()
@@ -39,6 +51,7 @@ class Coordinator: NSObject, UIGestureRecognizerDelegate {
             return
         } else {
             let removeValue = hitResults.first?.node
+//            removeValue.
             parent.isEditMode = true
             objectDimensionData.selectedChildNode = removeValue!
             selectedNode?.childNodes.forEach { node in
@@ -57,6 +70,7 @@ class Coordinator: NSObject, UIGestureRecognizerDelegate {
                 processNodeSelection(result.node)
                 selectedAxis = nil
                 tappedNode = result.node
+//                savedTappedNodes = result.node
                 objectTapped = false
             }
         }
@@ -204,7 +218,6 @@ class Coordinator: NSObject, UIGestureRecognizerDelegate {
         node.position = newPos
         updateArrowPositionsToMatchNode(node: node)
         lastPanTranslation = translation
-
     }
     
      func updateArrowPositionsToMatchNode(node: SCNNode) {
@@ -212,11 +225,13 @@ class Coordinator: NSObject, UIGestureRecognizerDelegate {
         guard let arrowX = self.arrowX, let arrowY = self.arrowY, let arrowZ = self.arrowZ else {
             return
         }
-        
-        let worldPosition = node.presentation.worldPosition // Use presentation for smooth updates
-        arrowX.worldPosition = worldPosition
-        arrowY.worldPosition = worldPosition
-        arrowZ.worldPosition = worldPosition
+         let worldPosition = node.presentation.worldPosition
+//         arrayPos.append(worldPosition)
+         lastNodePosition = worldPosition
+         
+         arrowX.worldPosition = worldPosition
+         arrowY.worldPosition = worldPosition
+         arrowZ.worldPosition = worldPosition
     }
     
     func addPanGesture() {
@@ -285,7 +300,8 @@ class Coordinator: NSObject, UIGestureRecognizerDelegate {
             cylinderNode.eulerAngles = SCNVector3(0, 0, CGFloat.pi / 2)
             cylinderNode.name = "axisArrowZ"
             coneNode.eulerAngles = SCNVector3(0, 0, CGFloat.pi / 2)
-            coneNode.position = SCNVector3(-0.15 - Z, Float(totalHeight) / 2 + 0.1, 0)
+            coneNode.position = SCNVector3(-X-0.15, Float(totalHeight) / 2 + 0.1, 0)
+
             coneNode.name = "axisArrowZ"
         }
         

@@ -24,8 +24,9 @@ class CanvasDataViewModel: ObservableObject {
     
     @Published var selectedChildNode: SCNNode? = nil
     @Published var arrowNode:[SCNNode]
+    @Published var countNodeNumber:Int
     
-    @ObservedObject var objectDimensionData : ObjectDimensionData 
+    @ObservedObject var objectDimensionData : ObjectDimensionData
     var floor = SCNNode()
     var grayMaterial = SCNMaterial()
     var floorGeometry = SCNFloor()
@@ -49,6 +50,7 @@ class CanvasDataViewModel: ObservableObject {
         self.isWallHidden = []
         self.renamedNode = []
         self.arrowNode = []
+        self.countNodeNumber = 0
         
         grayMaterial.diffuse.contents = UIColor.gray
         
@@ -130,6 +132,7 @@ class CanvasDataViewModel: ObservableObject {
             if let modelasset = try? SCNScene(url: modelURL), let modelNode = modelasset.rootNode.childNodes.first?.clone() {
                 self.listChildNodes.append(modelNode)
                 self.rootScene?.rootNode.addChildNode(modelNode)
+                arrayPos.append(ClassPosition(nodeNameNow: modelNode.name ?? "", nodeNamePositionNow: SCNVector3(0, 0, 0)))
             }
         }
     }
@@ -430,7 +433,7 @@ class CanvasDataViewModel: ObservableObject {
                         }
                     }
                     
-//                    if let
+                    //                    if let
                     if let unarchivedNamed = try? NSKeyedUnarchiver.unarchiveTopLevelObjectWithData(savedNameNode) as? [String] {
                         for childNameNodeSaved in unarchivedNamed {
                             renamedNode.append(childNameNodeSaved)
@@ -473,54 +476,56 @@ class CanvasDataViewModel: ObservableObject {
     }
     
     func processNodeSelection(selectedNode: SCNNode) {
-             deselectNodeAndArrows(selectedNode: selectedNode)
-             
-             if let nodeName = selectedNode.name, ["wall1", "wall2", "wall3", "wall4", "floor"].contains(nodeName) {
-                 let worldBoundingBox = selectedNode.boundingBox
-                 let worldMin = selectedNode.convertPosition(worldBoundingBox.min, to: nil)
-                 let worldMax = selectedNode.convertPosition(worldBoundingBox.max, to: nil)
-                 
-             } else {
-                 let (minBounds, maxBounds) = selectedNode.boundingBox
-                 let midPoint = SCNVector3(
-                     (maxBounds.x + minBounds.x) / 2,
-                     (maxBounds.y + minBounds.y) / 2,
-                     (maxBounds.z + minBounds.z) / 2
-                 )
-                 
-                 let worldBoundingBox = selectedNode.boundingBox
-                 let worldMin = selectedNode.convertPosition(worldBoundingBox.min, to: nil)
-                 let worldMax = selectedNode.convertPosition(worldBoundingBox.max, to: nil)
-                 
-                 let xFloat = worldMax.x - worldMin.x
-                 let yFloat = worldMax.y - worldMin.y
-                 let zFloat = worldMax.z - worldMin.z
-                 
-                 let torusRadius = xFloat*1.5// Adjust as necessary
-                 let torusThickness = 0.005 // Adjust as necessary
-                 let totalHeight = yFloat
-                 
-                 let worldPosition = selectedNode.presentation.worldPosition
-                 
-                 let torus = SCNTorus(ringRadius: CGFloat(torusRadius), pipeRadius: torusThickness)
-                 torus.firstMaterial?.diffuse.contents = Color(.cyan)
-                 torusNode = SCNNode(geometry: torus)
-//                 torusNode?.position = SCNVector3(0, Float(totalHeight) / 2 + 0.1, 0)
-                 torusNode?.eulerAngles = SCNVector3(0, Float.pi / 2, 0)//ini bikin flat
-
-                 torusHighNode = SCNNode(geometry: torus)
-//                 torusHighNode?.position = SCNVector3(0, Float(totalHeight) / 2 + 0.1, 0)
-                 torusHighNode?.eulerAngles = SCNVector3(0, 0, Float.pi / 2)
-                 
-                 torusNode?.worldPosition = worldPosition
-                 torusHighNode?.worldPosition = worldPosition
-                 
-                 rootScene?.rootNode.addChildNode(torusNode!)
-                 rootScene?.rootNode.addChildNode(torusHighNode!)
-             
-         }
-         
-     }
+        deselectNodeAndArrows(selectedNode: selectedNode)
+        
+        if let nodeName = selectedNode.name, ["wall1", "wall2", "wall3", "wall4", "floor"].contains(nodeName) {
+            let worldBoundingBox = selectedNode.boundingBox
+            let worldMin = selectedNode.convertPosition(worldBoundingBox.min, to: nil)
+            let worldMax = selectedNode.convertPosition(worldBoundingBox.max, to: nil)
+            
+        } else {
+            let (minBounds, maxBounds) = selectedNode.boundingBox
+            let midPoint = SCNVector3(
+                (maxBounds.x + minBounds.x) / 2,
+                (maxBounds.y + minBounds.y) / 2,
+                (maxBounds.z + minBounds.z) / 2
+            )
+            
+            let worldBoundingBox = selectedNode.boundingBox
+            let worldMin = selectedNode.convertPosition(worldBoundingBox.min, to: nil)
+            let worldMax = selectedNode.convertPosition(worldBoundingBox.max, to: nil)
+            
+            let xFloat = worldMax.x - worldMin.x
+            let yFloat = worldMax.y - worldMin.y
+            let zFloat = worldMax.z - worldMin.z
+            
+            let torusRadius = xFloat// Adjust as necessary
+            let torusThickness = 0.005 // Adjust as necessary
+            let totalHeight = yFloat
+            
+            var yPos = arrayPos[countNodeNumber].nodeNamePositionNow.y
+            yPos = yPos + yFloat/2
+            let torus = SCNTorus(ringRadius: CGFloat(torusRadius), pipeRadius: torusThickness)
+            torus.firstMaterial?.diffuse.contents = Color(.cyan)
+            torusNode = SCNNode(geometry: torus)
+            torusNode?.eulerAngles = SCNVector3(0, Float.pi / 2, 0)//ini bikin flat
+            
+            torusHighNode = SCNNode(geometry: torus)
+            torusHighNode?.eulerAngles = SCNVector3(0, 0, Float.pi / 2)
+            
+            if savedTappedNodes == listChildNodes[countNodeNumber]{
+                torusNode?.worldPosition = SCNVector3(arrayPos[countNodeNumber].nodeNamePositionNow.x,yPos,arrayPos[countNodeNumber].nodeNamePositionNow.z)
+                torusHighNode?.worldPosition = SCNVector3(arrayPos[countNodeNumber].nodeNamePositionNow.x,yPos,arrayPos[countNodeNumber].nodeNamePositionNow.z)
+                
+                rootScene?.rootNode.addChildNode(torusNode!)
+                rootScene?.rootNode.addChildNode(torusHighNode!)
+            }
+            print("savedTappedNodes:",savedTappedNodes?.name)
+            print("listChildNodes:",listChildNodes[countNodeNumber])
+            
+        }
+        
+    }
     
     func deselectNodeAndArrows(selectedNode: SCNNode) {
         objectDimensionData.reset()

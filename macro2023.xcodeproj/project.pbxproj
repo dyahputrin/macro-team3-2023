@@ -21,6 +21,7 @@
 		217567852B0F43F900616D61 /* LeftWall.usdz in Resources */ = {isa = PBXBuildFile; fileRef = 2175677E2B0F423400616D61 /* LeftWall.usdz */; };
 		217567862B0F43F900616D61 /* RightWall.usdz in Resources */ = {isa = PBXBuildFile; fileRef = 2175677C2B0F423400616D61 /* RightWall.usdz */; };
 		217567872B0F43F900616D61 /* WhiteFloor.usdz in Resources */ = {isa = PBXBuildFile; fileRef = 2175677D2B0F423400616D61 /* WhiteFloor.usdz */; };
+		2199B4C12B10C9EF005410DF /* ClassPosition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2199B4C02B10C9EF005410DF /* ClassPosition.swift */; };
 		21C90C192AD694880003D517 /* ProjectData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21C90C182AD694880003D517 /* ProjectData.swift */; };
 		21C90C412AD6A15B0003D517 /* RouterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21C90C402AD6A15B0003D517 /* RouterView.swift */; };
 		21C90C432AD7CC810003D517 /* ProjectViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21C90C422AD7CC810003D517 /* ProjectViewModel.swift */; };
@@ -106,6 +107,7 @@
 		2175677D2B0F423400616D61 /* WhiteFloor.usdz */ = {isa = PBXFileReference; lastKnownFileType = file.usdz; path = WhiteFloor.usdz; sourceTree = "<group>"; };
 		2175677E2B0F423400616D61 /* LeftWall.usdz */ = {isa = PBXFileReference; lastKnownFileType = file.usdz; path = LeftWall.usdz; sourceTree = "<group>"; };
 		2175677F2B0F423400616D61 /* FrontWall.usdz */ = {isa = PBXFileReference; lastKnownFileType = file.usdz; path = FrontWall.usdz; sourceTree = "<group>"; };
+		2199B4C02B10C9EF005410DF /* ClassPosition.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClassPosition.swift; sourceTree = "<group>"; };
 		21C90C182AD694880003D517 /* ProjectData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectData.swift; sourceTree = "<group>"; };
 		21C90C402AD6A15B0003D517 /* RouterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RouterView.swift; sourceTree = "<group>"; };
 		21C90C422AD7CC810003D517 /* ProjectViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectViewModel.swift; sourceTree = "<group>"; };
@@ -279,6 +281,7 @@
 				94DDE93D2ADE8FFA007915FF /* ColorExtension.swift */,
 				21C90C402AD6A15B0003D517 /* RouterView.swift */,
 				2161D8EB2B077F6D00487764 /* Coordinator.swift */,
+				2199B4C02B10C9EF005410DF /* ClassPosition.swift */,
 			);
 			path = Service;
 			sourceTree = "<group>";
@@ -632,6 +635,7 @@
 				94DDE96C2ADE8FFA007915FF /* RoomSceneView.swift in Sources */,
 				2128E7E12AE7A2C900FD6B99 /* ObjectViewModel.swift in Sources */,
 				BE6F996B2AE2728B00AC6A69 /* ImportButtonView.swift in Sources */,
+				2199B4C12B10C9EF005410DF /* ClassPosition.swift in Sources */,
 				94DDE9612ADE8FFA007915FF /* ColorExtension.swift in Sources */,
 				94DDE96A2ADE8FFA007915FF /* CanvasData.swift in Sources */,
 				94DDE96B2ADE8FFA007915FF /* CanvasDataViewModel.swift in Sources */,
