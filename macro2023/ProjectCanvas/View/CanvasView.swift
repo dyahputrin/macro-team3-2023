@@ -317,12 +317,6 @@ struct CanvasView: View {
             }) {
                 Label("Rename", systemImage: "pencil")
             }
-            Button(action: {
-                isExporting = true
-                print("Action for context menu item 2")
-            }) {
-                Label("Export as USDZ", systemImage: "square.and.arrow.up")
-            }
         }
         .alert("Rename", isPresented: $renameClicked, actions: {
             TextField("\(roomSceneViewModel.projectData.nameProject)", text: $newProjectName)
