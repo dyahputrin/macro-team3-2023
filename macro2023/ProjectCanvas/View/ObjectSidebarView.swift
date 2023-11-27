@@ -112,6 +112,11 @@ struct ObjectSidebarView: View {
                                                     }
                                                 }
                                                 .padding()
+                                                .contextMenu(ContextMenu(menuItems: {
+                                                    Button("Delete", systemImage: "trash", role: .destructive){
+                                                        ObjectVM.deleteProject(viewContext: viewContext, object: urlImport)
+                                                    }
+                                                }))
                                         }
                                         
                                     }

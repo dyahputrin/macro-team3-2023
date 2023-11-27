@@ -83,7 +83,6 @@ struct CanvasView: View {
         _isSetButtonSidebarTapped = isSetButtonSidebarTapped
         _activeProjectID = activeProjectID
         _activeScene = activeScene
-//        _objectDimensionData = StateObject(wrappedValue: ObjectDimensionData())
         _objectDimensionData = StateObject(wrappedValue:  objectDimensionData)
         _roomSceneViewModel  = StateObject(wrappedValue: CanvasDataViewModel(canvasData: CanvasData(roomWidth: 0, roomHeight: 0, roomLength: 0), projectData: projectData, routerView: routerView, objectDimensionData: objectDimensionData))
     }

@@ -66,4 +66,14 @@ class ObjectViewModel: UIViewController, ObservableObject, UIDocumentPickerDeleg
     func createSceneKitView(data: Data) -> ThumbnailView {
             return ThumbnailView(usdzData: data)
         }
+    
+    func deleteProject(viewContext: NSManagedObjectContext, object: ObjectEntity) {
+        viewContext.delete(object)
+        
+        do {
+            try viewContext.save()
+        } catch {
+            print("Error deleting project: \(error)")
+        }
+    }
 }
