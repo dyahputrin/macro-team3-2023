@@ -24,7 +24,7 @@ struct CanvasView: View {
     @State var objectsButtonClicked: Bool
     @State var roomButtonClicked: Bool
     @State var povButtonClicked: Bool
-
+    
     @Binding var viewfinderButtonClicked: Bool
     @Binding var isImporting: Bool
     @Binding var isExporting: Bool
@@ -99,23 +99,23 @@ struct CanvasView: View {
     var body: some View {
         
         GeometryReader { geometry in
-           
+            
             ZStack {
-                    let scenekitView =
-                    ScenekitView(
-                        objectDimensionData: objectDimensionData,
-                        canvasData: roomSceneViewModel.canvasData,
-                        roomSceneViewModel:roomSceneViewModel, 
-                        scene: $roomSceneViewModel.rootScene,
-                        isEditMode: $isEditMode,
-                        roomWidth: $roomWidth
-                    )
-                    scenekitView
-                        .edgesIgnoringSafeArea(.bottom)
-                        .id(sceneViewID)
-                        .onAppear {
-                            currentScenekitView = scenekitView
-                        }
+                let scenekitView =
+                ScenekitView(
+                    objectDimensionData: objectDimensionData,
+                    canvasData: roomSceneViewModel.canvasData,
+                    roomSceneViewModel:roomSceneViewModel,
+                    scene: $roomSceneViewModel.rootScene,
+                    isEditMode: $isEditMode,
+                    roomWidth: $roomWidth
+                )
+                scenekitView
+                    .edgesIgnoringSafeArea(.bottom)
+                    .id(sceneViewID)
+                    .onAppear {
+                        currentScenekitView = scenekitView
+                    }
             }
             
             if objectsButtonClicked == true {
@@ -132,16 +132,16 @@ struct CanvasView: View {
             if objectDimensionData.name != "--" {
                 let val = objectDimensionData.name
                 switch(val){
-                    case "floor":
-                     let _ = print("floor")
+                case "floor":
+                    let _ = print("floor")
                 case "wall1":
-                 let _ = print("wall1")
+                    let _ = print("wall1")
                 case "wall2":
-                 let _ = print("wall2")
+                    let _ = print("wall2")
                 case "wall3":
-                 let _ = print("wall3")
+                    let _ = print("wall3")
                 case "wall4":
-                 let _ = print("wall4")
+                    let _ = print("wall4")
                 default:
                     ObjectSizeView(roomWidthText:.constant("2"), roomLengthText: .constant("2"), roomHeightText: .constant("2"), sceneViewID: .constant(UUID()), routerView: _routerView, roomSceneViewModel: roomSceneViewModel, objectDimensionData: objectDimensionData)
                 }
@@ -157,46 +157,36 @@ struct CanvasView: View {
                 HStack {
                     
                     //VIEWFINDER
-                        Menu {
-                            Button(action: {
-                                if (ObjectCaptureSession.isSupported) {
-                                    self.isGuidedCaptureViewPresented = true
-                                } else {
-                                    isNotSupported = true
-                                }
-                            }, label: {
-                                Text("Scan objects")
-                            })
-                            Button(action: {
-                                if (RoomCaptureSession.isSupported) {
-                                    self.isRoomCaptureViewPresented = true
-                                } else {
-                                    isNotSupported = true
-                                }
-                            }, label: {
-                                Text("Scan room")
-                            })
-                        } label: {
-                            Label("Viewfinder", systemImage: "viewfinder")
-                                .foregroundColor(.black)
-                            Text("Scan")
-                                .font(.subheadline)
-                                .foregroundColor(.black)
-                        }
-                        .padding(.trailing, 50)
-                        .alert(isPresented: $isNotSupported) {
-                            Alert(title: Text("This feature is not supported"))
-                        }
-                    
-                    //EDIT MODE TOGGLE
-//                    Button(action : {
-//                        isEditMode.toggle()
-//                    }) {
-//                        Image(systemName: "pencil")
-//                            .foregroundColor(isEditMode ? .blue : .black)
-//                            .padding()
-//                    }
-                    
+                    Menu {
+                        Button(action: {
+                            if (ObjectCaptureSession.isSupported) {
+                                self.isGuidedCaptureViewPresented = true
+                            } else {
+                                isNotSupported = true
+                            }
+                        }, label: {
+                            Text("Scan objects")
+                        })
+                        Button(action: {
+                            if (RoomCaptureSession.isSupported) {
+                                self.isRoomCaptureViewPresented = true
+                            } else {
+                                isNotSupported = true
+                            }
+                        }, label: {
+                            Text("Scan room")
+                        })
+                    } label: {
+                        Label("Viewfinder", systemImage: "viewfinder")
+                            .foregroundColor(.black)
+                        Text("Scan")
+                            .font(.subheadline)
+                            .foregroundColor(.black)
+                    }
+                    .padding(.trailing, 50)
+                    .alert(isPresented: $isNotSupported) {
+                        Alert(title: Text("This feature is not supported"))
+                    }
                     // Object
                     Button(action : {
                         roomButtonClicked.toggle()
@@ -208,7 +198,7 @@ struct CanvasView: View {
                             Text("Room")
                                 .font(.subheadline)
                                 .foregroundColor(roomButtonClicked ? .accentColor : .black)
-                                
+                            
                         }
                     }
                     .popoverTip(closeSidebarTip, arrowEdge: .top)
@@ -226,7 +216,7 @@ struct CanvasView: View {
                                 .foregroundColor(objectsButtonClicked ? .accentColor : .black)
                         }
                     }
-
+                    
                 }
                 .padding(.vertical, 5)
                 .padding(.trailing, 200)
@@ -239,7 +229,6 @@ struct CanvasView: View {
                     isSaveClicked = true
                     showSaveAlert = true
                     roomSceneViewModel.saveProject(viewContext: viewContext)
-                    
                     roomSceneViewModel.saveSnapshot(activeProjectID: activeProjectID, viewContext: viewContext, snapshotImageArg: snapshotImage, scenekitView: currentScenekitView!)
                     
                 })
@@ -286,7 +275,7 @@ struct CanvasView: View {
         .fullScreenCover(isPresented: $isGuidedCaptureViewPresented, content: {
             GuidedCaptureView()
         })
-        .navigationTitle((routerView.project == nil ? "NewProject" : routerView.project?.projectName)!)
+        .navigationTitle((routerView.project?.projectName == nil ? "NewProject" : routerView.project?.projectName)!)
         .navigationBarBackButtonHidden(true)
         .navigationBarItems(leading: Button(action: {
             if !isSaveClicked {
@@ -313,10 +302,22 @@ struct CanvasView: View {
         .toolbarTitleMenu {
             Button(action: {
                 renameClicked = true
-                print("Action for context menu item 1")
             }) {
                 Label("Rename", systemImage: "pencil")
             }
+            //??
+//            Button(action: {
+//                roomSceneViewModel.saveSceneAsUSDZ { result in
+//                    switch result {
+//                    case .success(let usdzURL):
+//                        print("Scene saved as USDZ: \(usdzURL)")
+//                    case .failure(let error):
+//                        print("Error saving scene as USDZ: \(error.localizedDescription)")
+//                    }
+//                }
+//            }) {
+//                Label("Export as USDZ", systemImage: "square.and.arrow.up")
+//            }
         }
         .alert("Rename", isPresented: $renameClicked, actions: {
             TextField("\(roomSceneViewModel.projectData.nameProject)", text: $newProjectName)
@@ -334,9 +335,8 @@ struct CanvasView: View {
                 roomSceneViewModel.projectData.nameProject = routerView.project!.projectName!
                 roomSceneViewModel.projectData.uuid = routerView.project!.projectID!
             }
-            
             AppDelegate.orientationLock = .landscape // And making sure it stays that way
-                
+            
         }
         .onDisappear{
             print("CanvasView is disappearing")
@@ -344,7 +344,6 @@ struct CanvasView: View {
                 routerView.path.removeLast()
             }
             roomSceneViewModel.projectData.nameProject = ""
-//            roomSceneViewModel.projectData.uuid = UUID()
             routerView.project = nil
         }
     }

@@ -10,6 +10,7 @@ import SceneKit
 import CoreData
 import Combine
 import SwiftUI
+import ModelIO
 
 class CanvasDataViewModel: ObservableObject {
     @Published var canvasData: CanvasData
@@ -25,6 +26,8 @@ class CanvasDataViewModel: ObservableObject {
     @Published var selectedChildNode: SCNNode? = nil
     @Published var arrowNode:[SCNNode]
     @Published var countNodeNumber:Int
+    
+    @Published var exportResult: Result<URL, Error>? = nil
     
     @Published var objectDimensionData : ObjectDimensionData
     var floor = SCNNode()
@@ -282,7 +285,6 @@ class CanvasDataViewModel: ObservableObject {
                     for childrenNode in listChildNodes{
                         childrenNode.removeFromParentNode()
                     }
-                    
                     for arrowNodeChild in arrowNode{
                         arrowNodeChild.removeFromParentNode()
                     }
@@ -438,6 +440,7 @@ class CanvasDataViewModel: ObservableObject {
     }
     
     func saveSnapshot(activeProjectID: UUID, viewContext: NSManagedObjectContext, snapshotImageArg: UIImage?, scenekitView: ScenekitView) {
+        
         let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "ProjectEntity")
         fetchRequest.predicate = NSPredicate(format: "projectID == %@", activeProjectID as CVarArg)
         
@@ -454,6 +457,7 @@ class CanvasDataViewModel: ObservableObject {
                     print("Failed to take snapshot")
                 }
             } else {
+                // function to take the snapshot eventhough there's still no project found with a specific ID
                 print("No project found with ID: \(activeProjectID)")
             }
         } catch {
@@ -468,6 +472,23 @@ class CanvasDataViewModel: ObservableObject {
             arrowNodeChild.removeFromParentNode()
         }
         arrowNode.removeAll()
+    }
+    
+    func saveSceneAsUSDZ(completion: @escaping (Result<URL, Error>) -> Void) {
+        guard let rootScene = rootScene else {
+            completion(.failure(NSError(domain: "YourDomain", code: 0, userInfo: [NSLocalizedDescriptionKey: "Root scene is nil"])))
+            return
+        }
+
+        let downloadsDirectory = FileManager.default.urls(for: .downloadsDirectory, in: .userDomainMask).first!
+        let usdzFileURL = downloadsDirectory.appendingPathComponent("output.usdz")
+
+        do {
+            try rootScene.write(to: usdzFileURL, options: nil, delegate: nil)
+            completion(.success(usdzFileURL))
+        } catch {
+            completion(.failure(error))
+        }
     }
     
 }
