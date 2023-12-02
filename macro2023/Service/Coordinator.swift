@@ -18,6 +18,7 @@ class Coordinator: NSObject, UIGestureRecognizerDelegate {
     var arrowX: SCNNode?
     var arrowY: SCNNode?
     var arrowZ: SCNNode?
+    var arrowRotation: SCNNode?
     var tappedNode : SCNNode?
     var lastNodePosition : SCNVector3 = SCNVector3(x: 0, y: 0, z: 0)
     
@@ -45,13 +46,15 @@ class Coordinator: NSObject, UIGestureRecognizerDelegate {
             objectDimensionData.selectedChildNode = removeValue!
             selectedNode?.childNodes.forEach { node in
                 if node.name?.hasPrefix("axisArrow") == true {
-                    node.opacity = 0.3
+                    node.opacity = 0.5
                 }
             }
             
             if let result = hitResults.first(where: { $0.node.name?.hasPrefix("axisArrow") == true }) {
+                resetOpacityArrow() //Reset opacity to 0.5
+                
                 // Set the tapped arrow's opacity to 1.0
-                result.node.opacity = 1.0
+//                result.node.opacity = 1.0     //code ini ga jalan idk why
                 result.node.parent?.opacity = 1.0
                 selectedAxis = result.node.name
                 addPanGesture()
@@ -114,15 +117,25 @@ class Coordinator: NSObject, UIGestureRecognizerDelegate {
                 let zFloat = worldMax.z - worldMin.z
                 
                 arrowX = createArrowNode(axis: SCNVector3(1, 0, 0), color: .red, arrowName: "axisArrowX", X: xFloat, Y: yFloat, Z: zFloat)
+                arrowX!.opacity = 0.5
                 parent.roomSceneViewModel.arrowNode.append(arrowX!)
+                
                 arrowY = createArrowNode(axis: SCNVector3(0, 1, 0), color: .green, arrowName: "axisArrowY", X: xFloat, Y: yFloat, Z: zFloat)
+                arrowY!.opacity = 0.5
                 parent.roomSceneViewModel.arrowNode.append(arrowY!)
+                
                 arrowZ = createArrowNode(axis: SCNVector3(0, 0, 1), color: .blue, arrowName: "axisArrowZ", X: xFloat, Y: yFloat, Z: zFloat)
+                arrowZ!.opacity = 0.5
                 parent.roomSceneViewModel.arrowNode.append(arrowZ!)
+                
+                arrowRotation = createArrowNode(axis: SCNVector3(0, 0, 0), color: .white, arrowName: "axisArrowRotation", X: xFloat, Y: yFloat, Z: zFloat)
+                arrowRotation!.opacity = 0.5
+                parent.roomSceneViewModel.arrowNode.append(arrowRotation!)
                      
                 parent.scene?.rootNode.addChildNode(parent.roomSceneViewModel.arrowNode[0])
                 parent.scene?.rootNode.addChildNode(parent.roomSceneViewModel.arrowNode[1])
                 parent.scene?.rootNode.addChildNode(parent.roomSceneViewModel.arrowNode[2])  
+                parent.scene?.rootNode.addChildNode(parent.roomSceneViewModel.arrowNode[3])
                 updateArrowPositionsToMatchNode(node: node)
             }
             
@@ -206,7 +219,7 @@ class Coordinator: NSObject, UIGestureRecognizerDelegate {
     
      func updateArrowPositionsToMatchNode(node: SCNNode) {
         // Make sure the arrows exist
-        guard let arrowX = self.arrowX, let arrowY = self.arrowY, let arrowZ = self.arrowZ else {
+        guard let arrowX = self.arrowX, let arrowY = self.arrowY, let arrowZ = self.arrowZ, let arrowRotation = self.arrowRotation else {
             return
         }
          let worldPosition = node.presentation.worldPosition
@@ -216,6 +229,18 @@ class Coordinator: NSObject, UIGestureRecognizerDelegate {
          arrowX.worldPosition = worldPosition
          arrowY.worldPosition = worldPosition
          arrowZ.worldPosition = worldPosition
+         arrowRotation.worldPosition = worldPosition
+    }
+    
+    func resetOpacityArrow() {
+        guard let arrowX = self.arrowX, let arrowY = self.arrowY, let arrowZ = self.arrowZ, let arrowRotation = self.arrowRotation else {
+            return
+        }
+        
+        arrowX.opacity = 0.5
+        arrowY.opacity = 0.5
+        arrowZ.opacity = 0.5
+        arrowRotation.opacity = 0.5
     }
     
     func addPanGesture() {
@@ -243,7 +268,7 @@ class Coordinator: NSObject, UIGestureRecognizerDelegate {
         cylinderMaterial.transparency = 0
         cylinder.firstMaterial = cylinderMaterial
 
-        let cone = SCNCone(topRadius: 0, bottomRadius: 0.07, height: 0.15)
+        let cone = SCNCone(topRadius: 0, bottomRadius: 0.14, height: 0.30)
         cone.radialSegmentCount = 12
         let coneMaterial = SCNMaterial()
         coneMaterial.diffuse.contents = color
@@ -257,49 +282,62 @@ class Coordinator: NSObject, UIGestureRecognizerDelegate {
         // Define the total height of the arrow for positioning the torus
         let totalHeight = X / 2.0 // cylinder height + cone height
         let torusRadius = X // Adjust as necessary
-       let torusThickness = 0.03 // Adjust as necessary
+       let torusThickness = 0.05 // Adjust as necessary
 
-       // Create the torus as the rotation indicator
-        let torus = SCNTorus(ringRadius: CGFloat(torusRadius), pipeRadius: torusThickness)
-        torus.firstMaterial?.diffuse.contents = Color(.cyan)
-       let torusNode = SCNNode(geometry: torus)
-        torusNode.position = SCNVector3(0, Float(totalHeight) / 2 + 0.1, 0)
-       torusNode.eulerAngles = SCNVector3(0, Float.pi / 2, 0)// Lay the torus flat
-
+        let parentNode = SCNNode()
         
         // Rotate the arrow according to the axis
         if axis.x != 0 {
             cylinderNode.eulerAngles = SCNVector3(CGFloat.pi / 2, 0, 0)
             cylinderNode.name = "axisArrowX"
             coneNode.eulerAngles = SCNVector3(CGFloat.pi / 2, 0, 0)
-            coneNode.position = SCNVector3(0, Float(totalHeight) / 2 + 0.1, X + 0.15)
+            coneNode.position = SCNVector3(0, Float(totalHeight) / 2 + 0.1, X + 0.3)
             coneNode.name = "axisArrowX"
+            
+            parentNode.addChildNode(coneNode)
+            parentNode.name = "axisArrowX"
         } else if axis.y != 0 {
             cylinderNode.eulerAngles = SCNVector3(0, CGFloat.pi / 2, 0)
             cylinderNode.name = "axisArrowY"
             coneNode.eulerAngles = SCNVector3(0, CGFloat.pi / 2, 0)
-            coneNode.position = SCNVector3(0, Y + 0.15, 0)
+            coneNode.position = SCNVector3(0, Y + 0.3, 0)
             coneNode.name = "axisArrowY"
+            
+            parentNode.addChildNode(coneNode)
+            parentNode.name = "axisArrowY"
         } else if axis.z != 0 {
             cylinderNode.eulerAngles = SCNVector3(0, 0, CGFloat.pi / 2)
             cylinderNode.name = "axisArrowZ"
             coneNode.eulerAngles = SCNVector3(0, 0, CGFloat.pi / 2)
-            coneNode.position = SCNVector3(-X-0.15, Float(totalHeight) / 2 + 0.1, 0)
-
+            coneNode.position = SCNVector3(-X-0.3, Float(totalHeight) / 2 + 0.1, 0)
             coneNode.name = "axisArrowZ"
+            
+            parentNode.addChildNode(coneNode)
+            parentNode.name = "axisArrowZ"
+        } else {
+            // Create the torus as the rotation indicator
+             let torus = SCNTorus(ringRadius: CGFloat(torusRadius), pipeRadius: torusThickness)
+             torus.firstMaterial?.diffuse.contents = Color(.cyan)
+            let torusNode = SCNNode(geometry: torus)
+             torusNode.position = SCNVector3(0, Float(totalHeight) / 2 + 0.1, 0)
+            torusNode.eulerAngles = SCNVector3(0, Float.pi / 2, 0)// Lay the torus flat
+            torusNode.name = "axisArrowRotation"
+            
+            parentNode.addChildNode(torusNode)
+            parentNode.name = "axisArrowRotation"
         }
         
-        let parentNode = SCNNode()
-        parentNode.addChildNode(coneNode)
-        parentNode.addChildNode(torusNode) // Add the torus node to the parent
+//        let parentNode = SCNNode()
+//        parentNode.addChildNode(coneNode)
+//        parentNode.addChildNode(torusNode) // Add the torus node to the parent
 
         // Set the name for both the cylinder and cone
-        cylinderNode.name = arrowName
-        coneNode.name = arrowName
-        torusNode.name = "axisArrowRotation" // Optionally, give the torus the same name
+//        cylinderNode.name = arrowName
+//        coneNode.name = arrowName
+//        torusNode.name = "axisArrowRotation" // Optionally, give the torus the same name
 
         // Set the name for the parent node
-        parentNode.name = arrowName
+//        parentNode.name = arrowName
 
         return parentNode
     }

@@ -85,6 +85,12 @@ class CanvasDataViewModel: ObservableObject {
     func makeScene1(width: CGFloat, height: CGFloat, length: CGFloat) -> SCNScene? {
         rootScene = SCNScene(named: "RoomScene.scn")
         rootScene?.background.contents = UIColor.lightGray
+        let ambientLightNode = SCNNode()
+        ambientLightNode.light = SCNLight()
+        ambientLightNode.light?.type = .ambient
+        ambientLightNode.light?.color = UIColor.white
+        ambientLightNode.light?.intensity = 500
+        rootScene?.rootNode.addChildNode(ambientLightNode)
         
         // Add floor
         if let floorAsset = SCNScene(named: "WhiteFloor.usdz"),
