@@ -33,7 +33,7 @@ extension CaptureOverlayView {
                         .foregroundColor(.white)
                         .padding(.horizontal, 25)
                         .padding(.vertical, 20)
-                        .background(.blue)
+                        .background(Color.accentColor)
                         .clipShape(Capsule())
                 })
         }

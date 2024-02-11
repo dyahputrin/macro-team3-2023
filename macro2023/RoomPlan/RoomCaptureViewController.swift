@@ -1,10 +1,3 @@
-/*
-See the LICENSE.txt file for this sample’s licensing information.
-
-Abstract:
-The sample app's main view controller that manages the scanning process.
-*/
-
 import UIKit
 import RoomPlan
 

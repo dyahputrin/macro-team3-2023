@@ -9,7 +9,7 @@ import SwiftUI
 
 struct OnboardingViewControllerWrapper: UIViewControllerRepresentable {
     func makeUIViewController(context: Context) -> OnboardingViewController {
-        let storyboard = UIStoryboard(name: "Main", bundle: nil) // Replace with your storyboard name
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
         let viewController = storyboard.instantiateViewController(withIdentifier: "OnboardingViewController") as! OnboardingViewController
         return viewController
     }
